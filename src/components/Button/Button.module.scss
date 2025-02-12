@@ -9,3 +9,12 @@
     align-items: center;
     color: black;
 }
+
+.medium {
+    background-color: var(--primary);
+    border: none;
+    box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
+    font-family: Walsheim-light;
+    font-size: 17px;
+    padding: 7px 20px 7px 20px;
+}

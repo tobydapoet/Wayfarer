@@ -24,3 +24,25 @@
     text-decoration: none;
     font-size: 13px;
 }
+
+.modal-title {
+    color: var(--primary);
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.xmark {
+    color: var(--primary);
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}

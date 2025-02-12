@@ -6,6 +6,7 @@ const cx = classNames.bind(styles)
 function Button ({
     large,
     small,
+    medium,
     rounded,
     primary,
     disabled,
@@ -45,6 +46,7 @@ function Button ({
         primary,
         disabled,
         primary,
+        medium,
     })
     return ( <Comp className={classes} {...props} target="_blank">{children}</Comp> );
 }
