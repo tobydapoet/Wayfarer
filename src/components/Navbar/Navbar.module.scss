@@ -1,0 +1,26 @@
+.wrapper {
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+    box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--primary);
+    font-family: Walsheim-light;
+}
+
+.logo-link {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+   
+}
+
+.middle-btn {
+    margin: 0px 15px 0px 15px;
+    color: black;
+    text-decoration: none;
+    font-size: 13px;
+}

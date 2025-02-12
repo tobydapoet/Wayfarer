@@ -1,0 +1,23 @@
+@import 'normalize.css';
+
+:root {
+    --primary : #fff
+}
+
+@font-face {
+    font-family: Nocturne-light;
+    src: url('../assets/fonts/nocturne_serif_light.ttf');
+}
+@font-face {
+    font-family: Walsheim-light;
+    src: url('../assets/fonts/gt-walsheim-light.ttf');
+}
+@font-face {
+    font-family: themify;
+    src: url('../assets/fonts/themify.woff');
+}
+@font-face {
+    font-family: Walsheim-bold;
+    src: url('../assets/fonts/gt-walsheim-bold.ttf');
+}
+

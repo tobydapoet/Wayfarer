@@ -1,6 +1,9 @@
+import CinematicVideo from "../../components/CinematicVideo/CinematicVideo";
+
+
 function Home() {
     return (
-        <div>Home page</div>
+        <CinematicVideo />
     );
 }
 
