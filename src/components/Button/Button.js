@@ -16,6 +16,10 @@ function Button ({
     className,
     outline, 
     children,
+    email,
+    facebook,
+    leftIcon,
+    rightIcon,
     ...passProps
 }) {
     const Comp = 'button' 
@@ -47,8 +51,22 @@ function Button ({
         disabled,
         primary,
         medium,
+        email,
+        facebook,
+        leftIcon,
+        rightIcon,
     })
-    return ( <Comp className={classes} {...props} target="_blank">{children}</Comp> );
+    return ( 
+        <Comp 
+            className={classes} 
+            {...props} 
+            target="_blank"
+        >
+            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+            <span className={cx('title')}>{children}</span>
+            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
+        </Comp> 
+    );
 }
 
 export default Button ;
