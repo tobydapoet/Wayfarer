@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import ReactDOM from 'react-dom'
 import classNames from "classnames/bind";
 import styles from './Modal.module.scss'
 

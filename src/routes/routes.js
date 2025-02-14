@@ -11,7 +11,7 @@ const publicRoutes = [
     {path:'/about',component: About, topic: 'ABOUT US'},
     {path:'/blog',component: Blog, topic: 'BLOG & PRESS'},
     {path:'/contact',component: Contact, topic: 'CONTACT US'},
-    {path : '/profile', component: Profile, layout : null ,topic:'PROFILE'}
+    {path : '/:email', component: Profile, layout : null ,topic:'PROFILE'}
 ]
 const privateRoutes = [
 

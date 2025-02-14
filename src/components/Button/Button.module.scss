@@ -35,6 +35,10 @@
     border: none;
     font-family: Walsheim-light;
     font-size: 17px;
+
+    &:hover {
+        background-color: #ffffffdc;
+    }
 }
 
 .icon + .title , .title + .icon {
