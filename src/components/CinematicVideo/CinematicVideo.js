@@ -4,7 +4,10 @@ import styles from './CinematicVideo.module.scss'
 
 const cx = classNames.bind(styles)
 function CinematicVideo() {
-    return ( <video className={cx('introduce')} style={{display:'fixed'}} src={videos.videoTheme} autoPlay muted loop></video> );
+    return ( 
+        <div className={cx('video-container')}>
+            <video className={cx('introduce')} style={{display:'fixed'}} src={videos.videoTheme} autoPlay muted loop></video> 
+        </div>);
 }
 
 export default CinematicVideo;
