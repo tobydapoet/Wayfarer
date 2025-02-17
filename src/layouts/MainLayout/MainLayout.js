@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar";
 import styles from './MainLayout.module.scss'
 import classNames from "classnames/bind";
@@ -11,6 +12,7 @@ function MainLayout({children}) {
             <div className={cx('content')}>
                 {children}
             </div>
+            <Footer />
         </div>
     );
 }

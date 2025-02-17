@@ -1,0 +1,64 @@
+.wrapper {
+    overflow-x: hidden;
+
+    .partners {
+        width: 100%;
+        background-color: #b1b1b1b6;
+        display: flex;
+        justify-content: center;
+        gap: 7rem;
+        padding: 20px;
+
+        .partner-image {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Walsheim-light;
+        line-height: 30px;
+        font-size: 18px;
+        background-color:#202020;
+        padding: 20px 20px 0px 20px; 
+        color: var(--primary);
+        .logo-link {
+            img {
+                width: 150px;
+                height: auto;
+                object-fit: contain;
+            }
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+
+    }
+
+    
+}
+
+.media {
+    display: flex;
+    gap:20px;
+    justify-content: center;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .icon {
+        margin-top: 10px;
+        font-size: 30px;
+    }
+}
+

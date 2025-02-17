@@ -1,5 +1,10 @@
 .container {
     position: relative;
+    
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .content {
