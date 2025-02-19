@@ -19,7 +19,7 @@ function Navbar() {
     const [isOpenLogin,setIsOpenLogin] = useState(false)
     const [isOpenRegister,setIsOpenRegister] = useState(false)
     const [errors,setErrors] = useState({})
-    const currentUser = true
+    const currentUser = false
 
     const [dataLogin,setDataLogin,resetDataLogin] = useForm({
         email : '',
@@ -87,7 +87,7 @@ function Navbar() {
             <Link to={'/'} className={cx('logo-link')}><img src={images.logoDark} alt="Logo" /></Link>
             <div className={cx('inner')}> 
                 {publicRoutes.map((route,index) => {
-                    if(!route.layout && route.layout !== null)
+                    if(!route.layout && route.layout !== null && route.topic) 
                    return <Link key={index} className={cx('middle-btn')} to={route.path}>{route.topic}</Link>
                 })}
             </div>

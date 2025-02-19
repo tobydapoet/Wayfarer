@@ -2,7 +2,7 @@
     background-color: transparent;
     color: var(--primary);
     border: none;
-    font-family: Walsheim-light;
+    font-family:var(--font-default);
     font-size: 14px;
     cursor: pointer;
     margin: -10px 10px 0px 10px;
@@ -22,7 +22,7 @@
     background-color: var(--primary);
     border: none;
     box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
-    font-family: Walsheim-light;
+    font-family:var(--font-default);
     font-size: 17px;
     padding: 7px 20px 7px 20px;
 }
@@ -33,11 +33,11 @@
     border-radius: 20px;
     cursor: pointer;
     border: none;
-    font-family: Walsheim-light;
+    font-family:var(--font-default);
     font-size: 17px;
 
     &:hover {
-        background-color: #ffffffdc;
+        background-color: #ffffff;
     }
 }
 

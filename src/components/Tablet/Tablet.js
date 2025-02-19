@@ -27,7 +27,7 @@ function Tablet({data}) {
                             }
                         </>
                     ) : (
-                        images.map((image,index) => <Pin key={index} imgSrc={image}/>)
+                        images.map((image,index) => <Pin key={index} imgSrc={image} type='piece'/>)
                     )
                 }
                 </div>

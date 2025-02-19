@@ -1,12 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from './Tablet.module.scss';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Pin({ imgSrc }) {
+function Pin({ imgSrc , type,  to, title, name}) {
     const [size,setSize] = useState('')
-
+    
     const checkImageSize = (img) => {
         console.log('Width:', img.naturalWidth, 'Height:', img.naturalHeight);
         if (img.naturalHeight < img.naturalWidth) {
@@ -24,11 +25,27 @@ function Pin({ imgSrc }) {
         img.onload = () => checkImageSize(img);
     }, [imgSrc]);
 
+    let Comp = 'div'
+    if(to) {
+        Comp = Link
+    }
 
     return (
-        <div className={cx('pin', size)}>
+        <Comp className={cx('pin', size , type)}>
+            { name  && 
+                <div className={cx('content-overlay')}>
+                    <div className={cx('content-container')}>
+                        <div className={cx('title-container')}>
+                            {title}
+                        </div>
+                        <div className={cx('name-container')}>
+                            {name}
+                        </div>
+                    </div>
+                </div>
+            }
             <img src={imgSrc} alt="Pin" onLoad={checkImageSize}/> 
-        </div>
+        </Comp>
     );
 }
 // onLoad được chạy trước khi ảnh được render vào nên phải dùng useEffect
