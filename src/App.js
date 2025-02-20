@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import MainLayout from "./layouts/MainLayout";
 import { Fragment } from "react";
@@ -14,7 +14,7 @@ function App() {
             if(route.layout === null) {
               Layout = Fragment
             }
-            return <Route 
+            return <Route
                       key={index} 
                       path={route.path} 
                       element={
@@ -22,7 +22,21 @@ function App() {
                           <Page />
                         </Layout>
                       } 
-                  />;
+                    >
+                    {route.children && route.children.map((child,i) => (
+                        <Route 
+                          key={i}
+                          path={child.path}
+                          element= {
+                            <child.component />
+                          }
+                        />
+                    ))
+                    }  
+                    {route.children && route.children.length > 0 && (
+                        <Route index element={<Navigate to={route.children[0].path} replace />} />
+                    )}
+                  </Route>  
           })}
         </Routes>
       </div>

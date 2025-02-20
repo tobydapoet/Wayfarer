@@ -51,7 +51,7 @@ function Destinations() {
         {
             name : 'Ha Nam',
             image : 'https://cafefcdn.com/thumb_w/640//203337114487263232/2024/1/3/photo1704247889382-17042478895516275449-1704271252143833717266.jpg',
-            to : '/HaNam2',
+            to : '/HaNam',
             trips : 200,
             hotel : 124,
             transport : 500,
@@ -59,7 +59,7 @@ function Destinations() {
         {
             name: 'Ha Noi',
             image : 'https://media.istockphoto.com/id/510206305/photo/city-lights.jpg?s=612x612&w=0&k=20&c=AZJfxbE8pLqwDLzA-x5jrikAauYVY5L-LxGz88cNQbk=',
-            to : '/HaNoi1',
+            to : '/HaNoi',
             trips : 200,
             hotel : 124,
             transport : 500,
@@ -67,7 +67,7 @@ function Destinations() {
         {
             name : 'Hai Phong',
             image : 'https://cdn.haiphong.gov.vn/gov-hpg/SiteFolders/Root/1/thuvienanh/8403.jpg',
-            to : '/HaGiang1',
+            to : '/HaGiang',
             trips : 200,
             hotel : 124,
             transport : 500,
@@ -75,7 +75,7 @@ function Destinations() {
         {
             name: 'Quang Ninh',
             image : 'https://upload.wikimedia.org/wikipedia/commons/d/d3/A_view_of_Ha_Long_Bay_from_the_high_point_of_Sun_Sot_cave_%2831520203451%29.jpg',
-            to : '/QuanNinh1',
+            to : '/QuanNinh',
             trips : 200,
             hotel : 124,
             transport : 500,
@@ -83,7 +83,7 @@ function Destinations() {
         {
             name : 'Ha Giang',
             image : 'https://vitracotour.com/wp-content/uploads/2023/12/ha-giang-2.jpg',
-            to : '/HaGiang1',
+            to : '/HaGiang',
             trips : 200,
             hotel : 124,
             transport : 500,
@@ -91,7 +91,7 @@ function Destinations() {
         {
             name: 'Hoa Binh',
             image : 'https://images.vietnamtourism.gov.vn/en/images/2021/hoabinhvna1.jpg',
-            to : '/HoaBinh1',
+            to : '/HoaBinh',
             trips : 200,
             hotel : 124,
             transport : 500,
@@ -99,7 +99,7 @@ function Destinations() {
         {
             name : 'Ha Nam',
             image : 'https://cafefcdn.com/thumb_w/640//203337114487263232/2024/1/3/photo1704247889382-17042478895516275449-1704271252143833717266.jpg',
-            to : '/HaNam1',
+            to : '/HaNam',
             trips : 200,
             hotel : 124,
             transport : 500,

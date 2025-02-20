@@ -4,7 +4,10 @@ import About from "../pages/About";
 import Profile from "../pages/Profile"
 import Contact from "../pages/Contact";
 import Blogs from "../pages/Blogs";
-import Placement from "../pages/Placement";
+import Placement from "../pages/Destinations/Placement";
+import Trips from '../pages/Destinations/Placement/Trips'
+import Transports from '../pages/Destinations/Placement/Transports'
+import Hotels from '../pages/Destinations/Placement/Hotels'
 
 const publicRoutes = [
     {path:'/',component: Home , topic: 'HOME', navbar: 'trans'},
@@ -13,7 +16,11 @@ const publicRoutes = [
     {path:'/blogs',component: Blogs, topic: 'BLOG'},
     {path:'/contact',component: Contact, topic: 'CONTACT US'},
     {path : '/:email', component: Profile, layout : null ,topic:'PROFILE'},
-    {path:'/destinations/:placement',component: Placement},
+    {path:'/destinations/:placement',component: Placement, children : [
+        {path: 'trips',component: Trips, default: true},
+        {path: 'hotels',component: Hotels},
+        {path: 'transports',component: Transports}
+    ]},
 ]
 const privateRoutes = [
 
