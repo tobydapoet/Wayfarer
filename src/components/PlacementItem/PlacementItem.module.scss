@@ -59,7 +59,16 @@
                 }
             }
         }
+
+        .activities-container{
+            display: flex;
+            gap: 10px;
+            font-size: 25px;
+            color: #929191;
+            margin-top: 20px;
+        }
     }
+    
 
     
 }
