@@ -18,6 +18,18 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     grid-auto-rows: 10px;
+    
+
+    .img-container {
+        margin-left: 100px;
+
+        .img {
+            width: 450px;
+            height: 600px;
+            object-fit: cover;
+            box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
+        }
+    }
 
     .vertical-img-container {
         position: absolute;
@@ -28,6 +40,7 @@
         img {
             width: 450px;
             height: 450px;
+            object-fit: cover;
             box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
         }
     }

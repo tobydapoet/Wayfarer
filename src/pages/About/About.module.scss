@@ -1,0 +1,28 @@
+.wrapper {
+    width: 94vw;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 10rem;
+
+    .year-static {
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+            
+
+            .title {
+                font-family: 'themify';
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .description {               
+                text-align: center;
+                font-family: var(--font-default);
+            }
+        }
+    }
+}
