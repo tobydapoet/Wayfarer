@@ -7,6 +7,7 @@ import {
 import { publicRoutes } from "./routes";
 import MainLayout from "./layouts/MainLayout";
 import { Fragment } from "react";
+import ProfileLayout from "./layouts/ProfileLayout";
 
 const getRandomColor = () => {
   const hue = Math.floor(Math.random() * 360); // Ngẫu nhiên một màu sắc
@@ -36,7 +37,7 @@ function App() {
             const Page = route.component;
             let Layout = MainLayout;
             if (route.layout === null) {
-              Layout = Fragment;
+              Layout = ProfileLayout;
             }
             return (
               <Route

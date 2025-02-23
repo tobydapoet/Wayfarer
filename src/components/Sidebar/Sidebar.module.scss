@@ -1,0 +1,103 @@
+.wrapper {
+
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    backdrop-filter: blur(15px);
+
+    .current-user {
+        text-decoration: none;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    
+        &::after {
+            content: "";
+            display: block;
+            width: 90%; // Hoặc 50% nếu muốn ngắn hơn
+            margin: auto; // Căn giữa
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+
+            .img-avatar {
+                width: 10rem;
+                height: 10rem;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+
+        .info-user {
+            color: var(--primary);
+            margin: 10px;
+            font-family: var(--font-default);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            .name {
+                font-size: 1rem;
+            }
+
+            .email,
+            .position {
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    .nevigate {
+        display: flex;
+        flex-direction: column;
+
+        a {
+            text-decoration: none;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: transparent; // Ensure a starting bg color
+            transition: background-color 0.3s ease; // Smooth effect
+            color: var(--primary);
+
+            &:hover {
+                background-color: rgba(7, 7, 7, 0.397);
+            }
+        }
+    }
+
+    .logout {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 90%;
+            margin: auto; 
+            border-bottom: 1px solid var(--primary);
+        }
+
+        a {
+            text-decoration: none;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: transparent; // Ensure a starting bg color
+            transition: background-color 0.3s ease; // Smooth effect
+            color: var(--primary);
+
+            &:hover {
+                background-color: rgba(7, 7, 7, 0.397);
+            }
+        }
+    }
+
+}

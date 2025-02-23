@@ -19,7 +19,7 @@ function Navbar() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [errors, setErrors] = useState({});
-  const currentUser = false;
+  const currentUser = true;
 
   const [dataLogin, setDataLogin, resetDataLogin] = useForm({
     email: "",

@@ -1,0 +1,39 @@
+.wrapper {
+    width: 100vw; 
+    height: 100vh;
+    padding: relative;
+    margin: 0;
+    display: flex;
+
+    .background-img {
+        src: url('https://i.pinimg.com/736x/e0/12/65/e01265f9116c51d9f2a0bddc628f5510.jpg');
+        position: absolute;
+        width: 100vw; 
+        height: 100vh;
+        z-index: 1;
+        object-fit: center;
+    }
+
+    .container {
+        display: flex;
+        width: 90vw;
+        margin: 2rem auto;
+        height: 90vh;
+        z-index: 2;
+        position: relative;
+        justify-content: center;
+    }
+    .sidebar-container {
+        width: 15vw;
+        background-color: transparent;
+        -webkit-backdrop-filter: blur(15px); // For Safari support
+        
+    }
+    
+
+    .content {
+        flex: 1; 
+        padding: 20px;
+        color: white; 
+    }
+}
