@@ -112,7 +112,7 @@ function Navbar() {
               icon={faXmark}
               onClick={() => setIsOpenLogin(false)}
             />
-            <Input
+            <Input  light
               placeholder="Email"
               name="email"
               value={dataLogin.email}
@@ -120,7 +120,7 @@ function Navbar() {
               email
             />
 
-            <Input
+            <Input light
               placeholder="Password"
               name="password"
               value={dataLogin.password}
@@ -154,21 +154,21 @@ function Navbar() {
               onClick={handleCloseRegister}
             />
 
-            <Input
+            <Input light
               placeholder="Email"
               name="email"
               value={dataRegister.email}
               onChange={handleChangeRegister}
               error={errors.email}
             />
-            <Input
+            <Input light
               placeholder="Password"
               name="password"
               value={dataRegister.password}
               onChange={handleChangeRegister}
               error={errors.password}
             />
-            <Input
+            <Input light
               placeholder="Enter your password"
               name="repassword"
               value={dataRegister.repassword}

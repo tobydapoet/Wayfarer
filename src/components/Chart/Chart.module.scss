@@ -1,3 +1,13 @@
+.year {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-default);
+    font-weight: 700;
+    padding: 0 10%;
+}
+
+
 .row {
     display: flex;
     align-items: center;

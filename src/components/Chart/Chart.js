@@ -14,8 +14,8 @@ function Chart({ last, current }) {
   const contentCurrent = contentMap.thisYear || {};
 
   const getRandomPastelColor = () => {
-    const hue = Math.floor(Math.random() * 360); // Ngẫu nhiên một màu sắc
-    return `hsl(${hue}, 90%, 50%)`; // Độ bão hòa 70%, độ sáng 80%
+    const hue = Math.floor(Math.random() * 360); 
+    return `hsl(${hue}, 90%, 50%)`; 
   };
 
   const colors = Array(5) // Tạo danh sách 5 màu khác nhau
@@ -65,6 +65,14 @@ function Chart({ last, current }) {
 
   return (
     <>
+      <div className={cx('year')}>
+        <div className={cx('year-left')}>
+          {contentLast.year}
+        </div>
+        <div className={cx('year-right')}>
+          {contentCurrent.year}
+        </div>
+      </div>
       {commonKeys.map((key) => (
         <div className={cx("row")}>
           <div className={cx("left")}>

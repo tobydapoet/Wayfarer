@@ -4,19 +4,35 @@ import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
-function Input({ placeholder, className, onChange, value, name, error }) {
+function Input({
+  placeholder,
+  className,
+  onChange,
+  value,
+  name,
+  error,
+  dark,
+  light,
+  textarea
+}) {
+
+  let Comp = 'input'
+  if(textarea) {
+    Comp = 'textarea'
+  }
+
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("input-container")}>
-        <input
+      <div className={cx("input-container", { dark, light })}>
+        <Comp
           placeholder={placeholder}
-          className={className}
+          className={cx(className, { dark, light })}
           onChange={onChange}
           value={value}
           name={name}
         />
       </div>
-      <span className={cx("error")}>{error}</span>
+      {error && <span className={cx("error")}>{error}</span>}
     </div>
   );
 }

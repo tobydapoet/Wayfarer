@@ -2,9 +2,19 @@
     margin-bottom: 20px;
 }
 .input-container {
-    border-bottom: 2px solid var(--primary);
+    
     margin-bottom: 4px;
-    input {
+
+    &.dark {
+        border-bottom: 2px solid rgb(147, 147, 147);
+
+    }
+
+    &.light {
+        border-bottom: 2px solid var(--primary);
+    }
+
+    input,textarea {
         border: none;
         width: 100%;
         margin: 20px 0 7px 0;
@@ -12,7 +22,19 @@
         font-family: var(--font-default);
         font-size: 20px;
         background-color: transparent;
-        color: var(--primary);
+        
+        &.dark {
+            color: black;
+        }
+
+        &.light {
+            color: var(--primary);
+        }
+    }
+
+    textarea {  
+        height: 200px;
+        resize: none; 
     }
 }
 
