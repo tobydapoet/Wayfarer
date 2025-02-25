@@ -1,5 +1,6 @@
 .wrapper {
     margin-bottom: 20px;
+    position: relative;
 }
 .input-container {
     
@@ -30,6 +31,9 @@
         &.light {
             color: var(--primary);
         }
+        &.readOnly {
+            pointer-events: none;
+        }
     }
 
     textarea {  
@@ -41,4 +45,28 @@
 .error {
     color: rgb(253, 77, 77);
     margin-top: -10px;
+}
+
+.edit {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    cursor: pointer;
+}
+
+.edit-mode {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    .check {
+        font-size: 25px;
+    }
+    .cancel {
+        font-size: 25px;
+    }
 }

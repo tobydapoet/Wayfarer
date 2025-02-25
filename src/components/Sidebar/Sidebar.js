@@ -15,7 +15,7 @@ function Sidebar() {
 
   return (
     <div className={cx("wrapper")}>
-      <Link to="" className={cx("current-user")}>
+      <Link to={`/${userInfo.email}`} className={cx("current-user")}>
         <div className={cx("img-container")}>
           <img src={userInfo.avatar} className={cx("img-avatar")} />
         </div>

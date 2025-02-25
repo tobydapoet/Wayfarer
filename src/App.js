@@ -15,16 +15,6 @@ const getRandomColor = () => {
   document.documentElement.style.setProperty('--random-color',randomColor)
 };
 
-// const setRandomColor = () => {
-//   const r = Math.floor(Math.random() * 156) ;
-//   const g = Math.floor(Math.random() * 156) ;
-//   const b = Math.floor(Math.random() * 156 ) ;
-
-//   const randomColor = `rgb(${r}, ${g}, ${b})`;
-//   document.documentElement.style.setProperty('--pastel-color',randomColor)
-// };
-
-
 getRandomColor()
 
 

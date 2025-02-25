@@ -97,8 +97,10 @@ function Navbar() {
 
       {currentUser ? (
         <AccountItem
-          email="tnkoko123@gmail.com"
-          avatar="https://cdn4.iconfinder.com/data/icons/occupation-and-people-avatar-vol-3-1/128/person_beach_male_people_avatar_tourist_glasses-512.png"
+          name="Nguyen Viet Tung"
+          email="Cat@gmail.com"
+          avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s"
+          position="manager"
         />
       ) : (
         <div className={cx("to-user")}>
@@ -112,7 +114,8 @@ function Navbar() {
               icon={faXmark}
               onClick={() => setIsOpenLogin(false)}
             />
-            <Input  light
+            <Input
+              light
               placeholder="Email"
               name="email"
               value={dataLogin.email}
@@ -120,7 +123,8 @@ function Navbar() {
               email
             />
 
-            <Input light
+            <Input
+              light
               placeholder="Password"
               name="password"
               value={dataLogin.password}
@@ -154,21 +158,24 @@ function Navbar() {
               onClick={handleCloseRegister}
             />
 
-            <Input light
+            <Input
+              light
               placeholder="Email"
               name="email"
               value={dataRegister.email}
               onChange={handleChangeRegister}
               error={errors.email}
             />
-            <Input light
+            <Input
+              light
               placeholder="Password"
               name="password"
               value={dataRegister.password}
               onChange={handleChangeRegister}
               error={errors.password}
             />
-            <Input light
+            <Input
+              light
               placeholder="Enter your password"
               name="repassword"
               value={dataRegister.repassword}
