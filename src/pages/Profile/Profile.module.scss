@@ -1,23 +1,109 @@
 .wrapper {
     width: 100%;
 
+
     .content {
         display: flex;
         gap: 50px;
         align-items: center;
+        margin-top: 30px;
 
         .input-content {
             width: 80%;
-           
+            display: flex;
+            flex-direction: column;
+
+            .additional {
+                display: flex;
+                justify-content: space-between;
+
+                .email {
+                    width: 80%;
+                }
+
+                .gender {
+                    width: 15%;
+                }
+
+            }
+
+            .country-phone {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+
+                .country {
+                    color: var(--primary);
+                    background-color: transparent;
+                    border: none;
+                    color: black;
+                    width: 20vw;
+
+
+                    button {
+                        border: none;
+                        color: white;
+                        font-family: var(--font-default);
+                        background-color: transparent;
+                        font-size: 20px;     
+
+                    }
+                }
+
+                .phone {
+                    color: white !important;
+                    display: flex;
+                    width: 25vw;
+                   
+
+                    input {
+                        color: white;
+                        background-color: transparent;
+                        border: none;
+                        font-family: var(--font-default);
+                        font-size: 20px;
+                        height: 42.3px;
+                        
+                    }
+                    div {
+                        background-color: transparent;
+                        border: none;
+                    }
+                }
+            }
         }
 
         .img-content {
+           
+
             img {
                 width: 250px;
                 height: 250px;
                 object-fit: cover;
                 border-radius: 50%;
+                display: flex;
+                margin: 0 auto;
             }
+
+            .change-container {
+                display: flex;
+                justify-content: center;
+                margin: 0 auto;
+                margin-top: 30px;
+
+                input {
+                    border: none;
+                    outline: none;
+                    font-family: var(--font-default);
+                    font-size: 20px;
+                    background-color: transparent;
+                    display: block; 
+                    text-align: center; 
+                    width: 80%;
+                }
+            }
+
         }
     }
 }
+
