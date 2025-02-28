@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import MainLayout from "./layouts/MainLayout";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import ProfileLayout from "./layouts/ProfileLayout";
 
 const getRandomColor = () => {
@@ -44,7 +44,7 @@ function App() {
                     <Route
                       key={i}
                       path={child.path}
-                      element={<child.component />}
+                      element={React.createElement(child.component)}
                     />
                   ))}
                 {route.children && route.children.length > 0 && (

@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +12,8 @@ function Sidebar() {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
     position: "manager",
   };
+
+  const { email } = useParams();
 
   return (
     <div className={cx("wrapper")}>
@@ -35,15 +37,15 @@ function Sidebar() {
       <div className="gap-line1"></div>
 
       <div className={cx("nevigate")}>
-        <Link to="" className="notify">
-          Notifiy
-        </Link>
-        <Link to="" className="favourite">
+        <NavLink to={`/${email}/processing`} className={(nav) => cx('processing', {active : nav.isActive})}>
+          Processing
+        </NavLink>
+        <NavLink to={`/${email}/favourite`} className={(nav) => cx('favourite', {active : nav.isActive})}>
           Favourite
-        </Link>
-        <Link to="" className="history">
+        </NavLink>
+        <NavLink to={`/${email}/history`} className={(nav) => cx('history', {active : nav.isActive})} >
           History
-        </Link>
+        </NavLink>
       </div>
 
       <div className="gap-line2"></div>

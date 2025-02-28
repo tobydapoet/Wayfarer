@@ -1,0 +1,30 @@
+.wrapper {
+  
+    display: flex;
+    transition: all 0.3s ease;
+    height: 90vh;
+    
+
+    .summary {
+        width: 100%;
+        transition: width 0.3s ease;
+        min-width: calc(40% - 20px);
+    
+        padding: 15px;
+        &.collapsed {
+            width: 40%;
+        }
+    }
+    .details {
+        width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background-color:rgba(100, 90, 129, 0.5);
+
+        &.expanded {
+            width: 70%; 
+            opacity: 1;
+        }
+    }
+}

@@ -8,6 +8,7 @@ import Placement from "../pages/Destinations/Placement";
 import Trips from '../pages/Destinations/Placement/Trips'
 import Transports from '../pages/Destinations/Placement/Transports'
 import Hotels from '../pages/Destinations/Placement/Hotels'
+import SelectedPage from "../pages/SelectedPage/SelectedPage";
 
 const publicRoutes = [
     {path:'/',component: Home , topic: 'HOME', navbar: 'trans'},
@@ -16,6 +17,7 @@ const publicRoutes = [
     {path:'/blogs',component: Blogs, topic: 'BLOG'},
     {path:'/contact',component: Contact, topic: 'CONTACT US'},
     {path : '/:email', component: Profile, layout : null ,topic:'PROFILE'},
+    {path : '/:email/:selected',component: SelectedPage, layout: null},
     {path:'/destinations/:placement',component: Placement, children : [
         {path: 'trips',component: Trips, default: true},
         {path: 'hotels',component: Hotels},
