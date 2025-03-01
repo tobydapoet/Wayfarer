@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import Processing from "./Processing";
 import Favourite from "./Favourite";
-import History from "./History";
+import BonusPoint from "./BonusPoint/BonusPoint";
+
 
 function SelectedPage() {
   const { selected } = useParams();
@@ -11,8 +12,8 @@ function SelectedPage() {
         return <Processing />;
       case 'favourite':
         return <Favourite />;
-      case 'history':
-        return <History />;
+      case 'bonus':
+        return <BonusPoint />
       default:
         return <div>Không tìm thấy trang</div>;
     }

@@ -1,0 +1,117 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(248, 204, 146);
+    height: 90vh;
+    padding: 5px;
+
+    .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr); /* Thêm số cột */
+        grid-template-rows: repeat(5, 1fr);
+        gap: 5px;
+        background-color: rgb(248, 204, 146);
+        width: 100%;
+        max-width: fit-content;
+
+        .day {
+            width: 10.2vw;
+            height: 70px;
+            display: flex;
+            color: black;
+            border: 1px solid black;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-default);
+            position: relative;
+
+            .day-name {
+                position: absolute;
+                top: 0;
+                right: 0;
+                border-left: 1px solid black;
+                border-bottom: 1px solid black;
+                width: 30px;
+                height: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 13px;
+            }
+        }
+    }
+    .check-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        margin-top: 10px;
+        gap: 20px;
+
+        .note {
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 20px;
+            border: none;
+        }
+    }
+
+    .content {
+        font-family: var(--font-default);
+        font-size: 17px;
+        margin-bottom: 20px;
+    }
+
+    .voucher-wrapper {
+        margin-top: 20px;
+        padding: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        flex: 1;
+        justify-content: center;
+
+        .voucher-container {
+            width: 20%;
+            height: fit-content;
+            background: #fff;
+            border: 2px dashed #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            .voucher-header {
+                font-size: 17px;
+                font-weight: bold;
+                color: #d32f2f;
+                margin-bottom: 10px;
+            }
+            .voucher-code {
+                font-size: 20px;
+                font-weight: bold;
+                color: #000;
+                background: #f4f4f4;
+                padding: 10px;
+                border-radius: 5px;
+                
+            }
+            .voucher-details {
+                font-size: 14px;
+                color: #555;
+                margin-bottom: 10px;
+            }
+            .voucher-footer {
+                font-size: 12px;
+                color: #777;
+                border-top: 1px dashed #999;
+                padding-top: 5px;
+              
+            }
+        }
+    }
+}

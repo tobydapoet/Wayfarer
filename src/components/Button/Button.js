@@ -20,6 +20,7 @@ function Button ({
     facebook,
     leftIcon,
     rightIcon,
+
     ...passProps
 }) {
     const Comp = 'button' 
@@ -27,8 +28,8 @@ function Button ({
 
     if(disabled)
     {
-        Object.key(props).forEach((key) => {
-            if(key.startWith('on') && typeof(key) === 'function') {
+        Object.keys(props).forEach((key) => {
+            if(key.startsWith('on') && typeof(key) === 'function') {
                 delete props[key]
             }
         })

@@ -64,8 +64,9 @@ function DetailItem({ data, onClick }) {
         <div>Start : {info.start}</div>
         <div>Finish : {info.finish}</div>
         <div>Member : {info.guest}</div>
+        <div>Cost : {info.cost}</div>
         <div>
-          Status:{" "}
+          Status:
           <span className={cx("status", statusColors[info.status])}>
             {getStatus(info.type, info.status)}
           </span>
@@ -84,26 +85,28 @@ function DetailItem({ data, onClick }) {
         </div>
       )}
       <Modal open={isOpenCancel} onClose={() => setOpenCancel(false)}>
-        <div className={cx('cancel-container')}>
-          <div className={cx('cancel-content')}> 
+        <div className={cx("cancel-container")}>
+          <div className={cx("cancel-content")}>
             Do you want to cancel this schedule ?
           </div>
-          <div className={cx('btn-container')}>
-            <Button large onClick={() => setOpenCancel(false)}>No</Button>
+          <div className={cx("btn-container")}>
+            <Button large onClick={() => setOpenCancel(false)}>
+              No
+            </Button>
             <Button large>Yes</Button>
           </div>
         </div>
       </Modal>
 
       <Modal open={isOpenPay} onClose={() => setOpenPay(false)}>
-        <div className={cx('pay-container')}>
-        <div className={cx('pay-content')}> 
-          Do you want to pay ?
-        </div>
-        <div className={cx('btn-container')}>
-          <Button large onClick={() => setOpenPay(false)}>No</Button>
-          <Button large>Yes</Button>
-        </div>
+        <div className={cx("pay-container")}>
+          <div className={cx("pay-content")}>Do you want to pay ?</div>
+          <div className={cx("btn-container")}>
+            <Button large onClick={() => setOpenPay(false)}>
+              No
+            </Button>
+            <Button large>Yes</Button>
+          </div>
         </div>
       </Modal>
     </div>

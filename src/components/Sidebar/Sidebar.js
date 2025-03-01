@@ -43,8 +43,8 @@ function Sidebar() {
         <NavLink to={`/${email}/favourite`} className={(nav) => cx('favourite', {active : nav.isActive})}>
           Favourite
         </NavLink>
-        <NavLink to={`/${email}/history`} className={(nav) => cx('history', {active : nav.isActive})} >
-          History
+        <NavLink to={`/${email}/bonus`} className={(nav) => cx('bonus', {active : nav.isActive})} >
+          Bonus point
         </NavLink>
       </div>
 
