@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactFlagsSelect from "react-flags-select";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -21,40 +21,51 @@ const userInfo = {
 };
 function Profile() {
   const [userData, setUserData] = useState({ ...userInfo });
+  const [tempData, setTempData] = useState({ ...userData });
+  const dataRef = useRef({ ...userData });
 
   const handleChangeInput = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
+ 
+  const phoneRef = useRef(userInfo.phone);
 
-  const handleChangePhone = (value) => {
-    setUserData((prev) => ({ ...prev, phone: value }));
-  };
+const handleChangePhone = (value) => {
+  if (dataRef.current.phone !== value) {
+    dataRef.current.phone = value;
+  }
+};
+  
   const handleChangeCountry = (value) => {
-    setUserData((prev) => ({ ...prev, country: value }));
+    if (dataRef.current.country !== value) {
+      dataRef.current.country = value;
+    }
   };
+
+  const handleOnSave = () => {
+    setUserData({ ...dataRef.current }); // Chỉ cập nhật UI khi nhấn Save
+  };
+
   const handleChangeImg = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       console.error("Không có file nào được chọn!");
       return;
     }
-  
+
     const file = e.target.files[0]; // Lấy file đầu tiên
     const imageUrl = URL.createObjectURL(file); // Tạo URL tạm thời
     setUserData((prev) => ({ ...prev, avatar: imageUrl })); // Cập nhật state
   };
 
-  const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    setUserData({ ...userInfo });
-  }, [userInfo]);
+  const fileInputRef = useRef(null);
 
   const isDisabled = true;
 
   if (fileInputRef.current) {
     fileInputRef.current.value = "";
   }
-
+  console.log(userData)
   return (
     <div className={cx("wrapper")}>
       <div className={cx("title")}>Profile</div>
@@ -108,27 +119,26 @@ function Profile() {
           </div>
           <div className={cx("country-phone")}>
             <div className={cx("country-container")}>
-              <Input light readOnly={true}>
+              <Input light readOnly={true} onSave = {handleOnSave}>
                 <ReactFlagsSelect
-                  selected={userData.country}
+                  selected={dataRef.current.country}
                   onSelect={handleChangeCountry}
                   name="country"
                   searchable
-                  className={cx("country", { disabled: isDisabled })}
-                  disabled={isDisabled}
+                  className={cx("country")}
                 />
               </Input>
             </div>
 
             <div className={cx("phone-container")}>
-              <Input light>
+              <Input light readOnly={true} onSave={handleOnSave}>
                 <PhoneInput
                   className={cx("phone")}
-                  value={userData.phone}
+                  enableSearch
+                  value={dataRef.current.phone}
                   name="phone"
                   onChange={handleChangePhone}
-                  country={userData.country?.toLowerCase() || ""}
-                  disabled={true}
+                  country={dataRef.current.country?.toLowerCase() || ""}
                 />
               </Input>
             </div>
@@ -137,7 +147,10 @@ function Profile() {
 
         <div className={cx("img-content")}>
           <div className={cx("img")}>
-          <img src={userData.avatar || "default-avatar.png"} alt="User avatar" />
+            <img
+              src={userData.avatar || "default-avatar.png"}
+              alt="User avatar"
+            />
             <div className={cx("change-container")}>
               <input
                 light

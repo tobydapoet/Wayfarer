@@ -21,55 +21,58 @@ function Input({
   light,
   textarea,
   type,
-  readOnly = true,
+  readOnly = false,
   childs = [],
   children,
+  disabled,
+  onSave
 }) {
-  const [isReadOnly, setIsReadOnly] = useState(readOnly);
+  const [isReadOnly, setIsReadOnly] = useState(readOnly ? true : false);
   const [localValue, setLocalValue] = useState(value);
   const [tempValue, setTempValue] = useState(value);
+  const inputRef = useRef();
+  
 
   let Comp = "input";
-  if (textarea) {
-    Comp = "textarea";
-  } else if (childs && childs.length > 0) {
-    Comp = "select";
-  } else if (children) {
-    Comp = "div";
-  }
+  if (textarea) Comp = "textarea";
+  else if (childs.length > 0) Comp = "select";
+  else if (children) Comp = "div";
 
-  const inputRef = useRef();
-
-  const enableEditting = () => {
+  const enableEditing = () => {
     setIsReadOnly(false);
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
-  const cancelEditting = () => {
+  const cancelEditing = () => {
     setLocalValue(tempValue);
     setIsReadOnly(true);
   };
 
-  const finishEditting = () => {
-    if (onChange) {
-      onChange({ target: { name, value: localValue } });
-    }
+  const finishEditing = () => {
+    if (onChange) onChange({ target: { name, value: localValue } });
     setIsReadOnly(true);
+    setTempValue(localValue);
   };
+
+  const handleoOnSave = () => {
+    if (onSave) onSave();
+    if (onChange) onChange({ target: { name, value: localValue } });
+    setIsReadOnly(true);
+    setTempValue(localValue);
+    console.log('render ')
+  }
 
   return (
     <div className={cx("wrapper")}>
-      <div
-        className={cx("input-container", { dark, light })}
-        onMouseDown={(e) => isReadOnly && e.preventDefault()} // Ngăn click
-      >
+      <div className={cx("input-container", { dark, light })}>
         {Comp === "select" ? (
           <select
-            className={cx(className, { dark, light, readOnly: isReadOnly })}
+            className={cx(className, { dark, light})}
             onChange={(e) => setLocalValue(e.target.value)}
             value={localValue}
             name={name}
             ref={inputRef}
+            disabled={isReadOnly}
           >
             {childs.map((child, index) => (
               <option key={index} value={child}>
@@ -86,35 +89,30 @@ function Input({
             name={name}
             type={type}
             ref={inputRef}
+            disabled={disabled} 
           >
-            {React.Children.map(children, (child) =>
+           {React.Children.map(children, (child) =>
               React.cloneElement(child, {
-                disabled: isReadOnly, 
+                disabled: disabled || isReadOnly,
+                onSave : finishEditing,
+                onClose : cancelEditing
               })
             )}
           </Comp>
         )}
       </div>
+
       {error && <span className={cx("error")}>{error}</span>}
-      {isReadOnly===true ? (
-        <FontAwesomeIcon
-          className={cx("edit")}
-          icon={faPenToSquare}
-          onClick={enableEditting}
-        />
-      ) : (
-        <div className={cx("edit-mode")}>
-          <FontAwesomeIcon
-            className={cx("check")}
-            icon={faSquareCheck}
-            onClick={finishEditting}
-          />
-          <FontAwesomeIcon
-            className={cx("cancel")}
-            icon={faSquareXmark}
-            onClick={cancelEditting}
-          />
-        </div>
+
+      {readOnly && (
+        isReadOnly ? (
+          <FontAwesomeIcon className={cx("edit")} icon={faPenToSquare} onClick={enableEditing} />
+        ) : (
+          <div className={cx("edit-mode")}>
+            <FontAwesomeIcon className={cx("check")} icon={faSquareCheck} onClick={onSave? handleoOnSave : finishEditing} />
+            <FontAwesomeIcon className={cx("cancel")} icon={faSquareXmark} onClick={cancelEditing} />
+          </div>
+        )
       )}
     </div>
   );

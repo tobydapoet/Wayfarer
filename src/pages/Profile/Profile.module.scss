@@ -55,7 +55,7 @@
                     display: flex;
                     width: 25vw;
                    
-
+                    
                     input {
                         color: white;
                         background-color: transparent;
@@ -65,9 +65,17 @@
                         height: 42.3px;
                         
                     }
+
                     div {
                         background-color: transparent;
                         border: none;
+                        input {
+                            color: black;
+                            height: 20px;
+                        }
+                        li {
+                            color: black;
+                        }
                     }
                 }
             }
