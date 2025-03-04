@@ -1,0 +1,124 @@
+.basic-infor {
+    display: flex;
+    gap: 15px;
+    margin: 20px;
+
+    .balance {
+        background-color: #c0cfb2;
+
+        .icon {
+            background-color: #8ba888;
+            color: #44624a;
+        }
+
+        .growth {
+            display: flex;
+            border-radius: 5px;
+            gap: 5px;
+            align-items: center;
+            font-size: 13px;
+
+            .growth-percent {
+                color: #44624a;
+                border-radius: 10px;
+                padding: 5px;
+                background-color: #8ba888;
+            }
+        }
+    }
+
+    .sales {
+        background-color: #fff192;
+
+        .icon {
+            background-color: #f0d331;
+            color: #776815;
+        }
+
+        .growth {
+            display: flex;
+            border-radius: 5px;
+            gap: 5px;
+            align-items: center;
+            font-size: 13px;
+
+            .growth-percent {
+                color: #776815;
+                border-radius: 10px;
+                padding: 5px;
+                background-color: #f0d331;
+            }
+        }
+    }
+
+    .users {
+        background-color: #7880f3;
+
+        .icon {
+            background-color: #515dfd;
+            color: #010866;
+        }
+
+        .growth {
+            display: flex;
+            border-radius: 5px;
+            gap: 5px;
+            align-items: center;
+            font-size: 13px;
+
+            .growth-percent {
+                border-radius: 10px;
+                padding: 5px;
+                background-color: #515dfd;
+                color: #010866;
+            }
+        }
+    }
+
+    > div {
+        width: 180px;
+        height: 135px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 16px;
+        padding: 10px;
+        gap: 30px;
+
+        .parameter {
+            .topic {
+                font-size: 15px;
+                display: flex;
+                gap: 5px;
+                align-items: center;
+            }
+        }
+
+        .number {
+            font-size: 23px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+        }
+
+        .icon {
+            padding: 5px;
+            font-size: 8px;
+            border-radius: 5px;
+        }
+
+        .growth {
+            display: flex;
+            border-radius: 5px;
+            gap: 5px;
+            align-items: center;
+            font-size: 13px;
+
+            .growth-percent {
+                border-radius: 10px;
+                padding: 5px;
+                font-weight: bold;
+            }
+        }
+    }
+}

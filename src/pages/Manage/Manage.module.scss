@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    margin: 0px 8vw;
+    gap: 30px;
+    
+
+    .sidebar-container {
+
+        box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
+        width: 15vw;
+        height: 90vh;
+        position: sticky;
+        top: calc(60px + 2vh);
+        margin-top: 2vh;
+
+    }
+
+    .content {
+        flex-grow: 1;
+        box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
+        margin-top: 2vh;
+    }
+
+
+}

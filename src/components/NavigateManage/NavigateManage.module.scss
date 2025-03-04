@@ -1,0 +1,32 @@
+.navigate-item {
+    border-radius: 5px;
+    padding: 15px 30px;
+    text-decoration: none;
+    position: relative;
+    font-family: var(--font-default);
+    display: flex;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+    font-size: 17px;
+
+
+    &:hover {
+        background-color: rgb(226, 226, 226);
+    }
+
+    &.active {
+        color: black;
+
+        &::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 2px;
+            background-color: black;
+            bottom: 0px;
+            left: 0;
+            border-radius: 100px;
+        }
+    }
+}

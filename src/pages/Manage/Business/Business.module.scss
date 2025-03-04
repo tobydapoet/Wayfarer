@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .navigate {
+        display: flex;
+    }
+
+    .content {
+        flex-grow: 1;
+    }
+
+}
