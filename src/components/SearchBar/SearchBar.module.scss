@@ -2,8 +2,20 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin: 10px 45px;
-    width: 94vw;
+    width: 100%;
+
+    .search-result-container {
+        position: relative;
+        display: flex;
+        width: 100%;
+        
+        .search-result {
+            width: 100%;
+            border-radius: 16px;
+            
+           
+        }
+    }
 }
 
 .search {
@@ -18,10 +30,8 @@
     transition: border-color 0.3s ease;
 
     &:focus {
-        border-color: rgba(22, 24, 35, 0.6); 
+        border-color: rgba(22, 24, 35, 0.6);
     }
-
-   
 }
 
 .search-icon {
@@ -42,10 +52,3 @@
     color: #706d6d;
 }
 
-.search-result {
-    width: 94vw;
-    padding: 8px 80px 8px -20px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-}

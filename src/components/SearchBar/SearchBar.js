@@ -34,8 +34,8 @@ function SearchBar() {
             visible = {searchValue.length > 0}
             placement="bottom"
             render={attrs => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <Popper>Hello ădawdawdwadawđ</Popper>
+                <div className={cx('search-result-container')} tabIndex="-1" {...attrs}>
+                    <Popper className={cx('search-result')}>Hello ădawdawdwadawđ</Popper>
                 </div>
             )}
         >

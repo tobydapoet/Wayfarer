@@ -4,6 +4,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .search-container {
+        width: 94vw;
+        margin-top: 30px;
+        display: flex;
+        position: relative;
+    }
 }
 
 .content-wrapper {

@@ -1,0 +1,57 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--primary);
+    margin:10px 20px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    
+
+    .user {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .name {
+            font-size: 13px;
+        }
+
+        img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
+
+    .status {
+        display: flex;
+        width: 20px;
+        .icon {
+            font-size: 7px;
+
+            &.working {
+                color: rgb(61, 212, 61);
+            }
+            &.inMeeting {
+                color: blue;
+            }
+            &.onLeave {
+                color: red;
+            }
+            &.offDuty {
+                color: rgb(190, 190, 190);
+            }
+        }
+    }
+
+   
+}
+
+.popper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}

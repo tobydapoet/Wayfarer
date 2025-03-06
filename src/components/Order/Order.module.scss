@@ -1,0 +1,93 @@
+
+
+.wrapper {
+    display: flex;
+    align-items: center; 
+    gap: 20px;
+    padding: 15px 5px;
+    color: #202020;
+
+    &:hover {
+        background-color: #3535350e;
+    }
+
+    .user {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex: 1.3;
+        
+        div {
+            font-size: 13px;
+            font-weight: bold;
+
+        }
+        
+        img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
+    .cost {
+        margin-left: 40px;
+        flex: 0.7;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .status {
+        flex: 1.6;
+        font-size: 13px;
+        font-weight: bold;
+
+        &.pending {
+            color: #ffcc00; /* Vàng */
+        }
+
+        &.confirmed {
+            color: #4caf50; /* Xanh lá */
+        }
+
+        &.payment-pending {
+            color: #ff9800; /* Cam */
+        }
+
+        &.paid {
+            color: #2196f3; /* Xanh dương */
+        }
+
+        &.checked-in {
+            color: #673ab7; /* Tím */
+            border-radius: 16px;
+        }
+
+        &.completed {
+            color: #009688; /* Xanh lục */
+            border-radius: 16px;
+        }
+
+        &.cancelled {
+            color: #f44336; /* Đỏ */
+            border-radius: 16px;
+        }
+
+        &.no-show {
+            color: #9e9e9e; /* Xám */
+            border-radius: 16px;
+        }
+
+        &.refunded {
+            color: #8bc34a; /* Xanh nhạt */
+            border-radius: 16px;
+        }
+    }
+    .time {
+        flex: 1.2;
+        display: flex;
+        justify-content: flex-end;
+        font-size: 13px;
+        font-weight: bold;
+    }
+}

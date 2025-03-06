@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import Tippy from "@tippyjs/react/headless";
 
-import SearchBar from '../../components/SearchBar'
 import styles from './Destinations.module.scss'
 import Locations from "../../components/Locations";
 

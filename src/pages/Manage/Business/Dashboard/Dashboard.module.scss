@@ -1,123 +1,219 @@
-.basic-infor {
-    display: flex;
-    gap: 15px;
-    margin: 20px;
+.wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50vw auto;
+    overflow: visible;
+    align-items: start;
 
-    .balance {
-        background-color: #c0cfb2;
-
-        .icon {
-            background-color: #8ba888;
-            color: #44624a;
-        }
-
-        .growth {
-            display: flex;
-            border-radius: 5px;
-            gap: 5px;
-            align-items: center;
-            font-size: 13px;
-
-            .growth-percent {
-                color: #44624a;
-                border-radius: 10px;
-                padding: 5px;
-                background-color: #8ba888;
-            }
-        }
-    }
-
-    .sales {
-        background-color: #fff192;
-
-        .icon {
-            background-color: #f0d331;
-            color: #776815;
-        }
-
-        .growth {
-            display: flex;
-            border-radius: 5px;
-            gap: 5px;
-            align-items: center;
-            font-size: 13px;
-
-            .growth-percent {
-                color: #776815;
-                border-radius: 10px;
-                padding: 5px;
-                background-color: #f0d331;
-            }
-        }
-    }
-
-    .users {
-        background-color: #7880f3;
-
-        .icon {
-            background-color: #515dfd;
-            color: #010866;
-        }
-
-        .growth {
-            display: flex;
-            border-radius: 5px;
-            gap: 5px;
-            align-items: center;
-            font-size: 13px;
-
-            .growth-percent {
-                border-radius: 10px;
-                padding: 5px;
-                background-color: #515dfd;
-                color: #010866;
-            }
-        }
-    }
-
-    > div {
-        width: 180px;
-        height: 135px;
+    .sub-dashboard {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        border-radius: 16px;
-        padding: 10px;
-        gap: 30px;
+        position: sticky;
+        top: 50px;
+        z-index: 1;
+        background-color: white;
+        height: 90vh;
+        width: 100%;
+        overflow-y: scroll;
+        scrollbar-width: none;
+        .pie-chart {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            width: auto;
+            height: 50vh;
+            align-items: center;
+        }
 
-        .parameter {
-            .topic {
-                font-size: 15px;
+        .list-staffs {
+            width: 100%;
+            background-color: #f1eee3;
+            display: flex;
+            flex-direction: column;
+
+          
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                padding: 10px;
+                margin-left: 15px;
+            }
+            .staffs-container {
+                overflow-y: scroll;
+                scrollbar-width: none;
+                height: 50vh;
+            }
+        }
+    }
+
+    .main-dashboard {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        background-color: #f8f7f1;
+
+        .basic-infor {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
+
+            .balance {
+                background-color: #c0cfb2;
+
+                .icon {
+                    background-color: #8ba888;
+                    color: #44624a;
+                }
+
+                .growth {
+                    display: flex;
+                    border-radius: 5px;
+                    gap: 5px;
+                    align-items: center;
+                    font-size: 13px;
+
+                    .growth-percent {
+                        color: #44624a;
+                        border-radius: 10px;
+                        padding: 5px;
+                        background-color: #8ba888;
+                    }
+                }
+            }
+
+            .sales {
+                background-color: #fff192;
+
+                .icon {
+                    background-color: #f0d331;
+                    color: #776815;
+                }
+
+                .growth {
+                    display: flex;
+                    border-radius: 5px;
+                    gap: 5px;
+                    align-items: center;
+                    font-size: 13px;
+
+                    .growth-percent {
+                        color: #776815;
+                        border-radius: 10px;
+                        padding: 5px;
+                        background-color: #f0d331;
+                    }
+                }
+            }
+
+            .users {
+                background-color: #7880f3;
+
+                .icon {
+                    background-color: #515dfd;
+                    color: #010866;
+                }
+
+                .growth {
+                    display: flex;
+                    border-radius: 5px;
+                    gap: 5px;
+                    align-items: center;
+                    font-size: 13px;
+
+                    .growth-percent {
+                        border-radius: 10px;
+                        padding: 5px;
+                        background-color: #515dfd;
+                        color: #010866;
+                    }
+                }
+            }
+
+            > div {
+                width: 180px;
+                height: 135px;
                 display: flex;
-                gap: 5px;
-                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                border-radius: 16px;
+                padding: 10px;
+                gap: 30px;
+
+                .parameter {
+                    .topic {
+                        font-size: 15px;
+                        display: flex;
+                        gap: 5px;
+                        align-items: center;
+                    }
+                }
+
+                .number {
+                    font-size: 23px;
+                    font-weight: bold;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .icon {
+                    padding: 5px;
+                    font-size: 8px;
+                    border-radius: 5px;
+                }
+
+                .growth {
+                    display: flex;
+                    border-radius: 5px;
+                    gap: 5px;
+                    align-items: center;
+                    font-size: 13px;
+
+                    .growth-percent {
+                        border-radius: 10px;
+                        padding: 5px;
+                        font-weight: bold;
+                    }
+                }
             }
         }
 
-        .number {
-            font-size: 23px;
-            font-weight: bold;
+        .chart {
             display: flex;
             justify-content: center;
-        }
-
-        .icon {
-            padding: 5px;
-            font-size: 8px;
-            border-radius: 5px;
-        }
-
-        .growth {
-            display: flex;
-            border-radius: 5px;
-            gap: 5px;
-            align-items: center;
-            font-size: 13px;
+            flex-direction: column;
+            width: 93%;
+            margin-left: 20px;
+            height: 100%;
+            margin: 40px 0;
 
             .growth-percent {
-                border-radius: 10px;
-                padding: 5px;
                 font-weight: bold;
+                font-size: 23px;
+                margin: 10px 0;
+            }
+        }
+        .last-order {
+            width: 93%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1;
+
+            .search-bar {
+                margin-top: 10px;
+                display: flex;
+            }
+
+            .list-orders {
+                display: flex;
+                flex-direction: column;
+                height: 50vh;
+                overflow: scroll;
+                scrollbar-width: none;
             }
         }
     }
