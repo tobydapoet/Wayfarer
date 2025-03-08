@@ -12,7 +12,7 @@ function Business() {
         <NavigateManage to={`dashboard`}>Dashboard</NavigateManage>
         <NavigateManage to={`staffs`}>Staffs</NavigateManage>
 
-        <NavigateManage to={`guests`}>Guests</NavigateManage>
+        <NavigateManage to={`clients`}>Clients</NavigateManage>
       </div>
       <div className={cx("content")}>
         <Outlet />

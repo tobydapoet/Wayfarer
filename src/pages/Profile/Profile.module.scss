@@ -27,18 +27,12 @@
 
             }
 
-            .country-phone {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 10px;
-
-                .country {
+                .country-container {
                     color: var(--primary);
                     background-color: transparent;
                     border: none;
                     color: black;
-                    width: 20vw;
-
+                    width: 100%;
 
                     button {
                         border: none;
@@ -46,14 +40,17 @@
                         font-family: var(--font-default);
                         background-color: transparent;
                         font-size: 20px;     
-
+                        
+                    }
+                    svg {
+                        color: white;
                     }
                 }
 
                 .phone {
                     color: white !important;
                     display: flex;
-                    width: 25vw;
+                    width: 20vw;
                    
                     
                     input {
@@ -62,7 +59,7 @@
                         border: none;
                         font-family: var(--font-default);
                         font-size: 20px;
-                        height: 42.3px;
+                        
                         
                     }
 
@@ -77,7 +74,7 @@
                             color: black;
                         }
                     }
-                }
+                
             }
         }
 

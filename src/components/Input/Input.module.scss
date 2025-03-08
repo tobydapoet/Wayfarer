@@ -33,6 +33,11 @@
         &.readOnly {
             pointer-events: none;
         }
+
+        &.readOnly {
+            width: 95%;
+        }
+
     }
 
     textarea {

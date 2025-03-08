@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ReactFlagsSelect from "react-flags-select";
+import getCountryCode from "../../utils/countryUtils/countryUtils";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import styles from "./Profile.module.scss";
@@ -17,33 +18,27 @@ const userInfo = {
   gender: "male",
   birth: "2004-10-29",
   phone: "0348349754",
-  country: "VN" || "US",
+  location:
+    "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
 };
 function Profile() {
   const [userData, setUserData] = useState({ ...userInfo });
-  const [tempData, setTempData] = useState({ ...userData });
   const dataRef = useRef({ ...userData });
 
   const handleChangeInput = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
- 
+
   const phoneRef = useRef(userInfo.phone);
 
-const handleChangePhone = (value) => {
-  if (dataRef.current.phone !== value) {
-    dataRef.current.phone = value;
-  }
-};
-  
-  const handleChangeCountry = (value) => {
-    if (dataRef.current.country !== value) {
-      dataRef.current.country = value;
+  const handleChangePhone = (value) => {
+    if (dataRef.current.phone !== value) {
+      dataRef.current.phone = value;
     }
   };
 
   const handleOnSave = () => {
-    setUserData({ ...dataRef.current }); // Chỉ cập nhật UI khi nhấn Save
+    setUserData({ ...dataRef.current });
   };
 
   const handleChangeImg = (e) => {
@@ -52,20 +47,18 @@ const handleChangePhone = (value) => {
       return;
     }
 
-    const file = e.target.files[0]; // Lấy file đầu tiên
-    const imageUrl = URL.createObjectURL(file); // Tạo URL tạm thời
-    setUserData((prev) => ({ ...prev, avatar: imageUrl })); // Cập nhật state
+    const file = e.target.files[0]; 
+    const imageUrl = URL.createObjectURL(file); 
+    setUserData((prev) => ({ ...prev, avatar: imageUrl }));
   };
 
-
+  console.log(userData);
   const fileInputRef = useRef(null);
-
-  const isDisabled = true;
 
   if (fileInputRef.current) {
     fileInputRef.current.value = "";
   }
-  console.log(userData)
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("title")}>Profile</div>
@@ -119,26 +112,27 @@ const handleChangePhone = (value) => {
           </div>
           <div className={cx("country-phone")}>
             <div className={cx("country-container")}>
-              <Input light readOnly={true} onSave = {handleOnSave}>
-                <ReactFlagsSelect
-                  selected={dataRef.current.country}
-                  onSelect={handleChangeCountry}
-                  name="country"
-                  searchable
-                  className={cx("country")}
-                />
-              </Input>
+              <Input
+                light
+                key={userData.location}
+                placeholder="Location"
+                value={userData?.location || ""}
+                name="location"
+                onChange={handleChangeInput}
+                readOnly={true}
+                location
+              />
             </div>
 
             <div className={cx("phone-container")}>
-              <Input light readOnly={true} onSave={handleOnSave}>
+              <Input dark readOnly={true} onSave={handleOnSave} frame="Phone">
                 <PhoneInput
                   className={cx("phone")}
                   enableSearch
                   value={dataRef.current.phone}
                   name="phone"
                   onChange={handleChangePhone}
-                  country={dataRef.current.country?.toLowerCase() || ""}
+                  country={getCountryCode(userData.location).toLowerCase()}
                 />
               </Input>
             </div>

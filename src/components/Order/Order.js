@@ -46,7 +46,7 @@ function Order({data}) {
         <img src={data.avatar} alt={data.name} />
         <div className={cx('name')}>{data.name}</div>
     </div>
-    <div className={cx('cost')}>${data.cost}</div>
+    <div className={cx('cost')}>${Number(data.cost).toLocaleString("us-US")}</div>
     <div className={cx("status", statusColors[data.status])}>{getStatus(tour.type, tour.status)}</div>
     <div className={cx('time')}>{data.time}</div>
 

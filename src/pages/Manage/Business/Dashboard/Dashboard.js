@@ -354,7 +354,7 @@ function Dashboard() {
               </div>
             </div>
             <div className={cx("number")}>
-              $ {balanceMonth.toLocaleString("de-DE")}
+              $ {balanceMonth.toLocaleString("us-US")}
             </div>
             <div className={cx("growth")}>
               <span className={cx("growth-percent")}>+ 16% </span>vs last month
@@ -368,7 +368,7 @@ function Dashboard() {
               </div>
             </div>
             <div className={cx("number")}>
-              $ {totalSales.toLocaleString("de-DE")}
+              $ {totalSales.toLocaleString("us-US")}
             </div>
             <div className={cx("growth")}>
               <span className={cx("growth-percent")}>+ 16% </span>vs last month
@@ -382,7 +382,7 @@ function Dashboard() {
               </div>
             </div>
             <div className={cx("number")}>
-              $ {(totalSales - balanceMonth).toLocaleString("de-DE")}
+              $ {(totalSales - balanceMonth).toLocaleString("us-US")}
             </div>
             <div className={cx("growth")}>
               <span className={cx("growth-percent")}>+ 16% </span>vs last month

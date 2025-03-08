@@ -11,9 +11,9 @@ import Hotels from "../pages/Destinations/Placement/Hotels";
 import SelectedPage from "../pages/SelectedPage/SelectedPage";
 import Manage from "../pages/Manage/Manage";
 import Business from "../pages/Manage/Business";
-import Staffs from "../pages/Manage/Business/Staffs/Staffs";
+import Staffs from "../pages/Manage/Business/Staffs";
 import Dashboard from "../pages/Manage/Business/Dashboard";
-import Guests from "../pages/Manage/Business/Guests";
+import Clients from "../pages/Manage/Business/Clients";
 import Content from "../pages/Manage/Content";
 import HomeContent from "../pages/Manage/Content/HomeContent";
 import DestinationsContent from "../pages/Manage/Content/DestinationsContent";
@@ -22,7 +22,8 @@ import BlogContent from "../pages/Manage/Content/BlogContent";
 import Partners from "../pages/Manage/Partners";
 import Bills from "../pages/Manage/Bills";
 import ProfileLayout from "../layouts/ProfileLayout";
-import { faDashboard } from "@fortawesome/free-solid-svg-icons";
+import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
+import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -42,8 +43,24 @@ const publicRoutes = [
         default: true,
         children: [
           { path: "staffs", component: Staffs, layout: null },
-          { path: "dashboard", component: Dashboard, default: true, layout: null },
-          { path: "guests", component: Guests, layout: null },
+          {
+            path: "dashboard",
+            component: Dashboard,
+            default: true,
+            layout: null,
+          },
+          { path: "clients", component: Clients, layout: null },
+          {
+            path: "/manage/business/staffs/:info",
+            component: StaffInfo,
+            layout: null,
+          },
+          {
+            path: "/manage/business/clients/:info",
+            component: ClientInfo,
+            layout: null,
+          },
+          
         ],
       },
       {
@@ -87,6 +104,7 @@ const publicRoutes = [
       { path: "transports", component: Transports, layout: null },
     ],
   },
+  
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };
