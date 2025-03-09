@@ -145,7 +145,7 @@ function BonusPoint() {
         ))}
       </div>
       <div className={cx("check-container")}>
-        <Button large onClick={() => handleAttendance(dayRef.current)} disabled={attendance[dayRef.current] === "attended"}>
+        <Button rounded onClick={() => handleAttendance(dayRef.current)} disabled={attendance[dayRef.current] === "attended"}>
           Check
         </Button>
         <button onClick={handleOpenNote} className={cx("note")}>

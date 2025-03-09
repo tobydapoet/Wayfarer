@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    transition: all 0.3s ease;
+    font-family: var(--font-default);
+    height: calc(100% - 20px);
+
+    .summary {
+        width: 30%;
+        transition: width 0.3s ease;
+        min-width: calc(30% - 20px);
+        padding: 10px;
+        height: 100%;
+        background-color: #f1eee3;
+        overflow: scroll;
+        scrollbar-width: none;
+    }
+    .details {
+        width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: ease-in-out 0.3s ease;
+        color: black;
+        background-color: #f8f7f1;
+        height: calc(100% + 20px);
+
+        &.expanded {
+            width: 70%; 
+            opacity: 1;
+        }
+    }
+    .client-info {
+        width: 70%; 
+        height: calc(100% + 20px);
+        background-color: #f8f7f1;
+    }
+}

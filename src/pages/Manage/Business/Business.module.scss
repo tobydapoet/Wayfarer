@@ -1,21 +1,23 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
-
+    height: calc(100vh - 60px);
+    box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
 
     .navigate {
         display: flex;
-        position: sticky;
-        top: 0;
+        position: fixed;
         background-color: var(--primary);
         z-index: 50;
-        
+        width: calc(70vw - 2px);
+        border: 1px solid rgba(209, 204, 204, 0.75);
     }
 
     .content {
         height: 100%;
-
+        margin-top: 47px;
+        border: 1px solid rgba(209, 204, 204, 0.75);
+        overflow-y: scroll;
+        scrollbar-width: none;
     }
-
 }

@@ -5,7 +5,7 @@ import {
   faSquareCheck,
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styles from "./Input.module.scss";
 
 const cx = classNames.bind(styles);
@@ -31,10 +31,12 @@ function Input({
 }) {
   const [isReadOnly, setIsReadOnly] = useState(readOnly ? true : false);
   const [localValue, setLocalValue] = useState(value);
-  const [tempValue, setTempValue] = useState(value);
   const [countryCode, setCountryCode] = useState(value);
   const inputRef = useRef();
+  inputRef.current = value;
+  const focusRef = useRef();
 
+  console.log(localValue, inputRef);
   let Comp = "input";
   if (textarea) Comp = "textarea";
   else if (childs.length > 0) Comp = "select";
@@ -42,7 +44,14 @@ function Input({
 
   const enableEditing = () => {
     setIsReadOnly(false);
-    inputRef.current?.focus();
+    setTimeout(() => {
+      console.log("inputRef.current:", inputRef.current); // ✅ Debug
+      setTimeout(() => {
+        if (focusRef.current && typeof focusRef.current.focus === "function") {
+          focusRef.current.focus();
+        }
+      }, 100);
+    }, 100);
   };
 
   const getLocationName = async (latitude, longitude) => {
@@ -83,13 +92,12 @@ function Input({
   };
 
   const cancelEditing = () => {
-    setLocalValue(tempValue);
-    setIsReadOnly(true);
+    setLocalValue(inputRef.current);
+    setTimeout(() => setIsReadOnly(true), 100);
   };
 
   const finishEditing = () => {
     console.log("Giá trị trước khi lưu:", localValue);
-    setTempValue(localValue)
     if (onChange) {
       onChange({
         target: {
@@ -101,16 +109,13 @@ function Input({
       });
     }
     setIsReadOnly(true);
-    setTempValue(localValue?.location || localValue);
   };
 
   const handleOnSave = () => {
     if (onSave) onSave();
     if (onChange) onChange({ target: { name, value: localValue } });
     setIsReadOnly(true);
-    setTempValue(localValue);
   };
-
 
   const content = (
     <div className={cx("wrapper")}>
@@ -135,10 +140,10 @@ function Input({
             placeholder={placeholder}
             className={cx(className, { dark, light, readOnly: isReadOnly })}
             onChange={(e) => setLocalValue(e.target.value)}
-            value={localValue}
+            value={children ? null : localValue}
             name={name}
             type={type}
-            ref={inputRef}
+            ref={!children ? focusRef : null}
             disabled={disabled}
           >
             {React.Children.map(children, (child) =>
@@ -147,6 +152,10 @@ function Input({
                 onSave: finishEditing,
                 countryCode: countryCode,
                 setCountryCode: setCountryCode,
+                value: localValue,
+                inputProps: {
+                  ref: focusRef, 
+                },
               })
             )}
           </Comp>
@@ -185,8 +194,8 @@ function Input({
   );
 
   return frame ? (
-    <div className="frame-wrapper">
-      <div className="frame-wrapper">{frame}</div>
+    <div className={cx("frame-wrapper")}>
+      <div className={cx("frame-content")}>{frame}</div>
       {content}
     </div>
   ) : (

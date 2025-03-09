@@ -6,7 +6,7 @@
     margin-bottom: 4px;
 
     &.dark {
-        border-bottom: 2px solid rgb(147, 147, 147);
+        border-bottom: 2px solid rgb(166, 166, 166);
     }
 
     &.light {
@@ -101,3 +101,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
   }
+
+.frame-content {
+    color: rgb(166, 166, 166);
+    font-weight: bold;
+}

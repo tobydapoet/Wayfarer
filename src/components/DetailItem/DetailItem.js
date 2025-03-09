@@ -8,7 +8,7 @@ import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
-function DetailItem({ data, onClick }) {
+function DetailItem({ data, onClick, client }) {
   const [isOpenCancel, setOpenCancel] = useState(false);
   const [isOpenPay, setOpenPay] = useState(false);
 
@@ -45,7 +45,7 @@ function DetailItem({ data, onClick }) {
     8: "refunded",
   };
 
-  function getStatus(type, code) {
+  function getStatus(type, code ) {
     if (code === 4) {
       if (type === "trips") return "On Trip";
       if (type === "hotels") return "Checked In";
@@ -72,43 +72,47 @@ function DetailItem({ data, onClick }) {
           </span>
         </div>
       </div>
-      {info.status < 4 && (
-        <div className={cx("choice")}>
-          <Button large onClick={handleOpenCancel}>
-            Cancel
-          </Button>
-          {info.status == 2 && (
-            <Button large onClick={handleOpenPay}>
-              Pay
-            </Button>
+      { client &&
+        <>
+          {info.status < 4 && (
+            <div className={cx("choice")}>
+              <Button rounded onClick={handleOpenCancel}>
+                Cancel
+              </Button>
+              {info.status == 2 && (
+                <Button rounded onClick={handleOpenPay}>
+                  Pay
+                </Button>
+              )}
+            </div>
           )}
-        </div>
-      )}
-      <Modal open={isOpenCancel} onClose={() => setOpenCancel(false)}>
-        <div className={cx("cancel-container")}>
-          <div className={cx("cancel-content")}>
-            Do you want to cancel this schedule ?
-          </div>
-          <div className={cx("btn-container")}>
-            <Button large onClick={() => setOpenCancel(false)}>
-              No
-            </Button>
-            <Button large>Yes</Button>
-          </div>
-        </div>
-      </Modal>
-
-      <Modal open={isOpenPay} onClose={() => setOpenPay(false)}>
-        <div className={cx("pay-container")}>
-          <div className={cx("pay-content")}>Do you want to pay ?</div>
-          <div className={cx("btn-container")}>
-            <Button large onClick={() => setOpenPay(false)}>
-              No
-            </Button>
-            <Button large>Yes</Button>
-          </div>
-        </div>
-      </Modal>
+          <Modal open={isOpenCancel} onClose={() => setOpenCancel(false)}>
+            <div className={cx("cancel-container")}>
+              <div className={cx("cancel-content")}>
+                Do you want to cancel this schedule ?
+              </div>
+              <div className={cx("btn-container")}>
+                <Button large onClick={() => setOpenCancel(false)}>
+                  No
+                </Button>
+                <Button large>Yes</Button>
+              </div>
+            </div>
+          </Modal>
+    
+          <Modal open={isOpenPay} onClose={() => setOpenPay(false)}>
+            <div className={cx("pay-container")}>
+              <div className={cx("pay-content")}>Do you want to pay ?</div>
+              <div className={cx("btn-container")}>
+                <Button large onClick={() => setOpenPay(false)}>
+                  No
+                </Button>
+                <Button large>Yes</Button>
+              </div>
+            </div>
+          </Modal>
+        </>
+      }
     </div>
   );
 }

@@ -25,16 +25,14 @@ const INFO = {
 
 function StaffInfo() {
   const [userData, setUserData] = useState({ ...INFO });
-  const dataRef = useRef({ phone: "", country: "", ...userData });
+  const dataRef = useRef({ phone: "", country: "", ...INFO });
 
   const handleChangeInput = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   const handleChangePhone = (value) => {
-    if (dataRef.current.phone !== value) {
-      dataRef.current.phone = value;
-    }
+    dataRef.current.phone = value;
   };
 
   const handleOnSave = () => {
@@ -50,8 +48,7 @@ function StaffInfo() {
     setUserData((prev) => ({ ...prev, avatar: imgURL }));
   };
 
-  console.log(getCountryCode(userData.location))
-
+  console.log(getCountryCode(userData.location));
 
   return (
     <div className={cx("wrapper")}>
@@ -118,7 +115,7 @@ function StaffInfo() {
         </div>
 
         <div className={cx("phone-container")}>
-          <Input dark readOnly={true} onSave={handleOnSave} frame="Phone">
+          <Input dark readOnly={true} onSave={handleOnSave} frame="Phone" value={userData.phone}>
             <PhoneInput
               className={cx("phone")}
               enableSearch
@@ -146,7 +143,7 @@ function StaffInfo() {
           <Input
             dark
             key={userData.location}
-            frame="Locaton"
+            frame="Location"
             type="location"
             placeholder="Location"
             value={userData?.location || ""}

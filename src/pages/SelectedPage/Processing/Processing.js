@@ -46,6 +46,7 @@ function Processing() {
     status : '3',
     type : '2'
 },
+
 ]
   return ( <div className={cx('wrapper')}>
     <div className={cx('summary',{ collapsed: selectedItem !== null })}>
@@ -58,15 +59,13 @@ function Processing() {
       )) }
     </div>
     <div className={cx("details", { expanded: selectedItem !== null })}>
-        {selectedItem ? (
-          <DetailItem data={selectedItem} onClick={e => {
+        {selectedItem && (
+          <DetailItem client data={selectedItem} onClick={e => {
             e.stopPropagation();
             setSelectedItem(null);
           }}/>
 
-        ) : (
-          "Hello"
-        )}
+        ) }
       </div>
   </div> );
 }

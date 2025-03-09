@@ -9,7 +9,7 @@
         width: 100%;
         transition: width 0.3s ease;
         min-width: calc(40% - 20px);
-    
+        color: black;
         padding: 15px;
         &.collapsed {
             width: 40%;
@@ -20,7 +20,8 @@
         opacity: 0;
         overflow: hidden;
         transition: all 0.3s ease;
-        background-color:rgba(100, 90, 129, 0.5);
+        background-color:#f8f7f1;
+        color: black;
 
         &.expanded {
             width: 70%; 

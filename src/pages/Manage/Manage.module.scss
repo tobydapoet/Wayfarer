@@ -3,14 +3,12 @@
     margin: 0px 8vw;
     grid-template-columns: 15vw auto;
     grid-template-rows: auto auto;
-    height: 92.1vh;
-
+    height: calc(100vh - 60px);
+    
 
     .sidebar-container {
-
         box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
         width: 15vw;
-
     }
 
     .content {

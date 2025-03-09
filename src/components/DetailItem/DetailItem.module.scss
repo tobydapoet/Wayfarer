@@ -1,13 +1,13 @@
 .wrapper {
     padding: 20px;
-    height: calc(90vh - 40px);
+    height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
 
     .back {
         background-color: transparent;
         border: none;
-        color: var(--primary);
+        color: black;
         font-size: 20px;
         cursor: pointer;
         display: flex;

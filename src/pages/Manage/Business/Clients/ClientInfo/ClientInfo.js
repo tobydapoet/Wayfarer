@@ -1,10 +1,9 @@
 import classNames from "classnames/bind";
-import Button from "../../../../../components/Button";
-import getCountryCode from "../../../../../utils/countryUtils/countryUtils";
-import Input from "../../../../../components/Input";
 import style from "./ClientInfo.module.scss";
-import { useRef, useState } from "react";
-import PhoneInput from "react-phone-input-2";
+import ClientProfile from "../../../../../components/UserProfile/UserProfile";
+import { useState } from "react";
+import DetailItem from "../../../../../components/DetailItem/DetailItem";
+import ProcessingItem from "../../../../../components/ProcessingItem/ProcessingItem";
 
 const cx = classNames.bind(style);
 
@@ -19,78 +18,147 @@ const CLIENT = {
     "Chemin du Lac-Pike, Low, La Vallée-de-la-Gatineau, Outaouais, Quebec, Canada",
 };
 
+const TourItems = [
+  {
+    name: "Temple of Literature1",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 11,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "2",
+    type: "0",
+  },
+  {
+    name: "Temple of Literature2",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 10,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "4",
+    type: "1",
+  },
+  {
+    name: "Temple of Literature3",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 12,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "3",
+    type: "2",
+  },
+  {
+    name: "Temple of Literature2",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 10,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "4",
+    type: "1",
+  },
+  {
+    name: "Temple of Literature3",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 12,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "3",
+    type: "2",
+  },
+  {
+    name: "Temple of Literature2",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 10,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "4",
+    type: "1",
+  },
+  {
+    name: "Temple of Literature3",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 12,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "3",
+    type: "2",
+  },
+  {
+    name: "Temple of Literature3",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 12,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "3",
+    type: "2",
+  },
+  {
+    name: "Temple of Literature3",
+    city: "Ha Noi",
+    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
+    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
+    cost: 500,
+    guest: 12,
+    start: "15:40 2025-2-27",
+    finish: "17:40 2025-2-27",
+    status: "3",
+    type: "2",
+  },
+];
 function ClientInfo() {
-  const [clientData, setClientData] = useState({ ...CLIENT });
-  const dataRef = useRef({ phone: "", ...CLIENT });
-
-  const handleChangeInput = (e) => {
-    setClientData({ ...clientData, [e.target.name]: e.target.value });
-  };
-
-  const handleChangePhone = (value) => {
-    if (dataRef.current.phone !== value) {
-      dataRef.current.phone = value;
-    }
-    setClientData((prev) => ({
-      ...prev,
-      phone: dataRef.current.phone,
-    }));
-  };
-
-  const handleOnSave = () => {
-    setClientData({ ...dataRef.current });
-  };
-
-  console.log(clientData.phone)
-
+  const [selectedItem, setSelectedItem] = useState(null);
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("name")}>
-        <Input
-          dark
-          frame="Fullname"
-          placeholder="Name..."
-          value={clientData.name}
-          name="name"
-          onChange={handleChangeInput}
-          readOnly
-        />
-      </div>
-      <div className={cx("name")}>
-        <Input
-          dark
-          frame="Email"
-          placeholder="Email..."
-          value={clientData.email}
-          name="email"
-          onChange={handleChangeInput}
-          readOnly
-        />
-      </div>
-      <div className={cx("password")}>
-        <Input
-          dark
-          type="password"
-          frame="Password"
-          placeholder="Password..."
-          value={clientData.password}
-          name="passwaord"
-          onChange={handleChangeInput}
-          readOnly
-        />
-      </div>
-      <div className={cx("phone-container")}>
-        <Input dark readOnly={true} onSave={handleOnSave} frame="Phone">
-          <PhoneInput
-            className={cx("phone")}
-            enableSearch
-            value={clientData.phone}
-            name="phone"
-            onChange={handleChangePhone}
-            country={getCountryCode(clientData.location).toLowerCase()}
+      <div className={cx("summary", { collapsed: selectedItem !== null })}>
+        {TourItems.map((TourItem, key) => (
+          <ProcessingItem
+            key={key}
+            data={TourItem}
+            onClick={() => setSelectedItem(TourItem)}
           />
-        </Input>
+        ))}
       </div>
+      {selectedItem ? (
+        <div className={cx("details", { expanded: selectedItem !== null })}>
+          {selectedItem && (
+            <DetailItem
+              data={selectedItem}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedItem(null);
+              }}
+            />
+          )}
+        </div>
+      ) : (
+        <div className={cx("client-info")}>
+          {" "}
+          <ClientProfile data={CLIENT} />
+        </div>
+      )}
     </div>
   );
 }
