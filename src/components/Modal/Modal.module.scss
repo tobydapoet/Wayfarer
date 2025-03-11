@@ -16,12 +16,10 @@
     background: transparent;
     padding: 30px;
     border-radius: 8px;
-    max-width: 350px;
-    width: 100%;
     border: 1px solid ;
     backdrop-filter: blur(15px);
     border:1px solid var(--primary);
-    width: 400px;
+    width: 350px;
     transform: translateY(-50px);
     opacity: 0;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;

@@ -9,7 +9,6 @@ function Pin({ imgSrc , type,  to, title, name}) {
     const [size,setSize] = useState('')
     
     const checkImageSize = (img) => {
-        console.log('Width:', img.naturalWidth, 'Height:', img.naturalHeight);
         if (img.naturalHeight < img.naturalWidth) {
             setSize('small');
         } else if (img.naturalHeight === img.naturalWidth) {

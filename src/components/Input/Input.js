@@ -20,6 +20,7 @@ function Input({
   dark,
   light,
   textarea,
+  maxLength,
   type,
   readOnly = false,
   childs = [],
@@ -30,7 +31,7 @@ function Input({
   frame,
 }) {
   const [isReadOnly, setIsReadOnly] = useState(readOnly ? true : false);
-  const [localValue, setLocalValue] = useState(value);
+  const [localValue, setLocalValue] = useState(value || '');
   const [countryCode, setCountryCode] = useState(value);
   const inputRef = useRef();
   inputRef.current = value;
@@ -45,7 +46,7 @@ function Input({
   const enableEditing = () => {
     setIsReadOnly(false);
     setTimeout(() => {
-      console.log("inputRef.current:", inputRef.current); // ✅ Debug
+      console.log("inputRef.current:", inputRef.current); 
       setTimeout(() => {
         if (focusRef.current && typeof focusRef.current.focus === "function") {
           focusRef.current.focus();
@@ -144,6 +145,7 @@ function Input({
             name={name}
             type={type}
             ref={!children ? focusRef : null}
+            maxLength = {maxLength}
             disabled={disabled}
           >
             {React.Children.map(children, (child) =>
@@ -159,11 +161,11 @@ function Input({
               })
             )}
           </Comp>
+          
         )}
       </div>
-
+      { maxLength && <div className={cx('limit')}>{localValue.length}/{maxLength}</div>}
       {error && <span className={cx("error")}>{error}</span>}
-
       {readOnly &&
         (isReadOnly ? (
           <FontAwesomeIcon

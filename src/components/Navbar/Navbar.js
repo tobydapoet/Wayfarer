@@ -19,7 +19,7 @@ function Navbar() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [errors, setErrors] = useState({});
-  const currentUser = true;
+  const currentUser = false;
 
   const [dataLogin, setDataLogin, resetDataLogin] = useForm({
     email: "",
@@ -104,7 +104,7 @@ function Navbar() {
         />
       ) : (
         <div className={cx("to-user")}>
-          <Button rounded onClick={() => setIsOpenLogin(true)}>
+          <Button nav onClick={() => setIsOpenLogin(true)}>
             Login
           </Button>
           <Modal open={isOpenLogin} onClose={() => setIsOpenLogin(false)}>
@@ -146,7 +146,7 @@ function Navbar() {
             </div>
           </Modal>
 
-          <Button rounded onClick={() => setIsOpenRegister(true)}>
+          <Button nav onClick={() => setIsOpenRegister(true)}>
             Register
           </Button>
           <Modal open={isOpenRegister} onClose={handleCloseRegister}>

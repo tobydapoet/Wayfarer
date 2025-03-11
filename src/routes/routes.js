@@ -24,6 +24,7 @@ import Bills from "../pages/Manage/Bills";
 import ProfileLayout from "../layouts/ProfileLayout";
 import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
+import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -60,7 +61,6 @@ const publicRoutes = [
             component: ClientInfo,
             layout: null,
           },
-          
         ],
       },
       {
@@ -81,6 +81,16 @@ const publicRoutes = [
           },
           { path: "about_us_content", component: AboutUsContent, layout: null },
           { path: "blog_content", component: BlogContent, layout: null },
+          {
+            path: "/manage/content/home_content/:info",
+            component: HomeContentInfo,
+            layout: null,
+          },
+          {
+            path: "/manage/content/home_content/Add_Content",
+            component: HomeContentInfo,
+            layout: null,
+          },
         ],
       },
       { path: "partners", component: Partners, layout: null },
@@ -104,7 +114,6 @@ const publicRoutes = [
       { path: "transports", component: Transports, layout: null },
     ],
   },
-  
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes };

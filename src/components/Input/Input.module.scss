@@ -20,7 +20,7 @@
         margin: 20px 0 7px 0;
         outline: none;
         font-family: var(--font-default);
-        font-size: 20px;
+        font-size: 19px;
         background-color: transparent;
 
         &.dark {
@@ -81,7 +81,7 @@ select {
     margin: 20px 0 7px 0;
     outline: none;
     font-family: var(--font-default);
-    font-size: 20px;
+    font-size: 19px;
     background-color: transparent;
     color: var(--primary);
     appearance: none;
@@ -105,4 +105,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .frame-content {
     color: rgb(166, 166, 166);
     font-weight: bold;
+}
+
+.limit {
+    color: rgb(166, 166, 166);
+    font-size: 13px;
 }

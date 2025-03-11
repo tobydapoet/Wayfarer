@@ -9,7 +9,6 @@ function Tablet({ data }) {
   const images = data.images || [];
   const title = data.title || "";
   const describe = data.describe || "";
-  const viewMore = data.viewMore || "";
   return (
     <div className={cx("wrapper")}>
       {images.length > 0 && (
@@ -49,12 +48,7 @@ function Tablet({ data }) {
       >
         {title && <div className={cx("title")}> {title} </div>}
         {describe && <div className={cx("describe")}> {describe} </div>}
-        {viewMore && (
-          <Link to={viewMore} className={cx("view-more")}>
-            {" "}
-            View more
-          </Link>
-        )}
+        
       </div>
     </div>
   );

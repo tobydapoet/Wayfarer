@@ -11,7 +11,6 @@ function Business() {
       <div className={cx("navigate")}>
         <NavigateManage to={`dashboard`}>Dashboard</NavigateManage>
         <NavigateManage to={`staffs`}>Staffs</NavigateManage>
-
         <NavigateManage to={`clients`}>Clients</NavigateManage>
       </div>
       <div className={cx("content")}>
