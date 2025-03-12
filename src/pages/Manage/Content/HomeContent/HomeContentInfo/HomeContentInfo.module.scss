@@ -2,12 +2,37 @@
     padding: 20px;
 
     .images-container {
-        border: 1px solid rgba(209, 204, 204, 0.75);
+        border: 1px solid rgba(153, 153, 153, 0.75);
         padding: 10px;
+
+        .setting {
+            width: fit-content;
+            display: flex;
+            gap: 10px;
+           
+            input {
+                cursor: pointer;
+                font-family: var(--font-default);
+                font-size: 15px;
+                width: 200px;
+                cursor: pointer;
+            }
+
+            button {
+                border: none;
+                padding: 5px 20px;
+                font-family: var(--font-default);
+                font-size: 15px;
+                background-color: rgb(185, 183, 183);
+                cursor: pointer;
+                color: var(--primary);
+                border-radius: 4px;
+            }
+        }
 
         .images {
             display: flex;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
             gap: 10px;
             margin-top: 10px;
 
@@ -22,8 +47,6 @@
 
     .content {
         margin-top: 20px;
-
-        
     }
 
     .apply {
@@ -32,10 +55,28 @@
         margin: 0 auto;
     }
 
-    .result {
+    .test-wrapper {
         width: 100vw;
-        overflow: scroll;
+        height: 100vh;
+        position: relative;
+
+        .btn {
+            display: flex;
+            gap: 20px;
+            width: 450px;
+            position: absolute;
+            bottom: 20px;
+            right: 50px;
+        }
     }
-
-
 }
+
+input[type="file"]::file-selector-button {
+    padding: 10px;
+    background-color: rgb(185, 183, 183);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--primary);
+}
+

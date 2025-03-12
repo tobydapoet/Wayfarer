@@ -9,20 +9,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    pointer-events: auto;
   }
   
   .modal-content {
     background: transparent;
-    padding: 30px;
     border-radius: 8px;
     border: 1px solid ;
+    padding: 30px;
     backdrop-filter: blur(15px);
     border:1px solid var(--primary);
     width: 350px;
     transform: translateY(-50px);
     opacity: 0;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+
+    &.test {
+      width: 100%;
+      background-color: var(--primary);
+      height: 100vh;
+      overflow: scroll;
+      scrollbar-width: none;
+    }
   }
   
   .modal-show {

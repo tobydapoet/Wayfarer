@@ -11,7 +11,6 @@ import Button from "../Button";
 
 const cx = classNames.bind(styles);
 
-
 function StaffItem({ data }) {
   const navigate = useNavigate();
 
@@ -35,53 +34,56 @@ function StaffItem({ data }) {
     navigate(`${data.name}`);
   };
 
-
   return (
-    <tr
-      className={cx("wrapper")}
-      onClick={handleRowClick}
-      style={{ cursor: "pointer" }}
-    >
-      <td className={cx("info")}>
-        <div className={cx("img")}>
-          <img src={data.avatar} alt={data.name} />
-        </div>
-        <div className={cx("name")}>{data.name}</div>
-      </td>
-      <td className={cx("country")}>
-        <Flag className={cx("flag")} code={getCountryCode(data.location)} />
-      </td>
-      <td className={cx("salary")}>
-        ${Number(data.salary).toLocaleString("us-US")}
-      </td>
-      <td className={cx("time")}>{data.start}</td>
-      <td className={cx("status-container")}>
-        <div className={cx("status", statusColors[data.status])}>
-          {status[data.status]}
-        </div>
-      </td>
-      <td className={cx("delete")}>
-        <FontAwesomeIcon
-          icon={faXmark}
-          className={cx("delete-icon")}
-          onClick={(e) => {
-            e.stopPropagation();
-            setDeleteNotice(true);
-          }}
-        />
-      </td>
+    <>
+      <tr
+        className={cx("wrapper")}
+        onClick={handleRowClick}
+        style={{ cursor: "pointer" }}
+      >
+        <td className={cx("info")}>
+          <div className={cx("img")}>
+            <img src={data.avatar} alt={data.name} />
+          </div>
+          <div className={cx("name")}>{data.name}</div>
+        </td>
+        <td className={cx("country")}>
+          <Flag className={cx("flag")} code={getCountryCode(data.location)} />
+        </td>
+        <td className={cx("salary")}>
+          ${Number(data.salary).toLocaleString("us-US")}
+        </td>
+        <td className={cx("time")}>{data.start}</td>
+        <td className={cx("status-container")}>
+          <div className={cx("status", statusColors[data.status])}>
+            {status[data.status]}
+          </div>
+        </td>
+        <td className={cx("delete")}>
+          <FontAwesomeIcon
+            icon={faXmark}
+            className={cx("delete-icon")}
+            onClick={(e) => {
+              e.stopPropagation();
+              setDeleteNotice(true);
+            }}
+          />
+        </td>
+      </tr>
       <Modal open={deleteNotice} onClose={() => setDeleteNotice(false)}>
-        <div className={cx('notice-container')}>
+        <div className={cx("notice-container")}>
           <div className={cx("notice-content")}>
             Do you want to delete this staff ?
           </div>
-          <div className={cx('btn-container')}>
+          <div className={cx("btn-container")}>
             <Button large>Yes</Button>
-            <Button large onClick={()=>setDeleteNotice(false)}>Cancel</Button>
+            <Button large onClick={() => setDeleteNotice(false)}>
+              Cancel
+            </Button>
           </div>
-        </div>  
+        </div>
       </Modal>
-    </tr>
+    </>
   );
 }
 

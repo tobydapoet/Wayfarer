@@ -61,7 +61,6 @@ function Input({
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("Vị trị lấy ra " + data.display_name);
       return data;
     } catch (error) {
       console.error("Lỗi khi lấy tên địa điểm:", error);
@@ -95,6 +94,15 @@ function Input({
   const cancelEditing = () => {
     setLocalValue(inputRef.current);
     setTimeout(() => setIsReadOnly(true), 100);
+  };
+
+  const handleOnChange = (e) => {
+    const newValue = e.target.value;
+    setLocalValue(newValue);
+  
+    if (!readOnly && onChange) {
+      onChange({ target: { name, value: newValue } });
+    }
   };
 
   const finishEditing = () => {
@@ -140,7 +148,7 @@ function Input({
           <Comp
             placeholder={placeholder}
             className={cx(className, { dark, light, readOnly: isReadOnly })}
-            onChange={(e) => setLocalValue(e.target.value)}
+            onChange={readOnly ?  (e) => setLocalValue(e.target.value) :handleOnChange}
             value={children ? null : localValue}
             name={name}
             type={type}

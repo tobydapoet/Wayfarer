@@ -48,7 +48,7 @@ function StaffInfo() {
     setUserData((prev) => ({ ...prev, avatar: imgURL }));
   };
 
-  console.log(getCountryCode(userData.location));
+  console.log('Thông tin sau cập nhât: ' ,userData)
 
   return (
     <div className={cx("wrapper")}>

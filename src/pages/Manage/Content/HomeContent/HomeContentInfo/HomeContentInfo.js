@@ -6,7 +6,8 @@ import Button from "../../../../../components/Button";
 import styles from "./HomeContentInfo.module.scss";
 import Tablet from "../../../../../components/Tablet";
 import Modal from "../../../../../components/Modal";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -37,7 +38,7 @@ function HomeContentInfo() {
     param.info
       ? {
           ...INFO,
-          images: INFO.images.map((img) => ({ preview: img })),
+          images: INFO.images,
         }
       : {
           title: "",
@@ -45,14 +46,11 @@ function HomeContentInfo() {
           images: [],
         }
   );
-  const [openTest,setOpenTest] = useState(true)
+  const [openTest, setOpenTest] = useState(false);
 
   const handleImageUploaded = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-    }));
+    const newImages = files.map((file) => URL.createObjectURL(file));
 
     setformData((prev) => ({
       ...prev,
@@ -60,27 +58,49 @@ function HomeContentInfo() {
     }));
   };
 
+  // const handleonChange = (e) => {
+  //   setformData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
+
   const handleonChange = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value });
+    setformData((prev) => {
+      const newData = { ...prev, [e.target.name]: e.target.value };
+      console.log("Dữ liệu sau khi nhập:", newData);
+      return newData;
+    });
   };
 
-  console.log(formData.images)
-
   console.log(param.info);
+
+  console.log("Thông tin sau cập nhât: ", formData);
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("images-container")}>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageUploaded}
-        />
+        <div className={cx("setting")}>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImageUploaded}
+          />
+          <button
+            className={cx("reset")}
+            onClick={(e) => setformData((prev) => ({ ...prev, images: [] }))}
+          >
+            Reset
+          </button>
+        </div>
+
         {formData.images.length > 0 && (
           <div className={cx("images")}>
-            {formData.images.map((image, index) => (
-              <img src={image.preview} key={index} />
-            ))}
+            {formData.images.map((image, index) => {
+              const imageUrl =
+                typeof image === "string" ? image : image.preview;
+              return (
+                <img src={imageUrl} key={index} alt={`Uploaded ${index}`} />
+              );
+            })}
           </div>
         )}
       </div>
@@ -88,6 +108,7 @@ function HomeContentInfo() {
         <Input
           dark
           frame="Title"
+          name="title"
           maxLength={60}
           placeholder="Title..."
           value={formData.title}
@@ -96,6 +117,7 @@ function HomeContentInfo() {
         <Input
           dark
           frame="Describe"
+          name="describe"
           maxLength={700}
           textarea
           placeholder="Describe..."
@@ -103,12 +125,36 @@ function HomeContentInfo() {
           onChange={handleonChange}
         />
       </div>
-      <div className={cx('apply')}>
-        <Button rounded>Apply</Button>
+      <div className={cx("apply")}>
+        <Button
+          rounded
+          onClick={() => {
+            console.log("Form Data Trước Apply:", formData);
+            setOpenTest(true);
+          }}
+        >
+          Apply
+        </Button>
       </div>
-      <div className={cx('result')}>
-        <Modal ><div className={cx('test-wrapper')}><Tablet data={INFO}/></div></Modal>
-      </div>
+
+      <Modal
+        test
+        open={openTest}
+        onClose={(e) => {
+          e.stopPropagation(); // Ngăn chặn sự kiện lan truyền
+          setOpenTest(false);
+        }}
+      >
+        <div className={cx("test-wrapper")}>
+          <Tablet data={formData} />
+          <div className={cx("btn")}>
+            <Button rounded onClick={() => setOpenTest(false)}>
+              Cancel
+            </Button>
+            <Button rounded>Confirm</Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
