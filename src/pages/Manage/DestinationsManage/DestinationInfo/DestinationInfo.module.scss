@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+    box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
+
+    .navigate {
+        display: flex;
+        position: fixed;
+        background-color: var(--primary);
+        z-index: 50;
+        width: calc(70vw - 1.5px);
+        border: 1px solid rgba(209, 204, 204, 0.75);
+        .info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #202020;
+            color: var(--primary);
+            font-size: 17px;
+            font-family: var(--font-default);
+        }
+    }
+
+    .content {
+        height: 100%;
+        margin-top: 47px;
+        border: 1px solid rgba(209, 204, 204, 0.75);
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+}

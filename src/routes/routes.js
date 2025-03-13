@@ -16,7 +16,7 @@ import Dashboard from "../pages/Manage/Business/Dashboard";
 import Clients from "../pages/Manage/Business/Clients";
 import Content from "../pages/Manage/Content";
 import HomeContent from "../pages/Manage/Content/HomeContent";
-import DestinationsContent from "../pages/Manage/Content/DestinationsContent";
+import DestinationsManage from "../pages/Manage/DestinationsManage";
 import AboutUsContent from "../pages/Manage/Content/AboutUsContent";
 import BlogContent from "../pages/Manage/Content/BlogContent";
 import Partners from "../pages/Manage/Partners";
@@ -25,6 +25,8 @@ import ProfileLayout from "../layouts/ProfileLayout";
 import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
 import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
+import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
+import ServicesManage from "../pages/Manage/DestinationsManage/ServicesManage";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -64,6 +66,30 @@ const publicRoutes = [
         ],
       },
       {
+        path: "destinations",
+        component: DestinationsManage,
+        layout: null,
+      },
+      {
+        path: "destinations/:info",
+        component: DestinationInfo,
+        layout: null,
+        children: [
+          // {
+          //   path: "trips",
+          //   component: ServicesManage,
+          //   layout: null,
+          //   default: true,
+          // },
+          {
+            path: ":type",
+            component: ServicesManage,
+            layout: null,
+          },
+        ],
+      },
+
+      {
         path: "content",
         component: Content,
         layout: null,
@@ -72,11 +98,6 @@ const publicRoutes = [
             path: "home_content",
             component: HomeContent,
             default: true,
-            layout: null,
-          },
-          {
-            path: "destinations_content",
-            component: DestinationsContent,
             layout: null,
           },
           { path: "about_us_content", component: AboutUsContent, layout: null },

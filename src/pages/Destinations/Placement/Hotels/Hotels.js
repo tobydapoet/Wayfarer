@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles)
 function Hotels() {
     let { placement } = useParams();
-    const HotelsItems = [
+    const HOTELS = [
         {
             name : 'Temple of Literature',
             city : 'Ha Noi',
@@ -55,11 +55,11 @@ function Hotels() {
     
     return ( 
     <div className={cx('wrapper')}>
-        {HotelsItems.filter(hotels => placement.replace(/([a-z])([A-Z])/g, '$1 $2') === hotels.city).map((hotel,index) => {
+        {HOTELS.filter(hotels => placement.replace(/([a-z])([A-Z])/g, '$1 $2') === hotels.city).map((hotel,index) => {
             console.log(hotel); 
         return (
             <div className={cx('trips-wrapper')} key={index}>
-                <PlacementItem type={Hotels.name.toLowerCase()} 
+                <PlacementItem client type={Hotels.name.toLowerCase()} 
                     data = {hotel}
                 />
             </div>

@@ -77,6 +77,12 @@ function Sidebar({ profile, management, dark }) {
             Business
           </NavLink>
           <NavLink
+            to={`destinations`}
+            className={(nav) => cx("destinations", { active: nav.isActive })}
+          >
+            Destinations
+          </NavLink>
+          <NavLink
             to={`content`}
             className={(nav) => cx("content", { active: nav.isActive })}
           >

@@ -19,8 +19,8 @@ function getCountryCode(location) {
     countries.getAlpha2Code(normalizedCountryName, "en");
 
   if (!countryCode) {
-    console.warn(`⚠️ Không tìm thấy mã quốc gia cho: "${countryName}"`);
-    return "UNKNOWN"; // Hoặc return null nếu muốn
+    console.warn(`Không tìm thấy mã quốc gia cho: "${countryName}"`);
+    return "UNKNOWN";
   }
 
   return countryCode;

@@ -16,14 +16,6 @@ function Content() {
           Home
         </NavigateManage>
         <NavigateManage
-          to={`destinations_content`}
-          className={(nav) =>
-            cx("destinationsContent", { active: nav.isActive })
-          }
-        >
-          Destinations
-        </NavigateManage>
-        <NavigateManage
           to={`about_us_content`}
           className={(nav) => cx("aboutusContent", { active: nav.isActive })}
         >
