@@ -122,7 +122,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Noi",
       star: 3.5,
-      reviews: 1000,
+      price: 20,
       image:
         "https://image.vietnam.travel/sites/default/files/styles/top_banner/public/2017-06/vietnam-travel-5.jpg?itok=XVnHP3ty",
       description:
@@ -134,7 +134,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Nam",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://media.gettyimages.com/id/564677101/photo/pagoda-on-hoan-kiem-lake.jpg?s=612x612&w=gi&k=20&c=yt1Uhahe8yczaTMa5g_q3Cab2RSh7zUBAf2Z6f1m8tc=",
       description:
@@ -145,7 +145,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Noi",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwH7zryZS9Prdrkfl4hvz-3B-03JqK5y9Oww&s",
       description:
@@ -157,7 +157,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Nam",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrx6r2oFGmae87rAfgPXHj7PTZDnsSRgwawA&s",
       description:
@@ -168,7 +168,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Giang",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Hanoi_Skyline_-_NKS.jpg/288px-Hanoi_Skyline_-_NKS.jpg",
       description:
@@ -181,7 +181,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Noi",
       star: 3.5,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOKcxmJ7TnWnvRlMjYMrKXwTIu81NFrZj6lw&s",
       description:
@@ -193,7 +193,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Nam",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://izitour.com/media/ckeditor/photos-a-hanoi-2_2023-08-17_120.webp",
       description:
@@ -204,7 +204,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Noi",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZP-nfAVqnxlHEfMIAYPQmADKJPP6ZDsGsOQ&s",
       description:
@@ -216,7 +216,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Nam",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNTiMJkiWvZg_vUVqb4Q73jQVNs9IDKC-bQ&s",
       description:
@@ -227,7 +227,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Giang",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2i9jRQ8JekfdwSQz_8E1qEEZYkpkYjPpDA&s",
       description:
@@ -240,7 +240,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Noi",
       star: 3.5,
-      reviews: 1000,
+      price: 20,
       image:
         "https://www.wanderlustmagazine.com/wp-content/uploads/2025/02/shutterstock_2397559069-390x700.jpg",
       description:
@@ -252,7 +252,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Nam",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://maisonoffice.vn/en/wp-content/uploads/2024/01/tallest-buildings-in-ha-noi.jpg",
       description:
@@ -263,7 +263,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Noi",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_58KtxYPQfH32iXOi8vI9ldwJRdchHAQy_w&s",
       description:
@@ -275,7 +275,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Nam",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://res.cloudinary.com/jerrick/image/upload/v1588649812/5eb0df54debee0001d318876.jpg",
       description:
@@ -286,7 +286,7 @@ function Favourite() {
       name: "Temple of Literature",
       city: "Ha Giang",
       star: 4,
-      reviews: 1000,
+      price: 20,
       image:
         "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
       description:

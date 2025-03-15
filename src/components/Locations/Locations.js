@@ -11,41 +11,50 @@ import styles from "./Locations.module.scss";
 import Button from "../Button";
 import { useState } from "react";
 import Modal from "../Modal";
+import EditDestinationManage from "../EditDestinationManage/EditDestinationManage";
 
 const cx = classNames.bind(styles);
 function Locations({ data, manage, client }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false);
+  const [location, setLocation] = useState({ ...data });
 
   const navigate = useNavigate();
 
   const handleRowClick = () => {
-    navigate(`${data.name}`);
+    navigate(`${location.name}`);
   };
+
+  const handleSaveEdit = (updatedData) => {
+    setLocation(updatedData);
+  };
+
+  console.log(location.name);
 
   return (
     <div className={cx("wrapper", { manage })}>
-      <img className={cx("img")} src={data.image} />
+      <img className={cx("img")} src={location.image} />
       <div className={cx("overlay")}>
         <div className={cx("location")}>
-          <div className={cx("name", { manage })}>{data.name}</div>
+          <div className={cx("name", { manage })}>{location.name}</div>
         </div>
         <div className={cx("info")}>
-          {data.trips && (
+          {location.trips && (
             <div className={cx("trips-container")}>
               <FontAwesomeIcon icon={faLocationDot} />
-              <div> {data.trips}</div>
+              <div> {location.trips}</div>
             </div>
           )}
-          {data.hotel && (
+          {location.hotel && (
             <div className={cx("hotel-container")}>
               <FontAwesomeIcon icon={faBed} />
-              <div> {data.hotel}</div>
+              <div> {location.hotel}</div>
             </div>
           )}
-          {data.transport && (
+          {location.transport && (
             <div className={cx("transport-container")}>
               <FontAwesomeIcon icon={faCar} />
-              <div> {data.transport}</div>
+              <div> {location.transport}</div>
             </div>
           )}
         </div>
@@ -53,7 +62,7 @@ function Locations({ data, manage, client }) {
       {client && (
         <Link
           className={cx("view")}
-          to={`/destinations/${data.to.replace(/^\//, "")}`}
+          to={`/destinations/${location.to.replace(/^\//, "")}`}
         >
           View more
         </Link>
@@ -70,29 +79,49 @@ function Locations({ data, manage, client }) {
           >
             <FontAwesomeIcon icon={faXmark} />
           </div>
-          <Modal open={deleteNotice} onClose={() => setDeleteNotice(false)}>
-            <div className={cx("notice-container")}>
-              <div className={cx("notice-content")}>
-                Do you want to delete this destination ?
-              </div>
-              <div className={cx("btn-container")}>
-                <Button large>Yes</Button>
-                <Button large onClick={() => setDeleteNotice(false)}>
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </Modal>
-          <div className={cx('view')}>
-            <Button large className={cx('view-manage')} onClick={handleRowClick}>
+          <div className={cx("view")}>
+            <Button
+              large
+              className={cx("view-manage")}
+              onClick={handleRowClick}
+            >
               View
             </Button>
-            <Button large className={cx('edit-manage')} onClick={handleRowClick}>
+            <Button
+              large
+              className={cx("edit-manage")}
+              onClick={() => setOpenEditForm(true)}
+            >
               Edit
             </Button>
           </div>
         </>
       )}
+      <Modal open={deleteNotice} onClose={() => setDeleteNotice(false)}>
+        <div className={cx("notice-container")}>
+          <div className={cx("notice-content")}>
+            Do you want to delete this destination ?
+          </div>
+          <div className={cx("btn-container")}>
+            <Button large>Yes</Button>
+            <Button
+              large
+              onClick={() => {
+                setDeleteNotice(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      <EditDestinationManage
+        open={openEditForm}
+        onClose={() => setOpenEditForm(false)}
+        data={location}
+        onSave={handleSaveEdit}
+      />
     </div>
   );
 }

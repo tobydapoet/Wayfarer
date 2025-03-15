@@ -31,7 +31,7 @@ function Input({
   frame,
 }) {
   const [isReadOnly, setIsReadOnly] = useState(readOnly ? true : false);
-  const [localValue, setLocalValue] = useState(value || '');
+  const [localValue, setLocalValue] = useState(value || "");
   const [countryCode, setCountryCode] = useState(value);
   const inputRef = useRef();
   inputRef.current = value;
@@ -46,7 +46,7 @@ function Input({
   const enableEditing = () => {
     setIsReadOnly(false);
     setTimeout(() => {
-      console.log("inputRef.current:", inputRef.current); 
+      console.log("inputRef.current:", inputRef.current);
       setTimeout(() => {
         if (focusRef.current && typeof focusRef.current.focus === "function") {
           focusRef.current.focus();
@@ -99,7 +99,7 @@ function Input({
   const handleOnChange = (e) => {
     const newValue = e.target.value;
     setLocalValue(newValue);
-  
+
     if (!readOnly && onChange) {
       onChange({ target: { name, value: newValue } });
     }
@@ -148,12 +148,14 @@ function Input({
           <Comp
             placeholder={placeholder}
             className={cx(className, { dark, light, readOnly: isReadOnly })}
-            onChange={readOnly ?  (e) => setLocalValue(e.target.value) :handleOnChange}
+            onChange={
+              readOnly ? (e) => setLocalValue(e.target.value) : handleOnChange
+            }
             value={children ? null : localValue}
             name={name}
             type={type}
             ref={!children ? focusRef : null}
-            maxLength = {maxLength}
+            maxLength={maxLength}
             disabled={disabled}
           >
             {React.Children.map(children, (child) =>
@@ -164,15 +166,18 @@ function Input({
                 setCountryCode: setCountryCode,
                 value: localValue,
                 inputProps: {
-                  ref: focusRef, 
+                  ref: focusRef,
                 },
               })
             )}
           </Comp>
-          
         )}
       </div>
-      { maxLength && <div className={cx('limit')}>{localValue.length}/{maxLength}</div>}
+      {maxLength && (
+        <div className={cx("limit")}>
+          {localValue.length}/{maxLength}
+        </div>
+      )}
       {error && <span className={cx("error")}>{error}</span>}
       {readOnly &&
         (isReadOnly ? (
@@ -205,7 +210,7 @@ function Input({
 
   return frame ? (
     <div className={cx("frame-wrapper")}>
-      <div className={cx("frame-content")}>{frame}</div>
+      <div className={cx("frame-content", { dark, light })}>{frame}</div>
       {content}
     </div>
   ) : (

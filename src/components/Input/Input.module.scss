@@ -103,8 +103,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
 .frame-content {
-    color: rgb(166, 166, 166);
-    font-weight: bold;
+
+
+    &.dark {
+        color: rgb(99, 98, 98);
+        font-weight: bold;
+    }
+
+    &.light {
+        color: rgb(209, 209, 209);
+        font-weight: bold;
+    }
 }
 
 .limit {

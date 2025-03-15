@@ -7,7 +7,6 @@
         position: relative;
         width: 240px;
         height: 400px;
-
     }
 
     .delete {
@@ -18,7 +17,6 @@
         font-size: 20px;
         cursor: pointer;
     }
-   
 
     .overlay {
         position: absolute;
@@ -31,9 +29,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transform: translateY(-50%); 
+        transform: translateY(-50%);
         flex-direction: column;
-        
+
         .name {
             font-family: var(--font-default);
             font-weight: 500;
@@ -45,38 +43,38 @@
             }
         }
 
-        .trips-container{
-            color: var(--primary);
-            font-family: var(--font-default);
-            font-size: 20px;
-            margin-top: 15px;
+        .info {
+            height: 100px;
             display: flex;
-            gap: 8px;
-
-        }
-
-        .hotel-container{
-            color: var(--primary);
-            font-family: var(--font-default);
-            font-size: 20px;
+            flex-direction: column;
+            gap: 15px;
             margin-top: 15px;
-            display: flex;
-            gap: 8px;
 
+            .trips-container {
+                color: var(--primary);
+                font-family: var(--font-default);
+                font-size: 20px;
+                display: flex;
+                gap: 8px;
+            }
+
+            .hotel-container {
+                color: var(--primary);
+                font-family: var(--font-default);
+                font-size: 20px;
+                display: flex;
+                gap: 8px;
+            }
+
+            .transport-container {
+                color: var(--primary);
+                font-family: var(--font-default);
+                font-size: 20px;
+                display: flex;
+                gap: 8px;
+            }
         }
-
-        .transport-container{
-            color: var(--primary);
-            font-family: var(--font-default);
-            font-size: 20px;
-            margin-top: 15px;
-            display: flex;
-            gap: 8px;
-
-        }
-
     }
-
 
     .img {
         width: 100%;
@@ -95,7 +93,7 @@
         width: 85%;
         height: 40px;
         border-radius: 20px;
-        font-family:var(--font-default);
+        font-family: var(--font-default);
         font-size: 17px;
         color: black;
         background-color: var(--primary);
@@ -110,10 +108,12 @@
         .view-manage {
             border-top-right-radius: 0px;
             border-end-end-radius: 0px;
+            border-right: 0.5px solid #a09e9e; 
         }
         .edit-manage {
             border-start-start-radius: 0px;
             border-end-start-radius: 0px;
+            border-left: 0.5px solid #a09e9e; 
         }
     }
 

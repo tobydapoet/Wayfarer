@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../../components/SearchBar";
 import Locations from "../../../components/Locations";
+import { useState } from "react";
+import EditDestinationManage from "../../../components/EditDestinationManage/EditDestinationManage";
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +59,13 @@ function DestinationsManage() {
     },
   ];
 
-  const navigate = useNavigate();
+
+  const [openEditForm, setOpenEditForm] = useState(false);
+  const [locations,setLocations] = useState(LOCATIONS)
+
+  const handleSaveLocation = (newLocation) => {
+    setLocations((prev) => [...prev, newLocation])
+  }
 
   return (
     <div className={cx("wrapper")}>
@@ -66,16 +74,23 @@ function DestinationsManage() {
         <div
           className={cx("add")}
           style={{ cursor: "pointer" }}
-          onClick={() => navigate("add_content")}
+          onClick={() => setOpenEditForm(true)}
         >
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </div>
       <div className={cx("content")}>
-        {LOCATIONS.map((location, index) => (
+        {locations.map((location, index) => (
           <Locations manage key={index} data={location} />
         ))}
       </div>
+
+      <EditDestinationManage
+        open={openEditForm}
+        onClose={() => setOpenEditForm(false)}
+        onSave = {handleSaveLocation}
+      />
+      
     </div>
   );
 }

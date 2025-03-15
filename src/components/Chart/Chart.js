@@ -18,9 +18,6 @@ function Chart({ last, current }) {
     return `hsl(${hue}, 90%, 50%)`; 
   };
 
-  const colors = Array(5) // Tạo danh sách 5 màu khác nhau
-  .fill(null)
-  .map(() => getRandomPastelColor());
 
   const ColorLine = ({ year1, year2 }) => {
     const result = (year2 / year1) * 100;

@@ -27,6 +27,7 @@ import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
 import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
 import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
 import ServicesManage from "../pages/Manage/DestinationsManage/ServicesManage";
+import ServiceIntroduce from "../pages/Manage/DestinationsManage/ServicesManage/ServiceIntroduce/ServiceIntroduce";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -75,17 +76,17 @@ const publicRoutes = [
         component: DestinationInfo,
         layout: null,
         children: [
-          // {
-          //   path: "trips",
-          //   component: ServicesManage,
-          //   layout: null,
-          //   default: true,
-          // },
           {
             path: ":type",
             component: ServicesManage,
             layout: null,
           },
+          {
+            path: ":type/:name",
+            component: ServiceIntroduce,
+            layout: null,
+          },
+          
         ],
       },
 

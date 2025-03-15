@@ -5,38 +5,13 @@ import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 import Button from "../Button";
-import {
-  faStarHalfStroke,
-  faStar,
-  faPersonChalkboard,
-  faShop,
-  faMapLocationDot,
-  faGuitar,
-  faBurger,
-  faMugHot,
-  faCampground,
-  faExclamation,
-  faPersonSwimming,
-  faFish,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import StarRating from "../../utils/StartRating";
 
 const cx = classNames.bind(styles);
 
 function PlacementItem({ type, data, manage, client }) {
-  const defaultActivities = [
-    "souvenir",
-    "visit",
-    "campfire",
-    "music",
-    "food",
-    "drink",
-    "travel",
-    "swim",
-    "fishing",
-  ];
-
   const contentMap = {
     trips: {
       ...data,
@@ -48,39 +23,9 @@ function PlacementItem({ type, data, manage, client }) {
       activities: data.activities ? data.activities.split(",") : [],
     },
 
-    transports: { ...data },
+    transports: { ...data ,  activities: data.activities ? data.activities.split(",") : [],},
   };
   const content = contentMap[type] || {};
-
-  const StarRating = ({ rating }) => {
-    const stars = [];
-    const roundedRating = Math.round(rating * 2) / 2;
-    for (let i = 0; i < 5; i++) {
-      if (i < Math.floor(roundedRating)) {
-        stars.push(<FontAwesomeIcon icon={faStar} color="#FFD700" />);
-      } else if (i + 0.5 === roundedRating) {
-        stars.push(<FontAwesomeIcon icon={faStarHalfStroke} color="#FFD700" />);
-      } else {
-        stars.push(<FontAwesomeIcon icon={emptyStar} color="#FFD700" />);
-      }
-    }
-    return <div>{stars}</div>;
-  };
-
-  const getIcon = (activity) => {
-    const icons = {
-      souvenir: faShop,
-      visit: faPersonChalkboard,
-      campfire: faCampground,
-      music: faGuitar,
-      food: faBurger,
-      drink: faMugHot,
-      travel: faMapLocationDot,
-      swim: faPersonSwimming,
-      fishing: faFish,
-    };
-    return icons[activity] || faExclamation;
-  };
 
   const [deleteNotice, setDeleteNotice] = useState(false);
 
@@ -89,6 +34,12 @@ function PlacementItem({ type, data, manage, client }) {
   const handleRowClick = () => {
     navigate(`${data.name}`);
   };
+
+  const getRandomPastelColor = () => {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 90%, 50%)`;
+  };
+  const randomColor = getRandomPastelColor();
 
   return (
     <div className={cx("wrapper")}>
@@ -99,8 +50,8 @@ function PlacementItem({ type, data, manage, client }) {
             <div className={cx("header")}>
               <div className={cx("name", { manage })}>{content.name}</div>
               <div
-                className={cx("reviews", { manage })}
-              >{`${content.reviews} reviews`}</div>
+                className={cx("price", { manage })}
+              >{`$${content.price}`}</div>
             </div>
             <div className={cx("star")}>
               <StarRating rating={content.star} />
@@ -110,16 +61,16 @@ function PlacementItem({ type, data, manage, client }) {
             </div>
             {content.activities && (
               <div className={cx("activities-container")}>
-                {defaultActivities.map(
-                  (activity) =>
-                    content.activities.includes(activity) && (
-                      <FontAwesomeIcon
-                        key={activity}
-                        icon={getIcon(activity)}
-                        className={cx('icon',{manage})}
-                      />
-                    )
-                )}
+                {content.activities &&
+                  content.activities.map((activity, index) => (
+                    <div
+                      key={index}
+                      className={cx("activity")}
+                      style={{ backgroundColor: randomColor }}
+                    >
+                      {activity.toLowerCase()}
+                    </div>
+                  ))}
               </div>
             )}
             <div className={cx("view-container")}>
