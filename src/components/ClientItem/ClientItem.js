@@ -5,9 +5,8 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Flag from "react-world-flags";
 import getCountryCode from "../../utils/countryUtils/countryUtils";
-import Button from "../Button";
 import styles from "./ClientItem.module.scss";
-import Modal from "../Modal";
+import Notice from "../Notice";
 
 const cx = classNames.bind(styles);
 
@@ -49,19 +48,11 @@ function ClientItem({ data }) {
           />
         </td>
       </tr>
-      <Modal open={deleteNotice} onClose={() => setDeleteNotice(false)}>
-        <div className={cx("notice-container")}>
-          <div className={cx("notice-content")}>
-            Do you want to delete this client ?
-          </div>
-          <div className={cx("btn-container")}>
-            <Button large>Yes</Button>
-            <Button large onClick={() => setDeleteNotice(false)}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      <Notice
+        open={deleteNotice}
+        onClose={() => setDeleteNotice(false)}
+        content = "Do you want to delete this client ?"
+      />
     </>
   );
 }

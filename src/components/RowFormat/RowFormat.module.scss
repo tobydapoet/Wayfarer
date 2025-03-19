@@ -1,0 +1,46 @@
+.wrapper {
+    position: relative;
+    margin-bottom: 100px ;
+
+    .content-container {
+        display: flex;
+
+        justify-content: space-evenly;
+        gap: 50px;
+
+        .title {
+            font-size: 3rem;
+            font-family: themify;
+            margin: 2rem 0;
+            font-weight: 300;
+            flex: 0.70;
+            display: flex;
+            align-items: center;
+    
+        }
+
+        .describe {
+            margin-top: 20px;
+            font-size: 17px;
+            text-align: justify;
+            line-height: 1.6;
+            font-family: var(--font-default);
+            text-indent: 30px;
+            flex: 1.3;
+        }
+
+        .title, .describe {
+            max-width: 45%; /* Hoặc giá trị nhỏ hơn tùy vào yêu cầu */
+        }
+    }
+    .img-container {
+        width: 100vw;
+        margin: 0rem -2.8rem;
+
+        img {
+            width: 100vw;
+            height: 80vh;
+            object-fit: cover;
+        }
+    }
+}

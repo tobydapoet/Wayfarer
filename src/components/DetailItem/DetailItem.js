@@ -1,10 +1,10 @@
+import { useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import styles from "./DetailItem.module.scss";
 import Button from "../Button";
-import Modal from "../Modal";
-import { useState } from "react";
+import Notice from "../Notice";
 
 const cx = classNames.bind(styles);
 
@@ -86,31 +86,9 @@ function DetailItem({ data, onClick, client }) {
               )}
             </div>
           )}
-          <Modal open={isOpenCancel} onClose={() => setOpenCancel(false)}>
-            <div className={cx("cancel-container")}>
-              <div className={cx("cancel-content")}>
-                Do you want to cancel this schedule ?
-              </div>
-              <div className={cx("btn-container")}>
-                <Button large onClick={() => setOpenCancel(false)}>
-                  No
-                </Button>
-                <Button large>Yes</Button>
-              </div>
-            </div>
-          </Modal>
+          <Notice open={isOpenCancel} onClose={() => setOpenCancel(false)} content=" Do you want to cancel this schedule ?"/>
     
-          <Modal open={isOpenPay} onClose={() => setOpenPay(false)}>
-            <div className={cx("pay-container")}>
-              <div className={cx("pay-content")}>Do you want to pay ?</div>
-              <div className={cx("btn-container")}>
-                <Button large onClick={() => setOpenPay(false)}>
-                  No
-                </Button>
-                <Button large>Yes</Button>
-              </div>
-            </div>
-          </Modal>
+          <Notice open={isOpenPay} onClose={() => setOpenPay(false)} content="Do you want to pay ?" />
         </>
       }
     </div>

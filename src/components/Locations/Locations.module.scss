@@ -117,23 +117,5 @@
         }
     }
 
-    .notice-container {
-        display: flex;
-        flex-direction: column;
-        height: 200px;
-        position: relative;
-        font-size: 19px;
-        font-family: var(--font-default);
 
-        .notice-content {
-            color: var(--primary);
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 20px;
-            margin-top: auto;
-            justify-content: center;
-        }
-    }
 }

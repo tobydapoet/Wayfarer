@@ -4,8 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./HomeContentItem.module.scss";
-import Modal from "../Modal";
-import Button from "../Button";
+import Notice from "../Notice";
 
 const cx = classNames.bind(styles);
 
@@ -43,19 +42,11 @@ function HomeContentItem({ data }) {
           </div>
         )}
       </div>
-      <Modal open={deleteNotice} onClose={() => setDeleteNotice(false)}>
-        <div className={cx("notice-container")}>
-          <div className={cx("notice-content")}>
-            Do you want to delete this content ?
-          </div>
-          <div className={cx("btn-container")}>
-            <Button large>Yes</Button>
-            <Button large onClick={() => setDeleteNotice(false)}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      <Notice
+        open={deleteNotice}
+        onClose={() => setDeleteNotice(false)}
+        content=" Do you want to delete this content ?"
+      />
     </div>
   );
 }

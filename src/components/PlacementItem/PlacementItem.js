@@ -3,11 +3,11 @@ import styles from "./PlacementItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import Modal from "../Modal";
 import Button from "../Button";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import StarRating from "../../utils/StartRating";
+import Notice from "../Notice";
 
 const cx = classNames.bind(styles);
 
@@ -102,22 +102,12 @@ function PlacementItem({ type, data, manage, client }) {
                       <FontAwesomeIcon icon={faXmark} />
                     </div>
                   </div>
-                  <Modal
+                  <Notice
                     open={deleteNotice}
                     onClose={() => setDeleteNotice(false)}
-                  >
-                    <div className={cx("notice-container")}>
-                      <div className={cx("notice-content")}>
-                        Do you want to delete this destination ?
-                      </div>
-                      <div className={cx("btn-container")}>
-                        <Button large>Yes</Button>
-                        <Button large onClick={() => setDeleteNotice(false)}>
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  </Modal>
+                    content= "Do you want to delte this destination ?"
+                  />
+                
                 </>
               )}
             </div>

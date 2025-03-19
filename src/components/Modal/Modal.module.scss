@@ -1,4 +1,4 @@
-// Modal.module.scss
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -32,6 +32,10 @@
       height: 100vh;
       overflow: scroll;
       scrollbar-width: none;
+    }
+
+    &.bigedit {
+      width: 60vw;
     }
   }
   
