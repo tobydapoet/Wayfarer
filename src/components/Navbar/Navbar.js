@@ -57,7 +57,6 @@ function Navbar() {
     } else if (dataRegister.password != dataRegister.repassword) {
       newErrors.repassword = "Mật khẩu nhập lại không đúng";
     }
-
     if (!dataRegister.repassword) {
       newErrors.repassword = "Yêu cầu nhập lại mật khẩu";
     }
@@ -107,7 +106,7 @@ function Navbar() {
           <Button nav onClick={() => setIsOpenLogin(true)}>
             Login
           </Button>
-          <Modal open={isOpenLogin} onClose={() => setIsOpenLogin(false)}>
+          <Modal open={isOpenLogin} onClose={() => setIsOpenLogin(false)} >
             <div className={cx("modal-title")}>Login</div>
             <FontAwesomeIcon
               className={cx("xmark")}
