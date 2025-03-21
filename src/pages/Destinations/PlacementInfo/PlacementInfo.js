@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
-import styles from "./ServiceIntroduce.module.scss";
-import Itinenary from "../../../../../components/Itinerary";
-import { useParams } from "react-router-dom";
-import ItineraryAdd from "../../../../../components/ItineraryAdd/ItineraryAdd";
+import styles from "./PlacementInfo.module.scss";
+import Itinerary from "../../../components/Itinerary";
+import Button from "../../../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -18,21 +18,21 @@ const CONTENT = {
     "visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir",
 };
 
-function ServiceIntroduce() {
-  const param = useParams();
-  console.log(param.type);
-
+function PlacementInfo() {
+  const navigate = useNavigate();
+  const handleBook = () => {
+    const encodedName = encodeURIComponent(CONTENT.name);
+    navigate(`/bill?bill=${encodedName}`)
+  }
   return (
     <div className={cx("wrapper")}>
-      {param.name !== "add_content" ? (
-        <Itinenary manage data={CONTENT} />
-      ) : param.type === "transports" ? (
-        <ItineraryAdd transports/>
-      ) : (
-        <ItineraryAdd />
-      )}
+      <Itinerary data={CONTENT} />
+
+      <div className={cx("btn-wrapper")}>
+        <Button large onClick={handleBook}>Book now!</Button>
+      </div>
     </div>
   );
 }
 
-export default ServiceIntroduce;
+export default PlacementInfo;

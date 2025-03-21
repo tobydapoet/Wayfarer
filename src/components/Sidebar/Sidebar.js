@@ -95,8 +95,8 @@ function Sidebar({ profile, management, dark }) {
             Partners
           </NavLink>
           <NavLink
-            to={`bills`}
-            className={(nav) => cx("bills", { active: nav.isActive })}
+            to={`billsmanage`}
+            className={(nav) => cx("billsmanage", { active: nav.isActive })}
           >
             Bills
           </NavLink>

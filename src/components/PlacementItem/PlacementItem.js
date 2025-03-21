@@ -23,7 +23,10 @@ function PlacementItem({ type, data, manage, client }) {
       activities: data.activities ? data.activities.split(",") : [],
     },
 
-    transports: { ...data ,  activities: data.activities ? data.activities.split(",") : [],},
+    transports: {
+      ...data,
+      activities: data.activities ? data.activities.split(",") : [],
+    },
   };
   const content = contentMap[type] || {};
 
@@ -32,7 +35,7 @@ function PlacementItem({ type, data, manage, client }) {
   const navigate = useNavigate();
 
   const handleRowClick = () => {
-    navigate(`${data.name}`);
+    navigate(`${data.name}`, { relative: "path" });
   };
 
   const getRandomPastelColor = () => {
@@ -75,11 +78,13 @@ function PlacementItem({ type, data, manage, client }) {
             )}
             <div className={cx("view-container")}>
               {client && (
-                <Link className={cx("btn-cotnainer")}>
-                  <Button large className={cx("view-more")}>
-                    Show more
-                  </Button>
-                </Link>
+                <Button
+                  large
+                  className={cx("view-more")}
+                  onClick={handleRowClick}
+                >
+                  Show more
+                </Button>
               )}
               {manage && (
                 <>
@@ -105,9 +110,8 @@ function PlacementItem({ type, data, manage, client }) {
                   <Notice
                     open={deleteNotice}
                     onClose={() => setDeleteNotice(false)}
-                    content= "Do you want to delte this destination ?"
+                    content="Do you want to delte this destination ?"
                   />
-                
                 </>
               )}
             </div>

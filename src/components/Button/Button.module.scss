@@ -27,6 +27,7 @@
 
 .facebook {
     color: rgb(23, 10, 212);
+
 }
 
 .email {
@@ -52,7 +53,8 @@
     font-size: 17px;
 
     &:hover {
-        background-color: #ffffff;
+        background-color: #a8a8a8;
+        color: var(--primary);
     }
 }
 

@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Itinerary.module.scss";
 import StarRating from "../../utils/StartRating";
+import Button from "../Button";
 
 const cx = classNames.bind(styles);
 
-function Itinerary({ data }) {
+function Itinerary({ data, manage }) {
   const [content, setContent] = useState({ ...data });
   const [editField, setEditField] = useState(null);
   const [tempValue, setTempValue] = useState("");
@@ -96,7 +97,6 @@ function Itinerary({ data }) {
     setEditField(null);
   };
 
-  console.log(content);
 
   useEffect(() => {
     if (editField === "description" && textareaRef.current) {
@@ -109,7 +109,7 @@ function Itinerary({ data }) {
     <div className={cx("wrapper")}>
       {/* Name */}
       <div className={cx("name-container")}>
-        {editField === "name" ? (
+        {editField === "name" && manage ? (
           <input
             className={cx("name-input")}
             type="text"
@@ -137,7 +137,7 @@ function Itinerary({ data }) {
       </h4>
 
       <div className={cx("price-container")}>
-        {editField === "price" ? (
+        {editField === "price" && manage ? (
           <input
             className={cx("price-input")}
             type="number"
@@ -163,13 +163,15 @@ function Itinerary({ data }) {
       <hr />
       <div className={cx("img-container")}>
         <img src={content.img} alt={content.name} />
-        <div className={cx("input-container")}>
-          <input type="file" onChange={handleChangeImg} />
-        </div>
+        {manage && (
+          <div className={cx("input-container")}>
+            <input type="file" onChange={handleChangeImg} />
+          </div>
+        )}
       </div>
 
       <div className={cx("description-container")}>
-        {editField === "description" ? (
+        {editField === "description" && manage ? (
           <textarea
             ref={textareaRef}
             className={cx("description-input")}
@@ -196,28 +198,30 @@ function Itinerary({ data }) {
       <div className={cx("activities-wrapper")}>
         <div className={cx("activities-header")}>
           <div className={cx("activities-title")}> Activities:</div>
-          <div className={cx("activities-add")}>
-            {editField === "activities" ? (
-              <input
-                type="text"
-                className={cx("activities-add-input")}
-                value={tempValue}
-                onChange={(e) => setTempValue(e.target.value)}
-                onBlur={() => HandleCancelEdit("activities")}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleSaveNewActivity();
-                  if (e.key === "Escape") HandleCancelEdit("activities");
-                }}
-                autoFocus
-              />
-            ) : (
-              <FontAwesomeIcon
-                className={cx("add-icon")}
-                icon={faPlus}
-                onClick={() => handleEditActivity()}
-              />
-            )}
-          </div>
+          {manage && (
+            <div className={cx("activities-add")}>
+              {editField === "activities" ? (
+                <input
+                  type="text"
+                  className={cx("activities-add-input")}
+                  value={tempValue}
+                  onChange={(e) => setTempValue(e.target.value)}
+                  onBlur={() => HandleCancelEdit("activities")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSaveNewActivity();
+                    if (e.key === "Escape") HandleCancelEdit("activities");
+                  }}
+                  autoFocus
+                />
+              ) : (
+                <FontAwesomeIcon
+                  className={cx("add-icon")}
+                  icon={faPlus}
+                  onClick={() => handleEditActivity()}
+                />
+              )}
+            </div>
+          )}
         </div>
 
         <div className={cx("activities")}>
@@ -243,6 +247,7 @@ function Itinerary({ data }) {
           ))}
         </div>
       </div>
+
     </div>
   );
 }

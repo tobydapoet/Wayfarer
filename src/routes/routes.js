@@ -5,9 +5,6 @@ import Profile from "../pages/Profile";
 import Contact from "../pages/Contact";
 import Blogs from "../pages/Blogs";
 import Placement from "../pages/Destinations/Placement";
-import Trips from "../pages/Destinations/Placement/Trips";
-import Transports from "../pages/Destinations/Placement/Transports";
-import Hotels from "../pages/Destinations/Placement/Hotels";
 import SelectedPage from "../pages/SelectedPage/SelectedPage";
 import Manage from "../pages/Manage/Manage";
 import Business from "../pages/Manage/Business";
@@ -20,7 +17,6 @@ import DestinationsManage from "../pages/Manage/DestinationsManage";
 import AboutUsContent from "../pages/Manage/Content/AboutUsContent";
 import BlogContent from "../pages/Manage/Content/BlogContent";
 import Partners from "../pages/Manage/Partners";
-import Bills from "../pages/Manage/Bills";
 import ProfileLayout from "../layouts/ProfileLayout";
 import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
@@ -28,12 +24,18 @@ import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo
 import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
 import ServicesManage from "../pages/Manage/DestinationsManage/ServicesManage";
 import ServiceIntroduce from "../pages/Manage/DestinationsManage/ServicesManage/ServiceIntroduce/ServiceIntroduce";
+import PlacementInfo from "../pages/Destinations/PlacementInfo";
+import Services from "../pages/Destinations/Placement/Services";
+import Bill from "../pages/Bill";
+import BillsManage from "../pages/Manage/BillsManage";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
   { path: "/destinations", component: DESTINATIONS, topic: "DESTINATIONS" },
   { path: "/about", component: About, topic: "ABOUT US" },
   { path: "/blogs", component: Blogs, topic: "BLOG" },
+  { path: "/bill", component: Bill},
+
   {
     path: "/manage",
     component: Manage,
@@ -86,7 +88,6 @@ const publicRoutes = [
             component: ServiceIntroduce,
             layout: null,
           },
-          
         ],
       },
 
@@ -116,7 +117,7 @@ const publicRoutes = [
         ],
       },
       { path: "partners", component: Partners, layout: null },
-      { path: "bills", component: Bills, layout: null },
+      { path: "billsmanage", component: BillsManage, layout: null },
     ],
   },
   { path: "/contact", component: Contact, topic: "CONTACT US" },
@@ -131,9 +132,8 @@ const publicRoutes = [
     path: "/destinations/:placement",
     component: Placement,
     children: [
-      { path: "trips", component: Trips, default: true, layout: null },
-      { path: "hotels", component: Hotels, layout: null },
-      { path: "transports", component: Transports, layout: null },
+      { path: ":type", component: Services, default: true, layout: null },
+      { path: ":type/:name", component: PlacementInfo, layout: null },
     ],
   },
 ];

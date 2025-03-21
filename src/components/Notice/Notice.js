@@ -5,16 +5,18 @@ import Button from "../Button";
 
 const cx = classNames.bind(styles);
 
-function Notice({open,onClose,content}) {
-
+function Notice({ open, onClose, content, onConfirm, warn }) {
   return (
     <Modal open={open} onClose={onClose}>
       <div className={cx("notice-container")}>
-        <div className={cx("notice-content")}>
-          {content}
-        </div>
+        <div className={cx("notice-content")}>{content}</div>
         <div className={cx("btn-container")}>
-          <Button large>Yes</Button>
+          {!warn && (
+            <Button large onClick={onConfirm}>
+              Yes
+            </Button>
+          )}
+
           <Button large onClick={onClose}>
             Cancel
           </Button>

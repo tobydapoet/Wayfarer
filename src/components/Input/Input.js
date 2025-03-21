@@ -5,7 +5,7 @@ import {
   faSquareCheck,
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./Input.module.scss";
 
 const cx = classNames.bind(styles);

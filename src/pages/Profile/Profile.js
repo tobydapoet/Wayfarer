@@ -17,6 +17,7 @@ const userInfo = {
   location:
     "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
 };
+localStorage.setItem("user", JSON.stringify(userInfo))
 function Profile() {
   return (
     <div className={cx("wrapper")}>

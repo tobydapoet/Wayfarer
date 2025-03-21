@@ -45,10 +45,10 @@ function BonusPoint() {
 
   
   const rewardText = {
-    5: "2%",
-    10: "5%",
-    20: "10%",
-    30: "20%",
+    5: 50,
+    10: 100,
+    20: 220,
+    30: 350,
   };
 
   useEffect(() => {
@@ -160,7 +160,7 @@ function BonusPoint() {
               Use this code to get {rewardText[voucher] || "a discount"} off on your next purchase.
             </div>
             <div className={cx("voucher-footer")}>
-              Valid until:{" "}
+              Valid until:
               {limitation.length > 0
                 ? `${limitation[index].month}-${limitation[index].day}-${limitation[index].year}`
                 : "N/A"}
