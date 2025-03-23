@@ -179,8 +179,38 @@
                 }
             }
         }
-    }
 
+    
+    }
+    .type-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .type-select {
+            color: black;
+            font-size: 19px;
+            font-family: var(--font-default);
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            margin:  auto 0;
+            border: 1px solid;
+            height: 50px;
+        }
+
+        div {
+            color: black;
+            font-size: 19px;
+            font-family: var(--font-default);
+
+        }
+    }
 
 }
 

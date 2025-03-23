@@ -37,7 +37,7 @@ function Input({
   inputRef.current = value;
   const focusRef = useRef();
 
-  console.log(localValue, inputRef);
+  // console.log(localValue, inputRef);
   let Comp = "input";
   if (textarea) Comp = "textarea";
   else if (childs.length > 0) Comp = "select";
@@ -46,7 +46,6 @@ function Input({
   const enableEditing = () => {
     setIsReadOnly(false);
     setTimeout(() => {
-      console.log("inputRef.current:", inputRef.current);
       setTimeout(() => {
         if (focusRef.current && typeof focusRef.current.focus === "function") {
           focusRef.current.focus();
@@ -106,7 +105,6 @@ function Input({
   };
 
   const finishEditing = () => {
-    console.log("Giá trị trước khi lưu:", localValue);
     if (onChange) {
       onChange({
         target: {

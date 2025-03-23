@@ -19,6 +19,7 @@ import BlogContent from "../pages/Manage/Content/BlogContent";
 import Partners from "../pages/Manage/Partners";
 import ProfileLayout from "../layouts/ProfileLayout";
 import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
+import StaffAdd from "../pages/Manage/Business/Staffs/StaffAdd";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
 import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
 import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
@@ -28,13 +29,15 @@ import PlacementInfo from "../pages/Destinations/PlacementInfo";
 import Services from "../pages/Destinations/Placement/Services";
 import Bill from "../pages/Bill";
 import BillsManage from "../pages/Manage/BillsManage";
+import BillEdit from "../pages/Manage/BillsManage/BillEdit";
+import ClientAdd from "../pages/Manage/Business/Clients/ClientAdd";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
   { path: "/destinations", component: DESTINATIONS, topic: "DESTINATIONS" },
   { path: "/about", component: About, topic: "ABOUT US" },
   { path: "/blogs", component: Blogs, topic: "BLOG" },
-  { path: "/bill", component: Bill},
+  { path: "/bill", component: Bill },
 
   {
     path: "/manage",
@@ -49,6 +52,7 @@ const publicRoutes = [
         default: true,
         children: [
           { path: "staffs", component: Staffs, layout: null },
+          { path: "staffs/add_content", component: StaffAdd, layout: null },
           {
             path: "dashboard",
             component: Dashboard,
@@ -56,14 +60,15 @@ const publicRoutes = [
             layout: null,
           },
           { path: "clients", component: Clients, layout: null },
-          {
-            path: "/manage/business/staffs/:info",
-            component: StaffInfo,
-            layout: null,
-          },
+          { path: "/manage/business/clients/add_content", component: ClientAdd, layout: null },
           {
             path: "/manage/business/clients/:info",
             component: ClientInfo,
+            layout: null,
+          },
+          {
+            path: "/manage/business/staffs/:info",
+            component: StaffInfo,
             layout: null,
           },
         ],
@@ -117,7 +122,12 @@ const publicRoutes = [
         ],
       },
       { path: "partners", component: Partners, layout: null },
-      { path: "billsmanage", component: BillsManage, layout: null },
+      {
+        path: "billsmanage",
+        component: BillsManage,
+        layout: null,
+      },
+      { path: "/manage/billsmanage/:bill", component: BillEdit, layout: null },
     ],
   },
   { path: "/contact", component: Contact, topic: "CONTACT US" },

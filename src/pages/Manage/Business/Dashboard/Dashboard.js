@@ -57,72 +57,84 @@ function Dashboard() {
 
   const STAFFS = [
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 2,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 1,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 3,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 2,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 1,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 3,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 1,
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
@@ -132,84 +144,109 @@ function Dashboard() {
 
   const ORDERS = [
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      cost: "2200",
-      status: 0,
-      time: "00:00:00 03/05/2025",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
+      status: 1,
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Maria Hulama",
-      cost: "5500",
-      status: 2,
-      time: "00:00:00 03/05/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Arnoid Sward",
-      cost: "4200",
-      status: 4,
-      time: "00:00:00 03/05/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee2",
-      cost: "2010",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
       status: 3,
-      time: "00:00:00 03/05/2025",
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee3",
-      cost: "2020",
-      status: 7,
-      time: "00:00:00 03/05/2025",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
+      status: 6,
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
     {
+      id : 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      cost: "2200",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
       status: 0,
-      time: "00:00:00 03/05/2025",
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
     {
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Maria Hulama",
-      cost: "5500",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
       status: 2,
-      time: "00:00:00 03/05/2025",
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
     {
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Arnoid Sward",
-      cost: "4200",
-      status: 4,
-      time: "00:00:00 03/05/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee2",
-      cost: "2010",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
       status: 3,
-      time: "00:00:00 03/05/2025",
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
     {
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee3",
-      cost: "2020",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
+      status: 3,
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
+    },
+    {
+      avatar:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
       status: 7,
-      time: "00:00:00 03/05/2025",
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
+    },
+    {
+      avatar:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
+      status: 4,
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
+    },
+    {
+      id : 1,
+      avatar:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
+      client: "Davis Astee3",
+      total: "2020",
+      service: "Temple of Literature1",
+      status: 7,
+      dateStart: "03/05/2025",
+      dateEnd: "03/06/2025",
     },
   ];
 
@@ -403,11 +440,14 @@ function Dashboard() {
           <div className={cx("search-bar")}>
             <SearchBar />
           </div>
-          <div className={cx("list-orders")}>
-            {ORDERS.map((order, key) => (
-              <Order key={key} data={order} />
-            ))}
-          </div>
+          <table>
+            
+            <tbody className={cx("list-orders")}>
+              {ORDERS.map((order, key) => (
+                <Order key={key} data={order} />
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -416,8 +456,12 @@ function Dashboard() {
           <Pie data={dataMonth} options={optionsMonth} plugins={plugins} />
         </div>
         <div className={cx("list-staffs")}>
-          <div className={cx('title')}>Staffs</div>
-          <div className={cx('staffs-container')}>{STAFFS.sort((a,b)=> a.status -b.status).map((staff,key) => <StaffStatus key={key} data={staff}/>)}</div>
+          <div className={cx("title")}>Staffs</div>
+          <div className={cx("staffs-container")}>
+            {STAFFS.sort((a, b) => a.status - b.status).map((staff, key) => (
+              <StaffStatus key={key} data={staff} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

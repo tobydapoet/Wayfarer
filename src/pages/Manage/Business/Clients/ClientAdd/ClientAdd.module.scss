@@ -1,0 +1,100 @@
+.wrapper {
+    padding: 10px 0px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
+    .main-detail {
+        grid-column: 1;
+        width: 100%;
+
+        .phone {
+            color: white !important;
+            display: flex;
+
+            input {
+                color: black;
+                background-color: transparent;
+                border: none;
+                font-family: var(--font-default);
+                font-size: 20px;
+                padding: 26px 0;
+                padding-left: 30px;
+            }
+
+            div {
+                background-color: transparent;
+                border: none;
+                input {
+                    color: black;
+                    height: 20px;
+                }
+                li {
+                    color: black;
+                }
+            }
+        }
+    }
+
+    .avatar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 300px;
+        height: 400px;
+        grid-column: 2;
+
+        img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .input-container {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            right: 70px;
+            bottom: 70px;
+
+            input {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                border-radius: 50%;
+                opacity: 0;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("../../..//../../../public/image-gallery.png");
+                background-position: center;
+                background-size: 50%;
+                background-repeat: no-repeat;
+                border-radius: 50%;
+                pointer-events: none;
+                background-color: white;
+                box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
+            }
+        }
+    }
+    .location-container {
+        grid-column: 1 / span 2;
+    }
+
+    .btn-container {
+        grid-column: 1 / span 2;
+        display: flex;
+        width: 300px;
+        margin: 0 auto;
+    }
+}

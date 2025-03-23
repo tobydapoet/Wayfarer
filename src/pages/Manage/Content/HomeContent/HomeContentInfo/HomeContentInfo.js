@@ -139,6 +139,7 @@ function HomeContentInfo() {
 
       <Modal
         test
+        form
         open={openTest}
         onClose={(e) => {
           e.stopPropagation(); // Ngăn chặn sự kiện lan truyền

@@ -1,6 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./Staffs.module.scss";
 import StaffItem from "../../../../components/StaffItem";
+import SearchBar from "../../../../components/SearchBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -114,11 +118,19 @@ const STAFFS = [
     start: "00:00:00",
   },
 ];
+
 function Staffs() {
+  const navigate = useNavigate();
   return (
     <div className={cx("wrapper")}>
+      <div className={cx("header")}>
+        <SearchBar />
+        <div className={cx("add")} style={{ cursor: "pointer" }} onClick={() => navigate('add_content')}>
+          <FontAwesomeIcon icon={faPlus} />
+        </div>
+      </div>
       <table>
-        <thead className={cx("header")}>
+        <thead>
           <tr>
             <th className={cx("name-header")}>Name</th>
             <th className={cx("location")}>Location</th>

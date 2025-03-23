@@ -3,40 +3,38 @@ import PhoneInput from "react-phone-input-2";
 import getCountryCode from "../../../../../utils/countryUtils/countryUtils";
 import "react-phone-input-2/lib/style.css";
 import Input from "../../../../../components/Input";
-import styles from "./StaffInfo.module.scss";
+import styles from "./StaffAdd.module.scss";
 import { useRef, useState } from "react";
+import images from "../../../../../assets/images";
+import Button from "../../../../../components/Button";
 
 const cx = classNames.bind(styles);
 
-const INFO = {
-  avatar:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-  name: "Davis Astee",
-  status: 1,
-  location:
-    "Bắc Sơn, Thị trấn Chúc Sơn, Chương Mỹ District, Hà Nội, 13400, VietNam",
-  salary: "1500",
-  name: "Nguyen Viet Tung",
-  email: "Cat@gmail.com",
-  birth: "2004-10-29",
-  phone: "0348349754",
-  password: "12345678",
-};
-
-function StaffInfo() {
-  const [userData, setUserData] = useState({ ...INFO });
-  const dataRef = useRef({ phone: "", country: "", ...INFO });
+function StaffAdd() {
+  const [userData, setUserData] = useState({
+    avatar: "",
+    name: "",
+    status: 0,
+    location: "",
+    salary: "",
+    name: "",
+    email: "",
+    birth: "",
+    phone: "",
+    password: "",
+  });
+  const [tempUserData, setTempUserData] = useState({ ...userData });
 
   const handleChangeInput = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setTempUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleChangePhone = (value) => {
-    dataRef.current.phone = value;
+    tempUserData.phone = value;
   };
 
   const handleOnSave = () => {
-    setUserData({ ...dataRef.current });
+    setUserData({ ...tempUserData });
   };
 
   const handleChangeImg = (e) => {
@@ -45,16 +43,22 @@ function StaffInfo() {
     }
     const file = e.target.files[0];
     const imgURL = URL.createObjectURL(file);
-    setUserData((prev) => ({ ...prev, avatar: imgURL }));
+    setTempUserData((prev) => ({ ...prev, avatar: imgURL }));
   };
 
-  console.log('Thông tin sau cập nhât: ' ,userData)
+
+  console.log("Thông tin sau cập nhât: ", userData);
 
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header-info")}>
         <div className={cx("avatar")}>
-          <img src={userData.avatar || "default-avatar.png"} alt="Avatar"></img>
+          <img
+            src={
+              tempUserData.avatar === "" ? images.noImg : tempUserData.avatar
+            }
+            alt="Avatar"
+          ></img>
           <div className={cx("input-container")}>
             <input type="file" name="avatar" onChange={handleChangeImg} />
           </div>
@@ -70,10 +74,9 @@ function StaffInfo() {
             dark
             frame="Fullname"
             placeholder="Name..."
-            value={userData.name}
             name="name"
             onChange={handleChangeInput}
-            readOnly
+            value={tempUserData.name}
           />
         </div>
         <div className={cx("email")}>
@@ -82,10 +85,9 @@ function StaffInfo() {
             frame="Email"
             placeholder="Email"
             name="email"
-            readOnly
-            value={INFO.email}
             email
             onChange={handleChangeInput}
+            value={tempUserData.email}
           />
         </div>
         <div className={cx("password")}>
@@ -94,11 +96,10 @@ function StaffInfo() {
             frame="Password"
             placeholder="Password"
             name="password"
-            readOnly
-            value={INFO.password}
             email
             type="password"
             onChange={handleChangeInput}
+            value={tempUserData.password}
           />
         </div>
         <div className={cx("birth")}>
@@ -107,22 +108,20 @@ function StaffInfo() {
             frame="Birth"
             type="date"
             placeholder="Birth"
-            value={userData.birth}
             name="birth"
             onChange={handleChangeInput}
-            readOnly={true}
+            value={tempUserData.birth}
           />
         </div>
 
         <div className={cx("phone-container")}>
-          <Input dark readOnly={true} onSave={handleOnSave} frame="Phone" value={userData.phone}>
+          <Input dark frame="Phone" value={tempUserData.phone}>
             <PhoneInput
               className={cx("phone")}
               enableSearch
-              value={dataRef.current.phone}
               name="phone"
               onChange={handleChangePhone}
-              country={getCountryCode(userData.location).toLowerCase()}
+              value={tempUserData.phone}
             />
           </Input>
         </div>
@@ -132,29 +131,32 @@ function StaffInfo() {
             frame="Salary"
             type="salary"
             placeholder="Salary"
-            value={userData.salary}
+            value={tempUserData.salary}
             name="salary"
             onChange={handleChangeInput}
-            readOnly={true}
           />
         </div>
 
         <div className={cx("location-container")}>
           <Input
             dark
-            key={userData.location}
             frame="Location"
             type="location"
             placeholder="Location"
-            value={userData?.location || ""}
+            value={tempUserData.location}
             name="location"
             onChange={handleChangeInput}
-            readOnly={true}
+            location
           />
         </div>
+      </div>
+      <div className={cx("btn-container")}>
+        <Button large onClick={handleOnSave}>
+          Save
+        </Button>
       </div>
     </div>
   );
 }
 
-export default StaffInfo;
+export default StaffAdd;

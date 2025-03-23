@@ -4,17 +4,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Itinerary.module.scss";
 import StarRating from "../../utils/StartRating";
-import Button from "../Button";
 
 const cx = classNames.bind(styles);
 
+const serviceMap = {
+  0: "trips",
+  1: "hotels",
+  2: "transports",
+};
+
 function Itinerary({ data, manage }) {
-  const [content, setContent] = useState({ ...data });
+  const [content, setContent] = useState({
+    ...data,
+    type: data.type in serviceMap ? data.type : 0,
+  });
   const [editField, setEditField] = useState(null);
   const [tempValue, setTempValue] = useState("");
   const textareaRef = useRef(null);
+  console.log(content)
 
   const activityMap = content.activities ? content.activities.split(",") : [];
+
+
 
   const handleChangeImg = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -97,11 +108,10 @@ function Itinerary({ data, manage }) {
     setEditField(null);
   };
 
-
   useEffect(() => {
     if (editField === "description" && textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Reset chiều cao
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Đặt chiều cao dựa trên nội dung
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; 
     }
   }, [tempValue, editField]);
 
@@ -247,7 +257,30 @@ function Itinerary({ data, manage }) {
           ))}
         </div>
       </div>
-
+      <div className={cx("type-container")}>
+        {editField === "type" ? (
+          <select
+          className={cx("type-select")}
+          value={tempValue}
+          onChange={(e) => setTempValue(e.target.value)}
+          onBlur={() => HandleCancelEdit("type")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSaveField("type");
+            if (e.key === "Escape") HandleCancelEdit("type");
+          }}
+        >
+          {Object.keys(serviceMap).map((key) => (
+            <option key={key} value={key} selected={key === tempValue}>
+              {serviceMap[key]} 
+            </option>
+          ))}
+        </select>
+        ) : (
+          <div onClick={() => handleEditField("type")}>
+            {serviceMap[content.type]}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

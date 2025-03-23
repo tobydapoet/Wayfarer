@@ -157,19 +157,13 @@
         }
         .last-order {
             width: 93%;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 1;
-
             .search-bar {
                 margin-top: 10px;
                 display: flex;
             }
 
             .list-orders {
-                display: flex;
-                flex-direction: column;
+        
                 height: 50vh;
                 overflow: scroll;
                 scrollbar-width: none;
@@ -219,4 +213,5 @@
             }
         }
     }
+    
 }
