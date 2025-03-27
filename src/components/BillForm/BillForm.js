@@ -265,7 +265,7 @@ function BillForm({ data, userVoucher }) {
               <div className={cx("voucher-code")}>{voucher.name}</div>
               <div className={cx("voucher-details")}>
                 Use this code to get{" "}
-                {`${voucher.value.toLocaleString("vi-VN")} VND` || "a discount"}
+                {`${voucher.value.toLocaleString("vi-VN")} VND ` || "a discount "}
                 off on your next purchase.
               </div>
             </div>

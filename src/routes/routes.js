@@ -38,12 +38,29 @@ const publicRoutes = [
   { path: "/about", component: About, topic: "ABOUT US" },
   { path: "/blogs", component: Blogs, topic: "BLOG" },
   { path: "/bill", component: Bill },
-
+  { path: "/contact", component: Contact, topic: "CONTACT US" },
+  
+  {
+    path: "/:email",
+    component: Profile,
+    layout: ProfileLayout,
+  },
+  { path: ":email/:selected", component: SelectedPage, layout: ProfileLayout },
+  {
+    path: "/destinations/:placement",
+    component: Placement,
+    children: [
+      { path: ":type", component: Services, default: true, layout: null },
+      { path: ":type/:name", component: PlacementInfo, layout: null },
+    ],
+  },
+];
+const privateRoutes = [
+  ...publicRoutes,
   {
     path: "/manage",
     component: Manage,
     topic: "MANAGEMENT",
-
     children: [
       {
         path: "business",
@@ -60,7 +77,11 @@ const publicRoutes = [
             layout: null,
           },
           { path: "clients", component: Clients, layout: null },
-          { path: "/manage/business/clients/add_content", component: ClientAdd, layout: null },
+          {
+            path: "/manage/business/clients/add_content",
+            component: ClientAdd,
+            layout: null,
+          },
           {
             path: "/manage/business/clients/:info",
             component: ClientInfo,
@@ -130,22 +151,6 @@ const publicRoutes = [
       { path: "/manage/billsmanage/:bill", component: BillEdit, layout: null },
     ],
   },
-  { path: "/contact", component: Contact, topic: "CONTACT US" },
-  {
-    path: "/:email",
-    component: Profile,
-    layout: ProfileLayout,
-    topic: "PROFILE",
-  },
-  { path: "/:email/:selected", component: SelectedPage, layout: ProfileLayout },
-  {
-    path: "/destinations/:placement",
-    component: Placement,
-    children: [
-      { path: ":type", component: Services, default: true, layout: null },
-      { path: ":type/:name", component: PlacementInfo, layout: null },
-    ],
-  },
+
 ];
-const privateRoutes = [];
 export { publicRoutes, privateRoutes };

@@ -81,7 +81,8 @@
     bottom: 1.5rem;
     right: 0;
     img {
-        height: 60px;
-        width: auto;
+        height: 7vh;
+        width: 6vw;
+        object-fit: contain;
     }
 }

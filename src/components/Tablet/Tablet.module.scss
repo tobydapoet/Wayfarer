@@ -15,10 +15,17 @@
 .imgs {
     position: relative;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
-    grid-auto-rows: 10px;
-    
+    display: flex;
+
+    .pin-container {
+        display: grid;
+        position: relative;
+        justify-content: center;
+        margin: 0 auto;
+        width: 100%;
+        grid-template-columns: repeat(auto-fill, 200px);
+        grid-auto-rows: 10px;
+    }
 
     .img-container {
         margin-left: 100px;
@@ -32,11 +39,10 @@
     }
 
     .vertical-img-container {
-        position: absolute;
         object-fit: contain;
         z-index: 1;
         left: 0;
-  
+
         img {
             width: 450px;
             height: 450px;
@@ -48,16 +54,14 @@
         position: absolute;
         object-fit: cover;
         z-index: 2;
-  
         top: 0;
         margin-left: 200px;
         margin-top: 300px;
-    
+
         img {
             width: auto;
-            height: 250px; 
+            height: 250px;
             box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
-            overflow-clip-margin: content-box;
         }
     }
 }
@@ -67,8 +71,7 @@
     padding: 0;
     border-radius: 16px;
     position: relative;
-    font-family:var(--font-default);
-
+    font-family: var(--font-default);
 
     .content-overlay {
         position: absolute;
@@ -93,8 +96,6 @@
         .name-container {
             margin-top: 10px;
         }
-
-       
     }
 
     &:hover .content-container {
@@ -102,7 +103,7 @@
     }
 
     &:hover .content-overlay {
-        opacity: 2; 
+        opacity: 2;
     }
 
     &.piece {
@@ -120,12 +121,12 @@
             grid-row-end: span 15;
             object-fit: cover;
         }
-        
+
         &.medium {
             grid-row-end: span 20;
             object-fit: cover;
         }
-        
+
         &.large {
             grid-row-end: span 33;
             object-fit: cover;
@@ -146,20 +147,18 @@
             grid-row-end: span 20;
             object-fit: cover;
         }
-        
+
         &.medium {
             grid-row-end: span 30;
             object-fit: cover;
         }
-        
+
         &.large {
             grid-row-end: span 50;
             object-fit: cover;
         }
     }
-
 }
-
 
 .content {
     width: 40vw;
@@ -170,37 +169,139 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        
     }
 
     .title {
-       font-size: 3rem;
-       font-family: themify;
-       margin: 2rem 0;
-       font-weight: 300;
+        font-size: 3rem;
+        font-family: themify;
+        margin: 2rem 0;
+        font-weight: 300;
     }
 
     .describe {
         margin-top: 20px;
         font-size: 17px;
         text-align: justify;
-        line-height: 1.6; 
-        font-family:var(--font-default);
+        line-height: 1.6;
+        font-family: var(--font-default);
+        text-indent: 30px;
     }
-    
+}
 
-    .view-more {
-        font-family: Walsheim-bold;
-        position: relative;
-        display: inline-block;
-        padding-bottom: 0.4rem;
-        text-decoration: none;
-        color: black;
-        margin-top: 20px;
-        font-size: 18px;
+@media (max-width: 1350px) {
+    .wrapper {
+        .imgs-container {
+            width: 80vw;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
 
+            .imgs {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+            }
 
-    
+            .vertical-img-container {
+                object-fit: contain;
+                z-index: 1;
+                left: 0;
+
+                img {
+                    width: 450px;
+                    height: 450px;
+                    object-fit: cover;
+                    box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
+                }
+            }
+            .horizontal-img-container {
+                object-fit: cover;
+                z-index: 2;
+                top: 50px;
+
+                img {
+                    width: auto;
+                    height: 250px;
+                    box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
+                }
+            }
+            .img-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 0;
+                overflow: visible;
+            }
+        }
     }
-    
+}
+
+@media (max-width: 1000px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 4rem 2rem;
+
+        .imgs-container {
+            width: 80vw;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+
+            .imgs {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+            }
+
+            .vertical-img-container {
+                object-fit: contain;
+                z-index: 1;
+                left: 0;
+
+                img {
+                    width: 450px;
+                    height: 450px;
+                    object-fit: cover;
+                    box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
+                }
+            }
+            .horizontal-img-container {
+                object-fit: cover;
+                z-index: 2;
+                top: 50px;
+
+                img {
+                    width: auto;
+                    height: 250px;
+                    box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
+                }
+            }
+            .img-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 0;
+                overflow: visible;
+            }
+        }
+        .content {
+            width: 90vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .title {
+                font-size: 2rem;
+                font-family: themify;
+                margin: 0;
+                margin-top: 2rem;
+                font-weight: 300;
+            }
+        
+        }
+    }
 }

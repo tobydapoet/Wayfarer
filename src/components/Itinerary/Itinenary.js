@@ -21,11 +21,9 @@ function Itinerary({ data, manage }) {
   const [editField, setEditField] = useState(null);
   const [tempValue, setTempValue] = useState("");
   const textareaRef = useRef(null);
-  console.log(content)
+  console.log(content);
 
   const activityMap = content.activities ? content.activities.split(",") : [];
-
-
 
   const handleChangeImg = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -111,7 +109,7 @@ function Itinerary({ data, manage }) {
   useEffect(() => {
     if (editField === "description" && textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; 
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [tempValue, editField]);
 
@@ -237,7 +235,7 @@ function Itinerary({ data, manage }) {
         <div className={cx("activities")}>
           {activityMap.map((activity, index) => (
             <div key={index} className={cx("activity")}>
-              {editField === `activity_${index}` ? (
+              {editField === `activity_${index}` && manage ? (
                 <input
                   type="text"
                   value={tempValue}
@@ -257,30 +255,32 @@ function Itinerary({ data, manage }) {
           ))}
         </div>
       </div>
-      <div className={cx("type-container")}>
-        {editField === "type" ? (
-          <select
-          className={cx("type-select")}
-          value={tempValue}
-          onChange={(e) => setTempValue(e.target.value)}
-          onBlur={() => HandleCancelEdit("type")}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSaveField("type");
-            if (e.key === "Escape") HandleCancelEdit("type");
-          }}
-        >
-          {Object.keys(serviceMap).map((key) => (
-            <option key={key} value={key} selected={key === tempValue}>
-              {serviceMap[key]} 
-            </option>
-          ))}
-        </select>
-        ) : (
-          <div onClick={() => handleEditField("type")}>
-            {serviceMap[content.type]}
-          </div>
-        )}
-      </div>
+      {manage && (
+        <div className={cx("type-container")}>
+          {editField === "type" ? (
+            <select
+              className={cx("type-select")}
+              value={tempValue}
+              onChange={(e) => setTempValue(e.target.value)}
+              onBlur={() => HandleCancelEdit("type")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSaveField("type");
+                if (e.key === "Escape") HandleCancelEdit("type");
+              }}
+            >
+              {Object.keys(serviceMap).map((key) => (
+                <option key={key} value={key} selected={key === tempValue}>
+                  {serviceMap[key]}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div onClick={() => handleEditField("type")}>
+              {serviceMap[content.type]}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

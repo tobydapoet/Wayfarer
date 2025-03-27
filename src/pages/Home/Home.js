@@ -4,6 +4,7 @@ import { ToIcon } from "../../components/Icons";
 import CinematicVideo from "../../components/CinematicVideo/CinematicVideo";
 import styles from "./Home.module.scss";
 import Tablet from "../../components/Tablet/Tablet";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -76,25 +77,19 @@ function Home() {
     },
   ];
 
+
   return (
     <>
       <div className={cx("page-header")}>
         <CinematicVideo />
-
         <div className={cx("content")}>
           <div className={cx("brand")}>
             <div className={cx("brand-name")}>Farwayer</div>
             <div className={cx("brand-title")}>Farer and Lover</div>
           </div>
           <div className={cx("list")}>
-            <Link to="/" className={cx("item-container")}>
+            <Link to="/destinations" className={cx("item-container")}>
               <div className={cx("booking")}>Plan your journey</div>
-              <span className={cx("icon-container")}>
-                <ToIcon className={cx("icon")} />
-              </span>
-            </Link>
-            <Link to="/" className={cx("item-container")}>
-              <div className={cx("review")}>Experiences review</div>
               <span className={cx("icon-container")}>
                 <ToIcon className={cx("icon")} />
               </span>
@@ -109,7 +104,9 @@ function Home() {
       </div>
 
       <div className={cx("main-infor")}>
-        {CONTENTS.map((content,index) => <Tablet data={content} key={index} /> )}
+        {CONTENTS.map((content, index) => (
+          <Tablet data={content} key={index} />
+        ))}
       </div>
     </>
   );

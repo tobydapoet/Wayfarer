@@ -1,22 +1,22 @@
 .wrapper {
     position: relative;
-    margin-bottom: 100px ;
+    margin-bottom: 100px;
 
     .content-container {
         display: flex;
-
         justify-content: space-evenly;
         gap: 50px;
+        width: 95vw;
+        margin: 0 auto;
 
         .title {
             font-size: 3rem;
             font-family: themify;
             margin: 2rem 0;
             font-weight: 300;
-            flex: 0.70;
+            flex: 0.7;
             display: flex;
             align-items: center;
-    
         }
 
         .describe {
@@ -29,18 +29,37 @@
             flex: 1.3;
         }
 
-        .title, .describe {
-            max-width: 45%; /* Hoặc giá trị nhỏ hơn tùy vào yêu cầu */
+        .title,
+        .describe {
+            margin-bottom: 40px;
         }
     }
     .img-container {
         width: 100vw;
-        margin: 0rem -2.8rem;
+        margin: 0rem;
 
         img {
             width: 100vw;
             height: 80vh;
             object-fit: cover;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .wrapper {
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            gap: 10px;
+
+            .title {
+                margin-bottom: 0;
+                font-size: 25px;
+            }
         }
     }
 }

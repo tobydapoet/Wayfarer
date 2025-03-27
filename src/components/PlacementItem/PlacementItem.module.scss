@@ -3,12 +3,12 @@
     overflow: hidden;
     width: 100%;
     height: fit-content;
+    margin-top: 20px;
 }
 
 .container {
     display: flex;
     gap: 20px;
-    margin-top: 20px;
     position: relative;
     font-family: var(--font-default);
     height: 250px;
@@ -22,7 +22,6 @@
         height: 100%;
         width: 30%;
         object-fit: cover;
-
     }
 
     .content {
@@ -34,6 +33,7 @@
             margin-bottom: 10px;
 
             .name {
+                font-size: 19px;
                 &.manage {
                     font-size: 17px;
                 }
@@ -42,11 +42,9 @@
 
             .price {
                 font-size: 25px;
-              
 
                 &.manage {
                     font-size: 25px;
-                 
                 }
             }
         }
@@ -92,9 +90,9 @@
 
         .activities-container {
             display: flex;
-            flex-wrap: wrap; /* Xuống dòng nếu không đủ chỗ */
-            gap: 10px; /* Khoảng cách giữa các hoạt động */
-            max-width: 100%; /* Giới hạn chiều rộng */
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 100%;
             margin-top: 10px;
             overflow-y: hidden;
             height: 35px;
@@ -106,10 +104,60 @@
             color: white;
             border-radius: 16px;
             font-size: 14px;
-            white-space: nowrap; /* Không cho phép xuống dòng trong từng mục */
+            white-space: nowrap;
             display: flex;
             align-items: center;
         }
     }
+}
+@media (max-width: 1000px) {
+    .container {
+        height: 170px;
+        gap: 5px;
 
+        .activities-container {
+            display: none !important;
+        }
+
+        .content {
+            padding: 10px;
+
+            .header {
+                .name {
+                    font-size: 15px;
+                    &.manage {
+                        font-size: 17px;
+                    }
+                }
+                .price {
+                    font-size: 19px;
+                }
+            }
+
+            .view-container {
+                position: absolute;
+                right: 2%;
+                bottom: 5%;
+                width: 150px;
+
+                .btn-container {
+                    font-family: var(--font-default);
+                    display: flex;
+                }
+
+                .view-more {
+                    font-size: 15px;
+                    width: 130px;
+                    &:hover {
+                        background-color: rgba(187, 186, 186, 0.75);
+                    }
+                }
+                .delete {
+                    padding: 10px;
+                    width: fit-content;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
 }

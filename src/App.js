@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import { publicRoutes } from "./routes";
+import { privateRoutes, publicRoutes } from "./routes";
 import MainLayout from "./layouts/MainLayout";
 import ProfileLayout from "./layouts/ProfileLayout";
 import React, { Fragment } from "react";
@@ -16,6 +16,8 @@ const getRandomColor = () => {
 };
 
 getRandomColor()
+
+const user  = JSON.parse(localStorage.getItem('user'))
 
 const renderRoutes = (routes) =>
   routes.map((route, index) => {
@@ -53,10 +55,11 @@ const renderRoutes = (routes) =>
   });
 
 function App() {
+  const routesToRender = user && user.position === 0 ? privateRoutes : publicRoutes;
   return (
     <Router>
       <div className="App">
-        <Routes>{renderRoutes(publicRoutes)}</Routes>
+        <Routes>{renderRoutes(routesToRender)}</Routes>
       </div>
     </Router>
   );

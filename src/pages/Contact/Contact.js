@@ -3,16 +3,92 @@ import Input from "../../components/Input";
 import styles from "./Contact.module.scss";
 import Button from "../../components/Button";
 import useForm from "../../hooks/useForm";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
 function Contact() {
-  const [inputValue, handleValue, resetValue] = useForm({
-    email: "",
-    name: "",
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [contactValue, setContactValue] = useForm({
+    email: user.email,
+    name: user.name,
     subject: "",
     message: "",
   });
+  const [tempConctactValue, setTempContactValue] = useState({
+    ...contactValue,
+  });
+  const [errors, setErrors] = useState({});
+
+  const validateInput = (name, value) => {
+    const newErrors = {};
+    switch (name) {
+      case "name": {
+        if (!value.trim()) {
+          newErrors.name = "Name cannot empty!";
+        }
+        break;
+      }
+      case "email": {
+        if (!value.trim()) {
+          newErrors.email = "Email cannot empty!";
+        } else if (
+          !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            value
+          )
+        ) {
+          newErrors.email = "Wrong format";
+        }
+        break;
+      }
+      case "subject": {
+        if (!value.trim()) {
+          newErrors.subject = "Subject cannot empty!";
+        }
+        break;
+      }
+      case "message": {
+        if (!value.trim()) {
+          newErrors.message = "Message cannot empty!";
+        }
+        break;
+      }
+    }
+    return newErrors;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const newErrors = validateInput(name, value);
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...newErrors, ...prevErrors };
+
+      if (!newErrors[name]) {
+        delete updatedErrors[name];
+      }
+
+      return updatedErrors;
+    });
+
+    setTempContactValue((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleOnSave = (e) => {
+    const newErrors = {};
+    Object.entries(tempConctactValue).forEach(([name, value]) => {
+      const fieldErros = validateInput(name, value);
+      Object.assign(newErrors, fieldErros);
+    });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    setContactValue({ ...tempConctactValue });
+  };
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
@@ -23,18 +99,20 @@ function Contact() {
               dark
               placeholder="Name"
               className={cx("name")}
-              value={inputValue.name}
-              onChange={handleValue}
+              value={tempConctactValue.name}
+              onChange={handleInputChange}
               name="name"
+              error={errors.name}
             />
 
             <Input
               dark
               placeholder="Email"
               className={cx("email")}
-              value={inputValue.email}
-              onChange={handleValue}
+              value={tempConctactValue.email}
+              onChange={handleInputChange}
               name="email"
+              error={errors.email}
             />
           </div>
 
@@ -42,9 +120,10 @@ function Contact() {
             dark
             placeholder="Subject"
             className={cx("subject")}
-            value={inputValue.subject}
-            onChange={handleValue}
+            value={tempConctactValue.subject}
+            onChange={handleInputChange}
             name="subject"
+            error={errors.subject}
           />
 
           <Input
@@ -53,11 +132,12 @@ function Contact() {
             className={cx("message")}
             name="message"
             textarea
-            value={inputValue.message}
-            onChange={handleValue}
+            value={tempConctactValue.message}
+            onChange={handleInputChange}
+            error={errors.message}
           />
 
-          <Button large className={cx("send-btn")}>
+          <Button large className={cx("send-btn")} onClick={() => handleOnSave()}>
             Send message
           </Button>
         </div>

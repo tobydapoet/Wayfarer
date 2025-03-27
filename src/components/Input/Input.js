@@ -176,7 +176,7 @@ function Input({
           {localValue.length}/{maxLength}
         </div>
       )}
-      {error && <span className={cx("error")}>{error}</span>}
+      <span className={cx("error")}>{error || "\u00A0"}</span>
       {readOnly &&
         (isReadOnly ? (
           <FontAwesomeIcon

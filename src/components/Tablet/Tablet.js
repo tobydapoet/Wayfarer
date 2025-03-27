@@ -10,7 +10,6 @@ function Tablet({ data }) {
   const singleImg = data.image || "";
   const title = data.title || "";
   const describe = data.describe || "";
-  console.log(data.image);
   return (
     <div className={cx("wrapper")}>
       {images.length > 0 || singleImg ? (
@@ -43,9 +42,11 @@ function Tablet({ data }) {
                   )}
                 </>
               ) : (
-                images.map((image, index) => (
-                  <Pin key={index} imgSrc={image} type="piece" />
-                ))
+                <div className={cx('pin-container')}>
+                  {images.map((image, index) => (
+                    <Pin key={index} imgSrc={image} type="piece" />
+                  ))}
+                </div>
               )
             ) : (
               <div className={cx("img-container")}>

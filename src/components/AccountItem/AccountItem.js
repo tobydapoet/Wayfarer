@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles)
 
-function AccountItem({email,avatar}) {
-    return ( <Link to={`/${email}`} className={cx('wrapper')}>
-        <img src = {avatar} className={cx('avatar')}/>
-        <div className={cx('email')}>{email}</div>
+
+function AccountItem({data}) {
+    return ( <Link to={`/${data.email}`} className={cx('wrapper')}>
+        <img src = {data.avatar} className={cx('avatar')}/>
+        <div className={cx('email')}>{data.email}</div>
     </Link>);
 }
 
