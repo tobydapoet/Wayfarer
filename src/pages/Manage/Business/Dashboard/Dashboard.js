@@ -57,84 +57,84 @@ function Dashboard() {
 
   const STAFFS = [
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 2,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 1,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 3,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 2,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 0,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 1,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 3,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
       status: 1,
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       name: "Davis Astee",
@@ -144,7 +144,7 @@ function Dashboard() {
 
   const ORDERS = [
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       client: "Davis Astee3",
@@ -155,7 +155,7 @@ function Dashboard() {
       dateEnd: "03/06/2025",
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       client: "Davis Astee3",
@@ -166,7 +166,7 @@ function Dashboard() {
       dateEnd: "03/06/2025",
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       client: "Davis Astee3",
@@ -177,7 +177,7 @@ function Dashboard() {
       dateEnd: "03/06/2025",
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       client: "Davis Astee3",
@@ -238,7 +238,7 @@ function Dashboard() {
       dateEnd: "03/06/2025",
     },
     {
-      id : 1,
+      id: 1,
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
       client: "Davis Astee3",
@@ -279,7 +279,8 @@ function Dashboard() {
           bottomRight: 10,
         },
         borderSkipped: "top",
-        barThickness: 45,
+        barThickness: "flex",
+        maxBarThickness: 45,
       },
       {
         label: "Remaining",
@@ -293,7 +294,8 @@ function Dashboard() {
           bottomRight: 0,
         },
         borderSkipped: "bottom",
-        barThickness: 45,
+        barThickness: "flex",
+        maxBarThickness: 45,
       },
     ],
   };
@@ -371,9 +373,9 @@ function Dashboard() {
   const optionsMonth = {
     plugins: {
       legend: {
-        position: "bottom", // Position of legend
+        position: "bottom",
         labels: {
-          padding: 12, // Add space inside the legend items
+          padding: 12,
         },
       },
     },
@@ -394,7 +396,8 @@ function Dashboard() {
               $ {balanceMonth.toLocaleString("us-US")}
             </div>
             <div className={cx("growth")}>
-              <span className={cx("growth-percent")}>+ 16% </span>vs last month
+              <div className={cx("growth-percent")}>+ 16% </div>
+              <span>vs last month</span>
             </div>
           </div>
           <div className={cx("sales")}>
@@ -408,7 +411,8 @@ function Dashboard() {
               $ {totalSales.toLocaleString("us-US")}
             </div>
             <div className={cx("growth")}>
-              <span className={cx("growth-percent")}>+ 16% </span>vs last month
+              <div className={cx("growth-percent")}>+ 16% </div>
+              <span>vs last month</span>
             </div>
           </div>
           <div className={cx("users")}>
@@ -422,7 +426,8 @@ function Dashboard() {
               $ {(totalSales - balanceMonth).toLocaleString("us-US")}
             </div>
             <div className={cx("growth")}>
-              <span className={cx("growth-percent")}>+ 16% </span>vs last month
+              <div className={cx("growth-percent")}>+ 16% </div>
+              <span>vs last month</span>
             </div>
           </div>
         </div>
@@ -441,7 +446,6 @@ function Dashboard() {
             <SearchBar />
           </div>
           <table>
-            
             <tbody className={cx("list-orders")}>
               {ORDERS.map((order, key) => (
                 <Order key={key} data={order} />

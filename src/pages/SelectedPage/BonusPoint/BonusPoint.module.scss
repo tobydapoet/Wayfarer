@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     background-color: #f1eee3;
-    height: 90vh;
+    height: calc(90vh - 10px);
     padding: 5px;
 
     .calendar {
@@ -26,6 +26,11 @@
             justify-content: center;
             font-family: var(--font-default);
             position: relative;
+
+            .check,
+            .xmark {
+                font-size: 40px;
+            }
 
             .day-name {
                 position: absolute;
@@ -53,7 +58,7 @@
         .note {
             background-color: transparent;
             cursor: pointer;
-            color:rgb(117, 117, 117);
+            color: rgb(117, 117, 117);
             font-size: 20px;
             border: none;
         }
@@ -98,7 +103,6 @@
                 background: #f4f4f4;
                 padding: 10px;
                 border-radius: 5px;
-                
             }
             .voucher-details {
                 font-size: 14px;
@@ -110,7 +114,38 @@
                 color: #777;
                 border-top: 1px dashed #999;
                 padding-top: 5px;
-              
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Thêm số cột */
+            grid-template-rows: repeat(5, 1fr);
+            gap: 5px;
+            background-color: #f1eee3;
+            width: 100%;
+            max-width: fit-content;
+            .day {
+                width: 14.2vw;
+                height: 60px;
+                .day-name {
+                    font-size: 10px;
+                    width: 17px;
+                    height: 12px;
+                    padding: 0;
+                }
+
+                .check {
+                    font-size: 20px;
+                }
+
+                .xmark {
+                    font-size: 20px;
+                }
             }
         }
     }

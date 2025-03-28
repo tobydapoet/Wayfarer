@@ -89,7 +89,7 @@
             .content {
                 margin-bottom: 40px;
                 text-decoration: none;
-                color: var(--primary);
+                color: #202020;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -105,4 +105,16 @@
 
 a {
     text-decoration: none;
+}
+
+@media (max-width:800px) {
+    .wrapper {
+        .tabs {
+            display: flex;
+    
+            div {
+                padding: 10px 15px;
+            }
+        }
+    }
 }

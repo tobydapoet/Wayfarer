@@ -4,7 +4,6 @@
     grid-template-columns: 15vw auto;
     grid-template-rows: auto auto;
     height: calc(100vh - 60px);
-    
 
     .sidebar-container {
         box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
@@ -17,5 +16,21 @@
         overflow: scroll;
         scrollbar-width: none;
     }
+}
 
+
+@media (max-width: 800px) {
+    .wrapper {
+        margin: 0px 0px;
+        width: 100vw;
+        grid-template-columns: 80px auto;
+
+        .sidebar-container {
+            width: 80px;
+        }
+
+        .content {
+            width: calc(100vw - 80px);
+        }
+    }
 }

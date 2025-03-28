@@ -9,7 +9,6 @@ const cx = classNames.bind(styles);
 
 
 function MainLayout({ children }) {
-
   const location = useLocation();
   const isManagementPage = location.pathname.startsWith("/manage");
   return (

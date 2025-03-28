@@ -1,19 +1,43 @@
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import {
+  faCircleInfo,
+  faClock,
+  faGift,
+  faHandshake,
+  faHeart,
+  faLocation,
+  faMoneyBills,
+  faNewspaper,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
 function Sidebar({ profile, management, dark }) {
-  const user = JSON.parse(localStorage.getItem('user'))
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const positionMap = {
-    0: 'Manager',
-    1: 'Staff',
-    2: 'Client'
-  }
+    0: "Manager",
+    1: "Staff",
+    2: "Client",
+  };
 
   const { email } = useParams();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className={cx("wrapper")}>
@@ -22,83 +46,118 @@ function Sidebar({ profile, management, dark }) {
           <img src={user.avatar} className={cx("img-avatar")} />
         </div>
 
-        <div className={cx("info-user", { dark })}>
-          <div className={cx("name")}>{user.name}</div>
-          <div className={cx("email")}> {user.email}</div>
-          {user.position !== "guess" && (
-            <div className={cx("position")}>
-              {positionMap[user.position]}
-            </div>
-          )}
-        </div>
+        {!isMobile && (
+          <div className={cx("info-user", { dark })}>
+            <div className={cx("name")}>{user.name}</div>
+            <div className={cx("email")}> {user.email}</div>
+            {user.position !== "guess" && (
+              <div className={cx("position")}>{positionMap[user.position]}</div>
+            )}
+          </div>
+        )}
       </Link>
 
       {profile && (
         <>
-          <div className="gap-line1"></div>
+          <div className={cx("menu")}>
+            {!isMobile && <hr className={cx("gap-line1")}></hr>}
 
-          <div className={cx("navigate-profile")}>
-            <NavLink
-              to={`/${email}/processing`}
-              className={(nav) => cx("processing", { active: nav.isActive })}
-            >
-              Processing
-            </NavLink>
-            <NavLink
-              to={`/${email}/favourite`}
-              className={(nav) => cx("favourite", { active: nav.isActive })}
-            >
-              Favourite
-            </NavLink>
-            <NavLink
-              to={`/${email}/bonus`}
-              className={(nav) => cx("bonus", { active: nav.isActive })}
-            >
-              Bonus point
-            </NavLink>
-          </div>
+            <div className={cx("navigate-profile")}>
+              <div className={cx("processing-container")}>
+                <NavLink
+                  to={`/${email}/processing`}
+                  className={(nav) =>
+                    cx("processing", { active: nav.isActive })
+                  }
+                >
+                  {isMobile ? <FontAwesomeIcon icon={faClock} /> : "Processing"}
+                </NavLink>
+              </div>
+              <div className={cx("favourite-container")}>
+                <NavLink
+                  to={`/${email}/favourite`}
+                  className={(nav) => cx("favourite", { active: nav.isActive })}
+                >
+                  {isMobile ? <FontAwesomeIcon icon={faHeart} /> : "Favourite"}
+                </NavLink>
+              </div>
+              <div className={cx("bonus-container")}>
+                <NavLink
+                  to={`/${email}/bonus`}
+                  className={(nav) => cx("bonus", { active: nav.isActive })}
+                >
+                  {isMobile ? <FontAwesomeIcon icon={faGift} /> : "Bonus point"}
+                </NavLink>
+              </div>
+            </div>
+            {!isMobile && <hr className={cx("gap-line2")}></hr>}
 
-          <div className="gap-line2"></div>
-
-          <div className={cx("logout")}>
-            <Link to="" className="logout">
-              Log out
-            </Link>
+            <div className={cx("logout")}>
+              <Link to="" className="logout">
+                {isMobile ? (
+                  <FontAwesomeIcon icon={faRightFromBracket} />
+                ) : (
+                  "Log out"
+                )}
+              </Link>
+            </div>
           </div>
         </>
       )}
       {management && (
-        <div className={cx("navigate-manage")}>
-          <NavLink
-            to={`business`}
-            className={(nav) => cx("busniness", { active: nav.isActive })}
-          >
-            Business
-          </NavLink>
-          <NavLink
-            to={`destinations`}
-            className={(nav) => cx("destinations", { active: nav.isActive })}
-          >
-            Destinations
-          </NavLink>
-          <NavLink
-            to={`content`}
-            className={(nav) => cx("content", { active: nav.isActive })}
-          >
-            Content
-          </NavLink>
-          <NavLink
-            to={`partners`}
-            className={(nav) => cx("partners", { active: nav.isActive })}
-          >
-            Partners
-          </NavLink>
-          <NavLink
-            to={`billsmanage`}
-            className={(nav) => cx("billsmanage", { active: nav.isActive })}
-          >
-            Bills
-          </NavLink>
+        <div className={cx("menu")}>
+          <div className={cx("navigate-manage")}>
+            <div className={cx("business-container")}>
+              <NavLink
+                to={`business`}
+                className={(nav) => cx("busniness", { active: nav.isActive })}
+              >
+                {isMobile ? (
+                  <FontAwesomeIcon icon={faCircleInfo} />
+                ) : (
+                  "Business"
+                )}
+              </NavLink>
+            </div>
+            <div className={cx("destinations-container")}>
+              <NavLink
+                to={`destinations`}
+                className={(nav) =>
+                  cx("destinations", { active: nav.isActive })
+                }
+              >
+                {isMobile ? (
+                  <FontAwesomeIcon icon={faLocation} />
+                ) : (
+                  "Destinations"
+                )}
+              </NavLink>
+            </div>
+            <div className={cx("content-container")}>
+              <NavLink
+                to={`content`}
+                className={(nav) => cx("content", { active: nav.isActive })}
+              >
+                {isMobile ? <FontAwesomeIcon icon={faNewspaper} /> : "Contents"}
+              </NavLink>
+            </div>
+            <div className={cx("partners-container")}>
+              <NavLink
+                to={`partners`}
+                className={(nav) => cx("partners", { active: nav.isActive })}
+              >
+                {isMobile ? <FontAwesomeIcon icon={faHandshake} /> : "Partners"}
+              </NavLink>
+            </div>
+            <div className={cx("billsmanage-container")}>
+              <NavLink
+                to={`billsmanage`}
+                className={(nav) => cx("billsmanage", { active: nav.isActive })}
+              >
+                {isMobile ? <FontAwesomeIcon icon={faMoneyBills} /> : "Bills"}
+              </NavLink>
+            </div>
+          </div>
         </div>
       )}
     </div>

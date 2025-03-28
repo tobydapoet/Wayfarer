@@ -24,8 +24,6 @@
         }
     }
 
-    
-
     .container {
         display: flex;
         transition: all 0.3s ease;
@@ -90,13 +88,13 @@
             height: 100px;
             grid-column: 2;
             flex: 0.2;
-    
+
             img {
                 width: 100px;
                 height: 100px;
                 object-fit: cover;
             }
-    
+
             .file-container {
                 position: absolute;
                 width: 50px;
@@ -104,7 +102,7 @@
                 right: -4px;
                 transform: translate(-50%);
                 bottom: -20px;
-    
+
                 input {
                     width: 100%;
                     height: 100%;
@@ -112,7 +110,7 @@
                     border-radius: 50%;
                     opacity: 0;
                 }
-    
+
                 &::after {
                     content: "";
                     position: absolute;
@@ -203,6 +201,4 @@
         margin: 0 auto;
         margin-top: 30px;
     }
-
-    
 }

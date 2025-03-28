@@ -43,7 +43,6 @@ function BonusPoint() {
     setAttendance((prev) => ({ ...prev, ...newAttendance }));
   }, [dayToday]);
 
-  
   const rewardText = {
     5: 50,
     10: 100,
@@ -81,8 +80,7 @@ function BonusPoint() {
             month: nextMonth,
             year: nextYear,
           });
-          console.log(limitation)
-
+          console.log(limitation);
 
           setRewardMessage(rewardText[count]);
           setOpenReward(true);
@@ -122,22 +120,19 @@ function BonusPoint() {
     <div className={cx("wrapper")}>
       <div className={cx("calendar")}>
         {days.map((day) => (
-          <div
-            className={cx("day")}
-            key={day}
-          >
+          <div className={cx("day")} key={day}>
             <div className={cx("day-name")}>{day}</div>
             {attendance[day] === "attended" && (
               <FontAwesomeIcon
                 className={cx("check")}
-                style={{ color: "green", fontSize: "40px" }}
+                style={{ color: "green" }}
                 icon={faCheck}
               />
             )}
             {attendance[day] === "missed" && (
               <FontAwesomeIcon
                 className={cx("xmark")}
-                style={{ color: "red", fontSize: "40px" }}
+                style={{ color: "red" }}
                 icon={faXmark}
               />
             )}
@@ -145,7 +140,11 @@ function BonusPoint() {
         ))}
       </div>
       <div className={cx("check-container")}>
-        <Button rounded onClick={() => handleAttendance(dayRef.current)} disabled={attendance[dayRef.current] === "attended"}>
+        <Button
+          rounded
+          onClick={() => handleAttendance(dayRef.current)}
+          disabled={attendance[dayRef.current] === "attended"}
+        >
           Check
         </Button>
         <button onClick={handleOpenNote} className={cx("note")}>
@@ -157,7 +156,8 @@ function BonusPoint() {
           <div key={index} className={cx("voucher-container")}>
             <div class={cx("voucher-code")}>SAVE{voucher}DAYS</div>
             <div class={cx("voucher-details")}>
-              Use this code to get {rewardText[voucher] || "a discount"} off on your next purchase.
+              Use this code to get {rewardText[voucher] || "a discount"} off on
+              your next purchase.
             </div>
             <div className={cx("voucher-footer")}>
               Valid until:

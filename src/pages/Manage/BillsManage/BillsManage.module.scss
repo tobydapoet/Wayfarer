@@ -32,7 +32,7 @@
 
     table {
         width: 100%;
-        table-layout: fixed;
+        table-layout: auto;
         border-collapse: collapse;
     }
 
@@ -40,11 +40,33 @@
         display: table-row-group;
     }
     th {
-        padding: 15px;
+        padding: 15px 0px;
         border-bottom: 2px solid #ddd;
+        font-size: 14px;
     }
+}
 
-    .function {
-        width: 50px;
+@media (max-width: 800px) {
+    .wrapper {
+        width: calc(100vw - 120px);
+        table {
+            
+            table-layout: auto;
+            border-collapse: collapse;
+        }
+    
+        thead {
+            width: calc(100vw - 120px);
+        }
+        th,
+        td {
+            min-width: 50px; /* Điều chỉnh giá trị này tùy theo nhu cầu */
+            word-wrap: break-word;
+            width: 100px;
+        }
+
+        .start {
+            display: none;
+        }
     }
 }

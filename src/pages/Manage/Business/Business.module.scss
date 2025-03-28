@@ -21,3 +21,12 @@
         scrollbar-width: none;
     }
 }
+
+@media(max-width:800px) {
+    .wrapper {
+        .navigate {
+            width: calc(100vw - 1.5px);
+        }
+    }
+}
+

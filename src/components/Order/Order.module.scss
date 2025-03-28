@@ -13,10 +13,11 @@
         white-space: nowrap;
         align-items: center;
         text-align: center;
+        font-weight: bold;
     }
-    
+
     table {
-        width: 100%;
+        width: calc(100% - 20px);
         table-layout: auto;
         border-collapse: collapse;
     }
@@ -28,7 +29,6 @@
 
         div {
             font-size: 13px;
-            font-weight: bold;
         }
 
         img {
@@ -40,19 +40,16 @@
     }
     .cost {
         font-size: 13px;
-        font-weight: bold;
         width: 40%;
     }
 
     .title {
-
         font-size: 13px;
-        font-weight: bold;
+        width: 50%;
     }
 
     .status {
         font-size: 13px;
-        font-weight: bold;
 
         &.pending {
             color: #ffcc00; /* Vàng */
@@ -97,7 +94,6 @@
     }
     .time-start {
         font-size: 13px;
-        font-weight: bold;
     }
 }
 
@@ -114,4 +110,52 @@
         }
     }
 }
+@media (max-width: 1000px) {
+    .wrapper {
+        color: #202020;
+        width: 100%;
+        cursor: pointer;
 
+        td {
+            padding: 15px;
+            font-weight: 500;
+            font-family: var(--font-default);
+        }
+
+        .time-start {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        color: #202020;
+        width: calc(100vw - 120px);
+        cursor: pointer;
+
+        td {
+            padding: 15px 4px;
+            font-weight: 500;
+            font-family: var(--font-default);
+        }
+
+        .user {
+            .name {
+                margin-top: 11px;
+            }
+
+            img {
+                display: none;
+            }
+        }
+
+        .time-start {
+            display: none;
+        }
+
+        .status {
+            display: none;
+        }
+    }
+}
