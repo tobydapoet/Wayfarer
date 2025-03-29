@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function StaffStatus({ data }) {
   const status = {
     0: "working",
-    1: "in a meeting",
+    1: "is meeting",
     2: "on leave",
     3: "off duty",
   };

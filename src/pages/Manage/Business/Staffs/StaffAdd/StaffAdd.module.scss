@@ -111,3 +111,11 @@
     width: 300px;
     margin: 0 auto;
 }
+@media(max-width:800px) {
+    .wrapper{
+        .main-detail {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

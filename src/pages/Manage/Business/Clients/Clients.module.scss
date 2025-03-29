@@ -40,3 +40,18 @@
         padding: 10px;
     }
 }
+
+@media(max-width:800px) {
+    .wrapper{
+        font-size: 13px;
+        
+        .location{
+            display: none;
+        }
+
+        
+        .phone{
+            display: none;
+        }
+    }
+}

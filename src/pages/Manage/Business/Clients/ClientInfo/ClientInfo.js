@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import style from "./ClientInfo.module.scss";
 import ClientProfile from "../../../../../components/UserProfile/UserProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DetailItem from "../../../../../components/DetailItem/DetailItem";
 import ProcessingItem from "../../../../../components/ProcessingItem/ProcessingItem";
 
@@ -130,6 +130,18 @@ const TourItems = [
 ];
 function ClientInfo() {
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
   return (
     <div className={cx("wrapper")}>
       <div className={cx("summary", { collapsed: selectedItem !== null })}>
@@ -153,9 +165,10 @@ function ClientInfo() {
             />
           )}
         </div>
-      ) : (
+      ) : null}
+
+      {(isMobile || !selectedItem) && (
         <div className={cx("client-info")}>
-          {" "}
           <ClientProfile data={CLIENT} />
         </div>
       )}

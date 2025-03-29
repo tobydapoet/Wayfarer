@@ -40,12 +40,12 @@
     }
     .cost {
         font-size: 13px;
-        width: 40%;
+        width: 20%;
     }
 
     .title {
         font-size: 13px;
-        width: 50%;
+      
     }
 
     .status {
@@ -133,6 +133,7 @@
         color: #202020;
         width: calc(100vw - 120px);
         cursor: pointer;
+        font-size: 13px;
 
         td {
             padding: 15px 4px;
@@ -141,13 +142,21 @@
         }
 
         .user {
+            display: flex;
+            align-items: center;
+            width: 100px;
             .name {
-                margin-top: 11px;
+    
             }
 
-            img {
-                display: none;
+            .img {
+                height: 40px;
+
+                img {
+                    display: none;
+                }
             }
+          
         }
 
         .time-start {

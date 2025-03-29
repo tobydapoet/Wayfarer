@@ -42,10 +42,6 @@
 
             .price {
                 font-size: 25px;
-
-                &.manage {
-                    font-size: 25px;
-                }
             }
         }
 
@@ -58,10 +54,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             margin-top: 10px;
-
-            &.manage {
-                font-size: 14px;
-            }
         }
 
         .view-container {
@@ -111,51 +103,55 @@
     }
 }
 @media (max-width: 1000px) {
-    .container {
-        height: 170px;
-        gap: 5px;
+    .wrapper {
+        margin-top: 0px;
 
-        .activities-container {
-            display: none !important;
-        }
-
-        .content {
-            padding: 10px;
-
-            .header {
-                .name {
-                    font-size: 15px;
-                    &.manage {
-                        font-size: 17px;
-                    }
-                }
-                .price {
-                    font-size: 19px;
-                }
+        .container {
+            height: 170px;
+            gap: 5px;
+            &.manage {
+                height: 170px;
+                margin-top: 0px;
             }
 
-            .view-container {
-                position: absolute;
-                right: 2%;
-                bottom: 5%;
-                width: 150px;
+            .activities-container {
+                display: none !important;
+            }
 
-                .btn-container {
-                    font-family: var(--font-default);
-                    display: flex;
-                }
+            .star {
+                font-size: 12px;
+            }
 
-                .view-more {
-                    font-size: 15px;
-                    width: 130px;
-                    &:hover {
-                        background-color: rgba(187, 186, 186, 0.75);
+            .content {
+                padding: 10px;
+
+                .header {
+                    .name {
+                        font-size: 15px;
+                        &.manage {
+                            font-size: 15px;
+                        }
+                    }
+                    .price {
+                        font-size: 19px;
                     }
                 }
-                .delete {
-                    padding: 10px;
-                    width: fit-content;
-                    cursor: pointer;
+
+                .view-container {
+                    position: absolute;
+                    right: 2%;
+                    bottom: 5%;
+                    width: 150px;
+
+                    .btn-container {
+                        font-family: var(--font-default);
+                        display: flex;
+                    }
+
+                    .view-more {
+                        font-size: 15px;
+                        width: 130px;
+                    }
                 }
             }
         }

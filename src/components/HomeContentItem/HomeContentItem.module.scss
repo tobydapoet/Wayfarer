@@ -43,10 +43,7 @@
         object-fit: cover;
       }
     }
-
   }
-
- 
 }
 
 ::-webkit-scrollbar {
@@ -74,4 +71,20 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
   border-radius: 16px;
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    .container {
+      .describe {
+        font-size: 15px;
+        text-indent: 20px;
+        text-align: justify;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
 }

@@ -45,14 +45,15 @@ function Order({ data, extent, onClick }) {
   }
   const navigate = useNavigate();
   const handleRowClick = () => {
-    navigate(`/manage/billsmanage/${data.id}`,);
+    navigate(`/manage/billsmanage/${data.id}`);
   };
   return (
- 
     <>
       <tr className={cx("wrapper")} onClick={handleRowClick}>
         <td className={cx("user")}>
-          <img src={data.avatar} alt={data.name} />
+          <div className={cx("img")}>
+            <img src={data.avatar} alt={data.name} />
+          </div>
           <div className={cx("name")}>{data.client}</div>
         </td>
         <td className={cx("cost")}>

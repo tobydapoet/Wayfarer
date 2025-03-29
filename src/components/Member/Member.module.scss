@@ -35,3 +35,18 @@
         cursor: pointer;
     }
 }
+@media(max-width:800px) {
+    .wrapper {
+        width: 100px;
+        img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+        div {
+            font-size: 13px;
+        }
+    }
+}

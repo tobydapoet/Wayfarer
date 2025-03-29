@@ -24,13 +24,67 @@
         height: calc(100% + 20px);
 
         &.expanded {
-            width: 70%; 
+            width: 70%;
             opacity: 1;
         }
     }
     .client-info {
-        width: 70%; 
+        width: 70%;
         height: calc(100% + 20px);
         background-color: #f8f7f1;
+    }
+}
+@media (max-width: 1200px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column-reverse; // Đảo ngược để client-info nằm trên summary
+        font-family: var(--font-default);
+        overflow: hidden;
+        height: auto;
+        background-color: #f8f7f1;
+        width: calc(100vw - 80px);
+
+        .client-info {
+            width: calc(100% - 60px); // Chiếm toàn bộ màn hình khi thu nhỏ
+            height: auto;
+            max-height: 100vh; // Giới hạn chiều cao
+            margin-top: -40px;
+            padding: 10px;
+        }
+
+        .summary {
+            width: calc(100% - 20px); // Ban đầu chiếm toàn bộ màn hình ngang
+            height: auto; // Co giãn theo nội dung
+            padding: 10px;
+            background-color: #f1eee3;
+            transition:
+                opacity 0.3s ease,
+                transform 0.3s ease;
+
+            &.collapsed {
+                display: none; // Khi thu gọn, ẩn hoàn toàn
+            }
+        }
+
+        .details {
+            width: 0;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            background-color: #f8f7f1;
+
+            &.expanded {
+                width: calc(100vw - 80px);
+                height: auto;
+                opacity: 1;
+                overflow: auto;
+            }
+        }
+
+        // Khi details mở rộng, ẩn summary
+        .details.expanded ~ .summary {
+            display: none;
+        }
     }
 }

@@ -8,6 +8,7 @@
 td {
     padding: 10px 15px;
     width: 100;
+
     white-space: nowrap;
 }
 
@@ -21,13 +22,13 @@ table {
     align-items: center;
     gap: 10px;
     width: 70px;
-}
 
-.img img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 }
 
 .country,
@@ -44,7 +45,7 @@ table {
 }
 
 .status {
-    padding: 6px 0px;
+    padding: 6px 5px;
 
     border-radius: 16px;
     color: var(--primary);
@@ -78,4 +79,31 @@ table {
     }
 }
 
+@media (max-width: 800px) {
+    .wrapper {
+        .info {
+            .img {
+                height: 40px;
+                img {
+                    display: none;
+                }
+            }
+            .name {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                margin: auto 0;
+            }
+        }
 
+        td {
+            font-size: 13px;
+        }
+        .country {
+            display: none;
+        }
+        .salary {
+            display: none;
+        }
+    }
+}

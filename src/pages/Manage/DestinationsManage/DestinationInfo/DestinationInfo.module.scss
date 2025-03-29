@@ -31,3 +31,19 @@
         scrollbar-width: none;
     }
 }
+@media(max-width:800px) {
+    .wrapper {
+        .navigate {
+            width: calc(100vw - 80.5px);
+            display: flex;
+            position: fixed;
+            font-size: 12px;
+            .info {
+                padding: 15px 20px;
+                white-space: nowrap;
+                font-size: 15px;
+                font-family: var(--font-default);
+            }
+        }
+    }
+}

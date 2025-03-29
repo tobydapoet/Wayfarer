@@ -202,3 +202,21 @@
         margin-top: 30px;
     }
 }
+
+@media (max-width: 800px) {
+    .wrapper {
+        .container {
+            .summary {
+                &.collapsed {
+                    display: none;
+                    width: 0%;
+                }
+            }
+            .details {
+                &.expanded {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

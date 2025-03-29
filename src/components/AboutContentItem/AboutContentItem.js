@@ -7,9 +7,9 @@ import Notice from "../Notice/Notice";
 
 const cx = classNames.bind(styles);
 
-function AboutContentItem({ data,onClick }) {
+function AboutContentItem({ data, onClick }) {
   const [isFlex, setIsFlex] = useState(false);
-  const [deleteNotice, setDeleteNotice] = useState(false)
+  const [deleteNotice, setDeleteNotice] = useState(false);
 
   const handleImgSize = (e) => {
     const width = e.target.naturalWidth;
@@ -19,11 +19,17 @@ function AboutContentItem({ data,onClick }) {
 
   return (
     <>
-      <div className={cx("wrapper")} onClick={onClick}>
+      <div className={cx("wrapper")}>
         <div className={cx("xmark")}>
-          <FontAwesomeIcon icon={faXmark} onClick={() => setDeleteNotice(true)} />
+          <FontAwesomeIcon
+            icon={faXmark}
+            onClick={() => setDeleteNotice(true)}
+          />
         </div>
-        <div className={cx("content-container", { flex: isFlex })}>
+        <div
+          className={cx("content-container", { flex: isFlex })}
+          onClick={onClick}
+        >
           <div className={cx("txt-content", { flex: isFlex })}>
             <div className={cx("title")}>{data.title}</div>
             <div className={cx("describe")}>{data.describe}</div>
@@ -31,7 +37,11 @@ function AboutContentItem({ data,onClick }) {
           {data.image && <img src={data.image} onLoad={handleImgSize} />}
         </div>
       </div>
-      <Notice open={deleteNotice} onClose={() => setDeleteNotice(false)} content="Do you want to delete this cotnent ?"/>
+      <Notice
+        open={deleteNotice}
+        onClose={() => setDeleteNotice(false)}
+        content="Do you want to delete this content ?"
+      />
     </>
   );
 }

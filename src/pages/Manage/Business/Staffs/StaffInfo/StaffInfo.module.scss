@@ -1,6 +1,5 @@
 .wrapper {
     padding: 20px;
-
     height: fit-content;
     scroll-behavior: unset;
 
@@ -14,6 +13,7 @@
         .word-content {
             display: flex;
             flex-direction: column;
+            font-family: var(--font-default);
             gap: 10px;
             
             .name-header {
@@ -102,6 +102,14 @@
 
         .location-container {
             grid-column: span 2;
+        }
+    }
+}
+@media(max-width:800px) {
+    .wrapper{
+        .main-detail {
+            display: flex;
+            flex-direction: column;
         }
     }
 }

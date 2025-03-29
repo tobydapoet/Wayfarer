@@ -57,3 +57,16 @@ table {
     }
 }
 
+@media(max-width:800px) {
+    .wrapper{
+        font-size: 13px;
+
+        .country{
+            display: none;
+        }
+
+        .phone{
+            display: none;
+        }
+    }
+}

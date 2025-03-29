@@ -123,47 +123,37 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 800px) {
+    .frame-wrapper {
+        .frame-content {
+            font-size: 14px;
+        }
+    }
     .wrapper {
         .input-container {
             margin-bottom: 4px;
-
-            &.dark {
-                border-bottom: 2px solid rgb(166, 166, 166);
-            }
-
-            &.light {
-                border-bottom: 2px solid var(--primary);
-            }
 
             input,
             textarea {
                 border: none;
                 width: 100%;
                 margin: 20px 0 7px 0;
-                outline: none;
-                font-family: var(--font-default);
                 font-size: 19px;
-                background-color: transparent;
-
-                &.dark {
-                    color: black;
-                }
-
-                &.light {
-                    color: var(--primary);
-                }
-                &.readOnly {
-                    pointer-events: none;
-                }
-
-                &.readOnly {
-                    width: 95%;
-                }
             }
+        }
+    }
+}
 
+@media (max-width: 600px) {
+    .wrapper {
+        .input-container {
+            margin-bottom: 4px;
+
+            input,
             textarea {
-                height: 200px;
-                resize: none;
+                border: none;
+                width: calc(100% - 20px);
+                margin: 20px 0 7px 0;
+                font-size: 15px;
             }
         }
     }

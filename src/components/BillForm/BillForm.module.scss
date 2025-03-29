@@ -1,19 +1,17 @@
 .wrapper {
     width: 45vw;
-    min-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: calc(100vh - 130px);
     margin: 0 auto;
     padding: 30px;
     position: static;
 
-
     .service {
-
         &.pointer-none {
             pointer-events: none;
-          }
+        }
     }
 
     .row {
@@ -32,11 +30,10 @@
         }
     }
 
-
     .pay-type {
         display: flex;
         flex-direction: column;
-        width:100%;
+        width: 100%;
 
         .pay-title {
             color: rgb(99, 98, 98);
@@ -65,7 +62,7 @@
             object-fit: contain;
         }
     }
-    
+
     .btn-wrapper {
         margin-top: 30px;
     }
@@ -95,7 +92,7 @@
             &.selected {
                 background-color: #f1eee3; // Màu nền nổi bật
                 border: 2px solid #3d3d3d; // Viền cam để phân biệt
-              }
+            }
             .voucher-code {
                 font-size: 1.1rem;
                 display: flex;
@@ -105,7 +102,6 @@
                 background: #f4f4f4;
                 padding: 10px;
                 border-radius: 5px;
-                
             }
             .voucher-details {
                 font-size: 0.7rem;
@@ -117,7 +113,6 @@
                 color: #777;
                 border-top: 1px dashed #999;
                 padding-top: 5px;
-              
             }
         }
     }
@@ -134,56 +129,46 @@
     }
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
     .wrapper {
+        padding: 10px;
+        width: calc(100vw - 100px);
+        
+        .row{
+            gap: 20px;
+        }
+
         .voucher-wrapper {
             padding: 10px;
-            box-sizing: border-box;
             width: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             margin: 0 auto;
-            gap: 10px;
             flex: 1;
-            justify-content: center;
             margin-bottom: 5px;
-    
+
             .voucher-container {
                 cursor: pointer;
                 height: 80px;
                 width: 100%;
-                background: #fff;
-                border: 2px dashed #333;
                 padding: 10px 8px;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 text-align: center;
                 position: relative;
                 .voucher-code {
                     font-size: 0.7rem;
-                    display: flex;
-                    justify-content: center;
-                    font-weight: bold;
-                    color: #000;
-                    background: #f4f4f4;
-                    padding: 10px;
-                    border-radius: 5px;
-                    
                 }
                 .voucher-details {
                     font-size: 0.6rem;
-                    color: #555;
-                    margin-bottom: 10px;
                 }
-                .voucher-footer {
-                    font-size: 12px;
-                    color: #777;
-                    border-top: 1px dashed #999;
-                    padding-top: 5px;
-                  
+            }
+        }
+
+        .pay-type{
+            .type-choice {
+                button{
+                    font-size: 14px;
+                    padding: 10px 12px;
                 }
             }
         }
     }
 }
+
