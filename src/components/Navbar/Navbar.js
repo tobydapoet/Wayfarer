@@ -8,7 +8,7 @@ import { privateRoutes, publicRoutes } from "../../routes/routes";
 import Button from "../Button";
 import images from "../../assets/images";
 import Modal from "../Modal";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../Input";
 import useForm from "../../hooks/useForm";
 import AccountItem from "../AccountItem/AccountItem";
@@ -29,26 +29,23 @@ const userInfo = {
     "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
 };
 
-
-
-const user = JSON.parse(localStorage.getItem('user'))
-
+const user = JSON.parse(localStorage.getItem("user"));
 
 function Navbar() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [errors, setErrors] = useState({});
   const [shrinkMenu, setShrinkMeu] = useState(false);
-    const [user, setUser] = useState(null);
-  
-    useEffect(() => {
-      let storedUser = localStorage.getItem("user");
-      if (!storedUser) {
-        localStorage.setItem("user", JSON.stringify(userInfo));
-        storedUser = JSON.stringify(userInfo);
-      }
-      setUser(JSON.parse(storedUser));
-    }, []);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    let storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      localStorage.setItem("user", JSON.stringify(userInfo));
+      storedUser = JSON.stringify(userInfo);
+    }
+    setUser(JSON.parse(storedUser));
+  }, []);
 
   const [dataLogin, setDataLogin, resetDataLogin] = useForm({
     email: "",
@@ -78,7 +75,6 @@ function Navbar() {
     } else if (!/\S+@\S+\.\S+/.test(dataRegister.email)) {
       newErrors.email = "Sai định dạng email";
     }
-
     if (!dataRegister.password) {
       newErrors.password = "Yêu cầu nhập mật khẩu";
     } else if (dataRegister.password.length < 8) {
@@ -124,19 +120,23 @@ function Navbar() {
         )}
       </button>
       <div className={cx("inner", { open: shrinkMenu })}>
-        {(user && user.position !== 2
-          ? privateRoutes
-          : publicRoutes
-        ).map((route, index) => {
-          if (route.layout === undefined || route.layout === false) {
-            return route.topic ? (
-              <Link key={index} className={cx("middle-btn")} to={route.path} onClick={() => setShrinkMeu(false)}>
-                {route.topic}
-              </Link>
-            ) : null;
+        {(user && user.position !== 2 ? privateRoutes : publicRoutes).map(
+          (route, index) => {
+            if (route.layout === undefined || route.layout === false) {
+              return route.topic ? (
+                <Link
+                  key={index}
+                  className={cx("middle-btn")}
+                  to={route.path}
+                  onClick={() => setShrinkMeu(false)}
+                >
+                  {route.topic}
+                </Link>
+              ) : null;
+            }
+            return null;
           }
-          return null;
-        })}
+        )}
         <hr className={cx("divider")} />
         {user ? (
           <div className={cx("to-user-shrink", { open: shrinkMenu })}>
@@ -158,7 +158,7 @@ function Navbar() {
         )}
       </div>
 
-      {user? (
+      {user ? (
         <div className={cx("to-user", { open: shrinkMenu })}>
           <AccountItem data={user} />
         </div>

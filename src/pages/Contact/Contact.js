@@ -73,11 +73,11 @@ function Contact() {
     setTempContactValue((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleOnSave = (e) => {
+  const handleOnSave = () => {
     const newErrors = {};
     Object.entries(tempConctactValue).forEach(([name, value]) => {
-      const fieldErros = validateInput(name, value);
-      Object.assign(newErrors, fieldErros);
+      const fieldErrors = validateInput(name, value);
+      Object.assign(newErrors, fieldErrors);
     });
 
     setErrors(newErrors);

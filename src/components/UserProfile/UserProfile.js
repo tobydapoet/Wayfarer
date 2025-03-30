@@ -7,12 +7,58 @@ import PhoneInput from "react-phone-input-2";
 
 const cx = classNames.bind(style);
 
-
-function UserProfile({data}) {
+function UserProfile({ data }) {
   const [clientData, setClientData] = useState({ ...data });
   const dataRef = useRef({ phone: "", ...data });
+  const [errors, setErrors] = useState({});
+  const validateInput = (name, value) => {
+    const newErrors = {};
+    switch (name) {
+      case "name":
+        if (!value.trim()) {
+          newErrors.name = "Name cannot empty!";
+        }
+        break;
+      case "email": {
+        if (!value.trim()) {
+          newErrors.email = "Email cannot empty!";
+        } else if (
+          !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            value
+          )
+        ) {
+          newErrors.email = "Wrong format";
+        }
+        break;
+      }
+      case "password": {
+        if (!value.trim()) {
+          newErrors.password = "Password cannot empty!";
+        } else if (value.length < 8) {
+          newErrors.password = "Password must be more than 8 characters";
+        }
+        break;
+      }
+      case "location": {
+        if (!value.trim()) {
+          newErrors.message = "Lcoation cannot empty!";
+        }
+        break;
+      }
+    }
+    return newErrors;
+  };
 
   const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    const newErrors = validateInput(name, value);
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...newErrors,...prevErrors};
+      if (!newErrors[name]) {
+        delete updatedErrors[name];
+      }
+      return updatedErrors;
+    });
     setClientData({ ...clientData, [e.target.name]: e.target.value });
   };
 
@@ -49,6 +95,7 @@ function UserProfile({data}) {
             name="name"
             onChange={handleChangeInput}
             readOnly
+            error={errors.name}
           />
         </div>
         <div className={cx("name")}>
@@ -60,6 +107,7 @@ function UserProfile({data}) {
             name="email"
             onChange={handleChangeInput}
             readOnly
+            error={errors.email}
           />
         </div>
         <div className={cx("password")}>
@@ -72,6 +120,7 @@ function UserProfile({data}) {
             name="passwaord"
             onChange={handleChangeInput}
             readOnly
+            error={errors.password}
           />
         </div>
         <div className={cx("phone-container")}>
@@ -81,6 +130,7 @@ function UserProfile({data}) {
             onSave={handleOnSave}
             frame="Phone"
             value={clientData.phone}
+            error={errors.phone}
           >
             <PhoneInput
               className={cx("phone")}
@@ -112,6 +162,7 @@ function UserProfile({data}) {
           onChange={handleChangeInput}
           readOnly={true}
           location
+          error={errors.location}
         />
       </div>
     </div>

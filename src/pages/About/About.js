@@ -53,9 +53,6 @@ function About() {
     }));
   };
 
-  useEffect(() => {
-    console.log("Size updated:", size);
-  }, [size]);
   return (
     <div className={cx("wrapper")}>
       {CONTENTS.map((content, index) => (

@@ -192,7 +192,7 @@ function Input({
         ) : (
           <div className={cx("edit-mode")}>
             <FontAwesomeIcon
-              className={cx("check")}
+              className={cx("check",{ disabled: !!error })}
               icon={faSquareCheck}
               onClick={onSave ? handleOnSave : finishEditing}
             />

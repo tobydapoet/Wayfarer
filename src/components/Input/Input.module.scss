@@ -57,6 +57,7 @@
     right: 0;
     bottom: 35px;
     cursor: pointer;
+
 }
 
 .edit-mode {
@@ -70,6 +71,10 @@
 
     .check {
         font-size: 25px;
+        &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     }
     .cancel {
         font-size: 25px;

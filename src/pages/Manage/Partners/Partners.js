@@ -11,6 +11,7 @@ import Modal from "../../../components/Modal";
 import PhoneInput from "react-phone-input-2";
 import Button from "../../../components/Button";
 import images from "../../../assets/images";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -72,216 +73,43 @@ const PARTNERS = [
 
 function Partners() {
   const [selectedItem, setSelectedItem] = useState(null);
-  const [addPartnerForm, setAddPartnerForm] = useState(false);
-  const [partners, setPartners] = useState(PARTNERS);
-  const [tempPartnerValue, setTempPartnerValue] = useState({});
-
-  const handlePartnerChange = (e) => {
-    setTempPartnerValue((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const navigate = useNavigate();
+  const handleOpenAddForm = () => {
+    navigate('add_partner');
   };
-
-  const handleChangePhone = (value) => {
-    if (tempPartnerValue.phone !== value) {
-      tempPartnerValue.phone = value;
-    }
-  };
-
-  const handleOnSave = (e) => {
-    if (Object.keys(tempPartnerValue).length === 0) {
-      setAddPartnerForm(false);
-      return;
-    }
-    setAddPartnerForm(false);
-    setPartners((prev) => [...prev, tempPartnerValue]);
-    setTempPartnerValue({});
-  };
-
-  const handleChangeImg = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      return;
-    }
-    const file = e.target.files[0];
-    const newFile = URL.createObjectURL(file);
-    setTempPartnerValue((prev) => ({ ...prev, logo: newFile }));
-  };
-
-  console.log(partners);
 
   return (
-    <>
-      <div className={cx("wrapper")}>
-        <div className={cx("header")}>
-          <SearchBar />
-          <div
-            className={cx("add")}
-            style={{ cursor: "pointer" }}
-            onClick={() => setAddPartnerForm(true)}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
-        </div>
-
-        <div className={cx("container")}>
-          <div className={cx("summary", { collapsed: selectedItem !== null })}>
-            {partners.map((partner, index) => (
-              <PartnerItem
-                data={partner}
-                key={index}
-                onClick={() => setSelectedItem(partner)}
-              />
-            ))}
-          </div>
-          <div className={cx("details", { expanded: selectedItem !== null })}>
-            {selectedItem && (
-              <Contract
-                data={selectedItem}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedItem(null);
-                }}
-              />
-            )}
-          </div>
+    <div className={cx("wrapper")}>
+      <div className={cx("header")}>
+        <SearchBar />
+        <div className={cx("add")} style={{ cursor: "pointer" }} onClick={handleOpenAddForm}>
+          <FontAwesomeIcon icon={faPlus} />
         </div>
       </div>
-      <Modal
-        bigedit
-        open={addPartnerForm}
-        onClose={() => setAddPartnerForm(false)}
-      >
-        <div className={cx("add-form")}>
-          <div className={cx("brand-wrapper")}>
-            <div className={cx("brand-container")}>
-              <Input
-                light
-                placeholder="Brand name..."
-                name="name"
-                frame="Brand"
-                onChange={handlePartnerChange}
-              />
-            </div>
-            <div className={cx("tax-container")}>
-              <Input
-                light
-                placeholder="Tax code..."
-                name="tax"
-                frame="Tax code"
-                onChange={handlePartnerChange}
-              />
-            </div>
-            <div className={cx("img-container")}>
-              <img src={tempPartnerValue?.logo || images.noImg} />
-              <div className={cx("file-container")}>
-                <input type="file" name="logo" onChange={handleChangeImg} />
-              </div>
-            </div>
-          </div>
 
-          <div className={cx("time")}>
-            <div className={cx("start-container")}>
-              <Input
-                light
-                placeholder="Start date..."
-                name="startDate"
-                frame="Start date"
-                type="date"
-                className={cx("start")}
-                onChange={handlePartnerChange}
-              />
-            </div>
-            <div className={cx("end-container")}>
-              <Input
-                light
-                placeholder="End date..."
-                name="endDate"
-                frame="End date"
-                type="date"
-                className={cx("end")}
-                onChange={handlePartnerChange}
-              />
-            </div>
-          </div>
-          <div className={cx("representative-container")}>
-            <div className={cx("represent-container")}>
-              <Input
-                light
-                placeholder="Representative..."
-                name="represent"
-                frame="Representative"
-                onChange={handlePartnerChange}
-              />
-            </div>
-            <div className={cx("position-container")}>
-              <Input
-                light
-                placeholder="Position..."
-                name="position"
-                frame="Position"
-                onChange={handlePartnerChange}
-              />
-            </div>
-          </div>
-          <div className={cx("contact")}>
-            <div className={cx("email-container")}>
-              <Input
-                light
-                placeholder="Email..."
-                name="email"
-                frame="Email"
-                onChange={handlePartnerChange}
-              />
-            </div>
-            <div className={cx("phone-container")}>
-              <Input light frame="Phone">
-                <PhoneInput
-                  className={cx("phone")}
-                  enableSearch
-                  name="phone"
-                  onChange={handleChangePhone}
-                />
-              </Input>
-            </div>
-          </div>
-          <div className={cx("address-container")}>
-            <Input
-              light
-              placeholder="Address..."
-              name="address"
-              frame="Address"
-              onChange={handlePartnerChange}
+      <div className={cx("container")}>
+        <div className={cx("summary", { collapsed: selectedItem !== null })}>
+          {PARTNERS.map((partner, index) => (
+            <PartnerItem
+              data={partner}
+              key={index}
+              onClick={() => setSelectedItem(partner)}
             />
-          </div>
-          <div className={cx("content-container")}>
-            <Input
-              light
-              placeholder="Content..."
-              name="content"
-              frame="Collaborative Content"
-              textarea
-              onChange={handlePartnerChange}
-            />
-          </div>
-          <div className={cx("policy-container")}>
-            <Input
-              light
-              placeholder="Privacy & Policy..."
-              name="policy"
-              textarea
-              frame="Privacy & Policy"
-              onChange={handlePartnerChange}
-            />
-          </div>
-          <div className={cx("btn-container")}>
-            <Button large onClick={handleOnSave}>
-              Save
-            </Button>
-          </div>
+          ))}
         </div>
-      </Modal>
-    </>
+        <div className={cx("details", { expanded: selectedItem !== null })}>
+          {selectedItem && (
+            <Contract
+              data={selectedItem}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedItem(null);
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

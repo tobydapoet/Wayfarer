@@ -46,13 +46,32 @@ function HomeContentInfo() {
           images: [],
         }
   );
+  const [tempFormData, setTempFormData] = useState({ ...formData });
   const [openTest, setOpenTest] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateInput = (name, value) => {
+    const newErrors = {};
+    switch (name) {
+      case "title":
+        if (!value.trim()) {
+          newErrors.title = "Title cannot empty!";
+        }
+        break;
+      case "describe":
+        if (!value.trim()) {
+          newErrors.describe = "Describe cannot empty!";
+        }
+        break;
+    }
+    return newErrors;
+  };
 
   const handleImageUploaded = (e) => {
     const files = Array.from(e.target.files);
     const newImages = files.map((file) => URL.createObjectURL(file));
 
-    setformData((prev) => ({
+    setTempFormData((prev) => ({
       ...prev,
       images: [...prev.images, ...newImages],
     }));
@@ -63,11 +82,37 @@ function HomeContentInfo() {
   // };
 
   const handleonChange = (e) => {
-    setformData((prev) => {
-      const newData = { ...prev, [e.target.name]: e.target.value };
-      console.log("Dữ liệu sau khi nhập:", newData);
-      return newData;
+    const { name, value } = e.target;
+    const newErrors = validateInput(name, value);
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...newErrors, ...prevErrors };
+      if (!newErrors[name]) {
+        delete updatedErrors[name];
+      }
+      return updatedErrors;
     });
+    setTempFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleApply = (e) => {
+    const newErrors = {};
+    Object.entries(tempFormData).forEach(([name, value]) => {
+      const fieldErros = validateInput(name, value);
+      Object.assign(newErrors, fieldErros);
+    });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+    setOpenTest(true);
+  };
+
+  const handleOnSave = () => {
+    setformData({ ...tempFormData });
   };
 
   console.log(param.info);
@@ -92,9 +137,9 @@ function HomeContentInfo() {
           </button>
         </div>
 
-        {formData.images.length > 0 && (
+        {tempFormData.images.length > 0 && (
           <div className={cx("images")}>
-            {formData.images.map((image, index) => {
+            {tempFormData.images.map((image, index) => {
               const imageUrl =
                 typeof image === "string" ? image : image.preview;
               return (
@@ -111,8 +156,9 @@ function HomeContentInfo() {
           name="title"
           maxLength={60}
           placeholder="Title..."
-          value={formData.title}
+          value={tempFormData.title}
           onChange={handleonChange}
+          error={errors.title}
         />
         <Input
           dark
@@ -121,16 +167,16 @@ function HomeContentInfo() {
           maxLength={700}
           textarea
           placeholder="Describe..."
-          value={formData.describe}
+          value={tempFormData.describe}
           onChange={handleonChange}
+          error={errors.describe}
         />
       </div>
       <div className={cx("apply")}>
         <Button
           rounded
           onClick={() => {
-            console.log("Form Data Trước Apply:", formData);
-            setOpenTest(true);
+            handleApply()
           }}
         >
           Apply
@@ -147,12 +193,14 @@ function HomeContentInfo() {
         }}
       >
         <div className={cx("test-wrapper")}>
-          <Tablet data={formData} />
+          <Tablet data={tempFormData} />
           <div className={cx("btn")}>
             <Button rounded onClick={() => setOpenTest(false)}>
               Cancel
             </Button>
-            <Button rounded>Confirm</Button>
+            <Button rounded onClick={handleOnSave}>
+              Confirm
+            </Button>
           </div>
         </div>
       </Modal>

@@ -70,7 +70,7 @@ function Clients() {
         <thead>
           <tr>
             <th className={cx("name-header")}>Name</th>
-            <th className={cx("loccation")}>Location</th>
+            <th className={cx("location")}>Location</th>
             <th className={cx("email")}>Email</th>
             <th className={cx("phone")}>Phone</th>
             <th></th>
