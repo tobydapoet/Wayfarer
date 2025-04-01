@@ -8,25 +8,77 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
-function ItineraryAdd({ transports }) {
-  const [content, setContent] = useState({});
-  const [editField, setEditField] = useState(null);
-  const [tempValues, setTempValues] = useState({
+const serviceMap = {
+  0: "trips",
+  1: "hotels",
+  2: "transports",
+};
+
+function ItineraryAdd() {
+  const [content, setContent] = useState({
     name: "",
     price: "",
     description: "",
     activities: "",
+    img: "",
+    type: 0,
   });
+  const [editField, setEditField] = useState(null);
+  const [tempValues, setTempValues] = useState({ ...content });
+  const [errors, setErrors] = useState({});
   const textareaRef = useRef(null);
+
+  const validateInput = (name, value) => {
+    const newErrors = {};
+    switch (name) {
+      case "name": {
+        if (!value.trim()) {
+          newErrors.name = "Title cannot be empty!";
+        }
+        break;
+      }
+      case "price": {
+        if (!value.trim()) {
+          newErrors.price = "Price cannot be empty!";
+        }
+        break;
+      }
+      case "description": {
+        if (!value.trim()) {
+          newErrors.description = "Description cannot be empty!";
+        }
+        break;
+      }
+      case "img": {
+        if (!value) {
+          newErrors.img = "Please choose image!";
+        }
+        break;
+      }
+    }
+    return newErrors;
+  };
 
   const activityMap = content.activities ? content.activities.split(",") : [];
 
   const handleChangeImg = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const imgURL = URL.createObjectURL(file);
-      setContent((prev) => ({ ...prev, img: imgURL }));
+    if (!e.target.files || e.target.files.length === 0) {
+      return;
     }
+    const file = e.target.files[0];
+    const newErrors = validateInput("img", file);
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...newErrors, prevErrors };
+      if (!newErrors.img) {
+        delete updatedErrors.img;
+      }
+      return updatedErrors;
+    });
+    if (newErrors.img) {
+      return;
+    }
+    const newFile = URL.createObjectURL(file);
+    setTempValues((prev) => ({ ...prev, img: newFile }));
   };
 
   const handleEditActivity = (index) => {
@@ -35,6 +87,19 @@ function ItineraryAdd({ transports }) {
       ...prev,
       activities: index !== undefined ? activityMap[index] : "",
     }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const newErrors = validateInput(name, value);
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...newErrors, ...prevErrors };
+      if (!newErrors[name]) {
+        delete updatedErrors[name];
+      }
+      return updatedErrors;
+    });
+    setTempValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSaveActivity = (index) => {
@@ -47,7 +112,10 @@ function ItineraryAdd({ transports }) {
       updatedActivities[index] = trimmedValue; // Cập nhật giá trị
     }
 
-    setContent((prev) => ({ ...prev, activities: updatedActivities.join(",") }));
+    setContent((prev) => ({
+      ...prev,
+      activities: updatedActivities.join(","),
+    }));
     setEditField(null);
     setTempValues((prev) => ({ ...prev, activities: "" }));
   };
@@ -57,7 +125,10 @@ function ItineraryAdd({ transports }) {
     if (trimmedValue === "") return;
 
     const updatedActivities = [...activityMap, trimmedValue];
-    setContent((prev) => ({ ...prev, activities: updatedActivities.join(",") }));
+    setContent((prev) => ({
+      ...prev,
+      activities: updatedActivities.join(","),
+    }));
     setEditField(null);
     setTempValues((prev) => ({ ...prev, activities: "" }));
   };
@@ -69,21 +140,20 @@ function ItineraryAdd({ transports }) {
     }
   }, [tempValues.description]);
 
-  // Hàm lưu tất cả giá trị tạm thời vào content khi nhấn Save
-  const handleSave = () => {
-    setContent((prev) => ({
-      ...prev,
-      name: tempValues.name,
-      price: tempValues.price,
-      description: tempValues.description,
-    }));
-    console.log("Saved Content:", {
-      ...content,
-      name: tempValues.name,
-      price: tempValues.price,
-      description: tempValues.description,
-      activities: content.activities,
+  const handleOnSave = () => {
+    let newErrors = {};
+
+    Object.entries(tempValues).forEach(([name, value]) => {
+      const fieldErrors = validateInput(name, value);
+      newErrors = { ...newErrors, ...fieldErrors };
     });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+    setContent({ ...tempValues });
   };
 
   return (
@@ -93,12 +163,12 @@ function ItineraryAdd({ transports }) {
         <input
           className={cx("name-input")}
           type="text"
+          name="name"
           placeholder="Name"
           value={tempValues.name}
-          onChange={(e) =>
-            setTempValues((prev) => ({ ...prev, name: e.target.value }))
-          }
+          onChange={handleInputChange}
         />
+        {errors.name && <p className={cx("error-text")}>{errors.name}</p>}
       </div>
 
       {/* Price */}
@@ -106,12 +176,12 @@ function ItineraryAdd({ transports }) {
         <input
           className={cx("price-input")}
           type="number"
+          name="price"
           placeholder="Price"
           value={tempValues.price}
-          onChange={(e) =>
-            setTempValues((prev) => ({ ...prev, price: e.target.value }))
-          }
+          onChange={handleInputChange}
         />
+        {errors.price && <p className={cx("error-text")}>{errors.price}</p>}
       </div>
 
       <hr />
@@ -122,6 +192,7 @@ function ItineraryAdd({ transports }) {
         <div className={cx("input-container")}>
           <input type="file" onChange={handleChangeImg} />
         </div>
+        {errors.img && <p className={cx("error-text")}>{errors.img}</p>}
       </div>
 
       {/* Description */}
@@ -130,15 +201,17 @@ function ItineraryAdd({ transports }) {
           ref={textareaRef}
           className={cx("description-input")}
           placeholder="Description"
+          name="description"
           value={tempValues.description}
-          onChange={(e) =>
-            setTempValues((prev) => ({ ...prev, description: e.target.value }))
-          }
+          onChange={handleInputChange}
         />
+        {errors.description && (
+          <p className={cx("error-text")}>{errors.description}</p>
+        )}
       </div>
 
       {/* Ẩn Activities nếu có transports */}
-      {!transports && (
+      {tempValues.type !== 2 && (
         <div className={cx("activities-wrapper")}>
           <div className={cx("activities-header")}>
             <div className={cx("activities-title")}>Activities:</div>
@@ -155,7 +228,9 @@ function ItineraryAdd({ transports }) {
                     }))
                   }
                   onBlur={handleSaveNewActivity}
-                  onKeyDown={(e) => e.key === "Enter" && handleSaveNewActivity()}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && handleSaveNewActivity()
+                  }
                   autoFocus
                 />
               )}
@@ -199,9 +274,23 @@ function ItineraryAdd({ transports }) {
         </div>
       )}
 
+      <div className={cx("type-container")}>
+        <select
+          className={cx("type-select")}
+          value={tempValues.type}
+          onChange={(e) => setTempValues(e.target.value)}
+        >
+          {Object.keys(serviceMap).map((key) => (
+            <option key={key} value={key}>
+              {serviceMap[key]}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Save Button */}
       <div className={cx("save-btn")}>
-        <Button large onClick={handleSave}>
+        <Button large onClick={handleOnSave}>
           Save
         </Button>
       </div>

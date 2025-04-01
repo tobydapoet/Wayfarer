@@ -1,8 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./PlacementItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";

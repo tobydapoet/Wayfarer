@@ -4,12 +4,29 @@ import Input from "../Input";
 import style from "./UserProfile.module.scss";
 import { useRef, useState } from "react";
 import PhoneInput from "react-phone-input-2";
+import Button from "../Button";
+import images from "../../assets/images";
 
 const cx = classNames.bind(style);
 
 function UserProfile({ data }) {
-  const [clientData, setClientData] = useState({ ...data });
-  const dataRef = useRef({ phone: "", ...data });
+  const [clientData, setClientData] = useState(() => {
+    if (data) {
+      return { ...data };
+    } else {
+      // Trả về đối tượng với các khóa từ `data` và giá trị mặc định rỗng hoặc giá trị khác
+      return {
+        email: "",
+        name: "",
+        password: "",
+        phone: "",
+        location: "",
+        avatar: "",
+        position: 2,
+      };
+    }
+  });
+  const [clientTempData, setClientTempData] = useState({ ...clientData });
   const [errors, setErrors] = useState({});
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -39,12 +56,25 @@ function UserProfile({ data }) {
         }
         break;
       }
-      case "location": {
+      case "phone": {
         if (!value.trim()) {
-          newErrors.message = "Lcoation cannot empty!";
+          newErrors.phone = "Phone cannot empty";
         }
         break;
       }
+      case "location": {
+        if (!value.trim()) {
+          newErrors.location = "Location cannot empty!";
+        }
+        break;
+      }
+      case "avatar":
+        {
+          if (!value) {
+            newErrors.avatar = "Please choose your avatar!";
+          }
+        }
+        break;
     }
     return newErrors;
   };
@@ -52,20 +82,40 @@ function UserProfile({ data }) {
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     const newErrors = validateInput(name, value);
+
     setErrors((prevErrors) => {
-      const updatedErrors = { ...newErrors,...prevErrors};
+      const updatedErrors = { ...prevErrors, ...newErrors };
+
       if (!newErrors[name]) {
         delete updatedErrors[name];
       }
+
       return updatedErrors;
     });
-    setClientData({ ...clientData, [e.target.name]: e.target.value });
+
+    setClientTempData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleChangePhone = (value) => {
-    if (dataRef.current.phone !== value) {
-      dataRef.current.phone = value;
-    }
+    setClientTempData((prev) => {
+      const updatedValues = { ...prev, phone: value };
+      const newErrors = validateInput("phone", value);
+
+      setErrors((prevErrors) => {
+        const updatedErrors = { ...newErrors, ...prevErrors };
+
+        if (!newErrors.phone) {
+          delete updatedErrors.phone;
+        }
+
+        return updatedErrors;
+      });
+
+      return updatedValues;
+    });
   };
 
   const handleChangeImg = (e) => {
@@ -74,14 +124,27 @@ function UserProfile({ data }) {
     }
     const file = e.target.files[0];
     const imgURL = URL.createObjectURL(file);
-    setClientData((prev) => ({ ...prev, avatar: imgURL }));
+    setClientTempData((prev) => ({ ...prev, avatar: imgURL }));
   };
 
   const handleOnSave = () => {
-    setClientData({ ...dataRef.current });
+    let newErrors = {};
+    Object.entries(clientTempData).forEach(([name, value]) => {
+      const updatedErrors = validateInput(name, value);
+      newErrors = { ...newErrors, ...updatedErrors };
+    });
+    console.log(newErrors);
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    setClientData({ ...clientTempData });
   };
 
-  console.log(clientData.phone);
+  console.log(errors);
 
   return (
     <div className={cx("wrapper")}>
@@ -91,10 +154,9 @@ function UserProfile({ data }) {
             dark
             frame="Fullname"
             placeholder="Name..."
-            value={clientData.name}
+            value={clientTempData.name}
             name="name"
             onChange={handleChangeInput}
-            readOnly
             error={errors.name}
           />
         </div>
@@ -103,10 +165,9 @@ function UserProfile({ data }) {
             dark
             frame="Email"
             placeholder="Email..."
-            value={clientData.email}
+            value={clientTempData.email}
             name="email"
             onChange={handleChangeInput}
-            readOnly
             error={errors.email}
           />
         </div>
@@ -116,18 +177,15 @@ function UserProfile({ data }) {
             type="password"
             frame="Password"
             placeholder="Password..."
-            value={clientData.password}
-            name="passwaord"
+            value={clientTempData.password}
+            name="password"
             onChange={handleChangeInput}
-            readOnly
             error={errors.password}
           />
         </div>
         <div className={cx("phone-container")}>
           <Input
-            dark
-            readOnly={true}
-            onSave={handleOnSave}
+            dark={true}
             frame="Phone"
             value={clientData.phone}
             error={errors.phone}
@@ -135,35 +193,40 @@ function UserProfile({ data }) {
             <PhoneInput
               className={cx("phone")}
               enableSearch
-              value={clientData.phone}
+              value={clientTempData.phone}
               name="phone"
               onChange={handleChangePhone}
-              country={getCountryCode(clientData.location).toLowerCase()}
+              country={(
+                getCountryCode(clientData.location) || ""
+              ).toLowerCase()}
             />
           </Input>
         </div>
       </div>
       <div className={cx("avatar")}>
-        <img src={clientData.avatar} />
+        <img src={clientTempData.avatar || images.noImg} />
         <div className={cx("input-container")}>
           <input type="file" name="avatar" onChange={handleChangeImg} />
         </div>
+        {errors.avatar && <p className={cx("error-text")}>{errors.avatar}</p>}
       </div>
 
       <div className={cx("location-container")}>
         <Input
           dark
-          key={clientData.location}
           frame="Location"
-          type="location"
           placeholder="Location"
-          value={clientData?.location || ""}
+          value={clientTempData.location}
           name="location"
           onChange={handleChangeInput}
-          readOnly={true}
           location
           error={errors.location}
         />
+      </div>
+      <div className={cx("btn-container")}>
+        <Button rounded className={cx("save-btn")} onClick={handleOnSave}>
+          Save
+        </Button>
       </div>
     </div>
   );

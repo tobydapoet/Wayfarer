@@ -30,11 +30,8 @@
         &.light {
             color: var(--primary);
         }
-        &.readOnly {
-            pointer-events: none;
-        }
 
-        &.readOnly {
+        &.isLocation {
             width: 95%;
         }
     }
@@ -52,15 +49,8 @@
     height: 20px;
 }
 
-.edit {
-    position: absolute;
-    right: 0;
-    bottom: 35px;
-    cursor: pointer;
 
-}
-
-.edit-mode {
+.locate {
     position: absolute;
     right: 0;
     bottom: 35px;
@@ -68,40 +58,9 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-
-    .check {
-        font-size: 25px;
-        &.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    }
-    .cancel {
-        font-size: 25px;
-    }
+    padding: 0 5px;
 }
 
-select {
-    border: none;
-    width: 100%;
-    margin: 20px 0 7px 0;
-    outline: none;
-    font-family: var(--font-default);
-    font-size: 19px;
-    background-color: transparent;
-    color: var(--primary);
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    option {
-        color: black;
-    }
-
-    &.readOnly {
-        pointer-events: none;
-    }
-}
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;

@@ -19,7 +19,6 @@ import BlogContent from "../pages/Manage/Content/BlogContent";
 import Partners from "../pages/Manage/Partners";
 import ProfileLayout from "../layouts/ProfileLayout";
 import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
-import StaffAdd from "../pages/Manage/Business/Staffs/StaffAdd";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
 import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
 import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
@@ -71,7 +70,6 @@ const privateRoutes = [
         default: true,
         children: [
           { path: "staffs", component: Staffs, layout: null },
-          { path: "staffs/add_content", component: StaffAdd, layout: null },
           {
             path: "dashboard",
             component: Dashboard,

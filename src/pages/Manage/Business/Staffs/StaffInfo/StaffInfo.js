@@ -5,6 +5,9 @@ import "react-phone-input-2/lib/style.css";
 import Input from "../../../../../components/Input";
 import styles from "./StaffInfo.module.scss";
 import { useRef, useState } from "react";
+import Button from "../../../../../components/Button";
+import { useParams } from "react-router-dom";
+import images from "../../../../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -24,19 +27,138 @@ const INFO = {
 };
 
 function StaffInfo() {
-  const [userData, setUserData] = useState({ ...INFO });
-  const dataRef = useRef({ phone: "", country: "", ...INFO });
+  const param = useParams();
+  const [userData, setUserData] = useState(
+    param.info !== "add_content"
+      ? { ...INFO }
+      : {
+          avatar: "",
+          name: "",
+          status: 0,
+          location: "",
+          salary: "",
+          name: "",
+          email: "",
+          birth: "",
+          phone: "",
+          password: "",
+        }
+  );
+  const [userTempData, setUserTempData] = useState({ ...userData });
+  const [errors, setErrors] = useState({});
+
+  const validateInput = (name, value) => {
+    const newErrors = {};
+    switch (name) {
+      case "name":
+        if (!value.trim()) {
+          newErrors.name = "Name cannot empty!";
+        }
+        break;
+      case "email": {
+        if (!value.trim()) {
+          newErrors.email = "Email cannot empty!";
+        } else if (
+          !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            value
+          )
+        ) {
+          newErrors.email = "Wrong format";
+        }
+        break;
+      }
+      case "password": {
+        if (!value.trim()) {
+          newErrors.password = "Password cannot empty!";
+        } else if (value.length < 8) {
+          newErrors.password = "Password must be more than 8 characters";
+        }
+        break;
+      }
+      case "phone": {
+        if (!value.trim()) {
+          newErrors.phone = "Phone cannot empty";
+        }
+        break;
+      }
+      case "location": {
+        if (!value.trim()) {
+          newErrors.location = "Location cannot empty!";
+        }
+        break;
+      }
+      case "avatar":
+        {
+          if (!value) {
+            newErrors.avatar = "Please choose your avatar!";
+          }
+        }
+        break;
+      case "salary": {
+        if (!value.trim()) {
+          newErrors.salary = "Salary cannot be empty";
+        }
+        break;
+      }
+      case "birth": {
+        const birthDate = new Date(value);
+        const today = new Date();
+        const tenYears = new Date();
+        tenYears.setFullYear(today.getFullYear() - 10);
+        if (!value.trim()) {
+          newErrors.birth = "Birth cannot be empty";
+        } else if (birthDate > tenYears) {
+          newErrors.birth = "Invalid birthday";
+        }
+        break;
+      }
+    }
+    return newErrors;
+  };
 
   const handleChangeInput = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const newErrors = validateInput(name, value);
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...newErrors, ...prevErrors };
+      if (!newErrors[name]) {
+        delete updatedErrors[name];
+      }
+      return newErrors;
+    });
+    setUserTempData({ ...userData, [name]: value });
   };
 
   const handleChangePhone = (value) => {
-    dataRef.current.phone = value;
+    setUserTempData((prev) => {
+      const updatedValues = { ...prev, phone: value };
+      const newErrors = validateInput("phone", value);
+
+      setErrors((prevErrors) => {
+        const updatedErrors = { ...newErrors, ...prevErrors };
+
+        if (!newErrors.phone) {
+          delete updatedErrors.phone;
+        }
+
+        return updatedErrors;
+      });
+
+      return updatedValues;
+    });
   };
 
   const handleOnSave = () => {
-    setUserData({ ...dataRef.current });
+    let newErrors = {};
+    Object.entries(userTempData).forEach(([name, value]) => {
+      const updatedErrors = validateInput(name, value);
+      newErrors = { ...newErrors, ...updatedErrors };
+    });
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+    setUserData({ ...userTempData });
   };
 
   const handleChangeImg = (e) => {
@@ -46,18 +168,21 @@ function StaffInfo() {
     const file = e.target.files[0];
     const imgURL = URL.createObjectURL(file);
     setUserData((prev) => ({ ...prev, avatar: imgURL }));
+    setErrors((prevErrors) => {
+      const { avatar, ...rest } = prevErrors; 
+      return rest;
+    });
   };
-
-  console.log('Thông tin sau cập nhât: ' ,userData)
 
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header-info")}>
         <div className={cx("avatar")}>
-          <img src={userData.avatar || "default-avatar.png"} alt="Avatar"></img>
+          <img src={userData.avatar || images.noImg} alt="Avatar"></img>
           <div className={cx("input-container")}>
             <input type="file" name="avatar" onChange={handleChangeImg} />
           </div>
+          {errors.avatar && <p className={cx("error-text")}>{errors.avatar}</p>}
         </div>
         <div className={cx("word-content")}>
           <div className={cx("name-header")}>{userData.name}</div>
@@ -70,10 +195,10 @@ function StaffInfo() {
             dark
             frame="Fullname"
             placeholder="Name..."
-            value={userData.name}
+            value={userTempData.name}
             name="name"
             onChange={handleChangeInput}
-            readOnly
+            error={errors.name}
           />
         </div>
         <div className={cx("email")}>
@@ -82,10 +207,10 @@ function StaffInfo() {
             frame="Email"
             placeholder="Email"
             name="email"
-            readOnly
-            value={INFO.email}
+            value={userTempData.email}
             email
             onChange={handleChangeInput}
+            error={errors.email}
           />
         </div>
         <div className={cx("password")}>
@@ -94,11 +219,10 @@ function StaffInfo() {
             frame="Password"
             placeholder="Password"
             name="password"
-            readOnly
-            value={INFO.password}
-            email
+            value={userTempData.password}
             type="password"
             onChange={handleChangeInput}
+            error={errors.password}
           />
         </div>
         <div className={cx("birth")}>
@@ -107,22 +231,27 @@ function StaffInfo() {
             frame="Birth"
             type="date"
             placeholder="Birth"
-            value={userData.birth}
+            value={userTempData.birth}
             name="birth"
             onChange={handleChangeInput}
-            readOnly={true}
+            error={errors.birth}
           />
         </div>
 
         <div className={cx("phone-container")}>
-          <Input dark readOnly={true} onSave={handleOnSave} frame="Phone" value={userData.phone}>
+          <Input
+            dark={true}
+            frame="Phone"
+            value={userTempData.phone}
+            error={errors.phone}
+          >
             <PhoneInput
               className={cx("phone")}
               enableSearch
-              value={dataRef.current.phone}
+              value={userTempData.phone}
               name="phone"
               onChange={handleChangePhone}
-              country={getCountryCode(userData.location).toLowerCase()}
+              country={(getCountryCode(userData.location) || "").toLowerCase()}
             />
           </Input>
         </div>
@@ -130,27 +259,33 @@ function StaffInfo() {
           <Input
             dark
             frame="Salary"
-            type="salary"
+            type="number"
             placeholder="Salary"
-            value={userData.salary}
+            value={userTempData.salary}
             name="salary"
             onChange={handleChangeInput}
-            readOnly={true}
+            error={errors.salary}
           />
         </div>
 
         <div className={cx("location-container")}>
           <Input
             dark
-            key={userData.location}
             frame="Location"
             type="location"
             placeholder="Location"
-            value={userData?.location || ""}
+            value={userTempData?.location || ""}
             name="location"
             onChange={handleChangeInput}
-            readOnly={true}
+            location
+            error={errors.location}
           />
+        </div>
+
+        <div className={cx("btn-container")}>
+          <Button rounded className={cx("save-btn")} onClick={handleOnSave}>
+            Save
+          </Button>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Input from "../../../../../components/Input";
 import Button from "../../../../../components/Button";
 import styles from "./HomeContentInfo.module.scss";
@@ -48,6 +48,7 @@ function HomeContentInfo() {
   );
   const [tempFormData, setTempFormData] = useState({ ...formData });
   const [openTest, setOpenTest] = useState(false);
+  const fileInputRef = useRef(null);
   const [errors, setErrors] = useState({});
 
   const validateInput = (name, value) => {
@@ -65,6 +66,12 @@ function HomeContentInfo() {
         break;
     }
     return newErrors;
+  };
+  const handleReset = () => {
+    setTempFormData((prev) => ({ ...prev, images: [] }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleImageUploaded = (e) => {
@@ -128,11 +135,9 @@ function HomeContentInfo() {
             multiple
             accept="image/*"
             onChange={handleImageUploaded}
+            ref={fileInputRef}
           />
-          <button
-            className={cx("reset")}
-            onClick={(e) => setformData((prev) => ({ ...prev, images: [] }))}
-          >
+          <button className={cx("reset")} onClick={handleReset}>
             Reset
           </button>
         </div>
@@ -176,7 +181,7 @@ function HomeContentInfo() {
         <Button
           rounded
           onClick={() => {
-            handleApply()
+            handleApply();
           }}
         >
           Apply
@@ -188,7 +193,7 @@ function HomeContentInfo() {
         form
         open={openTest}
         onClose={(e) => {
-          e.stopPropagation(); // Ngăn chặn sự kiện lan truyền
+          e.stopPropagation();
           setOpenTest(false);
         }}
       >

@@ -1,10 +1,6 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPenToSquare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
 import styles from "./Input.module.scss";
 
@@ -22,37 +18,20 @@ function Input({
   textarea,
   maxLength,
   type,
-  readOnly = false,
   childs = [],
   children,
   disabled,
-  onSave,
   location,
   frame,
 }) {
-  const [isReadOnly, setIsReadOnly] = useState(readOnly ? true : false);
   const [localValue, setLocalValue] = useState(value || "");
   const [countryCode, setCountryCode] = useState(value);
   const inputRef = useRef();
   inputRef.current = value;
-  const focusRef = useRef();
 
-  // console.log(localValue, inputRef);
   let Comp = "input";
   if (textarea) Comp = "textarea";
-  else if (childs.length > 0) Comp = "select";
   else if (children) Comp = "div";
-
-  const enableEditing = () => {
-    setIsReadOnly(false);
-    setTimeout(() => {
-      setTimeout(() => {
-        if (focusRef.current && typeof focusRef.current.focus === "function") {
-          focusRef.current.focus();
-        }
-      }, 100);
-    }, 100);
-  };
 
   const getLocationName = async (latitude, longitude) => {
     const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
@@ -90,86 +69,36 @@ function Input({
     }
   };
 
-  const cancelEditing = () => {
-    setLocalValue(inputRef.current);
-    setTimeout(() => setIsReadOnly(true), 100);
-  };
-
   const handleOnChange = (e) => {
     const newValue = e.target.value;
     setLocalValue(newValue);
 
-    if (!readOnly && onChange) {
+    if (onChange) {
       onChange({ target: { name, value: newValue } });
     }
-  };
-
-  const finishEditing = () => {
-    if (onChange) {
-      onChange({
-        target: {
-          name,
-          countryCode,
-          value:
-            typeof localValue === "object" ? localValue.location : localValue,
-        },
-      });
-    }
-    setIsReadOnly(true);
-  };
-
-  const handleOnSave = () => {
-    if (onSave) onSave();
-    if (onChange) onChange({ target: { name, value: localValue } });
-    setIsReadOnly(true);
   };
 
   const content = (
     <div className={cx("wrapper")}>
       <div className={cx("input-container", { dark, light })}>
-        {Comp === "select" ? (
-          <select
-            className={cx(className, { dark, light })}
-            onChange={(e) => setLocalValue(e.target.value)}
-            value={localValue}
-            name={name}
-            ref={inputRef}
-            disabled={isReadOnly}
-          >
-            {childs.map((child, index) => (
-              <option key={index} value={child}>
-                {child}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <Comp
-            placeholder={placeholder}
-            className={cx(className, { dark, light, readOnly: isReadOnly })}
-            onChange={
-              readOnly ? (e) => setLocalValue(e.target.value) : handleOnChange
-            }
-            value={children ? null : localValue}
-            name={name}
-            type={type}
-            ref={!children ? focusRef : null}
-            maxLength={maxLength}
-            disabled={disabled}
-          >
-            {React.Children.map(children, (child) =>
-              React.cloneElement(child, {
-                disabled: disabled || isReadOnly,
-                onSave: finishEditing,
-                countryCode: countryCode,
-                setCountryCode: setCountryCode,
-                value: localValue,
-                inputProps: {
-                  ref: focusRef,
-                },
-              })
-            )}
-          </Comp>
-        )}
+        <Comp
+          placeholder={placeholder}
+          className={cx(className, { dark, light, isLocation: location })}
+          onChange={handleOnChange}
+          value={children ? null : localValue}
+          name={name}
+          type={type}
+          maxLength={maxLength}
+          disabled={disabled}
+        >
+          {React.Children.map(children, (child) =>
+            React.cloneElement(child, {
+              countryCode: countryCode,
+              setCountryCode: setCountryCode,
+              value: localValue,
+            })
+          )}
+        </Comp>
       </div>
       {maxLength && (
         <div className={cx("limit")}>
@@ -177,32 +106,18 @@ function Input({
         </div>
       )}
       <span className={cx("error")}>{error || "\u00A0"}</span>
-      {readOnly &&
-        (isReadOnly ? (
-          <FontAwesomeIcon
-            className={cx("edit")}
-            icon={faPenToSquare}
-            onClick={() => {
-              {
-                location && getLocation();
-              }
-              enableEditing();
-            }}
-          />
-        ) : (
-          <div className={cx("edit-mode")}>
-            <FontAwesomeIcon
-              className={cx("check",{ disabled: !!error })}
-              icon={faSquareCheck}
-              onClick={onSave ? handleOnSave : finishEditing}
-            />
-            <FontAwesomeIcon
-              className={cx("cancel")}
-              icon={faSquareXmark}
-              onClick={cancelEditing}
-            />
-          </div>
-        ))}
+      {location && (
+        <FontAwesomeIcon
+          className={cx("locate")}
+          icon={faLocationDot}
+          onClick={(e) => {
+            {
+              e.preventDefault();
+              getLocation();
+            }
+          }}
+        />
+      )}
     </div>
   );
 

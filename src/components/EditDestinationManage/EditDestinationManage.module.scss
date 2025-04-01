@@ -39,10 +39,21 @@
             box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
             
         }
+  
     }
     .btn-container {
         display: flex;
         margin-top: 50px;
         gap : 10px
     }
+
+    .error-text {
+        color: rgb(253, 77, 77);
+        font-size: 13px;
+        display: flex;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-family: var(--font-default);
+    }
+
 }

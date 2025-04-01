@@ -21,7 +21,6 @@ const CONTENT = {
 
 function ServiceIntroduce() {
   const param = useParams();
-  console.log(param.type);
 
   return (
     <div className={cx("wrapper")}>

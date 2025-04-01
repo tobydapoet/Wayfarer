@@ -19,9 +19,40 @@ function Itinerary({ data, manage }) {
     type: data.type in serviceMap ? data.type : 0,
   });
   const [editField, setEditField] = useState(null);
-  const [tempValue, setTempValue] = useState("");
+  const [tempValue, setTempValue] = useState({ ...editField });
+  const [errors, setErrors] = useState({});
   const textareaRef = useRef(null);
-  console.log(content);
+
+  const validateInput = (name, value) => {
+    const newErrors = {};
+    switch (name) {
+      case "name": {
+        if (!value.trim()) {
+          newErrors.name = "Title cannot be empty!";
+        }
+        break;
+      }
+      case "price": {
+        if (!value.trim()) {
+          newErrors.price = "Price cannot be empty!";
+        }
+        break;
+      }
+      case "description": {
+        if (!value.trim()) {
+          newErrors.description = "Description cannot be empty!";
+        }
+        break;
+      }
+      case "type": {
+        if (!value) {
+          newErrors.img = "Please choose type!";
+        }
+        break;
+      }
+    }
+    return newErrors;
+  };
 
   const activityMap = content.activities ? content.activities.split(",") : [];
 
@@ -44,9 +75,16 @@ function Itinerary({ data, manage }) {
     setTempValue(content[field]);
   };
 
+  console.log(errors);
   const handleSaveField = (field) => {
-    setContent({ ...content, [field]: tempValue });
-    setEditField(null);
+    const newErrors = validateInput(field, tempValue);
+    if (Object.keys(newErrors).length === 0) {
+      setContent({ ...content, [field]: tempValue });
+      setEditField(null);
+      setErrors({ ...errors, [field]: undefined }); // Xóa lỗi cũ
+    } else {
+      setErrors({ ...errors, ...newErrors }); // Hiển thị lỗi mới
+    }
   };
 
   const handleEditActivity = (index) => {
@@ -118,18 +156,21 @@ function Itinerary({ data, manage }) {
       {/* Name */}
       <div className={cx("name-container")}>
         {editField === "name" && manage ? (
-          <input
-            className={cx("name-input")}
-            type="text"
-            value={tempValue}
-            onChange={(e) => setTempValue(e.target.value)}
-            onBlur={() => HandleCancelEdit("name")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSaveField("name");
-              if (e.key === "Escape") HandleCancelEdit("name");
-            }}
-            autoFocus
-          />
+          <>
+            <input
+              className={cx("name-input")}
+              type="text"
+              value={tempValue}
+              onChange={(e) => setTempValue(e.target.value)}
+              onBlur={() => HandleCancelEdit("name")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSaveField("name");
+                if (e.key === "Escape") HandleCancelEdit("name");
+              }}
+              autoFocus
+            />
+            {errors.name && <p className={cx("error-text")}>{errors.name}</p>}
+          </>
         ) : (
           <span
             onClick={() => handleEditField("name")}
@@ -146,18 +187,21 @@ function Itinerary({ data, manage }) {
 
       <div className={cx("price-container")}>
         {editField === "price" && manage ? (
-          <input
-            className={cx("price-input")}
-            type="number"
-            value={tempValue}
-            onChange={(e) => setTempValue(e.target.value)}
-            onBlur={() => HandleCancelEdit("price")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSaveField("price");
-              if (e.key === "Escape") HandleCancelEdit("price");
-            }}
-            autoFocus
-          />
+          <>
+            <input
+              className={cx("price-input")}
+              type="number"
+              value={tempValue}
+              onChange={(e) => setTempValue(e.target.value)}
+              onBlur={() => HandleCancelEdit("price")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSaveField("price");
+                if (e.key === "Escape") HandleCancelEdit("price");
+              }}
+              autoFocus
+            />
+            {errors.price && <p className={cx("error-text")}>{errors.price}</p>}
+          </>
         ) : (
           <span
             className={cx("price-show")}
@@ -172,26 +216,34 @@ function Itinerary({ data, manage }) {
       <div className={cx("img-container")}>
         <img src={content.img} alt={content.name} />
         {manage && (
-          <div className={cx("input-container")}>
-            <input type="file" onChange={handleChangeImg} />
-          </div>
+          <>
+            <div className={cx("input-container")}>
+              <input type="file" onChange={handleChangeImg} />
+            </div>
+            {errors.img && <p className={cx("error-text")}>{errors.img}</p>}
+          </>
         )}
       </div>
 
       <div className={cx("description-container")}>
         {editField === "description" && manage ? (
-          <textarea
-            ref={textareaRef}
-            className={cx("description-input")}
-            value={tempValue}
-            onChange={(e) => setTempValue(e.target.value)}
-            onBlur={() => HandleCancelEdit("description")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSaveField("description");
-              if (e.key === "Escape") HandleCancelEdit("description");
-            }}
-            autoFocus
-          />
+          <>
+            <textarea
+              ref={textareaRef}
+              className={cx("description-input")}
+              value={tempValue}
+              onChange={(e) => setTempValue(e.target.value)}
+              onBlur={() => HandleCancelEdit("description")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSaveField("description");
+                if (e.key === "Escape") HandleCancelEdit("description");
+              }}
+              autoFocus
+            />
+            {errors.description && (
+              <p className={cx("error-text")}>{errors.description}</p>
+            )}
+          </>
         ) : (
           <div
             className={cx("description-show")}
