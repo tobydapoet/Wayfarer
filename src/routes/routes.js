@@ -16,7 +16,6 @@ import HomeContent from "../pages/Manage/Content/HomeContent";
 import DestinationsManage from "../pages/Manage/DestinationsManage";
 import AboutUsContent from "../pages/Manage/Content/AboutUsContent";
 import BlogContent from "../pages/Manage/Content/BlogContent";
-import Partners from "../pages/Manage/Partners";
 import ProfileLayout from "../layouts/ProfileLayout";
 import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
@@ -30,8 +29,10 @@ import Bill from "../pages/Bill";
 import BillsManage from "../pages/Manage/BillsManage";
 import BillEdit from "../pages/Manage/BillsManage/BillEdit";
 import ClientAdd from "../pages/Manage/Business/Clients/ClientAdd";
-import PartnersAdd from "../pages/Manage/Partners/PartnersAdd";
 import AboutUsEdit from "../pages/Manage/Content/AboutUsContent/AboutUsEdit/AboutUsEdit";
+import ContactManage from "../pages/Manage/ContactManage";
+import BlogInfo from "../pages/Blogs/BlogInfo";
+import BlogAdd from "../pages/Blogs/BlogAdd/BlogAdd";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -40,6 +41,14 @@ const publicRoutes = [
   { path: "/blogs", component: Blogs, topic: "BLOG" },
   { path: "/bill", component: Bill },
   { path: "/contact", component: Contact, topic: "CONTACT US" },
+  {
+    path: "/blogs/:blog",
+    component: BlogInfo,
+  },
+  {
+    path: "/blogs/add_content",
+    component: BlogAdd,
+  },
 
   {
     path: "/:email",
@@ -129,7 +138,11 @@ const privateRoutes = [
             layout: null,
           },
           { path: "about_us_content", component: AboutUsContent, layout: null },
-          {path : "/manage/content/about_us_content/:title",component:AboutUsEdit,layout:null},
+          {
+            path: "/manage/content/about_us_content/:title",
+            component: AboutUsEdit,
+            layout: null,
+          },
           { path: "blog_content", component: BlogContent, layout: null },
           {
             path: "/manage/content/home_content/:info",
@@ -143,11 +156,26 @@ const privateRoutes = [
           },
         ],
       },
-      { path: "partners", component: Partners, layout: null },
-      { path: "/manage/partners/add_partner", component: PartnersAdd, layout: null },
+
+      {
+        path: "contact_manage",
+        component: ContactManage,
+        layout: null,
+      },
+
       {
         path: "billsmanage",
         component: BillsManage,
+        layout: null,
+      },
+      {
+        path: "/manage/content/blog_content/add_content",
+        component: BlogAdd,
+        layout: null,
+      },
+      {
+        path: "/manage/content/blog_content/:blog",
+        component: BlogInfo,
         layout: null,
       },
       { path: "/manage/billsmanage/:bill", component: BillEdit, layout: null },

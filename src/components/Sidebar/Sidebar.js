@@ -141,12 +141,14 @@ function Sidebar({ profile, management, dark }) {
                 {isMobile ? <FontAwesomeIcon icon={faNewspaper} /> : "Contents"}
               </NavLink>
             </div>
-            <div className={cx("partners-container")}>
+            <div className={cx("contact-container")}>
               <NavLink
-                to={`partners`}
-                className={(nav) => cx("partners", { active: nav.isActive })}
+                to={`contact_manage`}
+                className={(nav) =>
+                  cx("contactmanage", { active: nav.isActive })
+                }
               >
-                {isMobile ? <FontAwesomeIcon icon={faHandshake} /> : "Partners"}
+                {isMobile ? <FontAwesomeIcon icon={faHandshake} /> : "Contacts"}
               </NavLink>
             </div>
             <div className={cx("billsmanage-container")}>

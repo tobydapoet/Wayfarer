@@ -1,0 +1,105 @@
+.wrapper {
+    position: relative;
+
+    .xmark {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        cursor: pointer;
+        z-index: 50;
+    }
+
+    .container {
+        display: flex;
+        gap: 10px;
+        border: 1px solid rgba(153, 153, 153, 0.75);
+        padding: 10px;
+        position: relative;
+        z-index: 20;
+        cursor: pointer;
+
+        .img-container {
+            border: 1px solid rgba(153, 153, 153, 0.75);
+            img {
+                width: 170px;
+                height: 120px;
+                object-fit: contain;
+            }
+        }
+        .txt-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .title {
+                font-family: themify;
+                font-size: 20px;
+            }
+
+            .owner {
+                color: rgb(153, 153, 153);
+                font-family: var(--font-default);
+            }
+
+            .created-time {
+                color: rgb(153, 153, 153);
+                font-family: var(--font-default);
+            }
+        }
+
+        .status {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 7px 10px;
+            width: 150px;
+            display: flex;
+            justify-content: center;
+            border-radius: 16px;
+            color: var(--primary);
+
+            &.approved {
+                background-color: rgb(48, 245, 48);
+            }
+
+            &.notApproved {
+                background-color: red;
+            }
+        }
+    }
+}
+@media (max-width: 720px) {
+    .wrapper {
+        .xmark {
+            position: absolute;
+            right: 10px;
+            top: 7px;
+            cursor: pointer;
+            z-index: 50;
+        }
+        .container {
+            padding-top: 20px;
+            .img-container {
+                img {
+                    width: 100px;
+                }
+            }
+            .txt-content {
+                .title {
+                    font-size: 15px;
+                }
+                .owner,
+                .created-time {
+                    font-size: 13px;
+                }
+            }
+            .status {
+                bottom: 12px;
+                right: 10px;
+                padding: 4px 6px;
+                width: 120px;
+                font-size: 13px;
+            }
+        }
+    }
+}

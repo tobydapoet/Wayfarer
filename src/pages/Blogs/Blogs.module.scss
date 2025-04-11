@@ -1,15 +1,26 @@
-
-.search-wrapper {
-    width: 100vw;
+.header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 10px;
+    width: calc(100vw - 100px);
+    margin: 20px auto;
 
-    .search-container {
-        width: 94vw;
-        margin-top: 30px;
+    .add {
+        height: 25px;
+        width: 25px;
         display: flex;
-        position: relative;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        outline: none;
+        font-size: 16px;
+        font-family: var(--font-default);
+        transition: border-color 0.3s ease;
+
+        &:hover {
+            border-color: rgba(22, 24, 35, 0.6);
+        }
     }
 }
 
@@ -17,6 +28,6 @@
     width: 100%;
     justify-content: center;
     display: grid;
-    grid-template-columns: repeat(auto-fill,350px);
+    grid-template-columns: repeat(auto-fill, 350px);
     grid-auto-rows: 10px;
 }
