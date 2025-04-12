@@ -6,7 +6,6 @@ import NavigateManage from "../../../components/NavigateManage/NavigateManage";
 const cx = classNames.bind(styles);
 
 function Business() {
-
   return (
     <div className={cx("wrapper")}>
       <div className={cx("navigate")}>

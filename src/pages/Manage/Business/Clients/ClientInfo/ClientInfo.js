@@ -4,18 +4,21 @@ import ClientProfile from "../../../../../components/UserProfile/UserProfile";
 import { useEffect, useState } from "react";
 import DetailItem from "../../../../../components/DetailItem/DetailItem";
 import ProcessingItem from "../../../../../components/ProcessingItem/ProcessingItem";
+import { ClientProvider } from "../../../../../contexts/ClientContext";
 
 const cx = classNames.bind(style);
 
 const CLIENT = {
+  name: "Nguyen Viet Tung",
+  email: "Cat@gmail.com",
+  password: "1234567",
   avatar:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-  name: "Davis Astee ",
-  email: "davis@gmail.com",
+  position: "admin",
+
+  birth: "2004-10-29",
   phone: "0348349754",
-  password: "1234567",
-  location:
-    "Chemin du Lac-Pike, Low, La Vallée-de-la-Gatineau, Outaouais, Quebec, Canada",
+  site: "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
 };
 
 const TourItems = [
@@ -141,7 +144,7 @@ function ClientInfo() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("summary", { collapsed: selectedItem !== null })}>
@@ -169,7 +172,9 @@ function ClientInfo() {
 
       {(isMobile || !selectedItem) && (
         <div className={cx("client-info")}>
-          <ClientProfile data={CLIENT} />
+          <ClientProvider data={CLIENT}>
+            <ClientProfile />
+          </ClientProvider>
         </div>
       )}
     </div>

@@ -21,12 +21,11 @@ const userInfo = {
   password: "1234567",
   avatar:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-  position: 0,
+  position: "admin",
 
   birth: "2004-10-29",
   phone: "0348349754",
-  location:
-    "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
+  site: "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
 };
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -120,7 +119,7 @@ function Navbar() {
         )}
       </button>
       <div className={cx("inner", { open: shrinkMenu })}>
-        {(user && user.position !== 2 ? privateRoutes : publicRoutes).map(
+        {(user && user.position ? privateRoutes : publicRoutes).map(
           (route, index) => {
             if (route.layout === undefined || route.layout === false) {
               return route.topic ? (

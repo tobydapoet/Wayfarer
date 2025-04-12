@@ -33,7 +33,7 @@ function BlogInfo() {
         <img src={BLOG.image} />
         <div className={cx("content")}>{BLOG.content}</div>
       </div>
-      {user.position < 2 && BLOG.status !== true && (
+      {user.position && BLOG.status !== true && (
         <div className={cx("btn-container")}>
           <Button rounded>Appove</Button>
         </div>

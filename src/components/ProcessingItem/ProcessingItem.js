@@ -25,7 +25,6 @@ function ProcessingItem({ data, onClick, isSelected }) {
     }
     return status[code] || "Unknown Status";
   }
-  console.log(tour);
   return (
     <div className={cx("wrapper", { selected: isSelected })} onClick={onClick}>
       <div className={cx("container")}>
@@ -36,7 +35,9 @@ function ProcessingItem({ data, onClick, isSelected }) {
           </div>
           <div className={cx("text-content")}>
             <div className={cx("address")}>{tour.address}</div>
-            <div className={cx("status")}>status: {getStatus(tour.type, tour.status)}</div>
+            <div className={cx("status")}>
+              status: {getStatus(tour.type, tour.status)}
+            </div>
           </div>
         </div>
       </div>

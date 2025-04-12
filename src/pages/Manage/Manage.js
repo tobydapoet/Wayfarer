@@ -11,7 +11,7 @@ function Manage() {
         <Sidebar management dark />
       </div>
       <div className={cx("content")}>
-        <Outlet  />
+        <Outlet />
       </div>
     </div>
   );

@@ -17,7 +17,6 @@ import DestinationsManage from "../pages/Manage/DestinationsManage";
 import AboutUsContent from "../pages/Manage/Content/AboutUsContent";
 import BlogContent from "../pages/Manage/Content/BlogContent";
 import ProfileLayout from "../layouts/ProfileLayout";
-import StaffInfo from "../pages/Manage/Business/Staffs/StaffInfo";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
 import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
 import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
@@ -33,6 +32,7 @@ import AboutUsEdit from "../pages/Manage/Content/AboutUsContent/AboutUsEdit/Abou
 import ContactManage from "../pages/Manage/ContactManage";
 import BlogInfo from "../pages/Blogs/BlogInfo";
 import BlogAdd from "../pages/Blogs/BlogAdd/BlogAdd";
+import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -51,18 +51,22 @@ const publicRoutes = [
   },
 
   {
-    path: "/:email",
-    component: Profile,
-    layout: ProfileLayout,
-  },
-  { path: ":email/:selected", component: SelectedPage, layout: ProfileLayout },
-  {
     path: "/destinations/:placement",
     component: Placement,
     children: [
       { path: ":type", component: Services, default: true, layout: null },
       { path: ":type/:name", component: PlacementInfo, layout: null },
     ],
+  },
+  {
+    path: ":email",
+    component: Profile,
+    layout: ProfileLayout,
+  },
+  {
+    path: ":email/:selected",
+    component: SelectedPage,
+    layout: ProfileLayout,
   },
 ];
 const privateRoutes = [
@@ -98,7 +102,7 @@ const privateRoutes = [
           },
           {
             path: "/manage/business/staffs/:info",
-            component: StaffInfo,
+            component: StaffLayout,
             layout: null,
           },
         ],

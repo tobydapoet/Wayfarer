@@ -1,13 +1,16 @@
 import classNames from "classnames/bind";
 import style from "./ClientAdd.module.scss";
-import UserProfile from "../../../../../components/UserProfile";
+import ClientProfile from "../../../../../components/UserProfile";
+import { ClientProvider } from "../../../../../contexts/ClientContext";
 
 const cx = classNames.bind(style);
 
 function ClientAdd() {
   return (
     <div className={cx("wrapper")}>
-      <UserProfile />
+      <ClientProvider>
+        <ClientProfile />
+      </ClientProvider>
     </div>
   );
 }

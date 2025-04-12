@@ -51,14 +51,20 @@ function Input({
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log("Vị trí mới lấy:", latitude, longitude);
-
           const locationName = await getLocationName(latitude, longitude);
-          console.log("Tên địa điểm lấy được:", locationName.display_name);
-          console.log("Tên nước:", locationName.address.country_code);
+          const displayName = locationName.display_name;
 
-          setLocalValue(locationName.display_name);
+          setLocalValue(displayName);
           setCountryCode(locationName.address.country_code);
+
+          if (onChange) {
+            onChange({
+              target: {
+                name: name,
+                value: displayName,
+              },
+            });
+          }
         },
         (error) => {
           console.error("Lỗi lấy vị trí:", error);
@@ -68,7 +74,6 @@ function Input({
       alert("Trình duyệt không hỗ trợ định vị.");
     }
   };
-
   const handleOnChange = (e) => {
     const newValue = e.target.value;
     setLocalValue(newValue);

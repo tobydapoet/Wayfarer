@@ -62,7 +62,11 @@ function Clients() {
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
         <SearchBar />
-        <div className={cx("add")} style={{ cursor: "pointer" }} onClick={() => navigate('add_content')}>
+        <div
+          className={cx("add")}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("add_content")}
+        >
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </div>
