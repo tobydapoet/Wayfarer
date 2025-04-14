@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 function Clients() {
   const navigate = useNavigate();
-  const { clientData } = useContext(ClientContext);
+  const { allClientsData, handleDeleteClient } = useContext(ClientContext);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
@@ -36,8 +36,13 @@ function Clients() {
           </tr>
         </thead>
         <tbody>
-          {clientData.map((data) => (
-            <ClientItem data={data} key={data._id} />
+          {allClientsData.map((data) => (
+            <ClientItem
+              data={data}
+              key={data._id}
+              onClick={() => navigate(data.email)}
+              onDelete={() => handleDeleteClient(data._id)}
+            />
           ))}
         </tbody>
       </table>

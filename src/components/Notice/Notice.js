@@ -31,7 +31,13 @@ function Notice({ open, onClose, content, onConfirm, warn }) {
           <div className={cx("notice-content")}>{content}</div>
           <div className={cx("btn-container")}>
             {!warn && (
-              <Button large onClick={onConfirm}>
+              <Button
+                large
+                onClick={() => {
+                  onConfirm();
+                  onClose();
+                }}
+              >
                 Yes
               </Button>
             )}

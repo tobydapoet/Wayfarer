@@ -4,10 +4,11 @@ import getCountryCode from "../../utils/countryUtils/countryUtils";
 import "react-phone-input-2/lib/style.css";
 import Input from "../Input";
 import styles from "./StaffInfo.module.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Button from "../Button";
 import images from "../../assets/images";
 import { StaffContext } from "../../contexts/StaffContext";
+import { useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -16,13 +17,20 @@ function StaffInfo() {
     staffData,
     staffTempData,
     staffErrors,
+    handleSelectedStaff,
+    handleAddStaff,
     handleChangeStaffInput,
+    handleDeleteStaff,
     handleChangeStaffPhone,
     handleChangeStaffAvatar,
     handleOnSaveStaff,
   } = useContext(StaffContext);
-  console.log(staffTempData.site);
-  console.log(staffData);
+  const param = useParams();
+  useEffect(() => {
+    if (param.email) {
+      handleSelectedStaff(param.email);
+    }
+  }, [param.email]);
 
   return (
     <div className={cx("wrapper")}>
@@ -51,13 +59,15 @@ function StaffInfo() {
             dark
             frame="Fullname"
             placeholder="Name..."
-            value={staffTempData.name}
+            value={staffTempData.name || ""}
             name="name"
             onChange={handleChangeStaffInput}
             error={staffErrors.name}
           />
         </div>
-        <div className={cx("email")}>
+        <div
+          className={cx("email", { isReadOnly: Object.keys(param).length > 0 })}
+        >
           <Input
             dark
             frame="Email"
@@ -87,7 +97,7 @@ function StaffInfo() {
             frame="Birth"
             type="date"
             placeholder="Birth"
-            value={staffTempData.birth}
+            value={staffTempData.birth?.slice(0, 10)}
             name="birth"
             onChange={handleChangeStaffInput}
             error={staffErrors.birth}
@@ -138,13 +148,28 @@ function StaffInfo() {
         </div>
 
         <div className={cx("btn-container")}>
-          <Button
-            rounded
-            className={cx("save-btn")}
-            onClick={handleOnSaveStaff}
-          >
-            Save
-          </Button>
+          {Object.keys(param).length > 0 ? (
+            <>
+              <Button
+                rounded
+                className={cx("save-btn")}
+                onClick={() => handleOnSaveStaff(staffData._id, staffTempData)}
+              >
+                Save
+              </Button>
+              <Button
+                rounded
+                className={cx("save-btn")}
+                onClick={() => handleDeleteStaff(staffData._id)}
+              >
+                Remove
+              </Button>
+            </>
+          ) : (
+            <Button rounded className={cx("save-btn")} onClick={handleAddStaff}>
+              Add
+            </Button>
+          )}
         </div>
       </div>
     </div>

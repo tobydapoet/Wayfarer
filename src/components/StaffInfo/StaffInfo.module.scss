@@ -69,6 +69,11 @@
         grid-template-columns: 1fr 1fr;
         column-gap: 50px;
         row-gap: 20px;
+        .email {
+            &.isReadOnly {
+                pointer-events: none;
+            }
+        }
 
         .phone {
             color: white !important;
@@ -80,8 +85,8 @@
                 background-color: transparent;
                 border: none;
                 font-family: var(--font-default);
-                font-size: 20px;
-                padding: 26px 0;
+                font-size: 19px;
+                padding: 6.5px 0;
                 padding-left: 30px;
             }
 
@@ -104,6 +109,7 @@
         .btn-container {
             grid-column: span 2;
             width: 300px;
+            gap: 10px;
             display: flex;
             margin: 0 auto;
         }

@@ -134,7 +134,7 @@
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 800px) or (max-height: 650px) {
     .wrapper {
         width: 80px;
         .current-user {

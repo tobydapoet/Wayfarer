@@ -19,13 +19,15 @@ import { AccountContext } from "../../contexts/AccountContext";
 const cx = classNames.bind(styles);
 
 function Sidebar({ profile, management, dark }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth < 800 || window.innerHeight < 650
+  );
   const { user } = useContext(AccountContext);
   const { email } = useParams();
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 800);
+      setIsMobile(window.innerWidth < 800 || window.innerHeight < 650);
     };
     handleResize();
 

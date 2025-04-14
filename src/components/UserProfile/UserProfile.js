@@ -8,7 +8,7 @@ import images from "../../assets/images";
 import { ClientContext } from "../../contexts/ClientContext";
 import { StaffContext } from "../../contexts/StaffContext";
 import { useContext, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
@@ -17,10 +17,13 @@ function UserProfile() {
     clientData,
     clientTempData,
     clientErrors,
+    handleAddClient,
+    handleDeleteClient,
     handleChangeClientInput,
     handleChangeClientPhone,
     handleChangeClientImg,
     handleOnSaveClient,
+    handleSelectedClient,
   } = useContext(ClientContext);
 
   const {
@@ -32,6 +35,8 @@ function UserProfile() {
     handleChangeStaffAvatar,
     handleOnSaveStaff,
   } = useContext(StaffContext);
+
+  console.log(staffData);
 
   const isStaff = !!staffData?.position;
 
@@ -48,7 +53,16 @@ function UserProfile() {
     ? handleChangeStaffAvatar
     : handleChangeClientImg;
   const handleOnSave = isStaff ? handleOnSaveStaff : handleOnSaveClient;
-  console.log(formData);
+
+  const location = useLocation();
+  const param = useParams();
+
+  console.log(param);
+  useEffect(() => {
+    if (param.email) {
+      handleSelectedClient(param.email);
+    }
+  }, [param.email]);
 
   return (
     <div className={cx("wrapper")}>
@@ -68,6 +82,9 @@ function UserProfile() {
           <Input
             dark
             frame="Email"
+            className={cx("email", {
+              isReadOnly: Object.keys(param).length > 0,
+            })}
             placeholder="Email..."
             value={tempData?.email || ""}
             name="email"
@@ -129,9 +146,31 @@ function UserProfile() {
       </div>
 
       <div className={cx("btn-container")}>
-        <Button rounded className={cx("save-btn")} onClick={handleOnSave}>
-          Save
-        </Button>
+        {Object.keys(param).length > 0 ? (
+          <>
+            <Button
+              rounded
+              className={cx("save-btn")}
+              onClick={() => handleOnSave(formData._id, tempData)}
+            >
+              Save
+            </Button>
+            {location.pathname.includes("/manage/business/clients/") &&
+              !staffData.position && (
+                <Button
+                  rounded
+                  className={cx("delete-btn")}
+                  onClick={() => handleDeleteClient(formData._id)}
+                >
+                  Delete
+                </Button>
+              )}
+          </>
+        ) : (
+          <Button rounded className={cx("save-btn")} onClick={handleAddClient}>
+            Add
+          </Button>
+        )}
       </div>
     </div>
   );

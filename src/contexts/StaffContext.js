@@ -1,10 +1,16 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const StaffContext = createContext({
+  allStaffsData: [],
   staffData: {},
   staffTempData: {},
   staffErrors: {},
+  handleAddStaff: () => {},
+  handleSelectedStaff: () => {},
+  handleDeleteStaff: () => {},
   handleChangeStaffInput: () => {},
   handleChangeStaffPhone: () => {},
   handleChangeStaffAvatar: () => {},
@@ -12,16 +18,42 @@ export const StaffContext = createContext({
 });
 
 export const StaffProvider = ({ children, data }) => {
-  const [staffData, setStaffData] = useState([]);
-  const [staffTempData, setStaffTempData] = useState({ ...staffData });
+  const [allStaffsData, setAllStaffsData] = useState([]);
+  const [staffData, setStaffData] = useState(
+    data || {
+      name: "",
+      email: "",
+      password: "",
+      birth: "",
+      phone: "",
+      salary: "",
+      site: "",
+      avatar: "",
+    }
+  );
+  const [staffTempData, setStaffTempData] = useState({});
   const [staffErrors, setStaffErrors] = useState({});
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    setStaffTempData({ ...staffData });
+  }, [staffData]);
+
+  useEffect(() => {
+    if (data) return;
     axios
       .get("http://localhost:3000/staffs")
-      .then((res) => setStaffData(res.data))
+      .then((res) => setAllStaffsData(res.data))
       .catch((err) => console.error("Lỗi khi fetch:", err));
   }, []);
+
+  const handleSelectedStaff = (StaffEmail) => {
+    axios
+      .get(`http://localhost:3000/staffs/${StaffEmail}`)
+      .then((res) => setStaffData(res.data))
+      .catch((err) => console.log(err));
+  };
 
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -104,49 +136,120 @@ export const StaffProvider = ({ children, data }) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const imgURL = URL.createObjectURL(file);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result;
+      setStaffTempData((prev) => ({ ...prev, avatar: base64 }));
 
-    setStaffTempData((prev) => ({ ...prev, avatar: imgURL }));
-    setStaffErrors((prevErrors) => {
-      const { avatar, ...rest } = prevErrors;
-      return rest;
-    });
+      setStaffErrors((prevErrors) => {
+        const updatedErrors = { ...prevErrors };
+        delete updatedErrors.avatar;
+        return updatedErrors;
+      });
+    };
+    reader.readAsDataURL(file); // Chuyển thành base64
   };
 
-  const handleOnSaveStaff = () => {
-    try {
-      let newErrors = {};
-      console.log("Starting validation..."); // Kiểm tra xem có log này không
+  const handleOnSaveStaff = async (id, updatedData) => {
+    let newErrors = {};
 
-      Object.entries(staffTempData).forEach(([name, value]) => {
-        const updatedErrors = validateInput(name, value);
-        newErrors = { ...newErrors, ...updatedErrors };
-      });
+    Object.entries(staffTempData).forEach(([name, value]) => {
+      const updatedErrors = validateInput(name, value);
+      newErrors = { ...newErrors, ...updatedErrors };
+    });
 
-      console.log("Validation errors:", newErrors); // Xem lỗi validation
+    setStaffErrors(newErrors);
 
-      setStaffErrors(newErrors);
-
-      if (Object.keys(newErrors).length > 0) {
-        console.log("Validation failed, not saving");
-        return false;
-      }
-
-      console.log("Saving data:", staffTempData); // Xem dữ liệu trước khi lưu
-      setStaffData({ ...staffTempData });
-      return true;
-    } catch (error) {
-      console.error("Error in handleOnSaveStaff:", error);
+    if (Object.keys(newErrors).length > 0) {
+      console.log("Validation failed, not saving");
       return false;
+    }
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/staffs/${id}`,
+        updatedData
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setAllStaffsData((prev) =>
+          prev.map((staff) =>
+            staff._id === id ? { ...staff, ...updatedData } : staff
+          )
+        );
+      } else {
+        toast.error(res.data.mesage);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+
+    return true;
+  };
+
+  const handleAddStaff = async () => {
+    let newErrors = {};
+
+    Object.entries(staffTempData).forEach(([name, value]) => {
+      const updatedErrors = validateInput(name, value);
+      newErrors = { ...newErrors, ...updatedErrors };
+    });
+
+    setStaffErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      console.log("Validation failed, not saving");
+      return false;
+    }
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/staffs/create_staff",
+        staffTempData
+      );
+      if (res.data.success) {
+        toast.success(res.data.succes || "Add staff success!");
+        setAllStaffsData((prev) => [...prev, res.data]);
+        navigate("/manage/business/staffs");
+      }
+    } catch (err) {
+      if (err.response && err.response.data) {
+        toast.error(err.response.data.message || "Add staff failed!");
+      } else {
+        toast.error("An unknown error occurred!");
+      }
+    }
+    return true;
+  };
+
+  const handleDeleteStaff = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3000/staffs/${id}`);
+      if (res.data.success) {
+        toast.success(res.data.message || "Delete success!");
+        if (
+          location.pathname.includes("/manage/business/staffs/") &&
+          location.pathname !== "/manage/business/staffs"
+        ) {
+          navigate("/manage/business/staffs");
+        }
+        setAllStaffsData((prev) => prev.filter((staff) => staff._id !== id));
+      } else {
+        toast.error(res.data.message || "Delete failed!");
+      }
+    } catch (err) {
+      toast.error(err);
     }
   };
 
   return (
     <StaffContext.Provider
       value={{
+        allStaffsData,
         staffData,
         staffTempData,
         staffErrors,
+        handleAddStaff,
+        handleDeleteStaff,
+        handleSelectedStaff,
         handleChangeStaffInput,
         handleChangeStaffPhone,
         handleChangeStaffAvatar,

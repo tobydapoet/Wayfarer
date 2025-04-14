@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Input.module.scss";
 
 const cx = classNames.bind(styles);
@@ -18,7 +18,6 @@ function Input({
   textarea,
   maxLength,
   type,
-  childs = [],
   children,
   disabled,
   location,
@@ -28,6 +27,10 @@ function Input({
   const [countryCode, setCountryCode] = useState(value);
   const inputRef = useRef();
   inputRef.current = value;
+
+  useEffect(() => {
+    setLocalValue(value || "");
+  }, [value]);
 
   let Comp = "input";
   if (textarea) Comp = "textarea";

@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const AccountContext = createContext({
-  successMessage: {},
   user: {},
   setUser: () => {},
   dataLogin: {},
@@ -15,7 +14,7 @@ export const AccountContext = createContext({
   errors: {},
 });
 
-export const AccountProvider = ({ children }) => {
+export const AccountProvider = ({ children, data }) => {
   const [dataLogin, setDataLogin] = useState({});
   const [dataRegister, setDataRegister] = useState({});
   const [errors, setErrors] = useState({});
@@ -23,7 +22,6 @@ export const AccountProvider = ({ children }) => {
     const localUser = localStorage.getItem("user");
     return localUser ? JSON.parse(localUser) : null;
   });
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleValidate = (name, value) => {
     let newErrors = {};
@@ -171,7 +169,6 @@ export const AccountProvider = ({ children }) => {
     <AccountContext.Provider
       value={{
         user,
-        successMessage,
         setUser,
         dataLogin,
         dataRegister,

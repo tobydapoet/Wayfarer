@@ -96,12 +96,17 @@ const privateRoutes = [
             layout: null,
           },
           {
-            path: "/manage/business/clients/:info",
+            path: "/manage/business/staffs/add_content",
+            component: StaffLayout,
+            layout: null,
+          },
+          {
+            path: "/manage/business/clients/:email",
             component: ClientInfo,
             layout: null,
           },
           {
-            path: "/manage/business/staffs/:info",
+            path: "/manage/business/staffs/:email",
             component: StaffLayout,
             layout: null,
           },

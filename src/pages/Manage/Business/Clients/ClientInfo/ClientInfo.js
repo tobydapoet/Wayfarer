@@ -1,25 +1,14 @@
 import classNames from "classnames/bind";
 import style from "./ClientInfo.module.scss";
 import ClientProfile from "../../../../../components/UserProfile/UserProfile";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DetailItem from "../../../../../components/DetailItem/DetailItem";
 import ProcessingItem from "../../../../../components/ProcessingItem/ProcessingItem";
-import { ClientProvider } from "../../../../../contexts/ClientContext";
-
+import {
+  ClientContext,
+  ClientProvider,
+} from "../../../../../contexts/ClientContext";
 const cx = classNames.bind(style);
-
-const CLIENT = {
-  name: "Nguyen Viet Tung",
-  email: "Cat@gmail.com",
-  password: "1234567",
-  avatar:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-  position: "admin",
-
-  birth: "2004-10-29",
-  phone: "0348349754",
-  site: "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
-};
 
 const TourItems = [
   {
@@ -172,7 +161,7 @@ function ClientInfo() {
 
       {(isMobile || !selectedItem) && (
         <div className={cx("client-info")}>
-          <ClientProvider data={CLIENT}>
+          <ClientProvider>
             <ClientProfile />
           </ClientProvider>
         </div>

@@ -10,7 +10,6 @@ const cx = classNames.bind(styles);
 
 function Business() {
   const location = useLocation();
-  console.log(location);
   let Wrapper = Fragment;
   if (location.pathname === "/manage/business/staffs") {
     Wrapper = StaffProvider;

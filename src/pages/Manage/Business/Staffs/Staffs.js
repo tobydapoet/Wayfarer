@@ -9,10 +9,10 @@ import { useContext } from "react";
 import { StaffContext } from "../../../../contexts/StaffContext";
 
 const cx = classNames.bind(styles);
-
 function Staffs() {
   const navigate = useNavigate();
-  const { staffData } = useContext(StaffContext);
+  const { allStaffsData, handleDeleteStaff } = useContext(StaffContext);
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
@@ -37,8 +37,15 @@ function Staffs() {
           </tr>
         </thead>
         <tbody>
-          {staffData.map((data) => (
-            <StaffItem key={data.id} data={data} />
+          {allStaffsData.map((data) => (
+            <StaffItem
+              key={data._id}
+              data={data}
+              onClick={() => {
+                navigate(`${data.email}`);
+              }}
+              onDelete={() => handleDeleteStaff(data._id)}
+            />
           ))}
         </tbody>
       </table>

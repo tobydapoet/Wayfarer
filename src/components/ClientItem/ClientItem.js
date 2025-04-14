@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+
 import Flag from "react-world-flags";
 import getCountryCode from "../../utils/countryUtils/countryUtils";
 import styles from "./ClientItem.module.scss";
@@ -11,20 +11,14 @@ import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
-function ClientItem({ data }) {
-  const navigate = useNavigate();
-
+function ClientItem({ data, onClick, onDelete }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
-
-  const handleRowClick = () => {
-    navigate(`${data.name}`);
-  };
 
   return (
     <>
       <tr
         className={cx("wrapper")}
-        onClick={handleRowClick}
+        onClick={onClick}
         style={{ cursor: "pointer" }}
       >
         <td className={cx("info")}>
@@ -53,6 +47,7 @@ function ClientItem({ data }) {
         open={deleteNotice}
         onClose={() => setDeleteNotice(false)}
         content="Do you want to delete this client ?"
+        onConfirm={onDelete}
       />
     </>
   );

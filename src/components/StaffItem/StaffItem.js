@@ -7,12 +7,11 @@ import classNames from "classnames/bind";
 import Flag from "react-world-flags";
 import styles from "./StaffItem.module.scss";
 import Notice from "../Notice";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
-function StaffItem({ data }) {
-  const navigate = useNavigate();
-
+function StaffItem({ data, onClick, onDelete }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
 
   // const statusDisplay = {
@@ -29,22 +28,16 @@ function StaffItem({ data }) {
     "off duty": "offDuty",
   };
 
-  const handleRowClick = () => {
-    navigate(`${data.name}`);
-  };
-
-  console.log(data);
-
   return (
     <>
       <tr
         className={cx("wrapper")}
-        onClick={handleRowClick}
+        onClick={onClick}
         style={{ cursor: "pointer" }}
       >
         <td className={cx("info")}>
           <div className={cx("img")}>
-            <img src={data.avatar} alt={data.name} />
+            <img src={data.avatar || images.noImg} alt={data.name} />
           </div>
           <div className={cx("name")}>{data.name}</div>
         </td>
@@ -62,21 +55,24 @@ function StaffItem({ data }) {
             {data.status}
           </div>
         </td>
-        <td className={cx("delete")}>
-          <FontAwesomeIcon
-            icon={faXmark}
-            className={cx("delete-icon")}
-            onClick={(e) => {
-              e.stopPropagation();
-              setDeleteNotice(true);
-            }}
-          />
-        </td>
+        {data.position === "staff" && (
+          <td className={cx("delete")}>
+            <FontAwesomeIcon
+              icon={faXmark}
+              className={cx("delete-icon")}
+              onClick={(e) => {
+                e.stopPropagation();
+                setDeleteNotice(true);
+              }}
+            />
+          </td>
+        )}
       </tr>
       <Notice
         open={deleteNotice}
         onClose={() => setDeleteNotice(false)}
         content=" Do you want to delete this staff ?"
+        onConfirm={onDelete}
       />
     </>
   );
