@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import axios from "axios";
+import React, { createContext, useEffect, useState } from "react";
 
 export const StaffContext = createContext({
   staffData: {},
@@ -11,21 +12,16 @@ export const StaffContext = createContext({
 });
 
 export const StaffProvider = ({ children, data }) => {
-  const [staffData, setStaffData] = useState(
-    data || {
-      avatar: "",
-      name: "",
-      status: "",
-      site: "",
-      salary: "",
-      email: "",
-      birth: "",
-      phone: "",
-      password: "",
-    }
-  );
+  const [staffData, setStaffData] = useState([]);
   const [staffTempData, setStaffTempData] = useState({ ...staffData });
   const [staffErrors, setStaffErrors] = useState({});
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/staffs")
+      .then((res) => setStaffData(res.data))
+      .catch((err) => console.error("Lỗi khi fetch:", err));
+  }, []);
 
   const validateInput = (name, value) => {
     const newErrors = {};

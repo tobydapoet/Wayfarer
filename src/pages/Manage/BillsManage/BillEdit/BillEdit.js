@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import BillForm from "../../../../components/BillForm";
+import { BillProvider } from "../../../../contexts/BillContext";
 
 const BILL = {
   id: 4,
@@ -20,9 +21,9 @@ function BillEdit() {
   const param = useParams();
   console.log(param);
   return (
-    <div>
+    <BillProvider data={BILL}>
       {param.bill !== "add_content" ? <BillForm data={BILL} /> : <BillForm />}
-    </div>
+    </BillProvider>
   );
 }
 

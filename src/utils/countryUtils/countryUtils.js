@@ -6,6 +6,7 @@ countries.registerLocale(require("i18n-iso-countries/langs/vi.json"));
 const countryNameMap = {
   laos: "LA",
   lào: "LA",
+  korea: "KR",
 };
 
 function getCountryCode(location) {

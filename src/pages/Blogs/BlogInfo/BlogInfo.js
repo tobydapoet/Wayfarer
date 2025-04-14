@@ -15,7 +15,7 @@ const BLOG = {
     "Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.Worried about crossing streets in Hanoi? Here's how to navigate the chaos safely.",
   createdBy: "Davis Astee",
   createdAt: "2025-04-03 08:50",
-  status: true,
+  status: false,
 };
 function BlogInfo() {
   const location = useLocation();

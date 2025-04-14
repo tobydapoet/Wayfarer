@@ -15,23 +15,25 @@ function StaffItem({ data }) {
 
   const [deleteNotice, setDeleteNotice] = useState(false);
 
-  const status = {
-    0: "working",
-    1: "is meeting",
-    2: "on leave",
-    3: "off duty",
-  };
+  // const statusDisplay = {
+  //   working: "working",
+  //   inMeeting: "in a meeting",
+  //   onLeave: "on leave",
+  //   offDuty: "off duty",
+  // };
 
-  const statusColors = {
-    0: "working",
-    1: "inMeeting",
-    2: "onLeave",
-    3: "offDuty",
+  const statusDisplay = {
+    working: "Working",
+    "in meeting": "inMeeting",
+    "on leave": "onLeave",
+    "off duty": "offDuty",
   };
 
   const handleRowClick = () => {
     navigate(`${data.name}`);
   };
+
+  console.log(data);
 
   return (
     <>
@@ -47,15 +49,17 @@ function StaffItem({ data }) {
           <div className={cx("name")}>{data.name}</div>
         </td>
         <td className={cx("country")}>
-          <Flag className={cx("flag")} code={getCountryCode(data.location)} />
+          <Flag className={cx("flag")} code={getCountryCode(data.site)} />
         </td>
         <td className={cx("salary")}>
           ${Number(data.salary).toLocaleString("us-US")}
         </td>
-        <td className={cx("time")}>{data.start}</td>
+        <td className={cx("time")}>
+          {new Date(data.start).toLocaleDateString()}
+        </td>
         <td className={cx("status-container")}>
-          <div className={cx("status", statusColors[data.status])}>
-            {status[data.status]}
+          <div className={cx("status", statusDisplay[data.status])}>
+            {data.status}
           </div>
         </td>
         <td className={cx("delete")}>
@@ -69,8 +73,11 @@ function StaffItem({ data }) {
           />
         </td>
       </tr>
-      <Notice open={deleteNotice} onClose={() => setDeleteNotice(false)}  content=" Do you want to delete this staff ?"/>
-   
+      <Notice
+        open={deleteNotice}
+        onClose={() => setDeleteNotice(false)}
+        content=" Do you want to delete this staff ?"
+      />
     </>
   );
 }

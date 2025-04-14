@@ -8,100 +8,69 @@ import { privateRoutes, publicRoutes } from "../../routes/routes";
 import Button from "../Button";
 import images from "../../assets/images";
 import Modal from "../Modal";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "../Input";
 import useForm from "../../hooks/useForm";
 import AccountItem from "../AccountItem/AccountItem";
+import { AccountContext } from "../../contexts/AccountContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
-const userInfo = {
-  name: "Nguyen Viet Tung",
-  email: "Cat@gmail.com",
-  password: "1234567",
-  avatar:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-  position: "admin",
+// const userInfo = {
+//   name: "Nguyen Viet Tung",
+//   email: "Cat@gmail.com",
+//   password: "1234567",
+//   avatar:
+//     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
+//   position: "admin",
 
-  birth: "2004-10-29",
-  phone: "0348349754",
-  site: "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
-};
+//   birth: "2004-10-29",
+//   phone: "0348349754",
+//   site: "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
+// };
 
 const user = JSON.parse(localStorage.getItem("user"));
 
 function Navbar() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
-  const [errors, setErrors] = useState({});
   const [shrinkMenu, setShrinkMeu] = useState(false);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    let storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      localStorage.setItem("user", JSON.stringify(userInfo));
-      storedUser = JSON.stringify(userInfo);
-    }
-    setUser(JSON.parse(storedUser));
-  }, []);
+  // useEffect(() => {
+  //   let storedUser = localStorage.getItem("user");
+  //   if (!storedUser) {
+  //     localStorage.setItem("user", JSON.stringify(userInfo));
+  //     storedUser = JSON.stringify(userInfo);
+  //   }
+  //   setUser(JSON.parse(storedUser));
+  // }, []);
 
-  const [dataLogin, setDataLogin, resetDataLogin] = useForm({
-    email: "",
-    password: "",
-  });
+  const {
+    user,
+    successMessage,
+    dataLogin,
+    dataRegister,
+    changeLogin,
+    changeRegister,
+    checkLogin,
+    checkRegister,
+    resetLoginData,
+    resetRegisterData,
+    errors,
+  } = useContext(AccountContext);
 
-  const [dataRegister, setDataRegister, resetDataRegister] = useForm({
-    email: "",
-    password: "",
-    repassword: "",
-  });
-
-  const handleChangeLogin = (e) => {
-    setDataLogin(e);
-    console.log(`${e.target.name} : ${e.target.value}`);
+  const handleCLearLogin = () => {
+    setIsOpenLogin(false);
+    resetLoginData();
   };
 
-  const handleChangeRegister = (e) => {
-    setDataRegister(e);
-    console.log(`${e.target.name} : ${e.target.value}`);
-  };
-
-  const handleValidate = () => {
-    let newErrors = {};
-    if (!dataRegister.email) {
-      newErrors.email = "Yêu cầu nhập email";
-    } else if (!/\S+@\S+\.\S+/.test(dataRegister.email)) {
-      newErrors.email = "Sai định dạng email";
-    }
-    if (!dataRegister.password) {
-      newErrors.password = "Yêu cầu nhập mật khẩu";
-    } else if (dataRegister.password.length < 8) {
-      newErrors.password = "Mật khẩu tối thiểu 8 ký tự";
-    } else if (dataRegister.password != dataRegister.repassword) {
-      newErrors.repassword = "Mật khẩu nhập lại không đúng";
-    }
-    if (!dataRegister.repassword) {
-      newErrors.repassword = "Yêu cầu nhập lại mật khẩu";
-    }
-
-    return newErrors;
-  };
-
-  const handleCheckRegister = (e) => {
-    e.preventDefault();
-    const validationErrors = handleValidate();
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Đăng ký thành công");
-    }
-  };
-
-  const handleCloseRegister = () => {
-    setErrors({});
+  const handleCLearRegister = () => {
     setIsOpenRegister(false);
-    resetDataRegister();
+    resetRegisterData();
   };
+
   return (
     <header className={cx("wrapper")}>
       <Link to={"/"} className={cx("logo-link")}>
@@ -172,19 +141,19 @@ function Navbar() {
         </div>
       )}
 
-      <Modal open={isOpenLogin} onClose={() => setIsOpenLogin(false)}>
+      <Modal open={isOpenLogin} onClose={() => handleCLearLogin()}>
         <div className={cx("modal-title")}>Login</div>
         <FontAwesomeIcon
           className={cx("xmark")}
           icon={faXmark}
-          onClick={() => setIsOpenLogin(false)}
+          onClick={() => handleCLearLogin()}
         />
         <Input
           light
           placeholder="Email"
           name="email"
           value={dataLogin.email}
-          onChange={handleChangeLogin}
+          onChange={changeLogin}
           email
         />
 
@@ -193,7 +162,8 @@ function Navbar() {
           placeholder="Password"
           name="password"
           value={dataLogin.password}
-          onChange={handleChangeLogin}
+          onChange={changeLogin}
+          type="password"
         />
         <div className={cx("save-forgot-wrapper")}>
           <div className={cx("save-pass")}>
@@ -205,19 +175,28 @@ function Navbar() {
           </a>
         </div>
         <div className={cx("btn-wrapper")}>
-          <Button large className={cx("login-btn")}>
+          <Button large className={cx("login-btn")} onClick={checkLogin}>
             Login
           </Button>
         </div>
       </Modal>
 
-      <Modal open={isOpenRegister} onClose={handleCloseRegister}>
+      <Modal open={isOpenRegister} onClose={() => handleCLearRegister()}>
         <div className={cx("modal-title")}>Register</div>
 
         <FontAwesomeIcon
           className={cx("xmark")}
           icon={faXmark}
-          onClick={handleCloseRegister}
+          onClick={() => handleCLearRegister()}
+        />
+
+        <Input
+          light
+          placeholder="Username"
+          name="name"
+          value={dataRegister.name}
+          onChange={changeRegister}
+          error={errors.name}
         />
 
         <Input
@@ -225,7 +204,7 @@ function Navbar() {
           placeholder="Email"
           name="email"
           value={dataRegister.email}
-          onChange={handleChangeRegister}
+          onChange={changeRegister}
           error={errors.email}
         />
         <Input
@@ -233,16 +212,18 @@ function Navbar() {
           placeholder="Password"
           name="password"
           value={dataRegister.password}
-          onChange={handleChangeRegister}
+          onChange={changeRegister}
           error={errors.password}
+          type="password"
         />
         <Input
           light
           placeholder="Enter your password"
           name="repassword"
           value={dataRegister.repassword}
-          onChange={handleChangeRegister}
+          onChange={changeRegister}
           error={errors.repassword}
+          type="password"
         />
 
         <div className={cx("policy-wrapper")}>
@@ -251,11 +232,7 @@ function Navbar() {
         </div>
 
         <div className={cx("btn-wrapper")}>
-          <Button
-            large
-            className={cx("register-btn")}
-            onClick={handleCheckRegister}
-          >
+          <Button large className={cx("register-btn")} onClick={checkRegister}>
             Register
           </Button>
           <div className={cx("space-middle")}>
@@ -281,6 +258,8 @@ function Navbar() {
           </div>
         </div>
       </Modal>
+
+      {successMessage && toast.success({ successMessage })}
     </header>
   );
 }

@@ -20,26 +20,25 @@ function EditDestinationManage({ data, onClose, open, onSave }) {
   const [tempDataForm, setTempDataForm] = useState({ ...dataForm });
   const [errors, setErrors] = useState({});
 
-  
-useEffect(() => {
-  setDataForm(
-    data
-      ? { ...data }
-      : {
-          name: "",
-          image: "",
-        }
-  );
-  setTempDataForm(
-    data
-      ? { ...data }
-      : {
-          name: "",
-          image: "",
-        }
-  );
-  setErrors({});
-}, [data, open]);
+  useEffect(() => {
+    setDataForm(
+      data
+        ? { ...data }
+        : {
+            name: "",
+            image: "",
+          }
+    );
+    setTempDataForm(
+      data
+        ? { ...data }
+        : {
+            name: "",
+            image: "",
+          }
+    );
+    setErrors({});
+  }, [data, open]);
 
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -115,7 +114,6 @@ useEffect(() => {
       setTempDataForm({});
     }
   };
-  console.log(errors);
 
   return (
     <Modal

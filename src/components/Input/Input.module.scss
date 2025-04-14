@@ -15,6 +15,7 @@
 
     input,
     textarea {
+        all: unset;
         border: none;
         width: 100%;
         margin: 20px 0 7px 0;
@@ -22,7 +23,9 @@
         outline: none;
         font-family: var(--font-default);
         font-size: 19px;
-        background-color: transparent;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        transition: none !important;
 
         &.dark {
             color: black;

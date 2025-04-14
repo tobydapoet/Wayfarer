@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./Bill.module.scss";
 import { useParams, useSearchParams } from "react-router-dom";
 import BillForm from "../../components/BillForm/BillForm";
+import { BillContext, BillProvider } from "../../contexts/BillContext";
 
 const SERVICE = {
   name: "Temple of Literature1",
@@ -43,15 +44,14 @@ function Bill() {
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
   const userBill = {
-    client : user.name,
-    service : serviceName,
-    type : SERVICE.type
-  }
+    client: user.name,
+    service: serviceName,
+    type: SERVICE.type,
+  };
   return (
-    <BillForm
-      data = {userBill}
-      userVoucher={VOUCHERS}
-    />
+    <BillProvider data={userBill} userVoucher={VOUCHERS}>
+      <BillForm />
+    </BillProvider>
   );
 }
 

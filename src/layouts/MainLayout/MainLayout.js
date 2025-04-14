@@ -3,17 +3,18 @@ import Navbar from "../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import styles from "./MainLayout.module.scss";
 import classNames from "classnames/bind";
+import { AccountProvider } from "../../contexts/AccountContext";
 
 const cx = classNames.bind(styles);
-
-
 
 function MainLayout({ children }) {
   const location = useLocation();
   const isManagementPage = location.pathname.startsWith("/manage");
   return (
     <div className={cx("container")}>
-      <Navbar />
+      <AccountProvider>
+        <Navbar />
+      </AccountProvider>
       <div className={cx("content")}>{children}</div>
       {!isManagementPage && <Footer />}
     </div>

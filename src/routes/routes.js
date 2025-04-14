@@ -31,8 +31,8 @@ import ClientAdd from "../pages/Manage/Business/Clients/ClientAdd";
 import AboutUsEdit from "../pages/Manage/Content/AboutUsContent/AboutUsEdit/AboutUsEdit";
 import ContactManage from "../pages/Manage/ContactManage";
 import BlogInfo from "../pages/Blogs/BlogInfo";
-import BlogAdd from "../pages/Blogs/BlogAdd/BlogAdd";
 import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
+import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -47,7 +47,7 @@ const publicRoutes = [
   },
   {
     path: "/blogs/add_content",
-    component: BlogAdd,
+    component: BlogAddWraper,
   },
 
   {
@@ -174,7 +174,7 @@ const privateRoutes = [
       },
       {
         path: "/manage/content/blog_content/add_content",
-        component: BlogAdd,
+        component: BlogAddWraper,
         layout: null,
       },
       {

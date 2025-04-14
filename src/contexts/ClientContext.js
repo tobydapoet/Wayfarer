@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const ClientContext = createContext({
   clientData: {},
@@ -10,19 +11,15 @@ export const ClientContext = createContext({
   handleOnSaveClient: () => {},
 });
 
-export const ClientProvider = ({ children, data }) => {
-  const [clientData, setClientData] = useState(() => {
-    return (
-      data || {
-        email: "",
-        name: "",
-        password: "",
-        phone: "",
-        site: "",
-        avatar: "",
-      }
-    );
-  });
+export const ClientProvider = ({ children }) => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/clients")
+      .then((res) => setClientData(res.data))
+      .catch((err) => console.error("Lỗi khi fetch:", err));
+  }, []);
+
+  const [clientData, setClientData] = useState([]);
 
   const [clientTempData, setClientTempData] = useState({ ...clientData });
   const [clientErrors, setClientErrors] = useState({});

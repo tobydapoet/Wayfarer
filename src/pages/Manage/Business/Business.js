@@ -1,11 +1,22 @@
 import classNames from "classnames/bind";
 import styles from "./Business.module.scss";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import NavigateManage from "../../../components/NavigateManage/NavigateManage";
+import { StaffProvider } from "../../../contexts/StaffContext";
+import { ClientProvider } from "../../../contexts/ClientContext";
+import { Fragment } from "react";
 
 const cx = classNames.bind(styles);
 
 function Business() {
+  const location = useLocation();
+  console.log(location);
+  let Wrapper = Fragment;
+  if (location.pathname === "/manage/business/staffs") {
+    Wrapper = StaffProvider;
+  } else if (location.pathname === "/manage/business/clients") {
+    Wrapper = ClientProvider;
+  }
   return (
     <div className={cx("wrapper")}>
       <div className={cx("navigate")}>
@@ -14,7 +25,9 @@ function Business() {
         <NavigateManage to={`clients`}>Clients</NavigateManage>
       </div>
       <div className={cx("content")}>
-        <Outlet />
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
       </div>
     </div>
   );

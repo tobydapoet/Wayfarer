@@ -92,14 +92,15 @@
         display: flex;
         flex-direction: column;
 
-        a {
+        div {
+            cursor: pointer;
             text-decoration: none;
             height: 30px;
             display: flex;
             align-items: center;
             padding: 5px 10px;
-            background-color: transparent; // Ensure a starting bg color
-            transition: background-color 0.3s ease; // Smooth effect
+            background-color: transparent;
+            transition: background-color 0.3s ease;
             color: var(--primary);
 
             &:hover {

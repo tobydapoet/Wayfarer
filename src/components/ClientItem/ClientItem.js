@@ -7,6 +7,7 @@ import Flag from "react-world-flags";
 import getCountryCode from "../../utils/countryUtils/countryUtils";
 import styles from "./ClientItem.module.scss";
 import Notice from "../Notice";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -28,12 +29,12 @@ function ClientItem({ data }) {
       >
         <td className={cx("info")}>
           <div className={cx("img")}>
-            <img src={data.avatar} alt={data.name} />
+            <img src={data.avatar || images.noImg} alt={data.name} />
           </div>
           <div className={cx("name")}>{data.name}</div>
         </td>
         <td className={cx("country")}>
-          <Flag className={cx("flag")} code={getCountryCode(data.location)} />
+          <Flag className={cx("flag")} code={getCountryCode(data.site)} />
         </td>
         <td className={cx("email")}>{data.email}</td>
         <td className={cx("phone")}>{data.phone}</td>
@@ -51,7 +52,7 @@ function ClientItem({ data }) {
       <Notice
         open={deleteNotice}
         onClose={() => setDeleteNotice(false)}
-        content = "Do you want to delete this client ?"
+        content="Do you want to delete this client ?"
       />
     </>
   );

@@ -8,6 +8,8 @@ import { privateRoutes, publicRoutes } from "./routes";
 import MainLayout from "./layouts/MainLayout";
 import ProfileLayout from "./layouts/ProfileLayout";
 import React, { Fragment } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const getRandomColor = () => {
   const hue = Math.floor(Math.random() * 360); // Ngẫu nhiên một màu sắc
@@ -66,11 +68,14 @@ const renderRoutes = (routes) =>
 function App() {
   const routesToRender = user?.position ? privateRoutes : publicRoutes;
   return (
-    <Router>
-      <div className="App">
-        <Routes>{renderRoutes(routesToRender)}</Routes>
-      </div>
-    </Router>
+    <>
+      <ToastContainer position="top-center" autoClose={3000} />
+      <Router>
+        <div className="App">
+          <Routes>{renderRoutes(routesToRender)}</Routes>
+        </div>
+      </Router>
+    </>
   );
 }
 

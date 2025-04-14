@@ -15,9 +15,7 @@ function Profile() {
   return (
     <div className={cx("wrapper")}>
       <Wrapper data={user}>
-        <ClientProvider data={user}>
-          <UserProfile />
-        </ClientProvider>
+        <UserProfile />
       </Wrapper>
     </div>
   );

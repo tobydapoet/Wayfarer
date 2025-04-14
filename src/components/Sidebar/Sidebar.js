@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
-import { Link, NavLink, Outlet, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   faCircleInfo,
   faClock,
@@ -14,19 +14,13 @@ import {
   faNewspaper,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import { AccountContext } from "../../contexts/AccountContext";
 
 const cx = classNames.bind(styles);
 
 function Sidebar({ profile, management, dark }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const positionMap = {
-    0: "Manager",
-    1: "Staff",
-    2: "Client",
-  };
-
+  const { user } = useContext(AccountContext);
   const { email } = useParams();
 
   useEffect(() => {
@@ -38,6 +32,13 @@ function Sidebar({ profile, management, dark }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+    window.location.reload();
+  };
 
   return (
     <div className={cx("wrapper")}>
@@ -51,7 +52,7 @@ function Sidebar({ profile, management, dark }) {
             <div className={cx("name")}>{user.name}</div>
             <div className={cx("email")}> {user.email}</div>
             {user.position !== "guess" && (
-              <div className={cx("position")}>{positionMap[user.position]}</div>
+              <div className={cx("position")}>{user.position}</div>
             )}
           </div>
         )}
@@ -92,14 +93,14 @@ function Sidebar({ profile, management, dark }) {
             </div>
             {!isMobile && <hr className={cx("gap-line2")}></hr>}
 
-            <div className={cx("logout")}>
-              <Link to="" className="logout">
+            <div className={cx("logout")} onClick={handleLogout}>
+              <div>
                 {isMobile ? (
                   <FontAwesomeIcon icon={faRightFromBracket} />
                 ) : (
                   "Log out"
                 )}
-              </Link>
+              </div>
             </div>
           </div>
         </>
