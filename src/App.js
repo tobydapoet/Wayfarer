@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const getRandomColor = () => {
-  const hue = Math.floor(Math.random() * 360); // Ngẫu nhiên một màu sắc
+  const hue = Math.floor(Math.random() * 360);
   const randomColor = `hsl(${hue}, 90%, 30%)`;
   document.documentElement.style.setProperty("--random-color", randomColor);
 };
@@ -46,7 +46,6 @@ const renderRoutes = (routes) =>
         }
       >
         {route.children && renderRoutes(route.children)}
-
         {route.children && (
           <Route
             index

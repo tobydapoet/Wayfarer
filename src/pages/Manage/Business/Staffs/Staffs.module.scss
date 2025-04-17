@@ -6,6 +6,11 @@
     .header {
         display: flex;
         gap: 10px;
+        justify-content: space-between;
+
+        .search-container {
+            width: 300px;
+        }
 
         .add {
             height: 25px;
@@ -29,12 +34,10 @@
 
     thead {
         display: table-header-group;
-       
     }
     th {
         padding: 15px;
         border-bottom: 2px solid #ddd;
-        
     }
 
     .name-header {
@@ -42,16 +45,15 @@
         padding: 10px;
     }
 }
-@media(max-width:800px) {
+@media (max-width: 800px) {
     .wrapper {
         display: 10px;
 
-        .location{
+        .location {
             display: none;
         }
-        .salary{
+        .salary {
             display: none;
         }
     }
-
 }

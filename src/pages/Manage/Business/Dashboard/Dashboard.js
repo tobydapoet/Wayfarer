@@ -22,6 +22,8 @@ import styles from "./Dashboard.module.scss";
 import SearchBar from "../../../../components/SearchBar/SearchBar";
 import Order from "../../../../components/Order";
 import StaffStatus from "../../../../components/StaffStatus/StaffStatus";
+import { useContext } from "react";
+import { StaffContext } from "../../../../contexts/StaffContext";
 
 const cx = classNames.bind(styles);
 
@@ -54,93 +56,6 @@ function Dashboard() {
     services: 6000,
     sponsorship: 5000,
   };
-
-  const STAFFS = [
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 0,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 2,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 0,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 1,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 3,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 0,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 2,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 0,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 1,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 3,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 1,
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      name: "Davis Astee",
-      status: 3,
-    },
-  ];
 
   const ORDERS = [
     {
@@ -380,6 +295,7 @@ function Dashboard() {
       },
     },
   };
+  const { allStaffsData } = useContext(StaffContext);
 
   return (
     <div className={cx("wrapper")}>
@@ -462,9 +378,11 @@ function Dashboard() {
         <div className={cx("list-staffs")}>
           <div className={cx("title")}>Staffs</div>
           <div className={cx("staffs-container")}>
-            {STAFFS.sort((a, b) => a.status - b.status).map((staff, key) => (
-              <StaffStatus key={key} data={staff} />
-            ))}
+            {allStaffsData
+              .sort((a, b) => a.status - b.status)
+              .map((staff, key) => (
+                <StaffStatus key={key} data={staff} />
+              ))}
           </div>
         </div>
       </div>

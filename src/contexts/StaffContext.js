@@ -8,9 +8,13 @@ export const StaffContext = createContext({
   staffData: {},
   staffTempData: {},
   staffErrors: {},
+  searchResult: {},
+  handleSearchStaff: () => {},
   handleAddStaff: () => {},
+  handleSearchStaff: () => {},
   handleSelectedStaff: () => {},
   handleDeleteStaff: () => {},
+  handleChangeStatus: () => {},
   handleChangeStaffInput: () => {},
   handleChangeStaffPhone: () => {},
   handleChangeStaffAvatar: () => {},
@@ -33,6 +37,7 @@ export const StaffProvider = ({ children, data }) => {
   );
   const [staffTempData, setStaffTempData] = useState({});
   const [staffErrors, setStaffErrors] = useState({});
+  const [searchResult, setSearchResult] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -240,6 +245,39 @@ export const StaffProvider = ({ children, data }) => {
     }
   };
 
+  const handleSearchStaff = async (keyword) => {
+    await axios
+      .get(`http://localhost:3000/staffs/search?keyword=${keyword}`)
+      .then((res) => {
+        console.log("Kết quả:", res.data);
+        setSearchResult(Array.isArray(res.data) ? res.data : []);
+      })
+      .catch((err) => {
+        toast.error("Lỗi khi tìm kiếm!");
+        setSearchResult([]);
+        console.error(err);
+      });
+  };
+
+  const handleChangeStatus = async (status) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/staffs/${user._id}/status`,
+        {
+          status: status,
+        }
+      );
+      if (res.data.success) {
+        toast.success(`Change status to ${status}`);
+        setStaffData((prev) => ({ ...prev, status: status }));
+      }
+    } catch (err) {
+      console.error("Lỗi khi cập nhật trạng thái:", err);
+    }
+  };
+
   return (
     <StaffContext.Provider
       value={{
@@ -247,10 +285,14 @@ export const StaffProvider = ({ children, data }) => {
         staffData,
         staffTempData,
         staffErrors,
+        searchResult,
+        handleChangeStatus,
+        handleSearchStaff,
         handleAddStaff,
         handleDeleteStaff,
         handleSelectedStaff,
         handleChangeStaffInput,
+        handleSearchStaff,
         handleChangeStaffPhone,
         handleChangeStaffAvatar,
         handleOnSaveStaff,

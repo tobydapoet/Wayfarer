@@ -31,6 +31,9 @@
         flex: 1;
         color: white;
         background-color: #f1eee3;
+        overflow: scroll;
+        scrollbar-width: none;
+        width: 90vh;
     }
 
     .go-back {

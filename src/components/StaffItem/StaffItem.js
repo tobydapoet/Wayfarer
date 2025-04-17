@@ -14,15 +14,8 @@ const cx = classNames.bind(styles);
 function StaffItem({ data, onClick, onDelete }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
 
-  // const statusDisplay = {
-  //   working: "working",
-  //   inMeeting: "in a meeting",
-  //   onLeave: "on leave",
-  //   offDuty: "off duty",
-  // };
-
   const statusDisplay = {
-    working: "Working",
+    working: "working",
     "in meeting": "inMeeting",
     "on leave": "onLeave",
     "off duty": "offDuty",

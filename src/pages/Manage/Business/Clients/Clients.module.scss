@@ -6,6 +6,10 @@
     .header {
         display: flex;
         gap: 10px;
+        justify-content: space-between;
+        .search-container {
+            width: 300px;
+        }
 
         .add {
             height: 25px;
@@ -41,16 +45,15 @@
     }
 }
 
-@media(max-width:800px) {
-    .wrapper{
+@media (max-width: 800px) {
+    .wrapper {
         font-size: 13px;
-        
-        .location{
+
+        .location {
             display: none;
         }
 
-        
-        .phone{
+        .phone {
             display: none;
         }
     }

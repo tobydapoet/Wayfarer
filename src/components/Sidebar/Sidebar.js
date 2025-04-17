@@ -22,7 +22,7 @@ function Sidebar({ profile, management, dark }) {
   const [isMobile, setIsMobile] = useState(
     window.innerWidth < 800 || window.innerHeight < 650
   );
-  const { user } = useContext(AccountContext);
+  const { user, handleLogout } = useContext(AccountContext);
   const { email } = useParams();
 
   useEffect(() => {
@@ -34,13 +34,6 @@ function Sidebar({ profile, management, dark }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
-    window.location.reload();
-  };
 
   return (
     <div className={cx("wrapper")}>

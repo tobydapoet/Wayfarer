@@ -1,0 +1,29 @@
+.wrapper {
+    display: flex;
+    background-color: var(--primary);
+    align-items: center;
+    width: calc(300px - 30px);
+    padding: 15px;
+    color: black;
+    cursor: pointer;
+    gap: 10px;
+    &:hover {
+        background-color: #3535350e;
+    }
+
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .user-txt {
+        .name {
+            font-size: 14px;
+        }
+        .email {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+    }
+}

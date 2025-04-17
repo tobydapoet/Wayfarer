@@ -8,20 +8,14 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function StaffStatus({ data }) {
-  const status = {
-    0: "working",
-    1: "is meeting",
-    2: "on leave",
-    3: "off duty",
-  };
+const statusDisplay = {
+  working: "working",
+  "in meeting": "inMeeting",
+  "on leave": "onLeave",
+  "off duty": "offDuty",
+};
 
-  const statusColors = {
-    0: "working",
-    1: "inMeeting",
-    2: "onLeave",
-    3: "offDuty",
-  };
+function StaffStatus({ data }) {
   return (
     <Link to={"/"} className={cx("wrapper")}>
       <div className={cx("user")}>
@@ -32,14 +26,14 @@ function StaffStatus({ data }) {
         placement="bottom"
         render={(attrs) => (
           <div className={cx("popper-container")} tabIndex="-1" {...attrs}>
-            <Popper className={cx("popper")}>{status[data.status]}</Popper>
+            <Popper className={cx("popper")}>{data.status}</Popper>
           </div>
         )}
       >
         <div className={cx("status")}>
           <FontAwesomeIcon
             icon={faCircle}
-            className={cx("icon", statusColors[data.status])}
+            className={cx("icon", statusDisplay[data.status?.toLowerCase?.()])}
           />
         </div>
       </HeadlessTippy>

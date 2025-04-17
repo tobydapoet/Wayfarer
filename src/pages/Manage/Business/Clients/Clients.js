@@ -7,16 +7,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ClientContext } from "../../../../contexts/ClientContext";
+import ClientPopper from "../../../../components/ClientPopper/ClientPopper";
 
 const cx = classNames.bind(styles);
 
 function Clients() {
   const navigate = useNavigate();
-  const { allClientsData, handleDeleteClient } = useContext(ClientContext);
+  const {
+    allClientsData,
+    handleDeleteClient,
+    searchResult,
+    handleSearchClient,
+  } = useContext(ClientContext);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <SearchBar />
+        <div className={cx("search-container")}>
+          <SearchBar
+            onSearch={handleSearchClient}
+            results={searchResult}
+            renderResult={(client) => <ClientPopper data={client} />}
+          />
+        </div>
         <div
           className={cx("add")}
           style={{ cursor: "pointer" }}

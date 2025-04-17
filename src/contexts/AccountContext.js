@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const AccountContext = createContext({
   user: {},
@@ -8,13 +9,14 @@ export const AccountContext = createContext({
   dataLogin: {},
   dataRegister: {},
   changeLogin: () => {},
+  handleLogout: () => {},
   changeRegister: () => {},
   checkLogin: () => {},
   checkRegister: () => {},
   errors: {},
 });
 
-export const AccountProvider = ({ children, data }) => {
+export const AccountProvider = ({ children }) => {
   const [dataLogin, setDataLogin] = useState({});
   const [dataRegister, setDataRegister] = useState({});
   const [errors, setErrors] = useState({});
@@ -22,6 +24,7 @@ export const AccountProvider = ({ children, data }) => {
     const localUser = localStorage.getItem("user");
     return localUser ? JSON.parse(localUser) : null;
   });
+  const navigate = useNavigate();
 
   const handleValidate = (name, value) => {
     let newErrors = {};
@@ -115,9 +118,20 @@ export const AccountProvider = ({ children, data }) => {
         password: dataLogin.password,
       });
       if (resStaff.data.success) {
+        const resUpdate = await axios.put(
+          `http://localhost:3000/staffs/${resStaff.data.data._id}`,
+          {
+            status: "working",
+          }
+        );
+        if (resUpdate.data.success) {
+          localStorage.setItem("user", JSON.stringify(resStaff.data.data));
+          setUser(resStaff.data.data);
+        }
         localStorage.setItem("user", JSON.stringify({ ...resStaff.data.data }));
-        window.location.reload();
         setUser(resStaff.data.data);
+        window.location.reload();
+
         return;
       }
     } catch (err) {}
@@ -165,6 +179,27 @@ export const AccountProvider = ({ children, data }) => {
     setErrors({});
   };
 
+  const handleLogout = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      const logout = await axios.put(
+        `http://localhost:3000/staffs/${user._id}`,
+        {
+          status: "off duty",
+        }
+      );
+      if (logout.data.success) {
+        console.log("Thành công");
+        localStorage.removeItem("user");
+        navigate("/");
+      }
+      return logout;
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  };
+
   return (
     <AccountContext.Provider
       value={{
@@ -175,6 +210,7 @@ export const AccountProvider = ({ children, data }) => {
         changeLogin,
         changeRegister,
         checkLogin,
+        handleLogout,
         checkRegister,
         resetLoginData,
         resetRegisterData,

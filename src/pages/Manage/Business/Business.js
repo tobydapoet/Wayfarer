@@ -11,7 +11,10 @@ const cx = classNames.bind(styles);
 function Business() {
   const location = useLocation();
   let Wrapper = Fragment;
-  if (location.pathname === "/manage/business/staffs") {
+  if (
+    location.pathname === "/manage/business/staffs" ||
+    location.pathname === "/manage/business/dashboard"
+  ) {
     Wrapper = StaffProvider;
   } else if (location.pathname === "/manage/business/clients") {
     Wrapper = ClientProvider;

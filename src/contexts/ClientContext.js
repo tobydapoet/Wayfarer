@@ -8,6 +8,8 @@ export const ClientContext = createContext({
   clientData: {},
   clientTempData: {},
   clientErrors: {},
+  searchResult: {},
+  handleSearchClient: () => {},
   handleAddClient: () => {},
   handleDeleteClient: () => {},
   handleSelectedClient: () => {},
@@ -30,6 +32,7 @@ export const ClientProvider = ({ children, data }) => {
     }
   );
   const [clientTempData, setClientTempData] = useState({});
+  const [searchResult, setSearchResult] = useState([]);
   const [clientErrors, setClientErrors] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
@@ -212,6 +215,20 @@ export const ClientProvider = ({ children, data }) => {
     }
   };
 
+  const handleSearchClient = async (keyword) => {
+    await axios
+      .get(`http://localhost:3000/clients/search?keyword=${keyword}`)
+      .then((res) => {
+        console.log("Kết quả:", res.data);
+        setSearchResult(Array.isArray(res.data) ? res.data : []);
+      })
+      .catch((err) => {
+        toast.error("Lỗi khi tìm kiếm!");
+        setSearchResult([]);
+        console.error(err);
+      });
+  };
+
   return (
     <ClientContext.Provider
       value={{
@@ -219,8 +236,10 @@ export const ClientProvider = ({ children, data }) => {
         clientTempData,
         clientErrors,
         allClientsData,
+        searchResult,
         setClientErrors,
         handleAddClient,
+        handleSearchClient,
         handleDeleteClient,
         handleSelectedClient,
         handleChangeClientInput,

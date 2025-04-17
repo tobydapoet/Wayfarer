@@ -7,16 +7,24 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { StaffContext } from "../../../../contexts/StaffContext";
+import StaffPopper from "../../../../components/StaffPopper/StaffPopper";
 
 const cx = classNames.bind(styles);
 function Staffs() {
   const navigate = useNavigate();
-  const { allStaffsData, handleDeleteStaff } = useContext(StaffContext);
+  const { allStaffsData, handleDeleteStaff, searchResult, handleSearchStaff } =
+    useContext(StaffContext);
 
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <SearchBar />
+        <div className={cx("search-container")}>
+          <SearchBar
+            onSearch={handleSearchStaff}
+            results={searchResult}
+            renderResult={(staff) => <StaffPopper data={staff} />}
+          />
+        </div>
         <div
           className={cx("add")}
           style={{ cursor: "pointer" }}
