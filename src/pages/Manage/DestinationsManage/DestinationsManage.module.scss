@@ -7,6 +7,11 @@
     .header {
         display: flex;
         gap: 10px;
+        justify-content: space-between;
+
+        .search-container {
+            width: 300px;
+        }
 
         .add {
             height: 25px;
@@ -35,5 +40,19 @@
         padding: 10px;
         width: 100%;
         margin: 0 auto;
+    }
+}
+.cities-search {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--primary);
+    align-items: center;
+    width: calc(300px - 30px);
+    padding: 15px;
+    color: black;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #3535350e;
     }
 }

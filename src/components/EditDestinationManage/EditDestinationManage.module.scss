@@ -1,50 +1,59 @@
 .edit-wrapper {
-    img {
-        width: 240px;
-        height: 400px;
-        object-fit: cover;
-        display: flex;
-        margin: 0 auto;
-    }
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 
     .file-container {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        right: 55px;
-        bottom: 95px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
 
-        input {
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            border-radius: 50%;
-            opacity: 0;
+        img {
+            object-fit: cover;
+            display: flex;
+            width: calc(80% - 40px);
+            margin: 0 auto;
+            justify-content: center;
+            align-items: center;
         }
-
-        &::after {
-            content: "";
+        .input-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("../../../public/image-gallery.png");
-            background-position: center;
-            background-size: 50%;
-            background-repeat: no-repeat;
-            border-radius: 50%;
-            pointer-events: none;
-            background-color: white;
-            box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
-            
+            width: 50px;
+            height: 50px;
+            right: 30px;
+            bottom: -15px;
+
+            input {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                border-radius: 50%;
+                opacity: 0;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("../../../public/image-gallery.png");
+                background-position: center;
+                background-size: 50%;
+                background-repeat: no-repeat;
+                border-radius: 50%;
+                pointer-events: none;
+                background-color: white;
+                box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
+            }
         }
-  
     }
     .btn-container {
         display: flex;
         margin-top: 50px;
-        gap : 10px
+        gap: 10px;
     }
 
     .error-text {
@@ -55,5 +64,4 @@
         font-weight: 500;
         font-family: var(--font-default);
     }
-
 }

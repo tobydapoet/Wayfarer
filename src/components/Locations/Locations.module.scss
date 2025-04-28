@@ -33,7 +33,7 @@
         flex-direction: column;
 
         .name {
-            font-family: var(--font-default);
+            font-family: themify;
             font-weight: 500;
             color: var(--primary);
             font-size: 40px;
@@ -119,10 +119,8 @@
 }
 
 @media (max-width: 1000px) {
-    .wrapper{
+    .wrapper {
         width: 250px;
         height: 400px;
-
-
     }
 }

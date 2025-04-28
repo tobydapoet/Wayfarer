@@ -6,7 +6,9 @@ import { ClientProvider } from "../../contexts/ClientContext";
 
 const cx = classNames.bind(styles);
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
 const isStaff = !!user?.position;
 
 const Wrapper = isStaff ? StaffProvider : ClientProvider;
@@ -19,7 +21,5 @@ function Profile() {
       </Wrapper>
     </div>
   );
-}
-{
 }
 export default Profile;

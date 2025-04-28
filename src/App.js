@@ -19,7 +19,9 @@ const getRandomColor = () => {
 
 getRandomColor();
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
 
 const renderRoutes = (routes) =>
   routes.map((route, index) => {
@@ -30,20 +32,21 @@ const renderRoutes = (routes) =>
         : route.layout === null
         ? Fragment
         : MainLayout;
+    const Context = route.context;
+
+    const Element = Context ? (
+      <Context>
+        <Page />
+      </Context>
+    ) : (
+      <Page />
+    );
 
     return (
       <Route
         key={index}
         path={route.path}
-        element={
-          Layout === Fragment ? (
-            <Page />
-          ) : (
-            <Layout>
-              <Page />
-            </Layout>
-          )
-        }
+        element={Layout === Fragment ? Element : <Layout>{Element}</Layout>}
       >
         {route.children && renderRoutes(route.children)}
         {route.children && (

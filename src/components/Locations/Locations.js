@@ -10,27 +10,17 @@ import {
 import styles from "./Locations.module.scss";
 import Button from "../Button";
 import { useState } from "react";
-import EditDestinationManage from "../EditDestinationManage/EditDestinationManage";
 import Notice from "../Notice";
 
 const cx = classNames.bind(styles);
-function Locations({ data, manage, client }) {
+function Locations({ data: location, manage, client, onEdit, onDelete }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
-  const [openEditForm, setOpenEditForm] = useState(false);
-  const [location, setLocation] = useState({ ...data });
 
   const navigate = useNavigate();
 
   const handleRowClick = () => {
     navigate(`${location.name}`);
   };
-
-  const handleSaveEdit = (updatedData) => {
-    setLocation(updatedData);
-  };
-
-  console.log(location.name);
-
   return (
     <div className={cx("wrapper", { manage })}>
       <img className={cx("img")} src={location.image} />
@@ -62,7 +52,7 @@ function Locations({ data, manage, client }) {
       {client && (
         <Link
           className={cx("view")}
-          to={`/destinations/${location.to.replace(/^\//, "")}`}
+          to={`/destinations/${location.name.replace(/^\//, "")}`}
         >
           View more
         </Link>
@@ -87,11 +77,7 @@ function Locations({ data, manage, client }) {
             >
               View
             </Button>
-            <Button
-              large
-              className={cx("edit-manage")}
-              onClick={() => setOpenEditForm(true)}
-            >
+            <Button large className={cx("edit-manage")} onClick={onEdit}>
               Edit
             </Button>
           </div>
@@ -101,13 +87,7 @@ function Locations({ data, manage, client }) {
         open={deleteNotice}
         onClose={() => setDeleteNotice(false)}
         content="Do you want to delete this location ?"
-      />
-
-      <EditDestinationManage
-        open={openEditForm}
-        onClose={() => setOpenEditForm(false)}
-        data={location}
-        onSave={handleSaveEdit}
+        onConfirm={onDelete}
       />
     </div>
   );

@@ -5,7 +5,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
 
 const BLOG = {
   image:

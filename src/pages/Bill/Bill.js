@@ -41,7 +41,9 @@ const VOUCHERS = [
 function Bill() {
   const [searchParams] = useSearchParams();
   const serviceName = searchParams.get("bill");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user =
+    JSON.parse(localStorage.getItem("user")) ||
+    JSON.parse(sessionStorage.getItem("user"));
   console.log(user);
   const userBill = {
     client: user.name,

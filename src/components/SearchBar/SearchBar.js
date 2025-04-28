@@ -28,7 +28,7 @@ function SearchBar({ onSearch, results = [], renderResult }) {
       <FontAwesomeIcon icon={faSearch} className={cx("search-icon")} />
       <HeadlessTippy
         interactive
-        visible={searchValue.length > 0}
+        visible={searchValue.length > 0 && results.length > 0}
         appendTo={() => document.body}
         placement="bottom"
         render={(attrs) => (

@@ -260,7 +260,9 @@ export const StaffProvider = ({ children, data }) => {
   };
 
   const handleChangeStatus = async (status) => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user =
+      JSON.parse(localStorage.getItem("user")) ||
+      JSON.parse(sessionStorage.getItem("user"));
 
     try {
       const res = await axios.put(

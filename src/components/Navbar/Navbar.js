@@ -17,41 +17,21 @@ import { toast, ToastContainer } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
-// const userInfo = {
-//   name: "Nguyen Viet Tung",
-//   email: "Cat@gmail.com",
-//   password: "1234567",
-//   avatar:
-//     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-//   position: "admin",
-
-//   birth: "2004-10-29",
-//   phone: "0348349754",
-//   site: "Непское сельское поселение, Katangsky Rayon, Irkutsk Oblast, Siberian Federal District, Russia",
-// };
-
-const user = JSON.parse(localStorage.getItem("user"));
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
 
 function Navbar() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [shrinkMenu, setShrinkMeu] = useState(false);
-  // const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   let storedUser = localStorage.getItem("user");
-  //   if (!storedUser) {
-  //     localStorage.setItem("user", JSON.stringify(userInfo));
-  //     storedUser = JSON.stringify(userInfo);
-  //   }
-  //   setUser(JSON.parse(storedUser));
-  // }, []);
 
   const {
     user,
     successMessage,
     dataLogin,
     dataRegister,
+    setSavedPassword,
     changeLogin,
     changeRegister,
     checkLogin,
@@ -167,7 +147,11 @@ function Navbar() {
         />
         <div className={cx("save-forgot-wrapper")}>
           <div className={cx("save-pass")}>
-            <input type="checkbox" className={cx("save-btn")} />
+            <input
+              type="checkbox"
+              className={cx("save-btn")}
+              onClick={() => setSavedPassword(true)}
+            />
             <div>Save your password</div>
           </div>
           <a className={cx("forgot-pass")} href="">

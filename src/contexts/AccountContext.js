@@ -9,6 +9,7 @@ export const AccountContext = createContext({
   dataLogin: {},
   dataRegister: {},
   changeLogin: () => {},
+  setSavedPassword: () => {},
   handleLogout: () => {},
   changeRegister: () => {},
   checkLogin: () => {},
@@ -20,8 +21,10 @@ export const AccountProvider = ({ children }) => {
   const [dataLogin, setDataLogin] = useState({});
   const [dataRegister, setDataRegister] = useState({});
   const [errors, setErrors] = useState({});
+  const [savedPassword, setSavedPassword] = useState(false);
   const [user, setUser] = useState(() => {
-    const localUser = localStorage.getItem("user");
+    const localUser =
+      localStorage.getItem("user") || sessionStorage.getItem("user");
     return localUser ? JSON.parse(localUser) : null;
   });
   const navigate = useNavigate();
@@ -99,9 +102,9 @@ export const AccountProvider = ({ children }) => {
       if (res.data.success) {
         toast.success("Register success!");
         resetRegisterData();
-        localStorage.setItem("user", JSON.stringify({ ...res.data.data }));
-        window.location.reload();
+        sessionStorage.setItem("user", JSON.stringify({ ...res.data.data }));
         setUser(res.data.data);
+        window.location.reload();
       } else {
         toast.error(res.data.message || "Email already exists!");
       }
@@ -125,13 +128,20 @@ export const AccountProvider = ({ children }) => {
           }
         );
         if (resUpdate.data.success) {
-          localStorage.setItem("user", JSON.stringify(resStaff.data.data));
+          if (savedPassword) {
+            localStorage.setItem(
+              "user",
+              JSON.stringify({ ...resStaff.data.data })
+            );
+          } else {
+            sessionStorage.setItem(
+              "user",
+              JSON.stringify({ ...resStaff.data.data })
+            );
+          }
           setUser(resStaff.data.data);
+          window.location.reload();
         }
-        localStorage.setItem("user", JSON.stringify({ ...resStaff.data.data }));
-        setUser(resStaff.data.data);
-        window.location.reload();
-
         return;
       }
     } catch (err) {}
@@ -147,10 +157,18 @@ export const AccountProvider = ({ children }) => {
 
       if (resClient.data.success) {
         toast.success("Login success!");
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...resClient.data.data })
-        );
+        if (savedPassword) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...resClient.data.data })
+          );
+        } else {
+          sessionStorage.setItem(
+            "user",
+            JSON.stringify({ ...resClient.data.data })
+          );
+        }
+
         window.location.reload();
         setUser(resClient.data.data);
       } else {
@@ -181,7 +199,9 @@ export const AccountProvider = ({ children }) => {
 
   const handleLogout = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user =
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"));
 
       const logout = await axios.put(
         `http://localhost:3000/staffs/${user._id}`,
@@ -191,7 +211,7 @@ export const AccountProvider = ({ children }) => {
       );
       if (logout.data.success) {
         console.log("Thành công");
-        localStorage.removeItem("user");
+        localStorage.removeItem("user") || sessionStorage.removeItem("user");
         navigate("/");
       }
       return logout;
@@ -207,6 +227,7 @@ export const AccountProvider = ({ children }) => {
         setUser,
         dataLogin,
         dataRegister,
+        setSavedPassword,
         changeLogin,
         changeRegister,
         checkLogin,

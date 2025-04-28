@@ -8,7 +8,9 @@ import { useState } from "react";
 const cx = classNames.bind(styles);
 
 function Contact() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user =
+    JSON.parse(localStorage.getItem("user")) ||
+    JSON.parse(sessionStorage.getItem("user"));
   const [contactValue, setContactValue] = useForm({
     email: user.email,
     name: user.name,
@@ -137,7 +139,11 @@ function Contact() {
             error={errors.message}
           />
 
-          <Button large className={cx("send-btn")} onClick={() => handleOnSave()}>
+          <Button
+            large
+            className={cx("send-btn")}
+            onClick={() => handleOnSave()}
+          >
             Send message
           </Button>
         </div>

@@ -33,10 +33,16 @@ import ContactManage from "../pages/Manage/ContactManage";
 import BlogInfo from "../pages/Blogs/BlogInfo";
 import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
 import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
+import { CityContext, CityProvider } from "../contexts/CityContext";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
-  { path: "/destinations", component: DESTINATIONS, topic: "DESTINATIONS" },
+  {
+    path: "/destinations",
+    component: DESTINATIONS,
+    context: CityProvider,
+    topic: "DESTINATIONS",
+  },
   { path: "/about", component: About, topic: "ABOUT US" },
   { path: "/blogs", component: Blogs, topic: "BLOG" },
   { path: "/bill", component: Bill },
@@ -115,6 +121,7 @@ const privateRoutes = [
       {
         path: "destinations",
         component: DestinationsManage,
+        context: CityProvider,
         layout: null,
       },
       {
