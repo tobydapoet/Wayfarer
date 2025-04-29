@@ -1,10 +1,18 @@
-import { createContext, useState } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const BlogContext = createContext({
+  allBlogData: [],
   blogData: {},
   tempBlogData: {},
   errors: {},
   user: {},
+  blogsSearchData: [],
+  handleSearchBlogs: () => {},
+  handleSearchBlogsApproved: () => {},
+  handleSelectedBlog: () => {},
   handleInputChange: () => {},
   handleImgChange: () => {},
   handleSaveChange: () => {},
@@ -27,17 +35,46 @@ export const BlogProvider = ({ children, data }) => {
     JSON.parse(sessionStorage.getItem("user")) ||
     {};
 
-  const [blogData, setBlogData] = useState({
-    image: "",
-    title: "",
-    content: "",
-    createdBy: user?.name || "",
-    createdAt: formatTime(today),
-    status: false,
-  });
+  const [allBlogData, setAllBlogData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/blogs")
+      .then((res) => setAllBlogData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const [blogData, setBlogData] = useState(
+    data || {
+      image: "",
+      title: "",
+      content: "",
+      createdBy: user?.name || "",
+      createdAt: formatTime(today),
+      status: false,
+    }
+  );
+  const [blogsSearchData, setBlogsSearchData] = useState([]);
+  const [blogsSearchApprovedData, setBlogsSearchApprovedData] = useState([]);
+
+  const { blog } = useParams();
+  useEffect(() => {
+    if (blog) {
+      axios
+        .get(`http://localhost:3000/blogs/${blog}`)
+        .then((res) => setBlogData(res.data))
+        .catch((err) => console.error(err));
+    }
+  }, [blog]);
 
   const [tempBlogData, setTempBlogData] = useState({ ...blogData });
   const [errors, setErrors] = useState({});
+
+  const handleSelectedBlog = (selectedBlog) => {
+    setBlogData(selectedBlog);
+    navigate(`${selectedBlog._id}`);
+  };
 
   const validateError = (name, value) => {
     const newErrors = {};
@@ -79,6 +116,39 @@ export const BlogProvider = ({ children, data }) => {
     setTempBlogData((prev) => ({ ...prev, image: fileURL }));
   };
 
+  const handleSearchBlogs = async (keyword) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/blogs/search?keyword=${keyword}`
+      );
+      if (res.data.success) {
+        console.log(res.data);
+        setBlogsSearchData(Array.isArray(res.data.data) ? res.data.data : []);
+      } else {
+        setBlogsSearchData([]);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const handleSearchBlogsApproved = async (keyword) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/blogs/search_approved?keyword=${keyword}`
+      );
+      if (res.data.success) {
+        setBlogsSearchApprovedData(
+          Array.isArray(res.data.data) ? res.data.data : []
+        );
+      } else {
+        setBlogsSearchApprovedData([]);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   const handleSaveChange = (approve) => {
     let newErrors = {};
     Object.entries(tempBlogData).forEach(([name, value]) => {
@@ -103,10 +173,16 @@ export const BlogProvider = ({ children, data }) => {
   return (
     <BlogContext.Provider
       value={{
+        allBlogData,
         blogData,
         tempBlogData,
         errors,
         user,
+        blogsSearchData,
+        handleSearchBlogs,
+        blogsSearchApprovedData,
+        handleSearchBlogsApproved,
+        handleSelectedBlog,
         handleInputChange,
         handleImgChange,
         handleSaveChange,

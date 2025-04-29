@@ -34,6 +34,7 @@ import BlogInfo from "../pages/Blogs/BlogInfo";
 import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
 import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
 import { CityContext, CityProvider } from "../contexts/CityContext";
+import { BlogProvider } from "../contexts/BlogContext";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -44,12 +45,13 @@ const publicRoutes = [
     topic: "DESTINATIONS",
   },
   { path: "/about", component: About, topic: "ABOUT US" },
-  { path: "/blogs", component: Blogs, topic: "BLOG" },
+  { path: "/blogs", component: Blogs, context: BlogProvider, topic: "BLOG" },
   { path: "/bill", component: Bill },
   { path: "/contact", component: Contact, topic: "CONTACT US" },
   {
     path: "/blogs/:blog",
     component: BlogInfo,
+    context: BlogProvider,
   },
   {
     path: "/blogs/add_content",
@@ -159,7 +161,12 @@ const privateRoutes = [
             component: AboutUsEdit,
             layout: null,
           },
-          { path: "blog_content", component: BlogContent, layout: null },
+          {
+            path: "blog_content",
+            component: BlogContent,
+            context: BlogProvider,
+            layout: null,
+          },
           {
             path: "/manage/content/home_content/:info",
             component: HomeContentInfo,
@@ -192,6 +199,7 @@ const privateRoutes = [
       {
         path: "/manage/content/blog_content/:blog",
         component: BlogInfo,
+        context: BlogProvider,
         layout: null,
       },
       { path: "/manage/billsmanage/:bill", component: BillEdit, layout: null },

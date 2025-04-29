@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function Pin({ imgSrc, type, to, title, name, onClick }) {
+function Pin({ imgSrc, data, type, to, onClick }) {
   const [size, setSize] = useState("");
 
   const checkImageSize = (img) => {
@@ -17,12 +17,12 @@ function Pin({ imgSrc, type, to, title, name, onClick }) {
       setSize("large");
     }
   };
-
   useEffect(() => {
     const img = new Image();
-    img.src = imgSrc;
+    img.src = data && data.image ? data.image : imgSrc || "";
     img.onload = () => checkImageSize(img);
-  }, [imgSrc]);
+    img.onerror = () => console.error("Failed to load image");
+  }, [data, imgSrc]);
 
   let Comp = "div";
   if (to) {
@@ -31,15 +31,21 @@ function Pin({ imgSrc, type, to, title, name, onClick }) {
 
   return (
     <Comp className={cx("pin", size, type)} onClick={onClick}>
-      {name && (
+      {data && (
         <div className={cx("content-overlay")}>
           <div className={cx("content-container")}>
-            <div className={cx("title-container")}>{title}</div>
-            <div className={cx("name-container")}>{name}</div>
+            <div className={cx("title-container")}>{data.title}</div>
+            {data.clientId && (
+              <div className={cx("name-container")}>{data.clientId.name}</div>
+            )}
           </div>
         </div>
       )}
-      <img src={imgSrc} alt="Pin" onLoad={checkImageSize} />
+      <img
+        src={data && data.image ? data.image : imgSrc}
+        alt="Pin"
+        onLoad={checkImageSize}
+      />
     </Comp>
   );
 }

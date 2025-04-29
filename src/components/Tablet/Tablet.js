@@ -42,7 +42,7 @@ function Tablet({ data }) {
                   )}
                 </>
               ) : (
-                <div className={cx('pin-container')}>
+                <div className={cx("pin-container")}>
                   {images.map((image, index) => (
                     <Pin key={index} imgSrc={image} type="piece" />
                   ))}

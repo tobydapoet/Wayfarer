@@ -15,6 +15,7 @@ function DestinationsManage() {
   const {
     allCities,
     citiesSearchResult,
+    city,
     setCity,
     openEditForm,
     setOpenEditForm,
@@ -26,6 +27,8 @@ function DestinationsManage() {
     console.log("Updated allCities:", allCities);
   }, [allCities]);
 
+  const navigate = useNavigate();
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
@@ -34,7 +37,14 @@ function DestinationsManage() {
             onSearch={handleSearchCity}
             results={citiesSearchResult}
             renderResult={(searchResult) => (
-              <div className={cx("cities-search")}>{searchResult.name}</div>
+              <div
+                className={cx("cities-search")}
+                onClick={() => {
+                  navigate(searchResult.name);
+                }}
+              >
+                {searchResult.name}
+              </div>
             )}
           />
         </div>
