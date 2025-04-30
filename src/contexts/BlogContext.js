@@ -10,7 +10,11 @@ export const BlogContext = createContext({
   errors: {},
   user: {},
   blogsSearchData: [],
+  setBlogData: () => {},
+  handleCreateBlog: () => {},
+  handleApproveBlog: () => {},
   handleSearchBlogs: () => {},
+  handleDeleteBlog: () => {},
   handleSearchBlogsApproved: () => {},
   handleSelectedBlog: () => {},
   handleInputChange: () => {},
@@ -51,25 +55,31 @@ export const BlogProvider = ({ children, data }) => {
       title: "",
       content: "",
       createdBy: user?.name || "",
-      createdAt: formatTime(today),
+      createdAt: new Date(),
       status: false,
     }
   );
+  console.log(blogData);
   const [blogsSearchData, setBlogsSearchData] = useState([]);
   const [blogsSearchApprovedData, setBlogsSearchApprovedData] = useState([]);
 
-  const { blog } = useParams();
+  const { id } = useParams();
+  console.log(id);
   useEffect(() => {
-    if (blog) {
+    if (id) {
       axios
-        .get(`http://localhost:3000/blogs/${blog}`)
+        .get(`http://localhost:3000/blogs/${id}`)
         .then((res) => setBlogData(res.data))
         .catch((err) => console.error(err));
     }
-  }, [blog]);
+  }, [id]);
 
-  const [tempBlogData, setTempBlogData] = useState({ ...blogData });
+  const [tempBlogData, setTempBlogData] = useState({});
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setTempBlogData({ ...blogData });
+  }, [blogData]);
 
   const handleSelectedBlog = (selectedBlog) => {
     setBlogData(selectedBlog);
@@ -105,15 +115,14 @@ export const BlogProvider = ({ children, data }) => {
   };
 
   const handleImgChange = (e) => {
-    if (!e.target.files || e.target.value.length === 0) return;
-    const file = e.target.files[0];
-    if (errors.image) {
-      const updatedErrors = { ...errors };
-      delete updatedErrors.image;
-      setErrors(updatedErrors);
-    }
-    const fileURL = URL.createObjectURL(file);
-    setTempBlogData((prev) => ({ ...prev, image: fileURL }));
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result;
+      setTempBlogData((prev) => ({ ...prev, image: base64 }));
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSearchBlogs = async (keyword) => {
@@ -149,6 +158,53 @@ export const BlogProvider = ({ children, data }) => {
     }
   };
 
+  const handleApproveBlog = async (id) => {
+    try {
+      const res = await axios.put(`http://localhost:3000/blogs/${id}`, {
+        status: true,
+      });
+      if (res.data.success) {
+        setAllBlogData((prev) =>
+          prev.map((blog) => {
+            if (blog._id === id) {
+              return { ...blog, ...res.data.data };
+            }
+          })
+        );
+
+        toast.success(res.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const handleCreateBlog = async () => {
+    let newErrors = {};
+    Object.entries(tempBlogData).forEach(([name, value]) => {
+      const updatedErrors = validateError(name, value);
+      newErrors = { ...newErrors, ...updatedErrors };
+    });
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+    try {
+      const res = await axios.post(`http://localhost:3000/blogs/create_blog`, {
+        ...tempBlogData,
+        clientId: user._id,
+      });
+      if (res.data.success) {
+        setAllBlogData((prev) => prev.concat(res.data.data));
+        toast.success(res.data.message);
+        navigate(-1);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   const handleSaveChange = (approve) => {
     let newErrors = {};
     Object.entries(tempBlogData).forEach(([name, value]) => {
@@ -170,6 +226,20 @@ export const BlogProvider = ({ children, data }) => {
     });
   };
 
+  const handleDeleteBlog = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3000/blogs/${id}`);
+      if (res.data.success) {
+        setAllBlogData((prev) =>
+          prev.filter((currentBlog) => currentBlog._id !== id)
+        );
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   return (
     <BlogContext.Provider
       value={{
@@ -179,8 +249,12 @@ export const BlogProvider = ({ children, data }) => {
         errors,
         user,
         blogsSearchData,
+        setBlogData,
         handleSearchBlogs,
         blogsSearchApprovedData,
+        handleCreateBlog,
+        handleApproveBlog,
+        handleDeleteBlog,
         handleSearchBlogsApproved,
         handleSelectedBlog,
         handleInputChange,

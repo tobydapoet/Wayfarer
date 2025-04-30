@@ -7,6 +7,9 @@
     &.isManage {
         width: calc(70vw - 80px);
     }
+    &.isNoAdd {
+        width: calc(100vw - 135px);
+    }
 
     .main-info {
         display: flex;

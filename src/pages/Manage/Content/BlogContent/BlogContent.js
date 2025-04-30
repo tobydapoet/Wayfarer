@@ -17,6 +17,7 @@ function BlogContent() {
     handleSelectedBlog,
     blogsSearchData,
     handleSearchBlogs,
+    handleDeleteBlog,
   } = useContext(BlogContext);
 
   return (
@@ -40,6 +41,7 @@ function BlogContent() {
             key={index}
             data={blog}
             onClick={() => handleSelectedBlog(blog)}
+            onDelete={() => handleDeleteBlog(blog._id)}
           />
         ))}
       </div>

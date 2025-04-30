@@ -9,7 +9,6 @@ import Popper from "../Popper";
 const cx = classNames.bind(styles);
 function SearchBar({ onSearch, results = [], renderResult }) {
   const [searchValue, setSearchValue] = useState("");
-  const [showResult, setShowResult] = useState(false);
 
   const deleteSearch = () => {
     setSearchValue("");

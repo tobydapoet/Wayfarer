@@ -33,8 +33,9 @@ import ContactManage from "../pages/Manage/ContactManage";
 import BlogInfo from "../pages/Blogs/BlogInfo";
 import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
 import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
-import { CityContext, CityProvider } from "../contexts/CityContext";
+import { CityProvider } from "../contexts/CityContext";
 import { BlogProvider } from "../contexts/BlogContext";
+import BlogAdd from "../components/BlogAdd";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -74,6 +75,12 @@ const publicRoutes = [
   {
     path: ":email/:selected",
     component: SelectedPage,
+    layout: ProfileLayout,
+  },
+  {
+    path: ":email/my_blogs/:id",
+    component: BlogInfo,
+    context: BlogProvider,
     layout: ProfileLayout,
   },
 ];
@@ -197,7 +204,7 @@ const privateRoutes = [
         layout: null,
       },
       {
-        path: "/manage/content/blog_content/:blog",
+        path: "/manage/content/blog_content/:id",
         component: BlogInfo,
         context: BlogProvider,
         layout: null,

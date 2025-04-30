@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./BlogManageItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Notice from "../Notice";
-import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function ContentManageItem({ data, onClick }) {
+function ContentManageItem({ data, onClick, onDelete }) {
   const [openNotice, setOpenNotice] = useState(false);
   const blogTime = new Date(data.createdAt);
 
@@ -43,6 +42,7 @@ function ContentManageItem({ data, onClick }) {
         open={openNotice}
         onClose={() => setOpenNotice(false)}
         content="Do you want to delete this blog ?"
+        onConfirm={onDelete}
       />
     </>
   );

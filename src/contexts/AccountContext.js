@@ -203,18 +203,28 @@ export const AccountProvider = ({ children }) => {
         JSON.parse(localStorage.getItem("user")) ||
         JSON.parse(sessionStorage.getItem("user"));
 
-      const logout = await axios.put(
-        `http://localhost:3000/staffs/${user._id}`,
-        {
-          status: "off duty",
+      if (user?.position) {
+        // Nếu là nhân viên (có position), gọi API cập nhật trạng thái
+        const res = await axios.put(
+          `http://localhost:3000/staffs/${user._id}`,
+          {
+            status: "off duty",
+          }
+        );
+
+        if (res.data.success) {
+          console.log("Logout thành công (nhân viên)");
+        } else {
+          console.warn("Cập nhật trạng thái thất bại");
         }
-      );
-      if (logout.data.success) {
-        console.log("Thành công");
-        localStorage.removeItem("user") || sessionStorage.removeItem("user");
-        navigate("/");
+      } else {
+        console.log("Logout khách hàng (không cần cập nhật trạng thái)");
       }
-      return logout;
+
+      // Xoá user khỏi storage và chuyển trang
+      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
+      navigate("/");
     } catch (err) {
       console.error("Logout error:", err);
     }

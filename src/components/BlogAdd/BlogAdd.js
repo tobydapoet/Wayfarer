@@ -17,12 +17,12 @@ function BlogAdd() {
     user,
     handleInputChange,
     handleImgChange,
-    handleSaveChange,
+    handleCreateBlog,
   } = useContext(BlogContext);
 
   const location = useLocation();
   const isBlogInfo = location.pathname.includes("/blogs/");
-
+  console.log(tempBlogData);
   return (
     <div className={cx("wrapper", { clientInterface: isBlogInfo })}>
       <div className={cx("header")}>
@@ -36,7 +36,9 @@ function BlogAdd() {
           onChange={handleInputChange}
         />
         <div className={cx("owner")}>By: {blogData.createdBy} </div>
-        <div className={cx("created-time")}>At: {blogData.createdAt}</div>
+        <div className={cx("created-time")}>
+          At: {new Date(blogData.createdAt).toLocaleDateString()}
+        </div>
         <hr />
       </div>
       <div className={cx("body")}>
@@ -60,7 +62,7 @@ function BlogAdd() {
           onChange={handleInputChange}
         />
       </div>
-      {user.position && (
+      {/* {user.position && (
         <div className={cx("btn-container")}>
           <Button rounded onClick={() => handleSaveChange(false)}>
             Save
@@ -69,14 +71,13 @@ function BlogAdd() {
             Save and approve
           </Button>
         </div>
-      )}
-      {!user.position && (
-        <div className={cx("btn-container")}>
-          <Button rounded onClick={() => handleSaveChange(false)}>
-            Apply
-          </Button>
-        </div>
-      )}
+      )} */}
+
+      <div className={cx("btn-container")}>
+        <Button rounded onClick={() => handleCreateBlog()}>
+          Apply
+        </Button>
+      </div>
     </div>
   );
 }

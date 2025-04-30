@@ -12,11 +12,16 @@ import {
   faLocation,
   faMoneyBills,
   faNewspaper,
+  faPen,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccountContext } from "../../contexts/AccountContext";
 
 const cx = classNames.bind(styles);
+
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
 
 function Sidebar({ profile, management, dark }) {
   const [isMobile, setIsMobile] = useState(
@@ -69,6 +74,18 @@ function Sidebar({ profile, management, dark }) {
                   {isMobile ? <FontAwesomeIcon icon={faClock} /> : "Processing"}
                 </NavLink>
               </div>
+              {!user.position && (
+                <div className={cx("my_blogs-container")}>
+                  <NavLink
+                    to={`/${email}/my_blogs`}
+                    className={(nav) =>
+                      cx("my_blogs", { active: nav.isActive })
+                    }
+                  >
+                    {isMobile ? <FontAwesomeIcon icon={faPen} /> : "My Blogs"}
+                  </NavLink>
+                </div>
+              )}
               <div className={cx("favourite-container")}>
                 <NavLink
                   to={`/${email}/favourite`}

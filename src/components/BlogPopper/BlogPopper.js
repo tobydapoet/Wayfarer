@@ -2,9 +2,15 @@ import classNames from "classnames/bind";
 import styles from "./BlogPopper.module.scss";
 
 const cx = classNames.bind(styles);
-function BlogPopper({ manage, data, onClick }) {
+function BlogPopper({ manage, noAdd, data, onClick }) {
   return (
-    <div className={cx("wrapper", { isManage: manage })} onClick={onClick}>
+    <div
+      className={cx("wrapper", {
+        isManage: manage,
+        isNoAdd: noAdd,
+      })}
+      onClick={onClick}
+    >
       <div className={cx("main-info")}>
         {!manage && <img src={data.image} />}
         <div className={cx("text-info")}>

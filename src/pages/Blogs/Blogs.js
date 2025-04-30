@@ -12,6 +12,9 @@ import BlogPopper from "../../components/BlogPopper/BlogPopper";
 const cx = classNames.bind(styles);
 
 function Blogs() {
+  const user =
+    JSON.parse(localStorage.getItem("user")) ||
+    JSON.parse(sessionStorage.getItem("user"));
   const {
     allBlogData,
     handleSelectedBlog,
@@ -31,28 +34,36 @@ function Blogs() {
           onSearch={handleSearchBlogsApproved}
           results={blogsSearchApprovedData}
           renderResult={(blog) => (
-            <BlogPopper onClick={() => handleSelectedBlog(blog)} data={blog} />
+            <BlogPopper
+              onClick={() => handleSelectedBlog(blog)}
+              data={blog}
+              noAdd={user.position}
+            />
           )}
         />
-        <div
-          className={cx("add")}
-          onClick={handleAddClick}
-          style={{ cursor: "pointer" }}
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </div>
+        {!user.position && (
+          <div
+            className={cx("add")}
+            onClick={handleAddClick}
+            style={{ cursor: "pointer" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+        )}
       </div>
       <div className={cx("content-wrapper")}>
-        {allBlogData.map((blog) => {
-          return (
-            <Pin
-              key={blog._id}
-              type="page"
-              data={blog}
-              onClick={() => handleSelectedBlog(blog)}
-            ></Pin>
-          );
-        })}
+        {allBlogData
+          .filter((blogs) => blogs.status === true)
+          .map((blog) => {
+            return (
+              <Pin
+                key={blog._id}
+                type="page"
+                data={blog}
+                onClick={() => handleSelectedBlog(blog)}
+              ></Pin>
+            );
+          })}
       </div>
     </div>
   );

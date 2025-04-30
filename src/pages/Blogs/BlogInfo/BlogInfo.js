@@ -8,7 +8,7 @@ import { BlogContext } from "../../../contexts/BlogContext";
 const cx = classNames.bind(styles);
 
 function BlogInfo() {
-  const { blogData } = useContext(BlogContext);
+  const { blogData, handleApproveBlog } = useContext(BlogContext);
   console.log(blogData);
   const location = useLocation();
   const isBlogInfo = location.pathname.includes("/blogs/");
@@ -30,7 +30,9 @@ function BlogInfo() {
       </div>
       {!isBlogInfo && blogData.status === false && (
         <div className={cx("btn-container")}>
-          <Button rounded>Approve</Button>
+          <Button rounded onClick={() => handleApproveBlog(blogData._id)}>
+            Approve
+          </Button>
         </div>
       )}
     </div>
