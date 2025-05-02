@@ -35,7 +35,7 @@ import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
 import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
 import { CityProvider } from "../contexts/CityContext";
 import { BlogProvider } from "../contexts/BlogContext";
-import BlogAdd from "../components/BlogAdd";
+import { DestinationProvider } from "../contexts/DestinationContext";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -62,9 +62,10 @@ const publicRoutes = [
   {
     path: "/destinations/:placement",
     component: Placement,
+    context: DestinationProvider,
     children: [
       { path: ":type", component: Services, default: true, layout: null },
-      { path: ":type/:name", component: PlacementInfo, layout: null },
+      { path: ":type/:id", component: PlacementInfo, layout: null },
     ],
   },
   {
@@ -134,18 +135,21 @@ const privateRoutes = [
         layout: null,
       },
       {
-        path: "destinations/:info",
+        path: "destinations/:placement",
         component: DestinationInfo,
+        context: DestinationProvider,
         layout: null,
         children: [
           {
             path: ":type",
             component: ServicesManage,
+            context: DestinationProvider,
             layout: null,
           },
           {
-            path: ":type/:name",
+            path: ":type/:id",
             component: ServiceIntroduce,
+            context: DestinationProvider,
             layout: null,
           },
         ],

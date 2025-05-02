@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: calc(95vw - 180px);
+    padding: 20px;
+    font-family: var(--font-default);
+    cursor: pointer;
+
+    &.isManage {
+        width: calc(70vw - 190px);
+    }
+
+    &:hover {
+        background-color: #3535350e;
+    }
+    .left-side {
+        display: flex;
+        gap: 10px;
+        font-size: 14px;
+
+        img {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+        }
+
+        .txt-content {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+    }
+    .right-side {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        width: calc(80vw - 40px);
+    }
+}

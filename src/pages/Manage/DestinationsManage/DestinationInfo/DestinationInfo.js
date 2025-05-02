@@ -7,11 +7,13 @@ const cx = classNames.bind(styles);
 
 function DestinationInfo() {
   const param = useParams();
-  
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("navigate")}>
-        <div className={cx('info')}>{param.info==='add_content' ? 'Adding': param.info}</div>
+        <div className={cx("info")}>
+          {param.placement === "add_content" ? "Adding" : param.placement}
+        </div>
         <NavigateManage to={`trips`}>Trips</NavigateManage>
         <NavigateManage to={`hotels`}>Hotels</NavigateManage>
         <NavigateManage to={`transports`}>Transports</NavigateManage>

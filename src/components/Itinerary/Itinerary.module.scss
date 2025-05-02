@@ -73,7 +73,7 @@
             font-size: 25px;
             font-weight: bold;
             outline: none;
-            width: 100px;
+            width: 120px;
             border: none;
         }
         .price-show {
@@ -81,6 +81,28 @@
             font-size: 25px;
             font-weight: bold;
         }
+    }
+
+    .unit-container {
+        .unit-input {
+            font-family: themify;
+            font-size: 25px;
+            font-weight: bold;
+            outline: none;
+            width: 100px;
+            border: none;
+        }
+        .unit-show {
+            font-family: themify;
+            font-size: 25px;
+            font-weight: bold;
+        }
+    }
+
+    .error-unit-price {
+        display: flex;
+        gap: 10px;
+        height: 13px;
     }
 
     .description-container {
@@ -243,6 +265,16 @@ input[type="number"]::-webkit-outer-spin-button {
                 font-size: 17px;
             }
         }
+
+        .unit-container {
+            .unit-input {
+                font-size: 17px;
+            }
+            .unit-show {
+                font-size: 17px;
+            }
+        }
+
         .img-container {
             position: relative;
             display: flex;
@@ -294,4 +326,5 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-bottom: 20px;
     font-weight: 500;
     font-family: var(--font-default);
+    height: 15px;
 }

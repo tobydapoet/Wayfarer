@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export const CityContext = createContext({
@@ -17,6 +18,7 @@ export const CityContext = createContext({
   handleCreateCity: () => {},
   handleDeleteCity: () => {},
   handleSearchCity: () => {},
+  getCityFromParam: () => {},
 });
 
 export const CityProvider = ({ data, children }) => {
@@ -31,6 +33,7 @@ export const CityProvider = ({ data, children }) => {
   const [citiesSearchResult, setCitiesSearchResult] = useState([]);
   const [errors, setErrors] = useState({});
   const [openEditForm, setOpenEditForm] = useState(false);
+  const param = useParams();
 
   useEffect(() => {
     setTempCity(city);
@@ -181,6 +184,16 @@ export const CityProvider = ({ data, children }) => {
     }
   };
 
+  const getCityFromParam = async (cityName) => {
+    try {
+      const res = await axios.get(`http://localhost:3000/cities/${cityName}`);
+      return res.data;
+    } catch (err) {
+      toast.error("Không tìm thấy thành phố!");
+      return null;
+    }
+  };
+
   return (
     <CityContext.Provider
       value={{
@@ -192,6 +205,7 @@ export const CityProvider = ({ data, children }) => {
         setCity,
         resetForm,
         openEditForm,
+        getCityFromParam,
         setOpenEditForm,
         handleChangeCityImage,
         handleChangeCityInput,

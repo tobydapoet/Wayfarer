@@ -15,17 +15,12 @@ function DestinationsManage() {
   const {
     allCities,
     citiesSearchResult,
-    city,
     setCity,
     openEditForm,
     setOpenEditForm,
     handleSearchCity,
     handleDeleteCity,
   } = useContext(CityContext);
-
-  useEffect(() => {
-    console.log("Updated allCities:", allCities);
-  }, [allCities]);
 
   const navigate = useNavigate();
 

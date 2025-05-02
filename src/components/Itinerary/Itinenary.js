@@ -1,171 +1,56 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Itinerary.module.scss";
 import StarRating from "../../utils/StartRating";
+import { DestinationContext } from "../../contexts/DestinationContext";
+import { useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const serviceMap = {
-  0: "trips",
-  1: "hotels",
-  2: "transports",
-};
-
-function Itinerary({ data, manage }) {
-  const [content, setContent] = useState({
-    ...data,
-    type: data.type in serviceMap ? data.type : 0,
-  });
-  const [editField, setEditField] = useState(null);
-  const [tempValue, setTempValue] = useState({ ...editField });
-  const [errors, setErrors] = useState({});
+function Itinerary({ manage }) {
+  const {
+    content,
+    editMode,
+    tempContent,
+    errors,
+    currentActivity,
+    editActivityIndex,
+    handleEditField,
+    HandleCancelEdit,
+    handleChangeImg,
+    handleEditActivityMode,
+    handleEditMode,
+    handleEditActivity,
+    handleSaveActivity,
+    handleSaveDestination,
+  } = useContext(DestinationContext);
   const textareaRef = useRef(null);
 
-  const validateInput = (name, value) => {
-    const newErrors = {};
-    switch (name) {
-      case "name": {
-        if (!value.trim()) {
-          newErrors.name = "Title cannot be empty!";
-        }
-        break;
-      }
-      case "price": {
-        if (!value.trim()) {
-          newErrors.price = "Price cannot be empty!";
-        }
-        break;
-      }
-      case "description": {
-        if (!value.trim()) {
-          newErrors.description = "Description cannot be empty!";
-        }
-        break;
-      }
-      case "type": {
-        if (!value) {
-          newErrors.img = "Please choose type!";
-        }
-        break;
-      }
-    }
-    return newErrors;
-  };
-
-  const activityMap = content.activities ? content.activities.split(",") : [];
-
-  const handleChangeImg = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      console.warn("Không có file nào được chọn!");
-      return;
-    }
-    const file = e.target.files[0];
-    if (!file.type.startsWith("image/")) {
-      console.error("File không phải là ảnh!");
-      return;
-    }
-    const imgURL = URL.createObjectURL(file);
-    setContent((prev) => ({ ...prev, img: imgURL }));
-  };
-
-  const handleEditField = (field) => {
-    setEditField(field);
-    setTempValue(content[field]);
-  };
-
-  console.log(errors);
-  const handleSaveField = (field) => {
-    const newErrors = validateInput(field, tempValue);
-    if (Object.keys(newErrors).length === 0) {
-      setContent({ ...content, [field]: tempValue });
-      setEditField(null);
-      setErrors({ ...errors, [field]: undefined }); // Xóa lỗi cũ
-    } else {
-      setErrors({ ...errors, ...newErrors }); // Hiển thị lỗi mới
-    }
-  };
-
-  const handleEditActivity = (index) => {
-    if (index !== undefined) {
-      setEditField(`activity_${index}`);
-      setTempValue(activityMap[index]);
-    } else {
-      setEditField("activities");
-    }
-  };
-
-  const HandleCancelEdit = () => {
-    setContent({ ...content });
-    setEditField(null);
-    setTempValue("");
-  };
-
-  const handleSaveActivity = (index) => {
-    const trimmedValue = tempValue.trim();
-
-    const activityArray = content.activities
-      ? content.activities.split(",").map((item) => item.trim())
-      : [];
-
-    if (trimmedValue === "") {
-      activityArray.splice(index, 1);
-    } else {
-      activityArray[index] = trimmedValue;
-    }
-
-    setContent({ ...content, activities: activityArray.join(", ") });
-
-    setTempValue("");
-    setEditField(null);
-  };
-
-  const handleSaveNewActivity = (index) => {
-    const trimmedValue = tempValue.trim();
-
-    if (trimmedValue === "") {
-      if (index !== undefined) {
-        const updatedActivities = activityMap.filter((_, i) => i !== index);
-        setContent({ ...content, activities: updatedActivities.join(",") });
-      }
-    } else {
-      const updatedActivities = [...activityMap];
-      if (index !== undefined) {
-        updatedActivities[index] = trimmedValue;
-      } else {
-        updatedActivities.push(trimmedValue);
-      }
-
-      setContent({ ...content, activities: updatedActivities.join(",") });
-    }
-
-    setTempValue("");
-    setEditField(null);
-  };
-
   useEffect(() => {
-    if (editField === "description" && textareaRef.current) {
+    if (editMode === "description" && textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [tempValue, editField]);
+  }, [tempContent, editMode]);
 
   return (
     <div className={cx("wrapper")}>
       {/* Name */}
       <div className={cx("name-container")}>
-        {editField === "name" && manage ? (
+        {editMode === "name" && manage ? (
           <>
             <input
               className={cx("name-input")}
               type="text"
-              value={tempValue}
-              onChange={(e) => setTempValue(e.target.value)}
-              onBlur={() => HandleCancelEdit("name")}
+              value={tempContent.name}
+              name="name"
+              onChange={handleEditField}
+              onBlur={() => HandleCancelEdit()}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveField("name");
-                if (e.key === "Escape") HandleCancelEdit("name");
+                if (e.key === "Enter") handleSaveDestination();
+                if (e.key === "Escape") HandleCancelEdit(e);
               }}
               autoFocus
             />
@@ -173,7 +58,7 @@ function Itinerary({ data, manage }) {
           </>
         ) : (
           <span
-            onClick={() => handleEditField("name")}
+            onClick={() => handleEditMode("name")}
             className={cx("name-show")}
           >
             {content.name}
@@ -185,57 +70,98 @@ function Itinerary({ data, manage }) {
         <StarRating rating={content.star} />
       </h4>
 
-      <div className={cx("price-container")}>
-        {editField === "price" && manage ? (
+      <span className={cx("price-container")}>
+        {editMode === "price" && manage ? (
           <>
+            <strong style={{ fontSize: "25px", fontFamily: "themify" }}>
+              $
+            </strong>
             <input
               className={cx("price-input")}
               type="number"
-              value={tempValue}
-              onChange={(e) => setTempValue(e.target.value)}
+              name="price"
+              value={tempContent.price}
+              onChange={handleEditField}
               onBlur={() => HandleCancelEdit("price")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveField("price");
+                if (e.key === "Enter") handleSaveDestination();
                 if (e.key === "Escape") HandleCancelEdit("price");
               }}
               autoFocus
             />
-            {errors.price && <p className={cx("error-text")}>{errors.price}</p>}
+            <strong style={{ fontSize: "25px", fontFamily: "themify" }}>
+              /
+            </strong>
           </>
         ) : (
           <span
             className={cx("price-show")}
-            onClick={() => handleEditField("price")}
+            onClick={() => handleEditMode("price")}
           >
-            ${content.price}/pax
+            ${content.price}/
           </span>
         )}
-      </div>
+      </span>
+
+      <span className={cx("unit-container")}>
+        {editMode === "unit" && manage ? (
+          <>
+            <input
+              className={cx("unit-input")}
+              name="unit"
+              value={tempContent.unit}
+              onChange={handleEditField}
+              onBlur={() => HandleCancelEdit("unit")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSaveDestination();
+                if (e.key === "Escape") HandleCancelEdit("unit");
+              }}
+              autoFocus
+            />
+          </>
+        ) : (
+          <span
+            className={cx("unit-show")}
+            onClick={() => handleEditMode("unit")}
+          >
+            {content.unit}
+          </span>
+        )}
+      </span>
+      {(errors.price || errors.unit) && (
+        <div className={cx("error-unit-price")}>
+          {errors.price && (
+            <div className={cx("error-text")}>{errors.price}</div>
+          )}
+          {errors.unit && <div className={cx("error-text")}>{errors.unit}</div>}
+        </div>
+      )}
 
       <hr />
       <div className={cx("img-container")}>
-        <img src={content.img} alt={content.name} />
+        <img src={tempContent.image} alt={content.name} />
         {manage && (
           <>
             <div className={cx("input-container")}>
               <input type="file" onChange={handleChangeImg} />
             </div>
-            {errors.img && <p className={cx("error-text")}>{errors.img}</p>}
+            {errors.image && <p className={cx("error-text")}>{errors.image}</p>}
           </>
         )}
       </div>
 
       <div className={cx("description-container")}>
-        {editField === "description" && manage ? (
+        {editMode === "description" && manage ? (
           <>
             <textarea
               ref={textareaRef}
               className={cx("description-input")}
-              value={tempValue}
-              onChange={(e) => setTempValue(e.target.value)}
+              value={tempContent.description}
+              name="description"
+              onChange={handleEditField}
               onBlur={() => HandleCancelEdit("description")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveField("description");
+                if (e.key === "Enter") handleSaveDestination();
                 if (e.key === "Escape") HandleCancelEdit("description");
               }}
               autoFocus
@@ -247,7 +173,7 @@ function Itinerary({ data, manage }) {
         ) : (
           <div
             className={cx("description-show")}
-            onClick={() => handleEditField("description")}
+            onClick={() => handleEditMode("description")}
           >
             {content.description}
           </div>
@@ -260,15 +186,15 @@ function Itinerary({ data, manage }) {
           <div className={cx("activities-title")}> Activities:</div>
           {manage && (
             <div className={cx("activities-add")}>
-              {editField === "activities" ? (
+              {editMode === "add-activity" ? (
                 <input
                   type="text"
                   className={cx("activities-add-input")}
-                  value={tempValue}
-                  onChange={(e) => setTempValue(e.target.value)}
+                  value={currentActivity}
+                  onChange={handleEditActivity}
                   onBlur={() => HandleCancelEdit("activities")}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSaveNewActivity();
+                    if (e.key === "Enter") handleSaveActivity();
                     if (e.key === "Escape") HandleCancelEdit("activities");
                   }}
                   autoFocus
@@ -277,7 +203,7 @@ function Itinerary({ data, manage }) {
                 <FontAwesomeIcon
                   className={cx("add-icon")}
                   icon={faPlus}
-                  onClick={() => handleEditActivity()}
+                  onClick={() => handleEditActivityMode()}
                 />
               )}
             </div>
@@ -285,21 +211,21 @@ function Itinerary({ data, manage }) {
         </div>
 
         <div className={cx("activities")}>
-          {activityMap.map((activity, index) => (
+          {content.activities.map((activity, index) => (
             <div key={index} className={cx("activity")}>
-              {editField === `activity_${index}` && manage ? (
+              {editMode === `edit-activity` &&
+              editActivityIndex === index &&
+              manage ? (
                 <input
                   type="text"
-                  value={tempValue}
-                  onChange={(e) => setTempValue(e.target.value)}
-                  onBlur={() => handleSaveActivity(index)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && handleSaveActivity(index)
-                  }
+                  value={currentActivity}
+                  onChange={handleEditActivity}
+                  onBlur={() => handleSaveActivity()}
+                  onKeyDown={(e) => e.key === "Enter" && handleSaveActivity()}
                   autoFocus
                 />
               ) : (
-                <span onClick={() => handleEditActivity(index)}>
+                <span onClick={() => handleEditActivityMode(index)}>
                   {activity}
                 </span>
               )}
@@ -309,27 +235,24 @@ function Itinerary({ data, manage }) {
       </div>
       {manage && (
         <div className={cx("type-container")}>
-          {editField === "type" ? (
+          {editMode === "type" ? (
             <select
               className={cx("type-select")}
-              value={tempValue}
-              onChange={(e) => setTempValue(e.target.value)}
+              value={tempContent.type}
+              onChange={handleEditField}
+              name="type"
               onBlur={() => HandleCancelEdit("type")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveField("type");
+                if (e.key === "Enter") handleSaveDestination();
                 if (e.key === "Escape") HandleCancelEdit("type");
               }}
             >
-              {Object.keys(serviceMap).map((key) => (
-                <option key={key} value={key} selected={key === tempValue}>
-                  {serviceMap[key]}
-                </option>
-              ))}
+              <option value="trips">Trips</option>
+              <option value="hotels">Hotels</option>
+              <option value="transports">Transports</option>
             </select>
           ) : (
-            <div onClick={() => handleEditField("type")}>
-              {serviceMap[content.type]}
-            </div>
+            <div onClick={() => handleEditMode("type")}>{tempContent.type}</div>
           )}
         </div>
       )}

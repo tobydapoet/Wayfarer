@@ -59,12 +59,10 @@ export const BlogProvider = ({ children, data }) => {
       status: false,
     }
   );
-  console.log(blogData);
   const [blogsSearchData, setBlogsSearchData] = useState([]);
   const [blogsSearchApprovedData, setBlogsSearchApprovedData] = useState([]);
 
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     if (id) {
       axios
@@ -121,6 +119,11 @@ export const BlogProvider = ({ children, data }) => {
     reader.onload = () => {
       const base64 = reader.result;
       setTempBlogData((prev) => ({ ...prev, image: base64 }));
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        delete newErrors.image;
+        return newErrors;
+      });
     };
     reader.readAsDataURL(file);
   };
@@ -198,7 +201,9 @@ export const BlogProvider = ({ children, data }) => {
       if (res.data.success) {
         setAllBlogData((prev) => prev.concat(res.data.data));
         toast.success(res.data.message);
-        navigate(-1);
+        setTimeout(() => {
+          navigate(-1); // Quay lại sau khi UI có cơ hội cập nhật
+        }, 300);
       }
     } catch (err) {
       toast.error(err);

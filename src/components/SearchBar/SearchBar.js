@@ -51,6 +51,7 @@ function SearchBar({ onSearch, results = [], renderResult }) {
           placeholder="Search"
           value={searchValue}
           onChange={handleSearch}
+          onBlur={() => setSearchValue("")}
         />
       </HeadlessTippy>
       {!!searchValue && (

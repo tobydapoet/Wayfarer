@@ -4,38 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import StarRating from "../../utils/StartRating";
 import Notice from "../Notice";
+import { DestinationContext } from "../../contexts/DestinationContext";
 
 const cx = classNames.bind(styles);
 
-function PlacementItem({ type, data, manage, client }) {
-  const contentMap = {
-    trips: {
-      ...data,
-      activities: data.activities ? data.activities.split(",") : [],
-    },
-
-    hotels: {
-      ...data,
-      activities: data.activities ? data.activities.split(",") : [],
-    },
-
-    transports: {
-      ...data,
-      activities: data.activities ? data.activities.split(",") : [],
-    },
-  };
-  const content = contentMap[type] || {};
-
+function PlacementItem({ data, manage, client, onClick, onDelete }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
-
-  const navigate = useNavigate();
-
-  const handleRowClick = () => {
-    navigate(`${data.name}`, { relative: "path" });
-  };
 
   const getRandomPastelColor = () => {
     const hue = Math.floor(Math.random() * 360);
@@ -45,26 +22,24 @@ function PlacementItem({ type, data, manage, client }) {
 
   return (
     <div className={cx("wrapper")}>
-      {content && (
+      {data && (
         <div className={cx("container", { manage })}>
-          <img src={content.img} className={cx({ manage })} />
+          <img src={data.image} className={cx({ manage })} />
           <div className={cx("content")}>
             <div className={cx("header")}>
-              <div className={cx("name", { manage })}>{content.name}</div>
-              <div
-                className={cx("price", { manage })}
-              >{`$${content.price}`}</div>
+              <div className={cx("name", { manage })}>{data.name}</div>
+              <div className={cx("price", { manage })}>{`$${data.price}`}</div>
             </div>
             <div className={cx("star")}>
-              <StarRating rating={content.star} />
+              <StarRating rating={data.star} />
             </div>
             <div className={cx("description", { manage })}>
-              {content.description}
+              {data.description}
             </div>
-            {content.activities && (
+            {data.activities && (
               <div className={cx("activities-container")}>
-                {content.activities &&
-                  content.activities.map((activity, index) => (
+                {data.activities &&
+                  data.activities.map((activity, index) => (
                     <div
                       key={index}
                       className={cx("activity")}
@@ -77,22 +52,14 @@ function PlacementItem({ type, data, manage, client }) {
             )}
             <div className={cx("view-container")}>
               {client && (
-                <Button
-                  large
-                  className={cx("view-more")}
-                  onClick={handleRowClick}
-                >
+                <Button large className={cx("view-more")} onClick={onClick}>
                   Show more
                 </Button>
               )}
               {manage && (
                 <>
                   <div className={cx("btn-container")}>
-                    <Button
-                      large
-                      className={cx("view-more")}
-                      onClick={handleRowClick}
-                    >
+                    <Button large className={cx("view-more")} onClick={onClick}>
                       View more
                     </Button>
                     <div
@@ -110,6 +77,7 @@ function PlacementItem({ type, data, manage, client }) {
                     open={deleteNotice}
                     onClose={() => setDeleteNotice(false)}
                     content="Do you want to delte this destination ?"
+                    onConfirm={onDelete}
                   />
                 </>
               )}

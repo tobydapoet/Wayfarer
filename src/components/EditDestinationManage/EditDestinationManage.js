@@ -20,7 +20,6 @@ function EditDestinationManage({ onClose, open }) {
     handleChangeCityImage,
     handleChangeCityInput,
   } = useContext(CityContext);
-  console.log(errors);
 
   const handleSubmit = () => {
     if (city) {

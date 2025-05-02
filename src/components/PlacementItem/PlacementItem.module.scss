@@ -3,7 +3,6 @@
     overflow: hidden;
     width: 100%;
     height: fit-content;
-    margin-top: 20px;
 }
 
 .container {
@@ -13,6 +12,7 @@
     font-family: var(--font-default);
     height: 250px;
     width: 100%;
+
     &.manage {
         height: 240px;
         margin-top: 0px;
@@ -29,8 +29,8 @@
 
         .header {
             display: flex;
-            justify-content: space-between;
             margin-bottom: 10px;
+            width: 100%;
 
             .name {
                 font-size: 19px;
@@ -42,6 +42,8 @@
 
             .price {
                 font-size: 25px;
+                position: absolute;
+                right: 20px;
             }
         }
 
