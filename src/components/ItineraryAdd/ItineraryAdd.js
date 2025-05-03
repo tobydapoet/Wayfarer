@@ -14,7 +14,6 @@ function ItineraryAdd() {
   const {
     content,
     editMode,
-    tempContent,
     errors,
     currentActivity,
     editActivityIndex,
@@ -22,14 +21,11 @@ function ItineraryAdd() {
     HandleCancelEdit,
     handleChangeImg,
     handleEditActivityMode,
-    handleEditMode,
     handleEditActivity,
-    handleSaveActivity,
-    handleSaveDestination,
+    handleSaveActivityOnAdd,
     handleAddServices,
   } = useContext(DestinationContext);
   const textareaRef = useRef(null);
-  console.log(tempContent);
   return (
     <div className={cx("wrapper")}>
       {/* Name */}
@@ -39,7 +35,7 @@ function ItineraryAdd() {
           type="text"
           name="name"
           placeholder="Name"
-          value={tempContent.name}
+          value={content.name}
           onChange={handleEditField}
         />
         {errors.name && <p className={cx("error-text")}>{errors.name}</p>}
@@ -52,7 +48,7 @@ function ItineraryAdd() {
           type="number"
           name="price"
           placeholder="Price"
-          value={tempContent.price}
+          value={content.price}
           onChange={handleEditField}
         />
         <strong style={{ fontSize: "25px", fontFamily: "themify" }}>/</strong>
@@ -62,7 +58,7 @@ function ItineraryAdd() {
         <input
           className={cx("unit-input")}
           name="unit"
-          value={tempContent.unit}
+          value={content.unit}
           onChange={handleEditField}
           autoFocus
         />
@@ -78,7 +74,7 @@ function ItineraryAdd() {
       <hr />
       {/* Image */}
       <div className={cx("img-container")}>
-        <img src={tempContent.image || images.noImg} alt={content.name} />
+        <img src={content.image || images.noImg} alt={content.name} />
 
         <div className={cx("input-container")}>
           <input type="file" onChange={handleChangeImg} />
@@ -92,7 +88,7 @@ function ItineraryAdd() {
           className={cx("description-input")}
           placeholder="Description"
           name="description"
-          value={tempContent.description}
+          value={content.description}
           onChange={handleEditField}
         />
         {errors.description && (
@@ -100,7 +96,7 @@ function ItineraryAdd() {
         )}
       </div>
       {/* Ẩn Activities nếu có transports */}
-      {tempContent.type !== "transports" && (
+      {content.type !== "transports" && (
         <div className={cx("activities-wrapper")}>
           <div className={cx("activities-header")}>
             <div className={cx("activities-title")}> Activities:</div>
@@ -114,7 +110,7 @@ function ItineraryAdd() {
                   onChange={handleEditActivity}
                   onBlur={() => HandleCancelEdit("activities")}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSaveActivity();
+                    if (e.key === "Enter") handleSaveActivityOnAdd();
                     if (e.key === "Escape") HandleCancelEdit("activities");
                   }}
                   autoFocus
@@ -137,8 +133,10 @@ function ItineraryAdd() {
                     type="text"
                     value={currentActivity}
                     onChange={handleEditActivity}
-                    onBlur={() => handleSaveActivity()}
-                    onKeyDown={(e) => e.key === "Enter" && handleSaveActivity()}
+                    onBlur={() => handleSaveActivityOnAdd()}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && handleSaveActivityOnAdd()
+                    }
                     autoFocus
                   />
                 ) : (
@@ -154,7 +152,7 @@ function ItineraryAdd() {
       <div className={cx("type-container")}>
         <select
           className={cx("type-select")}
-          value={tempContent.type}
+          value={content.type}
           name="type"
           onChange={handleEditField}
         >

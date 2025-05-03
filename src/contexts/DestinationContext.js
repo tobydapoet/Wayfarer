@@ -6,7 +6,6 @@ import { CityContext } from "./CityContext";
 
 export const DestinationContext = createContext({
   content: {},
-  tempContent: {},
   errors: {},
   allDestinations: [],
   editMode: {},
@@ -19,21 +18,24 @@ export const DestinationContext = createContext({
   handleEditActivityMode: () => {},
   handleSelectedDestination: () => {},
   handleEditActivity: () => {},
+  handleSaveActivityOnAdd: () => {},
   handleEditMode: () => {},
   HandleCancelEdit: () => {},
-  setTempContent: () => {},
   handleChangeImg: () => {},
   handleEditField: () => {},
   handleSaveActivity: () => {},
-  handleSaveDestination: () => {},
   handleAddServices: () => {},
+  handleUpdateService: () => {},
+  handleDeleteDestination: () => {},
+  handleCancelActivity: () => {},
 });
 
 export const DestinationProvider = ({ children }) => {
   const [allDestinations, setAllDestinations] = useState([]);
   const [editMode, setEditMode] = useState(null);
-  const [tempContent, setTempContent] = useState({});
   const [currentActivity, setCurrentActivity] = useState("");
+  const [originalActivity, setOriginalActivity] = useState("");
+  const [originalContent, setOriginalContent] = useState({});
   const [editActivityIndex, setEditActivityIndex] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
   const { placement, type, id } = useParams();
@@ -47,7 +49,7 @@ export const DestinationProvider = ({ children }) => {
       .get(`http://localhost:3000/destinations`)
       .then((res) => setAllDestinations(res.data))
       .catch((err) => toast.error(err));
-  }, []);
+  }, [location]);
 
   const [content, setContent] = useState({
     name: "",
@@ -74,10 +76,6 @@ export const DestinationProvider = ({ children }) => {
 
     fetchCity();
   }, [placement]);
-
-  useEffect(() => {
-    setTempContent({ ...content });
-  }, [content]);
 
   useEffect(() => {
     if (id && id !== "add_content") {
@@ -138,7 +136,7 @@ export const DestinationProvider = ({ children }) => {
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result;
-      setTempContent((prev) => ({ ...prev, image: base64 }));
+      setContent((prev) => ({ ...prev, image: base64 }));
       setErrors((prevErrors) => {
         const newErrors = { ...prevErrors };
         delete newErrors.image;
@@ -168,7 +166,7 @@ export const DestinationProvider = ({ children }) => {
       }
       return updatedErrors;
     });
-    setTempContent((prev) => ({ ...prev, [name]: value }));
+    setContent((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEditActivityMode = (index) => {
@@ -179,14 +177,22 @@ export const DestinationProvider = ({ children }) => {
     } else {
       setEditMode("edit-activity");
       setEditActivityIndex(index);
-      setCurrentActivity(tempContent.activities[index]);
+      setCurrentActivity(content.activities[index]);
     }
   };
 
   const handleEditActivity = (e) => {
     setCurrentActivity(e.target.value);
+    setOriginalActivity(currentActivity);
   };
-  const handleSaveActivity = () => {
+
+  const handleCancelActivity = () => {
+    setCurrentActivity(originalActivity);
+    setEditActivityIndex(null);
+    setEditMode(null);
+  };
+
+  const handleSaveActivity = async () => {
     const trimmedValue = currentActivity.trim();
     let updatedActivities = [...content.activities];
 
@@ -203,40 +209,88 @@ export const DestinationProvider = ({ children }) => {
     }
 
     const updatedContent = {
-      ...tempContent,
+      ...content,
       activities: updatedActivities,
+      cityId: content.cityId._id || content.cityId,
     };
 
-    setContent(updatedContent);
-    setTempContent(updatedContent); // << Cập nhật để không bị mất
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/destinations/${content._id}`,
+        updatedContent
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+
+        setContent(updatedContent);
+        setAllDestinations((prev) =>
+          prev.map((item) => (item._id === content._id ? res.data.data : item))
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Lỗi khi cập nhật hoạt động!");
+    }
+
     setEditMode(null);
     setEditActivityIndex(null);
     setCurrentActivity("");
   };
-  const handleSaveDestination = () => {
-    let newErrors = {};
-    Object.entries(tempContent).forEach(([name, value]) => {
-      const fieldErrors = validateInput(name, value);
-      newErrors = { ...newErrors, ...fieldErrors };
-    });
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) {
-      return;
+
+  const handleSaveActivityOnAdd = () => {
+    const trimmedValue = currentActivity.trim();
+    let updatedActivities = [...content.activities];
+
+    if (trimmedValue === "") {
+      if (editActivityIndex !== null) {
+        updatedActivities.splice(editActivityIndex, 1);
+      }
+    } else {
+      if (editActivityIndex !== null) {
+        updatedActivities[editActivityIndex] = trimmedValue;
+      } else {
+        updatedActivities.push(trimmedValue);
+      }
     }
+
+    const updatedContent = {
+      ...content,
+      activities: updatedActivities,
+    };
+
+    setContent(updatedContent);
+    setContent(updatedContent); // << Cập nhật để không bị mất
     setEditMode(null);
-    setContent((prev) => ({
-      ...prev,
-      ...tempContent,
-    }));
+    setEditActivityIndex(null);
+    setCurrentActivity("");
   };
 
+  // const handleSaveDestination = () => {
+  //   let newErrors = {};
+  //   Object.entries(tempContent).forEach(([name, value]) => {
+  //     const fieldErrors = validateInput(name, value);
+  //     newErrors = { ...newErrors, ...fieldErrors };
+  //   });
+  //   setErrors(newErrors);
+  //   if (Object.keys(newErrors).length > 0) {
+  //     return;
+  //   }
+  //   setEditMode(null);
+  //   setContent((prev) => ({
+  //     ...prev,
+  //     ...tempContent,
+  //   }));
+  // };
+
   const handleEditMode = (field) => {
+    setOriginalContent(content);
     setEditMode(field);
   };
 
   const HandleCancelEdit = (field) => {
     setEditMode(null);
-    setTempContent({ ...content });
+    setContent(originalContent);
     setErrors((prevErrors) => {
       const newErrors = { ...prevErrors };
       delete newErrors[field];
@@ -288,10 +342,13 @@ export const DestinationProvider = ({ children }) => {
       toast.error(err);
     }
   };
+  useEffect(() => {
+    console.log("Updated allDestinations:", allDestinations);
+  }, [allDestinations]);
 
   const handleAddServices = async () => {
     let newErrors = {};
-    Object.entries(tempContent).forEach(([name, value]) => {
+    Object.entries(content).forEach(([name, value]) => {
       const fieldErrors = validateInput(name, value);
       newErrors = { ...newErrors, ...fieldErrors };
     });
@@ -299,15 +356,64 @@ export const DestinationProvider = ({ children }) => {
     if (Object.keys(newErrors).length > 0) {
       return;
     }
-    setEditMode(null);
     try {
       const res = await axios.post(
         `http://localhost:3000/destinations/create_destination`,
-        tempContent
+        content
       );
       if (res.data.success) {
-        navigate(-1);
         setAllDestinations((prev) => [...prev, res.data.data]);
+        toast.success(res.data.message);
+        navigate(`/manage/destinations/${placement}/${type}`);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const handleUpdateService = async (id) => {
+    let newErrors = {};
+    Object.entries(content).forEach(([name, value]) => {
+      const fieldErrors = validateInput(name, value);
+      newErrors = { ...newErrors, ...fieldErrors };
+    });
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/destinations/${content._id}`,
+        {
+          ...content,
+          cityId: content.cityId._id,
+        }
+      );
+      if (res.data.success) {
+        setAllDestinations((prev) =>
+          prev.map((destination) =>
+            destination._id === res.data.data._id
+              ? { ...destination, ...res.data.data }
+              : destination
+          )
+        );
+        setEditMode(null);
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const handleDeleteDestination = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:3000/destinations/${id}`
+      );
+      if (res.data.success) {
+        setAllDestinations((prev) =>
+          prev.filter((destination) => destination._id !== id)
+        );
         toast.success(res.data.message);
       }
     } catch (err) {
@@ -319,7 +425,6 @@ export const DestinationProvider = ({ children }) => {
     <DestinationContext.Provider
       value={{
         content,
-        tempContent,
         errors,
         allDestinations,
         editMode,
@@ -332,14 +437,16 @@ export const DestinationProvider = ({ children }) => {
         handleEditActivityMode,
         handleSelectedDestination,
         HandleCancelEdit,
-        setTempContent,
         handleChangeImg,
         handleEditField,
         handleSaveActivity,
-        handleSaveDestination,
+        handleSaveActivityOnAdd,
         handleEditMode,
         handleEditActivity,
+        handleCancelActivity,
         handleAddServices,
+        handleUpdateService,
+        handleDeleteDestination,
       }}
     >
       {children}

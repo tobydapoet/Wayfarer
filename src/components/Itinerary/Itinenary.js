@@ -13,7 +13,6 @@ function Itinerary({ manage }) {
   const {
     content,
     editMode,
-    tempContent,
     errors,
     currentActivity,
     editActivityIndex,
@@ -24,7 +23,8 @@ function Itinerary({ manage }) {
     handleEditMode,
     handleEditActivity,
     handleSaveActivity,
-    handleSaveDestination,
+    handleUpdateService,
+    handleCancelActivity,
   } = useContext(DestinationContext);
   const textareaRef = useRef(null);
 
@@ -33,7 +33,8 @@ function Itinerary({ manage }) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [tempContent, editMode]);
+  }, [content, editMode]);
+  console.log(content.activities);
 
   return (
     <div className={cx("wrapper")}>
@@ -44,13 +45,13 @@ function Itinerary({ manage }) {
             <input
               className={cx("name-input")}
               type="text"
-              value={tempContent.name}
+              value={content.name}
               name="name"
               onChange={handleEditField}
-              onBlur={() => HandleCancelEdit()}
+              onBlur={() => HandleCancelEdit("name")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveDestination();
-                if (e.key === "Escape") HandleCancelEdit(e);
+                if (e.key === "Enter") handleUpdateService();
+                if (e.key === "Escape") HandleCancelEdit("name");
               }}
               autoFocus
             />
@@ -80,11 +81,11 @@ function Itinerary({ manage }) {
               className={cx("price-input")}
               type="number"
               name="price"
-              value={tempContent.price}
+              value={content.price}
               onChange={handleEditField}
               onBlur={() => HandleCancelEdit("price")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveDestination();
+                if (e.key === "Enter") handleUpdateService();
                 if (e.key === "Escape") HandleCancelEdit("price");
               }}
               autoFocus
@@ -109,11 +110,11 @@ function Itinerary({ manage }) {
             <input
               className={cx("unit-input")}
               name="unit"
-              value={tempContent.unit}
+              value={content.unit}
               onChange={handleEditField}
               onBlur={() => HandleCancelEdit("unit")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveDestination();
+                if (e.key === "Enter") handleUpdateService();
                 if (e.key === "Escape") HandleCancelEdit("unit");
               }}
               autoFocus
@@ -139,7 +140,7 @@ function Itinerary({ manage }) {
 
       <hr />
       <div className={cx("img-container")}>
-        <img src={tempContent.image} alt={content.name} />
+        <img src={content.image} alt={content.name} />
         {manage && (
           <>
             <div className={cx("input-container")}>
@@ -156,12 +157,12 @@ function Itinerary({ manage }) {
             <textarea
               ref={textareaRef}
               className={cx("description-input")}
-              value={tempContent.description}
+              value={content.description}
               name="description"
               onChange={handleEditField}
               onBlur={() => HandleCancelEdit("description")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveDestination();
+                if (e.key === "Enter") handleUpdateService();
                 if (e.key === "Escape") HandleCancelEdit("description");
               }}
               autoFocus
@@ -192,10 +193,10 @@ function Itinerary({ manage }) {
                   className={cx("activities-add-input")}
                   value={currentActivity}
                   onChange={handleEditActivity}
-                  onBlur={() => HandleCancelEdit("activities")}
+                  onBlur={() => handleCancelActivity()}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleSaveActivity();
-                    if (e.key === "Escape") HandleCancelEdit("activities");
+                    if (e.key === "Escape") handleCancelActivity();
                   }}
                   autoFocus
                 />
@@ -211,26 +212,30 @@ function Itinerary({ manage }) {
         </div>
 
         <div className={cx("activities")}>
-          {content.activities.map((activity, index) => (
-            <div key={index} className={cx("activity")}>
-              {editMode === `edit-activity` &&
-              editActivityIndex === index &&
-              manage ? (
-                <input
-                  type="text"
-                  value={currentActivity}
-                  onChange={handleEditActivity}
-                  onBlur={() => handleSaveActivity()}
-                  onKeyDown={(e) => e.key === "Enter" && handleSaveActivity()}
-                  autoFocus
-                />
-              ) : (
-                <span onClick={() => handleEditActivityMode(index)}>
-                  {activity}
-                </span>
-              )}
-            </div>
-          ))}
+          {Array.isArray(content.activities) &&
+            content.activities.map((activity, index) => (
+              <div key={index} className={cx("activity")}>
+                {editMode === `edit-activity` &&
+                editActivityIndex === index &&
+                manage ? (
+                  <input
+                    type="text"
+                    value={currentActivity}
+                    onChange={handleEditActivity}
+                    onBlur={() => handleCancelActivity()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleSaveActivity();
+                      if (e.key === "Escape") handleCancelActivity();
+                    }}
+                    autoFocus
+                  />
+                ) : (
+                  <span onClick={() => handleEditActivityMode(index)}>
+                    {activity}
+                  </span>
+                )}
+              </div>
+            ))}
         </div>
       </div>
       {manage && (
@@ -238,12 +243,12 @@ function Itinerary({ manage }) {
           {editMode === "type" ? (
             <select
               className={cx("type-select")}
-              value={tempContent.type}
+              value={content.type}
               onChange={handleEditField}
               name="type"
               onBlur={() => HandleCancelEdit("type")}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveDestination();
+                if (e.key === "Enter") handleUpdateService();
                 if (e.key === "Escape") HandleCancelEdit("type");
               }}
             >
@@ -252,7 +257,7 @@ function Itinerary({ manage }) {
               <option value="transports">Transports</option>
             </select>
           ) : (
-            <div onClick={() => handleEditMode("type")}>{tempContent.type}</div>
+            <div onClick={() => handleEditMode("type")}>{content.type}</div>
           )}
         </div>
       )}

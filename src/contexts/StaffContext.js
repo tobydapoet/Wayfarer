@@ -46,6 +46,10 @@ export const StaffProvider = ({ children, data }) => {
   }, [staffData]);
 
   useEffect(() => {
+    console.log("Staff: ", allStaffsData);
+  });
+
+  useEffect(() => {
     if (data) return;
     axios
       .get("http://localhost:3000/staffs")
@@ -206,13 +210,18 @@ export const StaffProvider = ({ children, data }) => {
       return false;
     }
     try {
+      const today = new Date();
       const res = await axios.post(
         "http://localhost:3000/staffs/create_staff",
-        staffTempData
+        {
+          ...staffTempData,
+          start: today.toISOString(),
+        }
       );
       if (res.data.success) {
         toast.success(res.data.succes || "Add staff success!");
-        setAllStaffsData((prev) => [...prev, res.data]);
+        setAllStaffsData((prev) => [...prev, res.data.data]);
+
         navigate("/manage/business/staffs");
       }
     } catch (err) {

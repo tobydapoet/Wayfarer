@@ -19,29 +19,24 @@ function ServicesManage() {
     handleSearchTrips,
     handleSearchHotels,
     handleSearchTransports,
+    handleDeleteDestination,
   } = useContext(DestinationContext);
   const navigate = useNavigate();
   const { placement, type } = useParams();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (!allDestinations?.length) return;
+    if (!allDestinations || allDestinations.length === 0) return;
 
-    const validType = type && type !== ":type" ? type : "trips";
     if (!type || type === ":type") {
-      navigate(`/manage/destinations/${placement}/${validType}`, {
+      navigate(`/manage/destinations/${placement}/trips`, {
         replace: true,
       });
       return;
     }
 
-    // Chỉ cập nhật nếu dữ liệu thực sự thay đổi
-    setData((prev) => {
-      const newData = allDestinations.filter(
-        (item) => item.type === type && item.city?.name === placement
-      );
-      return JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData;
-    });
+    const filtered = allDestinations.filter((item) => item.type === type);
+    setData(filtered);
   }, [allDestinations, placement, type, navigate]);
   return (
     <div className={cx("wrapper")}>
@@ -96,6 +91,7 @@ function ServicesManage() {
             key={destination._id}
             data={destination}
             onClick={() => handleSelectedDestination(destination)}
+            onDelete={() => handleDeleteDestination(destination._id)}
           />
         ))}
     </div>

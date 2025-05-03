@@ -118,9 +118,9 @@ export const CityProvider = ({ data, children }) => {
         setAllCities((prev) =>
           prev.map((city) => {
             if (city._id === id) {
-              return { ...city, ...res.data.data }; // Cập nhật chính xác
+              return { ...city, ...res.data.data };
             }
-            return city; // Không trùng thì giữ nguyên
+            return city;
           })
         );
 

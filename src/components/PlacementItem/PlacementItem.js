@@ -28,7 +28,9 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
           <div className={cx("content")}>
             <div className={cx("header")}>
               <div className={cx("name", { manage })}>{data.name}</div>
-              <div className={cx("price", { manage })}>{`$${data.price}`}</div>
+              <div
+                className={cx("price", { manage })}
+              >{`$${data.price}/${data.unit}`}</div>
             </div>
             <div className={cx("star")}>
               <StarRating rating={data.star} />
