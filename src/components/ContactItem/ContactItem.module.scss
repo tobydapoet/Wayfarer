@@ -2,6 +2,7 @@
     border: 1px solid rgba(153, 153, 153, 0.75);
     padding: 15px;
     position: relative;
+    cursor: pointer;
 
     .xmark {
         position: absolute;
@@ -11,7 +12,25 @@
     }
 
     .container {
-        cursor: pointer;
+        .confirm-responsed {
+            margin-top: 10px;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            color: green;
+            font-family: var(--font-default);
+            font-size: 14px;
+        }
+
+        .confirm-noresponsed {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            color: red;
+            margin-top: 10px;
+            font-family: var(--font-default);
+            font-size: 14px;
+        }
     }
 
     .header {
@@ -49,6 +68,11 @@
         text-align: justify;
         .title {
             margin-bottom: 7px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .content {
             display: -webkit-box;
@@ -58,6 +82,7 @@
             text-overflow: ellipsis;
             line-height: 20px;
             text-indent: 10px;
+            height: 60px;
         }
     }
 }

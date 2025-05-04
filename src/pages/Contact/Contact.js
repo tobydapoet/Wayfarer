@@ -2,130 +2,59 @@ import classNames from "classnames/bind";
 import Input from "../../components/Input";
 import styles from "./Contact.module.scss";
 import Button from "../../components/Button";
-import useForm from "../../hooks/useForm";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ContactContext } from "../../contexts/ContactContext";
+import Notice from "../../components/Notice";
 
 const cx = classNames.bind(styles);
 
 function Contact() {
+  const {
+    contactValue,
+    errors,
+    notice,
+    handleCreateContact,
+    handleInputChange,
+    setContactValue,
+    handlePreventMessage,
+    setNotice,
+  } = useContext(ContactContext);
+
   const user =
     JSON.parse(localStorage.getItem("user")) ||
     JSON.parse(sessionStorage.getItem("user"));
-  const [contactValue, setContactValue] = useForm({
-    email: user.email,
-    name: user.name,
-    subject: "",
-    message: "",
-  });
-  const [tempConctactValue, setTempContactValue] = useState({
-    ...contactValue,
-  });
-  const [errors, setErrors] = useState({});
-
-  const validateInput = (name, value) => {
-    const newErrors = {};
-    switch (name) {
-      case "name": {
-        if (!value.trim()) {
-          newErrors.name = "Name cannot empty!";
-        }
-        break;
-      }
-      case "email": {
-        if (!value.trim()) {
-          newErrors.email = "Email cannot empty!";
-        } else if (
-          !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            value
-          )
-        ) {
-          newErrors.email = "Wrong format";
-        }
-        break;
-      }
-      case "subject": {
-        if (!value.trim()) {
-          newErrors.subject = "Subject cannot empty!";
-        }
-        break;
-      }
-      case "message": {
-        if (!value.trim()) {
-          newErrors.message = "Message cannot empty!";
-        }
-        break;
-      }
-    }
-    return newErrors;
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const newErrors = validateInput(name, value);
-    setErrors((prevErrors) => {
-      const updatedErrors = { ...newErrors, ...prevErrors };
-
-      if (!newErrors[name]) {
-        delete updatedErrors[name];
-      }
-
-      return updatedErrors;
-    });
-
-    setTempContactValue((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleOnSave = () => {
-    const newErrors = {};
-    Object.entries(tempConctactValue).forEach(([name, value]) => {
-      const fieldErrors = validateInput(name, value);
-      Object.assign(newErrors, fieldErrors);
-    });
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-      return;
-    }
-
-    setContactValue({ ...tempConctactValue });
-  };
 
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
-        <div className={cx("title")}>GET IN TOUCH</div>
+        <div className={cx("title-page")}>GET IN TOUCH</div>
         <div className={cx("content")}>
           <div className={cx("info")}>
             <Input
               dark
               placeholder="Name"
               className={cx("name")}
-              value={tempConctactValue.name}
-              onChange={handleInputChange}
+              value={user.name}
               name="name"
-              error={errors.name}
             />
 
             <Input
               dark
               placeholder="Email"
               className={cx("email")}
-              value={tempConctactValue.email}
-              onChange={handleInputChange}
+              value={user.email}
               name="email"
-              error={errors.email}
             />
           </div>
 
           <Input
             dark
-            placeholder="Subject"
-            className={cx("subject")}
-            value={tempConctactValue.subject}
+            placeholder="Title"
+            className={cx("title")}
+            value={contactValue.title}
             onChange={handleInputChange}
-            name="subject"
-            error={errors.subject}
+            name="title"
+            error={errors.title}
           />
 
           <Input
@@ -134,7 +63,7 @@ function Contact() {
             className={cx("message")}
             name="message"
             textarea
-            value={tempConctactValue.message}
+            value={contactValue.message}
             onChange={handleInputChange}
             error={errors.message}
           />
@@ -142,7 +71,7 @@ function Contact() {
           <Button
             large
             className={cx("send-btn")}
-            onClick={() => handleOnSave()}
+            onClick={() => handlePreventMessage()}
           >
             Send message
           </Button>
@@ -154,6 +83,12 @@ function Contact() {
           className={cx("image")}
         />
       </div>
+      <Notice
+        content="You are not client!"
+        warn
+        open={notice}
+        onClose={() => setNotice(false)}
+      />
     </div>
   );
 }

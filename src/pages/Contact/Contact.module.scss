@@ -3,39 +3,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:100px;
+    gap: 100px;
     margin: 0 auto;
     margin-top: 30px;
-   
-    .title {
+
+    .title-page {
         font-size: 3rem;
         font-family: themify;
         margin-bottom: 2rem;
     }
 
     .content {
-     
         font-size: 10px;
 
         .info {
             display: flex;
             gap: 50px;
         }
-        
-        .email, .name {
+
+        .email,
+        .name {
             font-size: 15px;
-           
-            
+            pointer-events: none;
         }
-            
-        .subject, .message {
+
+        .title,
+        .message {
             font-size: 15px;
-            
         }
     }
 
     .img-container {
-
         img {
             width: 500px;
             height: auto;
@@ -55,9 +53,8 @@
     }
 }
 
-@media (max-width: 1200px){
+@media (max-width: 1200px) {
     .img-container {
         display: none;
     }
-
 }

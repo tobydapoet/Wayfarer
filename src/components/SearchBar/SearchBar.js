@@ -30,6 +30,7 @@ function SearchBar({ onSearch, results = [], renderResult }) {
         visible={searchValue.length > 0 && results.length > 0}
         appendTo={() => document.body}
         placement="bottom"
+        onClickOutside={() => setSearchValue("")}
         render={(attrs) => (
           <div
             className={cx("search-result-container")}
@@ -51,7 +52,6 @@ function SearchBar({ onSearch, results = [], renderResult }) {
           placeholder="Search"
           value={searchValue}
           onChange={handleSearch}
-          onBlur={() => setSearchValue("")}
         />
       </HeadlessTippy>
       {!!searchValue && (

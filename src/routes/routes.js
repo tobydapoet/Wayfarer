@@ -36,6 +36,8 @@ import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
 import { CityProvider } from "../contexts/CityContext";
 import { BlogProvider } from "../contexts/BlogContext";
 import { DestinationProvider } from "../contexts/DestinationContext";
+import { ContactProvicer } from "../contexts/ContactContext";
+import ContactInfo from "../pages/Manage/ContactManage/ContactInfo/ContactInfo";
 
 const publicRoutes = [
   { path: "/", component: Home, topic: "HOME", navbar: "trans" },
@@ -48,7 +50,12 @@ const publicRoutes = [
   { path: "/about", component: About, topic: "ABOUT US" },
   { path: "/blogs", component: Blogs, context: BlogProvider, topic: "BLOG" },
   { path: "/bill", component: Bill },
-  { path: "/contact", component: Contact, topic: "CONTACT US" },
+  {
+    path: "/contact",
+    component: Contact,
+    context: ContactProvicer,
+    topic: "CONTACT US",
+  },
   {
     path: "/blogs/:blog",
     component: BlogInfo,
@@ -194,6 +201,14 @@ const privateRoutes = [
       {
         path: "contact_manage",
         component: ContactManage,
+        context: ContactProvicer,
+        layout: null,
+      },
+
+      {
+        path: "/manage/contact_manage/:id",
+        component: ContactInfo,
+        context: ContactProvicer,
         layout: null,
       },
 

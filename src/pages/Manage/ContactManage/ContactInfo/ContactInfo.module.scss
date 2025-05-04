@@ -1,0 +1,115 @@
+.wrapper {
+    padding: 20px;
+    .header {
+        margin-top: 5px;
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-default);
+        margin-bottom: 15px;
+
+        .client-info {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+
+            img {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+            .txt-info {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+
+                .email {
+                    font-size: 16px;
+                }
+                .name {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .time-create {
+            display: flex;
+            align-items: center;
+        }
+    }
+    .body {
+        .txt {
+            font-family: var(--font-default);
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .feedback {
+            .title {
+                border: 1px solid rgba(153, 153, 153, 0.75);
+                font-family: var(--font-default);
+                padding: 10px;
+                border-radius: 16px;
+                text-align: justify;
+                text-indent: 20px;
+                line-height: 23px;
+            }
+            .message {
+                border: 1px solid rgba(153, 153, 153, 0.75);
+                font-family: var(--font-default);
+                padding: 10px;
+                border-radius: 16px;
+                text-align: justify;
+                text-indent: 20px;
+                line-height: 23px;
+            }
+        }
+
+        .staff-info {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            font-family: var(--font-default);
+            margin-top: 50px;
+            margin-bottom: 15px;
+            img {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+            .txt-info {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+
+                .email {
+                    font-size: 14px;
+                }
+                .name {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .response-container {
+            padding: 0 10px;
+            text-align: justify;
+            line-height: 23px;
+
+            .response {
+                text-indent: 20px;
+                font-family: var(--font-default);
+                outline: none;
+                border: none;
+                font-size: 16px;
+            }
+        }
+    }
+    .btn-container {
+        width: 300px;
+        display: flex;
+        margin: 20px auto;
+    }
+}
