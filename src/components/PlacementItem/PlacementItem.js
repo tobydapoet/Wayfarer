@@ -20,6 +20,12 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
   };
   const randomColor = getRandomPastelColor();
 
+  const stringHtml = (html) => {
+    const tempP = document.createElement("div");
+    tempP.innerHTML = html;
+    return tempP.innerText;
+  };
+
   return (
     <div className={cx("wrapper")}>
       {data && (
@@ -36,7 +42,7 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
               <StarRating rating={data.star} />
             </div>
             <div className={cx("description", { manage })}>
-              {data.description}
+              <div>{stringHtml(data.description)}</div>
             </div>
             {data.activities && (
               <div className={cx("activities-container")}>

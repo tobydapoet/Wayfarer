@@ -12,23 +12,30 @@ function BlogInfo() {
   console.log(blogData);
   const location = useLocation();
   const isBlogInfo = location.pathname.includes("/blogs/");
+  const isOwnerInfo = location.pathname.includes("/my_blogs/");
   const blogTime = new Date(blogData.createdAt);
 
   return (
     <div className={cx("wrapper", { clientInterface: isBlogInfo })}>
       <div className={cx("header")}>
-        <div className={cx("title")}>{blogData.title}</div>
-        <div className={cx("owner")}>By: {blogData.clientId?.name}</div>
-        <div className={cx("created-time")}>
-          At: {blogTime.toLocaleDateString()}
+        <div className={cx("left-side")}>
+          <div className={cx("title")}>{blogData.title}</div>
+          <div className={cx("owner")}>By: {blogData.clientId?.name}</div>
+          <div className={cx("created-time")}>
+            At: {blogTime.toLocaleDateString()}
+          </div>
         </div>
-        <hr></hr>
+        {!isBlogInfo && (
+          <div className={cx("right-side")}>
+            <img src={blogData.image} />
+          </div>
+        )}
       </div>
+      <hr></hr>
       <div className={cx("body")}>
-        <img src={blogData.image} />
-        <div className={cx("content")}>{blogData.content}</div>
+        <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
       </div>
-      {!isBlogInfo && blogData.status === false && (
+      {!isBlogInfo && !isOwnerInfo && blogData.status === false && (
         <div className={cx("btn-container")}>
           <Button rounded onClick={() => handleApproveBlog(blogData._id)}>
             Approve

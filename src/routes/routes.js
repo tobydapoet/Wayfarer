@@ -57,7 +57,7 @@ const publicRoutes = [
     topic: "CONTACT US",
   },
   {
-    path: "/blogs/:blog",
+    path: "/blogs/:id",
     component: BlogInfo,
     context: BlogProvider,
   },

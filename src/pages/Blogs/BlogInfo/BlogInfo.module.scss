@@ -9,28 +9,38 @@
     }
 
     .header {
-        .title {
-            font-family: themify;
-            font-size: 30px;
-            color: #202020;
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        .left-side {
+            .title {
+                font-family: themify;
+                font-size: 30px;
+                color: #202020;
+                margin-bottom: 20px;
+            }
+            .owner,
+            .created-time {
+                color: rgb(153, 153, 153);
+                font-family: var(--font-default);
+                margin-top: 10px;
+            }
         }
-        .owner,
-        .created-time {
-            color: rgb(153, 153, 153);
-            font-family: var(--font-default);
-            margin-top: 10px;
-        }
-        hr {
-            margin: 20px 0px;
+
+        .right-side {
+            img {
+                width: 150px;
+                height: 100px;
+                object-fit: cover;
+                display: flex;
+            }
         }
     }
+    hr {
+        margin: 20px 0px;
+    }
     .body {
-        img {
-            width: 50%;
-            min-width: 300px;
-            display: flex;
-            margin: 20px auto;
-        }
+        color: #202020;
         .content {
             font-family: var(--font-default);
             text-align: justify;

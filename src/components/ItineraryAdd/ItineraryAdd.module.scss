@@ -1,92 +1,105 @@
 .wrapper {
     position: relative;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
 
-    .name-container {
-        font-family: themify;
-        font-size: 40px;
-        font-weight: bold;
-
-        .name-input {
+    .left-side {
+        flex: 1;
+        .name-container {
             font-family: themify;
             font-size: 40px;
             font-weight: bold;
-            border: none;
-            outline: none;
+            width: 100%;
+
+            .name-input {
+                font-family: themify;
+                font-size: 40px;
+                font-weight: bold;
+                border: none;
+                outline: none;
+                width: 100%;
+            }
+        }
+
+        .price-container {
+            .price-input {
+                font-family: themify;
+                margin-top: 20px;
+                font-size: 25px;
+                font-weight: bold;
+                outline: none;
+                width: 120px;
+                border: none;
+            }
+        }
+
+        .unit-container {
+            .unit-input {
+                font-family: themify;
+                font-size: 25px;
+                font-weight: bold;
+                outline: none;
+                width: 100px;
+                border: none;
+            }
         }
     }
 
-    .img-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        width: 600px;
-        height: 400px;
-        margin: 0 auto;
-        flex-direction: column;
-
-        img {
-            width: 80%;
-            height: 80%;
+    .right-side {
+        .img-container {
+            position: relative;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            object-fit: cover;
-        }
+            flex-direction: column;
 
-        .input-container {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            bottom: 40px;
-
-            input {
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-                border-radius: 50%;
-                opacity: 0;
+            img {
+                width: 170px;
+                height: 110px;
+                object-fit: cover;
+                display: flex;
             }
 
-            &::after {
-                content: "";
+            .input-container {
                 position: absolute;
-                top: 0;
-                left: 0;
                 width: 100%;
                 height: 100%;
-                background-image: url("../../../public/image-gallery.png");
-                background-position: center;
-                background-size: 50%;
-                background-repeat: no-repeat;
-                border-radius: 50%;
-                pointer-events: none;
-                background-color: white;
-                box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
+
+                input {
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+
+                    opacity: 0;
+                }
+
+                &:hover::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url("../../../public/image-gallery.png");
+                    background-position: center;
+                    background-size: 20%;
+                    background-repeat: no-repeat;
+                    pointer-events: none;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    box-shadow: 0px 1px 2px 0px rgba(209, 204, 204, 0.75);
+                }
             }
         }
-    }
-
-    .price-container {
-        .price-input {
-            font-family: themify;
-            margin-top: 20px;
-            font-size: 25px;
-            font-weight: bold;
-            outline: none;
-            width: 120px;
-            border: none;
-        }
-    }
-
-    .unit-container {
-        .unit-input {
-            font-family: themify;
-            font-size: 25px;
-            font-weight: bold;
-            outline: none;
-            width: 100px;
-            border: none;
+        .error-text-image {
+            color: rgb(253, 77, 77);
+            font-size: 13px;
+            display: flex;
+            margin-top: 5px;
+            font-weight: 500;
+            font-family: var(--font-default);
+            justify-content: center;
         }
     }
 
@@ -228,6 +241,10 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+hr {
+    margin-top: 20px;
+}
+
 .error-text {
     color: rgb(253, 77, 77);
     font-size: 13px;
@@ -236,7 +253,7 @@ input[type="number"]::-webkit-outer-spin-button {
     font-weight: 500;
     font-family: var(--font-default);
 }
-@media (max-width: 700px) {
+@media (max-width: 800px) {
     .wrapper {
         .description-container {
             font-family: var(--font-default);
@@ -246,65 +263,61 @@ input[type="number"]::-webkit-outer-spin-button {
             text-align: justify;
         }
 
-        .name-container {
-            font-size: 20px;
-
-            .name-input {
-                font-size: 20px;
-            }
-        }
-
-        .price-container {
-            .price-input {
-                font-size: 17px;
-            }
-        }
-
-        .unit-container {
-            .unit-input {
-                font-size: 17px;
-            }
-        }
-
-        .img-container {
-            position: relative;
-            display: flex;
-            width: 80%;
-            height: 80%;
-            flex-direction: column;
-
-            img {
-                width: 100%;
-                height: 70%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                object-fit: cover;
-                margin: 0px auto;
-            }
-
-            .input-container {
-                position: absolute;
-                width: 50px;
-                height: 50px;
-                bottom: -20px;
-
-                input {
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 50%;
-                    opacity: 0;
+        .header {
+            .left-side {
+                margin-top: -20px;
+                .name-container {
+                    .name-input {
+                        font-size: 22px;
+                    }
                 }
 
-                &::after {
-                    content: "";
+                .price-container {
+                    .price-input {
+                        font-size: 17px;
+                        width: 60px;
+                    }
+                }
+
+                .unit-container {
+                    .unit-input {
+                        font-size: 17px;
+                    }
+                }
+            }
+        }
+        .right-side {
+            .img-container {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+
+                img {
+                    width: 120px;
+                    height: 80px;
+                    object-fit: cover;
+                    display: flex;
+                }
+
+                .input-container {
                     position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-size: 50%;
-                    border-radius: 50%;
+
+                    input {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        opacity: 0;
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-size: 50%;
+                    }
                 }
             }
         }

@@ -60,17 +60,14 @@ export const DestinationProvider = ({ children }) => {
     image: "",
     description: "",
     activities: [],
-    type: "trips",
+    type: type,
   });
 
   useEffect(() => {
     const fetchCity = async () => {
       const city = await getCityFromParam(placement);
       if (city) {
-        console.log("City found:", city);
         setContent((prev) => ({ ...prev, cityId: city._id }));
-      } else {
-        console.log("City not found");
       }
     };
 
@@ -342,9 +339,6 @@ export const DestinationProvider = ({ children }) => {
       toast.error(err);
     }
   };
-  useEffect(() => {
-    console.log("Updated allDestinations:", allDestinations);
-  }, [allDestinations]);
 
   const handleAddServices = async () => {
     let newErrors = {};
