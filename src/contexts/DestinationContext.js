@@ -145,9 +145,11 @@ export const DestinationProvider = ({ children }) => {
 
   const handleSelectedDestination = (data) => {
     if (location.includes("manage")) {
-      navigate(`/manage/destinations/${placement}/${type}/${data._id}`);
+      navigate(
+        `/manage/destinations/${data.cityId.name}/${data.type}/${data._id}`
+      );
     } else {
-      navigate(`/destinations/${placement}/${type}/${data._id}`);
+      navigate(`/destinations/${data.cityId.name}/${data.type}/${data._id}`);
     }
 
     setContent(data);
@@ -237,7 +239,9 @@ export const DestinationProvider = ({ children }) => {
 
   const handleSaveActivityOnAdd = () => {
     const trimmedValue = currentActivity.trim();
-    let updatedActivities = [...content.activities];
+    let updatedActivities = Array.isArray(content.activities)
+      ? [...content.activities]
+      : [];
 
     if (trimmedValue === "") {
       if (editActivityIndex !== null) {
@@ -257,7 +261,6 @@ export const DestinationProvider = ({ children }) => {
     };
 
     setContent(updatedContent);
-    setContent(updatedContent); // << Cập nhật để không bị mất
     setEditMode(null);
     setEditActivityIndex(null);
     setCurrentActivity("");

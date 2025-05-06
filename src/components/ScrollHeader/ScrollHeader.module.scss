@@ -1,0 +1,28 @@
+.wrapper {
+    background-color: #202020;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    color: var(--primary);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    z-index: 100;
+
+    top .icon {
+        color: var(--primary);
+        font-size: 20px;
+    }
+}
+@media (max-width: 500px) {
+    .wrapper {
+        right: 30px;
+        bottom: 30px;
+        width: 40px;
+        height: 40px;
+    }
+}

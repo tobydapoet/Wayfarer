@@ -1,15 +1,17 @@
 import classNames from "classnames/bind";
-import styles from "./AboutUsContent.module.scss";
+import styles from "./AboutUsManage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import AboutContentItem from "../../../../components/AboutContentItem/AboutContentItem";
-import Member from "../../../../components/Member/Member";
-import Modal from "../../../../components/Modal";
+
 import { useState } from "react";
-import Input from "../../../../components/Input";
-import Button from "../../../../components/Button";
-import images from "../../../../assets/images";
+
 import { useNavigate } from "react-router-dom";
+import Button from "../../../components/Button";
+import Input from "../../../components/Input";
+import Modal from "../../../components/Modal";
+import Member from "../../../components/Member";
+import AboutContentItem from "../../../components/AboutContentItem";
+import images from "../../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -51,7 +53,7 @@ const MEMBERS = [
   },
 ];
 
-function AboutUsContent() {
+function AboutUsManage() {
   const [editMember, setEditMember] = useState(false);
   const [members, setmembers] = useState([...MEMBERS]);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -75,7 +77,7 @@ function AboutUsContent() {
     }
     return newErrors;
   };
-  console.log(errors)
+  console.log(errors);
 
   const navigate = useNavigate();
 
@@ -97,23 +99,23 @@ function AboutUsContent() {
       setErrors({ name: "Name cannot empty!", avatar: "Avatar cannot empty!" });
       return;
     }
-  
-    const newErrors = { ...errors }; 
-  
+
+    const newErrors = { ...errors };
+
     Object.entries(tempValueMember).forEach(([name, value]) => {
       const fieldErrors = validateInput(name, value);
       if (fieldErrors[name]) {
-        newErrors[name] = fieldErrors[name]; 
+        newErrors[name] = fieldErrors[name];
       } else {
         delete newErrors[name];
       }
     });
-  
+
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
       return;
     }
-  
+
     if (selectedMember) {
       setmembers((prevMembers) =>
         prevMembers.map((member) =>
@@ -123,10 +125,9 @@ function AboutUsContent() {
     } else {
       setmembers((prevMembers) => [...prevMembers, tempValueMember]);
     }
-  
+
     setEditMember(false);
   };
-  
 
   const handleMemberChange = (e) => {
     const { name, value } = e.target;
@@ -142,28 +143,33 @@ function AboutUsContent() {
   };
 
   const handleChangeImg = (e, type) => {
-    if (type !== "member") return; 
-  
+    if (type !== "member") return;
+
     if (!e.target.files || e.target.files.length === 0) {
-      setErrors((prevErrors) => ({ ...prevErrors, avatar: "Vui lòng chọn một ảnh!" }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        avatar: "Vui lòng chọn một ảnh!",
+      }));
       return;
     }
-  
+
     const file = e.target.files[0];
-  
+
     if (!file.type.startsWith("image/")) {
-      setErrors((prevErrors) => ({ ...prevErrors, avatar: "Tệp được chọn không phải là ảnh!" }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        avatar: "Tệp được chọn không phải là ảnh!",
+      }));
       return;
     }
-  
+
     const reader = new FileReader();
     reader.onloadend = () => {
-      setErrors((prevErrors) => ({ ...prevErrors, avatar: "" })); 
+      setErrors((prevErrors) => ({ ...prevErrors, avatar: "" }));
       setTempValueMember((prev) => ({ ...prev, avatar: reader.result }));
     };
     reader.readAsDataURL(file);
   };
-  
 
   return (
     <>
@@ -201,7 +207,7 @@ function AboutUsContent() {
           ))}
         </div>
       </div>
-      <Modal open={editMember} onClose={() => handleCancelMember} form> 
+      <Modal open={editMember} onClose={() => handleCancelMember} form>
         <div className={cx("edit-member-wrapper")}>
           <Input
             dark
@@ -218,7 +224,6 @@ function AboutUsContent() {
               name={tempValueMember?.avatar}
               onChange={(e) => handleChangeImg(e, "member")}
             />
-            
           </div>
           <img src={tempValueMember?.avatar || images.noImg} />
         </div>
@@ -236,4 +241,4 @@ function AboutUsContent() {
   );
 }
 
-export default AboutUsContent;
+export default AboutUsManage;

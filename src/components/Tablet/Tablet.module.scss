@@ -3,6 +3,7 @@
     padding: 4rem 6rem;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 .imgs-container {
@@ -27,9 +28,26 @@
         grid-auto-rows: 10px;
     }
 
-    .img-container {
-        margin-left: 100px;
+    .straight-render-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        gap: 10px;
+        img {
+            width: 450px;
+            object-fit: cover;
+            box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
+        }
+    }
 
+    .img-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
         .img {
             width: 450px;
             height: 600px;
@@ -172,10 +190,17 @@
         align-items: center;
     }
 
+    .author {
+        color: rgb(153, 153, 153);
+        font-family: var(--font-default);
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
     .title {
         font-size: 3rem;
         font-family: themify;
-        margin: 2rem 0;
+        margin-bottom: 2rem;
         font-weight: 300;
     }
 
@@ -186,6 +211,37 @@
         line-height: 1.6;
         font-family: var(--font-default);
         text-indent: 30px;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .show-more {
+        position: relative;
+        color: red;
+        font-family: themify;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 17px;
+        margin-top: 10px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px; /* khoảng cách giữa chữ và gạch */
+            width: 0%;
+            height: 2px;
+            background-color: red;
+            transition: width 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
     }
 }
 
@@ -226,13 +282,6 @@
                     height: 250px;
                     box-shadow: 5px 3px 3px 0px rgba(146, 146, 146, 2);
                 }
-            }
-            .img-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-left: 0;
-                overflow: visible;
             }
         }
     }
@@ -285,7 +334,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-left: 0;
                 overflow: visible;
             }
         }
@@ -299,7 +347,6 @@
                 font-size: 2rem;
                 font-family: themify;
                 margin: 0;
-                margin-top: 2rem;
                 font-weight: 300;
             }
         }

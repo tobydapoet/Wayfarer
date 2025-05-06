@@ -1,10 +1,11 @@
 import classNames from "classnames/bind";
 import styles from "./AboutUsEdit.module.scss";
 import { useState } from "react";
-import Input from "../../../../../components/Input";
-import Button from "../../../../../components/Button";
-import images from "../../../../../assets/images";
+
 import { useNavigate, useParams } from "react-router-dom";
+import Input from "../../../../components/Input";
+import Button from "../../../../components/Button";
+import images from "../../../../assets/images";
 
 const cx = classNames.bind(styles);
 

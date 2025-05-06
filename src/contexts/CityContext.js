@@ -34,6 +34,7 @@ export const CityProvider = ({ data, children }) => {
   const [errors, setErrors] = useState({});
   const [openEditForm, setOpenEditForm] = useState(false);
   const param = useParams();
+  console.log(city);
 
   useEffect(() => {
     setTempCity(city);

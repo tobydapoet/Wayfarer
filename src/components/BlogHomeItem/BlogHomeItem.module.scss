@@ -1,0 +1,39 @@
+.wrapper {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    width: 28vw;
+    height: 440px;
+    cursor: pointer;
+
+    img {
+        height: 60%;
+        width: 100%;
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    .txt-content {
+        background-color: var(--primary);
+        padding: 10px;
+        height: 150px;
+        position: relative;
+
+        .author {
+            color: rgb(153, 153, 153);
+            font-family: var(--font-default);
+            font-size: 17px;
+        }
+        .title {
+            font-family: var(--font-default);
+            margin-top: 10px;
+        }
+        .time {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgb(153, 153, 153);
+            font-family: var(--font-default);
+            font-size: 17px;
+        }
+    }
+}

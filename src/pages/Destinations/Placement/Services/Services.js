@@ -65,7 +65,7 @@ function Services() {
         />
       </div>
       {data
-        .filter((item) => item.city?.name === placement)
+        .filter((item) => item.cityId?.name === placement)
         .map((destination) => (
           <PlacementItem
             key={destination._id}

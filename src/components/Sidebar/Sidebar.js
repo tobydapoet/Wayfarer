@@ -1,15 +1,16 @@
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import {
   faCircleInfo,
   faClock,
   faGift,
-  faHandshake,
+  faGripHorizontal,
   faHeart,
   faLocation,
+  faMessage,
   faMoneyBills,
   faNewspaper,
   faPen,
@@ -126,7 +127,7 @@ function Sidebar({ profile, management, dark }) {
                 className={(nav) => cx("busniness", { active: nav.isActive })}
               >
                 {isMobile ? (
-                  <FontAwesomeIcon icon={faCircleInfo} />
+                  <FontAwesomeIcon icon={faGripHorizontal} />
                 ) : (
                   "Business"
                 )}
@@ -146,14 +147,27 @@ function Sidebar({ profile, management, dark }) {
                 )}
               </NavLink>
             </div>
-            <div className={cx("content-container")}>
+            <div className={cx("blog-container")}>
               <NavLink
-                to={`content`}
-                className={(nav) => cx("content", { active: nav.isActive })}
+                to={`blog_content`}
+                className={(nav) => cx("blog", { active: nav.isActive })}
               >
-                {isMobile ? <FontAwesomeIcon icon={faNewspaper} /> : "Contents"}
+                {isMobile ? <FontAwesomeIcon icon={faNewspaper} /> : "Blogs"}
               </NavLink>
             </div>
+            <div className={cx("aboutus-container")}>
+              <NavLink
+                to={`about_us_content`}
+                className={(nav) => cx("about", { active: nav.isActive })}
+              >
+                {isMobile ? (
+                  <FontAwesomeIcon icon={faCircleInfo} />
+                ) : (
+                  "About us"
+                )}
+              </NavLink>
+            </div>
+
             <div className={cx("contact-container")}>
               <NavLink
                 to={`contact_manage`}
@@ -161,7 +175,7 @@ function Sidebar({ profile, management, dark }) {
                   cx("contactmanage", { active: nav.isActive })
                 }
               >
-                {isMobile ? <FontAwesomeIcon icon={faHandshake} /> : "Contacts"}
+                {isMobile ? <FontAwesomeIcon icon={faMessage} /> : "Contacts"}
               </NavLink>
             </div>
             <div className={cx("billsmanage-container")}>

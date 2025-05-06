@@ -1,17 +1,14 @@
 import classNames from "classnames/bind";
-import styles from "./BlogContent.module.scss";
-import SearchBar from "../../../../components/SearchBar";
-import BlogManageItem from "../../../../components/BlogManageItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import styles from "./BlogManage.module.scss";
+import SearchBar from "../../../components/SearchBar";
+import BlogManageItem from "../../../components/BlogManageItem";
 import { useContext } from "react";
-import { BlogContext } from "../../../../contexts/BlogContext";
-import BlogPopper from "../../../../components/BlogPopper/BlogPopper";
+import { BlogContext } from "../../../contexts/BlogContext";
+import BlogPopper from "../../../components/BlogPopper/BlogPopper";
 
 const cx = classNames.bind(styles);
 
-function BlogContent() {
+function BlogManage() {
   const {
     allBlogData,
     handleSelectedBlog,
@@ -49,4 +46,4 @@ function BlogContent() {
   );
 }
 
-export default BlogContent;
+export default BlogManage;

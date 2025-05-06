@@ -14,8 +14,6 @@
     height: calc(100vh - 70px);
     margin: 0 2rem 0 2rem;
 }
-.page-header {
-}
 
 .brand {
     padding: 9rem 0 0 4rem;
@@ -60,12 +58,6 @@
     justify-content: center;
 }
 
-.booking {
-}
-
-.review {
-}
-
 .affiliate {
     display: flex;
     gap: 30px;
@@ -80,9 +72,37 @@
     }
 }
 
+.main-info {
+    .city {
+        // display: flex;
+        width: 80vw;
+        margin: 0 auto;
+        // overflow-x: auto;
+        // scrollbar-width: none;
+    }
+
+    .new-blog-container {
+        display: flex;
+        width: 80vw;
+        flex-direction: column;
+        margin: 0 auto;
+        gap: 20px;
+        margin-bottom: 50px;
+    }
+
+    .new-blog-txt {
+        font-family: themify;
+        font-size: 40px;
+    }
+
+    .blog-row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+}
 @media (max-width: 800px) {
     .page-header {
-        
         .content {
             .brand {
                 padding: 9rem 0 0 0rem;

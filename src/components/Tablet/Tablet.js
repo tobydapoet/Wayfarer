@@ -1,68 +1,82 @@
 import classNames from "classnames/bind";
 import styles from "./Tablet.module.scss";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Pin from "./Pin";
 
 const cx = classNames.bind(styles);
 
-function Tablet({ data }) {
-  const images = data.images || [];
-  const singleImg = data.image || "";
-  const title = data.title || "";
-  const describe = data.describe || "";
+function Tablet({ image, title, content, showMore, author }) {
+  const [textContent, setTextContent] = useState("");
+  const [displayImages, setDisplayImages] = useState([]);
+
+  useEffect(() => {
+    if (content) {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = content;
+
+      // Lấy ảnh từ content
+      const imgElements = tempDiv.querySelectorAll("img");
+      const contentImages = Array.from(imgElements).map((img) => img.src);
+
+      // Gỡ ảnh khỏi text
+      imgElements.forEach((img) => img.remove());
+      setTextContent(tempDiv.innerText);
+
+      // Ưu tiên ảnh từ content
+      if (contentImages.length > 0) {
+        setDisplayImages(contentImages);
+      } else if (image) {
+        setDisplayImages([image]); // dùng ảnh truyền từ props
+      }
+    } else if (image) {
+      setDisplayImages([image]);
+    }
+  }, [content, image]);
+
   return (
     <div className={cx("wrapper")}>
-      {images.length > 0 || singleImg ? (
+      {displayImages.length > 0 && (
         <div className={cx("imgs-container")}>
           <div className={cx("imgs")}>
-            {images.length > 0 ? (
-              images.length <= 2 ? (
-                <>
-                  {images.length === 1 ? (
-                    <div className={cx("img-container")}>
-                      <img src={images[0]} className={cx("img")} alt="img" />
-                    </div>
-                  ) : (
-                    <>
-                      <div className={cx("vertical-img-container")}>
-                        <img
-                          src={images[0]}
-                          className={cx("vertical-img")}
-                          alt="img"
-                        />
-                      </div>
-                      <div className={cx("horizontal-img-container")}>
-                        <img
-                          src={images[1]}
-                          className={cx("horizontal-img")}
-                          alt="img"
-                        />
-                      </div>
-                    </>
-                  )}
-                </>
-              ) : (
-                <div className={cx("pin-container")}>
-                  {images.map((image, index) => (
-                    <Pin key={index} imgSrc={image} type="piece" />
-                  ))}
-                </div>
-              )
-            ) : (
+            {displayImages.length === 1 ? (
               <div className={cx("img-container")}>
-                <img src={singleImg} className={cx("img")} alt="img" />
+                <img src={displayImages[0]} className={cx("img")} alt="img" />
+              </div>
+            ) : displayImages.length > 9 ? (
+              <div className={cx("pin-container")}>
+                {displayImages.map((img, index) => (
+                  <Pin key={index} imgSrc={img} type="piece" />
+                ))}
+              </div>
+            ) : (
+              <div className={cx("straight-render-container")}>
+                {displayImages.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    className={cx("img")}
+                    alt={`img-${index}`}
+                  />
+                ))}
               </div>
             )}
           </div>
         </div>
-      ) : null}
+      )}
+
       <div
-        className={cx("content", {
-          "full-width": images.length === 0 && !singleImg,
-        })}
+        className={cx("content", { "full-width": displayImages.length === 0 })}
       >
-        {title && <div className={cx("title")}> {title} </div>}
-        {describe && <div className={cx("describe")}> {describe} </div>}
+        {author && <div className={cx("author")}>{author}</div>}
+        {title && <div className={cx("title")}>{title}</div>}
+        {textContent && (
+          <>
+            <div className={cx("describe")}>{textContent}</div>
+            <div className={cx("show-more")} onClick={showMore}>
+              Show more
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

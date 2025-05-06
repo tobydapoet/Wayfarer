@@ -11,24 +11,20 @@ import Business from "../pages/Manage/Business";
 import Staffs from "../pages/Manage/Business/Staffs";
 import Dashboard from "../pages/Manage/Business/Dashboard";
 import Clients from "../pages/Manage/Business/Clients";
-import Content from "../pages/Manage/Content";
-import HomeContent from "../pages/Manage/Content/HomeContent";
 import DestinationsManage from "../pages/Manage/DestinationsManage";
-import AboutUsContent from "../pages/Manage/Content/AboutUsContent";
-import BlogContent from "../pages/Manage/Content/BlogContent";
 import ProfileLayout from "../layouts/ProfileLayout";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
-import HomeContentInfo from "../pages/Manage/Content/HomeContent/HomeContentInfo/HomeContentInfo";
 import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
 import ServicesManage from "../pages/Manage/DestinationsManage/ServicesManage";
 import ServiceIntroduce from "../pages/Manage/DestinationsManage/ServicesManage/ServiceIntroduce/ServiceIntroduce";
 import PlacementInfo from "../pages/Destinations/PlacementInfo";
 import Services from "../pages/Destinations/Placement/Services";
 import Bill from "../pages/Bill";
+import BlogManage from "../pages/Manage/BlogManage";
 import BillsManage from "../pages/Manage/BillsManage";
 import BillEdit from "../pages/Manage/BillsManage/BillEdit";
 import ClientAdd from "../pages/Manage/Business/Clients/ClientAdd";
-import AboutUsEdit from "../pages/Manage/Content/AboutUsContent/AboutUsEdit/AboutUsEdit";
+import AboutUsEdit from "../pages/Manage/AboutUsManage/AboutUsEdit/AboutUsEdit";
 import ContactManage from "../pages/Manage/ContactManage";
 import BlogInfo from "../pages/Blogs/BlogInfo";
 import StaffLayout from "../pages/Manage/Business/Staffs/StaffWrapper";
@@ -38,9 +34,15 @@ import { BlogProvider } from "../contexts/BlogContext";
 import { DestinationProvider } from "../contexts/DestinationContext";
 import { ContactProvicer } from "../contexts/ContactContext";
 import ContactInfo from "../pages/Manage/ContactManage/ContactInfo/ContactInfo";
+import AboutUsManage from "../pages/Manage/AboutUsManage";
 
 const publicRoutes = [
-  { path: "/", component: Home, topic: "HOME", navbar: "trans" },
+  {
+    path: "/",
+    component: Home,
+    context: [BlogProvider, CityProvider, DestinationProvider],
+    topic: "HOME",
+  },
   {
     path: "/destinations",
     component: DESTINATIONS,
@@ -163,39 +165,20 @@ const privateRoutes = [
       },
 
       {
-        path: "content",
-        component: Content,
+        path: "/manage/about_us_content",
+        component: AboutUsManage,
         layout: null,
-        children: [
-          {
-            path: "home_content",
-            component: HomeContent,
-            default: true,
-            layout: null,
-          },
-          { path: "about_us_content", component: AboutUsContent, layout: null },
-          {
-            path: "/manage/content/about_us_content/:title",
-            component: AboutUsEdit,
-            layout: null,
-          },
-          {
-            path: "blog_content",
-            component: BlogContent,
-            context: BlogProvider,
-            layout: null,
-          },
-          {
-            path: "/manage/content/home_content/:info",
-            component: HomeContentInfo,
-            layout: null,
-          },
-          {
-            path: "/manage/content/home_content/Add_Content",
-            component: HomeContentInfo,
-            layout: null,
-          },
-        ],
+      },
+      {
+        path: "/manage/about_us_content/:title",
+        component: AboutUsEdit,
+        layout: null,
+      },
+      {
+        path: "blog_content",
+        component: BlogManage,
+        context: BlogProvider,
+        layout: null,
       },
 
       {
@@ -218,12 +201,12 @@ const privateRoutes = [
         layout: null,
       },
       {
-        path: "/manage/content/blog_content/add_content",
+        path: "/manage/blog_content/add_content",
         component: BlogAddWraper,
         layout: null,
       },
       {
-        path: "/manage/content/blog_content/:id",
+        path: "/manage/blog_content/:id",
         component: BlogInfo,
         context: BlogProvider,
         layout: null,

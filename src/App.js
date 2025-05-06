@@ -10,6 +10,7 @@ import ProfileLayout from "./layouts/ProfileLayout";
 import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from "./utils/SrollToTop";
 
 const getRandomColor = () => {
   const hue = Math.floor(Math.random() * 360);
@@ -32,15 +33,17 @@ const renderRoutes = (routes) =>
         : route.layout === null
         ? Fragment
         : MainLayout;
-    const Context = route.context;
+    // const Context = route.context;
 
-    const Element = Context ? (
-      <Context>
-        <Page />
-      </Context>
-    ) : (
-      <Page />
-    );
+    const contexts = Array.isArray(route.context)
+      ? route.context
+      : route.context
+      ? [route.context]
+      : [];
+
+    const Element = contexts.reduceRight((children, Context) => {
+      return <Context>{children}</Context>;
+    }, <Page />);
 
     return (
       <Route
@@ -72,7 +75,9 @@ function App() {
   return (
     <>
       <ToastContainer position="top-center" autoClose={3000} />
+
       <Router>
+        <ScrollToTop />
         <div className="App">
           <Routes>{renderRoutes(routesToRender)}</Routes>
         </div>
