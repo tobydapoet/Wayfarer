@@ -35,6 +35,8 @@ import { DestinationProvider } from "../contexts/DestinationContext";
 import { ContactProvicer } from "../contexts/ContactContext";
 import ContactInfo from "../pages/Manage/ContactManage/ContactInfo/ContactInfo";
 import AboutUsManage from "../pages/Manage/AboutUsManage";
+import { AboutUsContext, AboutUsProvider } from "../contexts/AboutUsContext";
+import { StaffProvider } from "../contexts/StaffContext";
 
 const publicRoutes = [
   {
@@ -49,7 +51,12 @@ const publicRoutes = [
     context: CityProvider,
     topic: "DESTINATIONS",
   },
-  { path: "/about", component: About, topic: "ABOUT US" },
+  {
+    path: "/about",
+    component: About,
+    context: [AboutUsProvider, StaffProvider],
+    topic: "ABOUT US",
+  },
   { path: "/blogs", component: Blogs, context: BlogProvider, topic: "BLOG" },
   { path: "/bill", component: Bill },
   {
@@ -140,7 +147,7 @@ const privateRoutes = [
       {
         path: "destinations",
         component: DestinationsManage,
-        context: CityProvider,
+        context: [CityProvider, DestinationProvider],
         layout: null,
       },
       {
@@ -167,11 +174,19 @@ const privateRoutes = [
       {
         path: "/manage/about_us_content",
         component: AboutUsManage,
+        context: AboutUsProvider,
         layout: null,
       },
       {
-        path: "/manage/about_us_content/:title",
+        path: "/manage/about_us_content/add_content",
         component: AboutUsEdit,
+        context: AboutUsProvider,
+        layout: null,
+      },
+      {
+        path: "/manage/about_us_content/:id",
+        component: AboutUsEdit,
+        context: AboutUsProvider,
         layout: null,
       },
       {

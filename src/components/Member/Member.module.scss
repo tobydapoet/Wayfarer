@@ -1,5 +1,4 @@
 .wrapper {
-    box-shadow: 1px 1px 2px 1px rgba(209, 204, 204, 0.75);
     padding: 17px;
     border-radius: 16px;
     display: flex;
@@ -19,8 +18,8 @@
     div {
         height: 50px;
         margin-top: 20px;
-        font-size: 17px;
-        font-family: var(--font-default);
+        font-size: 19px;
+        font-family: themify;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -35,7 +34,7 @@
         cursor: pointer;
     }
 }
-@media(max-width:800px) {
+@media (max-width: 800px) {
     .wrapper {
         width: 100px;
         img {

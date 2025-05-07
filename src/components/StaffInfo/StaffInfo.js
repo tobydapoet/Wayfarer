@@ -79,6 +79,24 @@ function StaffInfo() {
             error={staffErrors.email}
           />
         </div>
+        <div className={cx("position")}>
+          <div className={cx("position-txt")}>Position</div>
+          {staffData.position !== "super admin" ? (
+            <select
+              className={cx("position-select")}
+              value={staffTempData.position}
+              name="position"
+              onChange={handleChangeStaffInput}
+            >
+              <option value="staff">staff</option>
+              <option value="admin">manager</option>
+            </select>
+          ) : (
+            <>
+              <div className={cx("CEO")}>CEO</div>
+            </>
+          )}
+        </div>
         <div className={cx("password")}>
           <Input
             dark

@@ -13,7 +13,16 @@ import { useState } from "react";
 import Notice from "../Notice";
 
 const cx = classNames.bind(styles);
-function Locations({ data: location, manage, client, onEdit, onDelete }) {
+function Locations({
+  data: location,
+  manage,
+  client,
+  onEdit,
+  onDelete,
+  tripsCount,
+  hotelsCount,
+  transportsCount,
+}) {
   const [deleteNotice, setDeleteNotice] = useState(false);
 
   const navigate = useNavigate();
@@ -21,6 +30,7 @@ function Locations({ data: location, manage, client, onEdit, onDelete }) {
   const handleRowClick = () => {
     navigate(`${location.name}`);
   };
+
   return (
     <div className={cx("wrapper", { manage })}>
       <img className={cx("img")} src={location.image} />
@@ -29,24 +39,19 @@ function Locations({ data: location, manage, client, onEdit, onDelete }) {
           <div className={cx("name", { manage })}>{location.name}</div>
         </div>
         <div className={cx("info")}>
-          {location.trips && (
-            <div className={cx("trips-container")}>
-              <FontAwesomeIcon icon={faLocationDot} />
-              <div> {location.trips}</div>
-            </div>
-          )}
-          {location.hotel && (
-            <div className={cx("hotel-container")}>
-              <FontAwesomeIcon icon={faBed} />
-              <div> {location.hotel}</div>
-            </div>
-          )}
-          {location.transport && (
-            <div className={cx("transport-container")}>
-              <FontAwesomeIcon icon={faCar} />
-              <div> {location.transport}</div>
-            </div>
-          )}
+          <div className={cx("trips-container")}>
+            <FontAwesomeIcon icon={faLocationDot} />
+            <div> {tripsCount}</div>
+          </div>
+
+          <div className={cx("hotel-container")}>
+            <FontAwesomeIcon icon={faBed} />
+            <div> {hotelsCount}</div>
+          </div>
+          <div className={cx("transport-container")}>
+            <FontAwesomeIcon icon={faCar} />
+            <div> {transportsCount}</div>
+          </div>
         </div>
       </div>
       {client && (

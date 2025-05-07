@@ -17,7 +17,7 @@ const cx = classNames.bind(styles);
 function Home() {
   const { allDestinations, handleSelectedDestination } =
     useContext(DestinationContext);
-  const { allBlogData, handleSelectedBlog } = useContext(BlogContext);
+  const { allBlogData } = useContext(BlogContext);
   const { allCities } = useContext(CityContext);
   const navigate = useNavigate();
 
@@ -79,13 +79,6 @@ function Home() {
           })}
         </div>
         <div className={cx("city")}>
-          {/* {allCities.map((city) => (
-            <CityItem
-              key={city._id}
-              data={city}
-              onClick={() => navigate(`/destinations/${city.name}`)}
-            />
-          ))} */}
           <Slider {...settings}>
             {allCities.map((city) => (
               <CityItem

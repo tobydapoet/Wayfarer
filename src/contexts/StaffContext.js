@@ -289,6 +289,13 @@ export const StaffProvider = ({ children, data }) => {
     }
   };
 
+  // const handleSetAdmin = (staff) => {
+  //   const res = axios.put(`http://localhost:3000/staffs/${staff._id}`);
+  //   if(res.data.succes){
+
+  //   }
+  // };
+
   return (
     <StaffContext.Provider
       value={{

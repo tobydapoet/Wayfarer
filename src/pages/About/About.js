@@ -1,35 +1,16 @@
 import classNames from "classnames/bind";
-import Tablet from "../../components/Tablet";
 import styles from "./About.module.scss";
-import Chart from "../../components/Chart/Chart";
-import { useEffect, useState } from "react";
-import RowFormat from "../../components/RowFormat/RowFormat";
+import { useContext, useEffect, useState } from "react";
+import RowFormat from "../../components/BlogFormat/BlogFormat";
 import Member from "../../components/Member/Member";
+import { AboutUsContext } from "../../contexts/AboutUsContext";
+import { StaffContext } from "../../contexts/StaffContext";
 
 const cx = classNames.bind(styles);
 
 function About() {
-  const CONTENTS = [
-    {
-      title: "WE HAVE THE BEST TOURS",
-      describe:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer elementum orci eu vehicula pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula. Phasellus euismod gravida eros. Aenean nec ipsum aliquet, pharetra magna id, interdum sapien. Etiam id lorem eu nisl pellentesque semper. Nullam tincidunt metus placerat, suscipit leo ut, tempus nulla. Fusce at eleifend tellus. Ut eleifend dui nunc, non fermentum quam placerat non. Etiam venenatis nibh augue, sed eleifend justo tristique eu",
-      image:
-        "https://img.freepik.com/free-vector/night-landscape-with-lake-mountains-trees-coast-vector-cartoon-illustration-nature-scene-with-coniferous-forest-river-shore-rocks-moon-stars-dark-sky_107791-8253.jpg",
-    },
-    {
-      title: "WE HAVE THE BEST TOURS",
-      describe:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer elementum orci eu vehicula pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula. Phasellus euismod gravida eros. Aenean nec ipsum aliquet, pharetra magna id, interdum sapien. Etiam id lorem eu nisl pellentesque semper. Nullam tincidunt metus placerat, suscipit leo ut, tempus nulla. Fusce at eleifend tellus. Ut eleifend dui nunc, non fermentum quam placerat non. Etiam venenatis nibh augue, sed eleifend justo tristique eu",
-      image:
-        "https://www.incredibleasiajourneys.com/uploads/galleries/vietnam-travel-guide-map-QoZ7.jpg",
-    },
-    {
-      title: "YOU WANT TO JOIN OUR TEAM?",
-      describe:
-        "If you are interested in joining our team. Please e-mail yourr CV to us. We'll will add you to ourr database and contact you should vacancies arise.",
-    },
-  ];
+  const { allContent } = useContext(AboutUsContext);
+  const { allStaffsData } = useContext(StaffContext);
   const MEMBERS = [
     {
       name: "Nguyen Tung",
@@ -55,12 +36,12 @@ function About() {
 
   return (
     <div className={cx("wrapper")}>
-      {CONTENTS.map((content, index) => (
-        <div className={cx("container")} key={index}>
+      {allContent.map((content) => (
+        <div className={cx("container")} key={content._id}>
           {!content.image ||
           content.image.length === 0 ||
-          size[index]?.height > size[index]?.width ? (
-            <Tablet data={content} />
+          size[content._id]?.height > size[content._id]?.width ? (
+            <RowFormat data={content} vertical />
           ) : (
             <RowFormat data={content} />
           )}
@@ -68,18 +49,28 @@ function About() {
             <img
               src={content.image}
               alt="hidden"
-              onLoad={(e) => handleImgLoad(e, index)}
+              onLoad={(e) => handleImgLoad(e, content._id)}
               style={{ display: "none" }}
             />
           )}
         </div>
       ))}
       <div className={cx("members-wrapper")}>
-        <div className={cx("members-title")}>Our team</div>
+        <div className={cx("members-ceo")}>CEO</div>
         <div className={cx("members-container")}>
-          {MEMBERS.map((member, index) => (
-            <Member data={member} key={index} />
-          ))}
+          {allStaffsData
+            .filter((members) => members.position === "super admin")
+            .map((member, index) => (
+              <Member data={member} key={index} />
+            ))}
+        </div>
+        <div className={cx("members-manager")}>Our team</div>
+        <div className={cx("members-container")}>
+          {allStaffsData
+            .filter((members) => members.position === "admin")
+            .map((member, index) => (
+              <Member data={member} key={index} />
+            ))}
         </div>
       </div>
     </div>

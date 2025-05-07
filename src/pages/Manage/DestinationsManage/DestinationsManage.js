@@ -8,6 +8,7 @@ import Locations from "../../../components/Locations";
 import { useContext, useEffect, useState } from "react";
 import EditDestinationManage from "../../../components/EditDestinationManage/EditDestinationManage";
 import { CityContext, CityProvider } from "../../../contexts/CityContext";
+import { DestinationContext } from "../../../contexts/DestinationContext";
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +23,10 @@ function DestinationsManage() {
     handleDeleteCity,
   } = useContext(CityContext);
 
+  const { counts } = useContext(DestinationContext);
+
   const navigate = useNavigate();
+  console.log(counts);
 
   return (
     <div className={cx("wrapper")}>
@@ -61,6 +65,9 @@ function DestinationsManage() {
               setOpenEditForm(true);
               setCity(selectedCity);
             }}
+            tripsCount={counts[selectedCity._id]?.trips || 0}
+            hotelsCount={counts[selectedCity._id]?.hotels || 0}
+            transportsCount={counts[selectedCity._id]?.transports || 0}
             onDelete={() => handleDeleteCity(selectedCity._id)}
           />
         ))}

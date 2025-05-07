@@ -7,7 +7,7 @@ import Notice from "../Notice/Notice";
 
 const cx = classNames.bind(styles);
 
-function AboutContentItem({ data, onClick }) {
+function AboutContentItem({ data, onClick, onDelete }) {
   const [isFlex, setIsFlex] = useState(false);
   const [deleteNotice, setDeleteNotice] = useState(false);
 
@@ -34,13 +34,20 @@ function AboutContentItem({ data, onClick }) {
             <div className={cx("title")}>{data.title}</div>
             <div className={cx("describe")}>{data.describe}</div>
           </div>
-          {data.image && <img src={data.image} onLoad={handleImgSize} />}
+          {data.image && (
+            <img
+              className={cx("img", { flex: isFlex })}
+              src={data.image}
+              onLoad={handleImgSize}
+            />
+          )}
         </div>
       </div>
       <Notice
         open={deleteNotice}
         onClose={() => setDeleteNotice(false)}
         content="Do you want to delete this content ?"
+        onConfirm={onDelete}
       />
     </>
   );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CityContext } from "./CityContext";
@@ -11,6 +11,7 @@ export const DestinationContext = createContext({
   editMode: {},
   currentActivity: {},
   searchResult: {},
+  counts: {},
   editActivityIndex: {},
   handleSearchTrips: () => {},
   handleSearchHotels: () => {},
@@ -38,11 +39,12 @@ export const DestinationProvider = ({ children }) => {
   const [originalContent, setOriginalContent] = useState({});
   const [editActivityIndex, setEditActivityIndex] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
+
   const { placement, type, id } = useParams();
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation().pathname;
-  const { getCityFromParam } = useContext(CityContext);
+  const { getCityFromParam, allCities } = useContext(CityContext);
 
   useEffect(() => {
     axios
@@ -90,6 +92,30 @@ export const DestinationProvider = ({ children }) => {
   useEffect(() => {
     setSearchResult([]);
   }, [type]);
+  console.log(allDestinations);
+
+  console.log("data2: ", allCities);
+  console.log("data: ", allDestinations);
+
+  const counts = useMemo(() => {
+    const newCounts = {};
+    allCities.forEach((city) => {
+      if (!city._id) return;
+
+      const cityDestinations = allDestinations.filter(
+        (d) => d.cityId && String(d.cityId._id) === String(city._id)
+      );
+
+      newCounts[city._id] = {
+        trips: cityDestinations.filter((d) => d.type === "trips").length,
+        hotels: cityDestinations.filter((d) => d.type === "hotels").length,
+        transports: cityDestinations.filter((d) => d.type === "transports")
+          .length,
+      };
+    });
+
+    return newCounts;
+  }, [allDestinations, allCities]);
 
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -172,7 +198,6 @@ export const DestinationProvider = ({ children }) => {
     if (index === undefined || index === null) {
       setEditMode("add-activity");
       setCurrentActivity("");
-      // setEditActivityIndex();
     } else {
       setEditMode("edit-activity");
       setEditActivityIndex(index);
@@ -428,6 +453,7 @@ export const DestinationProvider = ({ children }) => {
         editActivityIndex,
         currentActivity,
         searchResult,
+        counts,
         handleSearchTrips,
         handleSearchHotels,
         handleSearchTransports,

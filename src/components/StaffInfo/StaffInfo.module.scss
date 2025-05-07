@@ -66,9 +66,40 @@
 
     .main-detail {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(8, 1fr);
         column-gap: 50px;
         row-gap: 20px;
+
+        .name {
+            grid-column: span 3;
+        }
+
+        .email {
+            grid-column: span 3;
+            &.isReadOnly {
+                pointer-events: none;
+            }
+        }
+
+        .position {
+            grid-column: span 2;
+        }
+
+        .birth {
+            grid-column: span 4;
+        }
+
+        .phone-container {
+            grid-column: span 4;
+        }
+
+        .salary {
+            grid-column: span 4;
+        }
+
+        .password {
+            grid-column: span 4;
+        }
         .email {
             &.isReadOnly {
                 pointer-events: none;
@@ -103,11 +134,48 @@
             }
         }
 
+        .position {
+            width: 100%;
+            margin-bottom: 20px;
+            white-space: nowrap;
+
+            .position-txt {
+                color: rgb(99, 98, 98);
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 18px;
+            }
+
+            .position-select {
+                display: flex;
+                align-items: center;
+                border: none;
+                outline: none;
+                width: 100%;
+                font-family: var(--font-default);
+                font-size: 19px;
+                border-bottom: 2px solid rgb(166, 166, 166);
+                padding: 5px 5px;
+            }
+
+            .CEO {
+                display: flex;
+                align-items: center;
+                border: none;
+                outline: none;
+                width: 100%;
+                font-family: var(--font-default);
+                font-size: 19px;
+                border-bottom: 2px solid rgb(166, 166, 166);
+                padding: 6px 5px;
+            }
+        }
+
         .location-container {
-            grid-column: span 2;
+            grid-column: span 8;
         }
         .btn-container {
-            grid-column: span 2;
+            grid-column: span 8;
             width: 300px;
             gap: 10px;
             display: flex;
