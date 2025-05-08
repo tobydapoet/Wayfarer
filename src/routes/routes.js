@@ -37,6 +37,8 @@ import ContactInfo from "../pages/Manage/ContactManage/ContactInfo/ContactInfo";
 import AboutUsManage from "../pages/Manage/AboutUsManage";
 import { AboutUsContext, AboutUsProvider } from "../contexts/AboutUsContext";
 import { StaffProvider } from "../contexts/StaffContext";
+import VoucherManage from "../pages/Manage/VoucherManage";
+import { VoucherProvider } from "../contexts/VoucherContext";
 
 const publicRoutes = [
   {
@@ -213,6 +215,12 @@ const privateRoutes = [
       {
         path: "billsmanage",
         component: BillsManage,
+        layout: null,
+      },
+      {
+        path: "vouchermanage",
+        component: VoucherManage,
+        context: VoucherProvider,
         layout: null,
       },
       {

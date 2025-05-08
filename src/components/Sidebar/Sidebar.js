@@ -15,6 +15,7 @@ import {
   faNewspaper,
   faPen,
   faRightFromBracket,
+  faTicket,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccountContext } from "../../contexts/AccountContext";
 
@@ -184,6 +185,16 @@ function Sidebar({ profile, management, dark }) {
                 className={(nav) => cx("billsmanage", { active: nav.isActive })}
               >
                 {isMobile ? <FontAwesomeIcon icon={faMoneyBills} /> : "Bills"}
+              </NavLink>
+            </div>
+            <div className={cx("vouchermanage-container")}>
+              <NavLink
+                to={`vouchermanage`}
+                className={(nav) =>
+                  cx("vouchermanage", { active: nav.isActive })
+                }
+              >
+                {isMobile ? <FontAwesomeIcon icon={faTicket} /> : "Vouchers"}
               </NavLink>
             </div>
           </div>
