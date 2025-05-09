@@ -7,10 +7,16 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../components/Button";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Modal from "../../../components/Modal";
+import { UsageVoucherContext } from "../../../contexts/UsageVoucherContext";
+import VoucherItem from "../../../components/VoucherItem";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
 
 const getDaysinMounth = (year, month) => {
   const days = new Date(year, month + 1, 0).getDate();
@@ -24,6 +30,7 @@ function BonusPoint() {
   const dayToday = today.getDate();
   const dayRef = useRef();
   dayRef.current = dayToday;
+  const navigate = useNavigate();
   const days = getDaysinMounth(year, month);
 
   const [attendance, setAttendance] = useState({});
@@ -32,6 +39,9 @@ function BonusPoint() {
   const [loggedMilestones, setLoggedMilestones] = useState([]);
   const [rewardMessage, setRewardMessage] = useState("");
   const [limitation, setLimitaion] = useState([]);
+  const { allUsageVouchers } = useContext(UsageVoucherContext);
+  const [viewVoucherForm, setViewVoucherForm] = useState(false);
+  const [viewVoucher, setViewVoucher] = useState({});
 
   useEffect(() => {
     const newAttendance = {};
@@ -112,6 +122,7 @@ function BonusPoint() {
   //     [day]: "attended",
   //   }));
   // };
+  console.log(viewVoucher);
 
   const handleOpenNote = () => {
     setOpenNote(true);
@@ -152,21 +163,19 @@ function BonusPoint() {
         </button>
       </div>
       <div className={cx("voucher-wrapper")}>
-        {loggedMilestones.map((voucher, index) => (
-          <div key={index} className={cx("voucher-container")}>
-            <div class={cx("voucher-code")}>SAVE{voucher}DAYS</div>
-            <div class={cx("voucher-details")}>
-              Use this code to get {rewardText[voucher] || "a discount"} off on
-              your next purchase.
-            </div>
-            <div className={cx("voucher-footer")}>
-              Valid until:
-              {limitation.length > 0
-                ? `${limitation[index].month}-${limitation[index].day}-${limitation[index].year}`
-                : "N/A"}
-            </div>
-          </div>
-        ))}
+        {allUsageVouchers
+          .filter((usage) => usage.clientId._id === user._id)
+          .map((voucher) => (
+            <VoucherItem
+              data={voucher}
+              key={voucher._id}
+              minimal
+              onClick={() => {
+                setViewVoucher(voucher);
+                setViewVoucherForm(true);
+              }}
+            />
+          ))}
       </div>
       <Modal
         className={cx("note-container")}
@@ -194,6 +203,44 @@ function BonusPoint() {
         <Button large onClick={() => setOpenReward(false)}>
           OK
         </Button>
+      </Modal>
+      <Modal
+        form
+        open={viewVoucherForm}
+        onClose={() => setViewVoucherForm(false)}
+      >
+        <div className={cx("view-voucher-container")}>
+          <div className={cx("voucher-name")}>
+            {viewVoucher?.voucherId?.name}
+          </div>
+          <div className={cx("voucher-discount")}>
+            Discount: {viewVoucher?.voucherId?.discountValue}$
+          </div>
+          <div className={cx("voucher-minimum")}>
+            {" "}
+            Minimum: {viewVoucher?.voucherId?.minCost}$
+          </div>
+          <div className={cx("voucher-receive")}>
+            Expire:
+            {new Date(viewVoucher?.receivedAt).toLocaleString(undefined, {
+              dateStyle: "short",
+              timeStyle: "short",
+            })}
+          </div>
+          <div className={cx("voucher-expire")}>
+            Receive:
+            {new Date(viewVoucher?.expiredAt).toLocaleString(undefined, {
+              dateStyle: "short",
+              timeStyle: "short",
+            })}
+          </div>
+          <div className={cx("voucher-description")}>
+            {viewVoucher?.voucherId?.description}
+          </div>
+          <Button rounded onClick={() => navigate(`/destinations`)}>
+            Use now!
+          </Button>
+        </div>
       </Modal>
     </div>
   );

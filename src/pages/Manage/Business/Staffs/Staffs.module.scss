@@ -47,13 +47,13 @@
 }
 @media (max-width: 800px) {
     .wrapper {
-        display: 10px;
-
-        .location {
-            display: none;
-        }
-        .salary {
-            display: none;
+        table {
+            .location {
+                display: none;
+            }
+            .salary {
+                display: none;
+            }
         }
     }
 }

@@ -26,7 +26,14 @@ function Clients() {
           <SearchBar
             onSearch={handleSearchClient}
             results={searchResult}
-            renderResult={(client) => <ClientPopper data={client} />}
+            renderResult={(client) => (
+              <ClientPopper
+                data={client}
+                onClick={() =>
+                  navigate(`/manage/business/clients/${client.email}`)
+                }
+              />
+            )}
           />
         </div>
         <div

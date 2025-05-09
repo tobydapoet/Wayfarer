@@ -189,9 +189,9 @@ function Sidebar({ profile, management, dark }) {
             </div>
             <div className={cx("vouchermanage-container")}>
               <NavLink
-                to={`vouchermanage`}
+                to={`vouchers_manage`}
                 className={(nav) =>
-                  cx("vouchermanage", { active: nav.isActive })
+                  cx("vouchers_manage", { active: nav.isActive })
                 }
               >
                 {isMobile ? <FontAwesomeIcon icon={faTicket} /> : "Vouchers"}

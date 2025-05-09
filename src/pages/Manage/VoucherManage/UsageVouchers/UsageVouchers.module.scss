@@ -1,0 +1,100 @@
+.wrapper {
+    padding: 20px;
+    thead {
+        display: table-header-group;
+    }
+    th {
+        padding: 15px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .header {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+
+        .search-container {
+            width: 300px;
+        }
+        .ffc-area {
+            display: flex;
+            gap: 5px;
+        }
+
+        .add,
+        .delete {
+            height: 25px;
+            width: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+            font-family: var(--font-default);
+            transition: border-color 0.3s ease;
+
+            &:hover {
+                border-color: rgba(22, 24, 35, 0.6);
+            }
+        }
+
+        .delete {
+            &.isNoData {
+                pointer-events: none;
+                color: #aaa;
+                background-color: #f0f0f0;
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.list-client {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+
+    .client-item {
+        background-color: #202020;
+        color: var(--primary);
+        padding: 5px 10px;
+        border-radius: 16px;
+        display: flex;
+        font-size: 15px;
+        font-family: var(--font-default);
+        width: fit-content;
+    }
+}
+
+.voucher-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 400px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.voucher-name {
+    font-family: var(--font-default);
+    margin-bottom: 5px;
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        display: block;
+        .received,
+        .expired {
+            display: none;
+            background-color: red;
+        }
+    }
+    th {
+        font-size: 14px;
+    }
+}

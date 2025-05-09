@@ -39,6 +39,11 @@ import { AboutUsContext, AboutUsProvider } from "../contexts/AboutUsContext";
 import { StaffProvider } from "../contexts/StaffContext";
 import VoucherManage from "../pages/Manage/VoucherManage";
 import { VoucherProvider } from "../contexts/VoucherContext";
+import Vouchers from "../pages/Manage/VoucherManage/Vouchers/Vouchers";
+import UsageVouchers from "../pages/Manage/VoucherManage/UsageVouchers/UsageVouchers";
+import { UsageVoucherProvider } from "../contexts/UsageVoucherContext";
+import { ClientProvider } from "../contexts/ClientContext";
+import BonusPoint from "../pages/SelectedPage/BonusPoint/BonusPoint";
 
 const publicRoutes = [
   {
@@ -100,6 +105,12 @@ const publicRoutes = [
     path: ":email/my_blogs/:id",
     component: BlogInfo,
     context: BlogProvider,
+    layout: ProfileLayout,
+  },
+  {
+    path: ":email/bonus",
+    component: BonusPoint,
+    context: [UsageVoucherProvider],
     layout: ProfileLayout,
   },
 ];
@@ -218,10 +229,14 @@ const privateRoutes = [
         layout: null,
       },
       {
-        path: "vouchermanage",
+        path: "vouchers_manage",
         component: VoucherManage,
-        context: VoucherProvider,
+        context: [VoucherProvider, UsageVoucherProvider, ClientProvider],
         layout: null,
+        children: [
+          { path: "usage_vouchers", component: UsageVouchers, layout: null },
+          { path: "vouchers", component: Vouchers, layout: null },
+        ],
       },
       {
         path: "/manage/blog_content/add_content",

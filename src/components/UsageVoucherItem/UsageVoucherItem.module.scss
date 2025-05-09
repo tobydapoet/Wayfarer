@@ -1,0 +1,81 @@
+.wrapper {
+    width: calc(100% - 40px);
+    &:hover {
+        background-color: #3535350e;
+    }
+    font-size: 14px;
+}
+
+td {
+    padding: 10px 15px;
+    width: 100;
+    white-space: nowrap;
+}
+
+table {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+}
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 130px;
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.voucher,
+.received,
+.expired,
+.used {
+    text-align: center;
+}
+
+.delete {
+    width: 40px;
+    text-align: center;
+    padding: 5px;
+
+    .delete-icon {
+        padding: 10px;
+        border-radius: 10px;
+        &:hover {
+            background-color: #202020;
+            color: white;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        font-size: 11px;
+        .info {
+            width: 80px;
+
+            .img {
+                height: 40px;
+                img {
+                    display: none;
+                }
+            }
+            .name {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                margin: auto 0;
+            }
+        }
+
+        .received,
+        .expired {
+            display: none;
+        }
+    }
+}
