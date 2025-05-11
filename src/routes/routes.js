@@ -42,6 +42,8 @@ import UsageVouchers from "../pages/Manage/VoucherManage/UsageVouchers/UsageVouc
 import { UsageVoucherProvider } from "../contexts/UsageVoucherContext";
 import { ClientProvider } from "../contexts/ClientContext";
 import BonusPoint from "../pages/SelectedPage/BonusPoint/BonusPoint";
+import PayTypeManage from "../pages/Manage/PayTypeManage/PayTypeManage";
+import { PayTypeProvider } from "../contexts/PayTypeContext";
 
 const publicRoutes = [
   {
@@ -228,6 +230,12 @@ const privateRoutes = [
           { path: "usage_vouchers", component: UsageVouchers, layout: null },
           { path: "vouchers", component: Vouchers, layout: null },
         ],
+      },
+      {
+        path: "paytypes_manage",
+        component: PayTypeManage,
+        context: PayTypeProvider,
+        layout: null,
       },
       {
         path: "/manage/blog_content/add_content",

@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import {
   faCircleInfo,
   faClock,
+  faCreditCard,
   faGift,
   faGripHorizontal,
   faHeart,
@@ -195,6 +196,20 @@ function Sidebar({ profile, management, dark }) {
                 }
               >
                 {isMobile ? <FontAwesomeIcon icon={faTicket} /> : "Vouchers"}
+              </NavLink>
+            </div>
+            <div className={cx("paytypemanage-container")}>
+              <NavLink
+                to={`paytypes_manage`}
+                className={(nav) =>
+                  cx("paytypes_manage", { active: nav.isActive })
+                }
+              >
+                {isMobile ? (
+                  <FontAwesomeIcon icon={faCreditCard} />
+                ) : (
+                  "Payment method"
+                )}
               </NavLink>
             </div>
           </div>

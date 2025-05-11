@@ -13,7 +13,6 @@ export const AboutUsContext = createContext({
   handleCreateContent: () => {},
   handleChangeImg: () => {},
   handleContentChange: () => {},
-  handleSaveContent: () => {},
   handleImgLoad: () => {},
 });
 
@@ -66,6 +65,10 @@ export const AboutUsProvider = ({ children }) => {
           newErrors.describe = "Describe cannot empty!";
         }
         break;
+      case "image":
+        if (!value) {
+          newErrors.image = "Please selecte image!";
+        }
     }
     return newErrors;
   };
@@ -109,24 +112,6 @@ export const AboutUsProvider = ({ children }) => {
     };
     reader.readAsDataURL(file);
   };
-
-  const handleSaveContent = () => {
-    const newErrors = {};
-
-    Object.entries(content).forEach(([name, value]) => {
-      const fieldErrors = validateInput(name, value);
-      newErrors[name] = fieldErrors[name];
-    });
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-      return;
-    }
-
-    setContent({ ...content });
-  };
-  console.log(errors);
 
   const handleCreateContent = async () => {
     let newErrors = {};
@@ -208,7 +193,6 @@ export const AboutUsProvider = ({ children }) => {
         handleChangeImg,
         handleContentChange,
         handleImgLoad,
-        handleSaveContent,
       }}
     >
       {children}

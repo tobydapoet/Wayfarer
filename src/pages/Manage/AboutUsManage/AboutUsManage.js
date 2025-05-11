@@ -3,7 +3,7 @@ import styles from "./AboutUsManage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 import AboutContentItem from "../../../components/AboutContentItem";

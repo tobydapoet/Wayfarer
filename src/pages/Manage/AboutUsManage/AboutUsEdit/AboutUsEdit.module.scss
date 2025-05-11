@@ -70,4 +70,13 @@
         width: 600px;
         margin: 0 auto;
     }
+    .error-text-image {
+        color: rgb(253, 77, 77);
+        font-size: 13px;
+        display: flex;
+        margin-top: 5px;
+        font-weight: 500;
+        font-family: var(--font-default);
+        justify-content: center;
+    }
 }

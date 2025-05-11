@@ -11,18 +11,6 @@ const cx = classNames.bind(styles);
 function About() {
   const { allContent } = useContext(AboutUsContext);
   const { allStaffsData } = useContext(StaffContext);
-  const MEMBERS = [
-    {
-      name: "Nguyen Tung",
-      avatar:
-        "https://www.incredibleasiajourneys.com/uploads/galleries/vietnam-travel-guide-map-QoZ7.jpg",
-    },
-    {
-      name: "Nguyen Viet Tung 124e1242343",
-      avatar:
-        "https://www.incredibleasiajourneys.com/uploads/galleries/vietnam-travel-guide-map-QoZ7.jpg",
-    },
-  ];
 
   const [size, setSize] = useState({ width: 0, height: 0 });
 

@@ -43,6 +43,9 @@ function AboutUsEdit() {
             onLoad={(e) => handleImgLoad(e)}
           />
         </div>
+        {errors.image && (
+          <div className={cx("error-text-image")}>{errors.image}</div>
+        )}
         <div className={cx("content-edit-text")}>
           <Input
             dark

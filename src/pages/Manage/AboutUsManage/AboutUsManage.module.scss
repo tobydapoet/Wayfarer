@@ -28,18 +28,3 @@
         }
     }
 }
-
-@media (max-width: 800px) {
-    .wrapper {
-        .member-section {
-            .represent {
-                padding: 20px;
-                border: 1px solid #ccc;
-                margin-top: 10px;
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Tự động xuống dòng */
-                gap: 15px;
-            }
-        }
-    }
-}
