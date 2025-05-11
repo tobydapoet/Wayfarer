@@ -22,11 +22,9 @@ function DestinationsManage() {
     handleSearchCity,
     handleDeleteCity,
   } = useContext(CityContext);
-
-  const { counts } = useContext(DestinationContext);
+  const { allDestinations } = useContext(DestinationContext);
 
   const navigate = useNavigate();
-  console.log(counts);
 
   return (
     <div className={cx("wrapper")}>
@@ -65,9 +63,11 @@ function DestinationsManage() {
               setOpenEditForm(true);
               setCity(selectedCity);
             }}
-            tripsCount={counts[selectedCity._id]?.trips || 0}
-            hotelsCount={counts[selectedCity._id]?.hotels || 0}
-            transportsCount={counts[selectedCity._id]?.transports || 0}
+            count={
+              allDestinations?.filter(
+                (dest) => dest.cityId._id === selectedCity._id
+              ).length || 0
+            }
             onDelete={() => handleDeleteCity(selectedCity._id)}
           />
         ))}

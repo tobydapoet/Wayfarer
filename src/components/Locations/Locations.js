@@ -19,9 +19,7 @@ function Locations({
   client,
   onEdit,
   onDelete,
-  tripsCount,
-  hotelsCount,
-  transportsCount,
+  count,
 }) {
   const [deleteNotice, setDeleteNotice] = useState(false);
 
@@ -41,16 +39,7 @@ function Locations({
         <div className={cx("info")}>
           <div className={cx("trips-container")}>
             <FontAwesomeIcon icon={faLocationDot} />
-            <div> {tripsCount}</div>
-          </div>
-
-          <div className={cx("hotel-container")}>
-            <FontAwesomeIcon icon={faBed} />
-            <div> {hotelsCount}</div>
-          </div>
-          <div className={cx("transport-container")}>
-            <FontAwesomeIcon icon={faCar} />
-            <div> {transportsCount}</div>
+            <div> {count}</div>
           </div>
         </div>
       </div>

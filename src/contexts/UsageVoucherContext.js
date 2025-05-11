@@ -8,10 +8,12 @@ export const UsageVoucherContext = createContext({
   setListVouchersReceived: () => {},
   setVoucherReceived: () => {},
   voucherReceived: {},
+  searchUsageVoucher: [],
   toggleDelete: () => {},
   listDelete: {},
   handleAssignVoucher: () => {},
   openForm: {},
+  handleSearchVouchers: () => {},
   setOpenForm: () => {},
   handleDelete: () => {},
 });
@@ -22,6 +24,7 @@ export const UsageVoucherProvider = ({ children }) => {
   const [voucherReceived, setVoucherReceived] = useState({});
   const [listDelete, setlistDelete] = useState([]);
   const [openForm, setOpenForm] = useState(false);
+  const [searchUsageVoucher, setSearchUsageVoucher] = useState([]);
 
   useEffect(() => {
     axios
@@ -29,6 +32,29 @@ export const UsageVoucherProvider = ({ children }) => {
       .then((res) => setAllUsageVouchers(res.data))
       .catch((err) => console.log(err));
   }, []);
+  const handleSearchVouchers = async (keyword) => {
+    try {
+      if (!keyword.trim()) {
+        axios
+          .get(`http://localhost:3000/usage_vouchers`)
+          .then((res) => setAllUsageVouchers(res.data))
+          .catch((err) => console.log(err));
+      } else {
+        const res = await axios.get(
+          `http://localhost:3000/usage_vouchers/search?keyword=${keyword}`
+        );
+        console.log(res.data);
+        if (res.data.success) {
+          console.log(res.data.data);
+          setAllUsageVouchers(
+            Array.isArray(res.data.data) ? res.data.data : []
+          );
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleAssignVoucher = async () => {
     if (listVouchersReceived.length === 0) return;
@@ -55,8 +81,6 @@ export const UsageVoucherProvider = ({ children }) => {
       toast.error("Đã xảy ra lỗi khi gán voucher.");
     }
   };
-
-  console.log("ListDelete: ", listDelete);
 
   const toggleDelete = (usage) => {
     setlistDelete((prev) => {
@@ -101,8 +125,10 @@ export const UsageVoucherProvider = ({ children }) => {
         openForm,
         toggleDelete,
         listDelete,
+        searchUsageVoucher,
         setOpenForm,
         setListVouchersReceived,
+        handleSearchVouchers,
         setVoucherReceived,
         handleAssignVoucher,
         handleDelete,

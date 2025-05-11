@@ -26,8 +26,6 @@ function ItineraryAdd() {
     handleSaveActivityOnAdd,
     handleAddServices,
   } = useContext(DestinationContext);
-  const textareaRef = useRef(null);
-  console.log(content);
   return (
     <div className={cx("wrapper")}>
       {/* Name */}
@@ -164,62 +162,60 @@ function ItineraryAdd() {
         )}
       </div>
       {/* Ẩn Activities nếu có transports */}
-      {content.type !== "transports" && (
-        <div className={cx("activities-wrapper")}>
-          <div className={cx("activities-header")}>
-            <div className={cx("activities-title")}> Activities:</div>
 
-            <div className={cx("activities-add")}>
-              {editMode === "add-activity" ? (
-                <input
-                  type="text"
-                  className={cx("activities-add-input")}
-                  value={currentActivity}
-                  onChange={handleEditActivity}
-                  onBlur={() => HandleCancelEdit("activities")}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSaveActivityOnAdd();
-                    if (e.key === "Escape") HandleCancelEdit("activities");
-                  }}
-                  autoFocus
-                />
-              ) : (
-                <FontAwesomeIcon
-                  className={cx("add-icon")}
-                  icon={faPlus}
-                  onClick={() => handleEditActivityMode()}
-                />
-              )}
-            </div>
-          </div>
+      <div className={cx("activities-wrapper")}>
+        <div className={cx("activities-header")}>
+          <div className={cx("activities-title")}> Activities:</div>
 
-          <div className={cx("activities")}>
-            {Array.isArray(content.activities) &&
-              content.activities.length > 0 &&
-              content.activities.map((activity, index) => (
-                <div key={index} className={cx("activity")}>
-                  {editMode === `edit-activity` &&
-                  editActivityIndex === index ? (
-                    <input
-                      type="text"
-                      value={currentActivity}
-                      onChange={handleEditActivity}
-                      onBlur={() => handleSaveActivityOnAdd()}
-                      onKeyDown={(e) =>
-                        e.key === "Enter" && handleSaveActivityOnAdd()
-                      }
-                      autoFocus
-                    />
-                  ) : (
-                    <span onClick={() => handleEditActivityMode(index)}>
-                      {activity}
-                    </span>
-                  )}
-                </div>
-              ))}
+          <div className={cx("activities-add")}>
+            {editMode === "add-activity" ? (
+              <input
+                type="text"
+                className={cx("activities-add-input")}
+                value={currentActivity}
+                onChange={handleEditActivity}
+                onBlur={() => HandleCancelEdit("activities")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSaveActivityOnAdd();
+                  if (e.key === "Escape") HandleCancelEdit("activities");
+                }}
+                autoFocus
+              />
+            ) : (
+              <FontAwesomeIcon
+                className={cx("add-icon")}
+                icon={faPlus}
+                onClick={() => handleEditActivityMode()}
+              />
+            )}
           </div>
         </div>
-      )}
+
+        <div className={cx("activities")}>
+          {Array.isArray(content.activities) &&
+            content.activities.length > 0 &&
+            content.activities.map((activity, index) => (
+              <div key={index} className={cx("activity")}>
+                {editMode === `edit-activity` && editActivityIndex === index ? (
+                  <input
+                    type="text"
+                    value={currentActivity}
+                    onChange={handleEditActivity}
+                    onBlur={() => handleSaveActivityOnAdd()}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && handleSaveActivityOnAdd()
+                    }
+                    autoFocus
+                  />
+                ) : (
+                  <span onClick={() => handleEditActivityMode(index)}>
+                    {activity}
+                  </span>
+                )}
+              </div>
+            ))}
+        </div>
+      </div>
 
       {/* Save Button */}
       <div className={cx("save-btn")}>

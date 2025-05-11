@@ -5,8 +5,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Itinerary.module.scss";
 import StarRating from "../../utils/StartRating";
 import { DestinationContext } from "../../contexts/DestinationContext";
-import { useParams } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -27,14 +27,6 @@ function Itinerary({ manage }) {
     handleUpdateService,
     handleCancelActivity,
   } = useContext(DestinationContext);
-  const textareaRef = useRef(null);
-
-  useEffect(() => {
-    if (editMode === "description" && textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [content, editMode]);
 
   return (
     <div className={cx("wrapper")}>
@@ -147,7 +139,7 @@ function Itinerary({ manage }) {
         {manage && (
           <div className={cx("right-side")}>
             <div className={cx("img-container")}>
-              <img src={content.image} alt={content.name} />
+              <img src={content.image || images.noImg} alt={content.name} />
 
               <>
                 <div className={cx("input-container")}>
@@ -167,19 +159,6 @@ function Itinerary({ manage }) {
       <div className={cx("description-container")}>
         {editMode === "description" && manage ? (
           <>
-            {/* <textarea
-              ref={textareaRef}
-              className={cx("description-input")}
-              value={content.description}
-              name="description"
-              onChange={handleEditField}
-              onBlur={() => HandleCancelEdit("description")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleUpdateService();
-                if (e.key === "Escape") HandleCancelEdit("description");
-              }}
-              autoFocus
-            /> */}
             <Editor
               apiKey="wtgpv9fxlawe92pv114hejtf6xelqkledfwcbnu6tb4ldrhv"
               name="context"
@@ -227,7 +206,7 @@ function Itinerary({ manage }) {
                     }
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      handleUpdateService();
+                      document.getElementById("saveButton").click();
                     }
                     if (e.key === "Escape") {
                       HandleCancelEdit("description");
@@ -248,6 +227,13 @@ function Itinerary({ manage }) {
                 });
               }}
             />
+            <button
+              id="saveButton"
+              style={{ display: "none" }}
+              onClick={() => handleUpdateService()}
+            >
+              Save
+            </button>
             {errors.description && (
               <p className={cx("error-text")}>{errors.description}</p>
             )}

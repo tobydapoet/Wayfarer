@@ -1,26 +1,69 @@
 import classNames from "classnames/bind";
 import styles from "./DestinationInfo.module.scss";
-import NavigateManage from "../../../../components/NavigateManage/NavigateManage";
-import { Outlet, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SearchBar from "../../../../components/SearchBar";
+import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import PlacementItem from "../../../../components/PlacementItem/PlacementItem";
+import { DestinationContext } from "../../../../contexts/DestinationContext";
+import ServicesPopper from "../../../../components/ServicesPopper";
 
 const cx = classNames.bind(styles);
 
 function DestinationInfo() {
-  const param = useParams();
+  const {
+    searchResult,
+    allDestinations,
+    handleSelectedDestination,
+    handleSearchDestinations,
+    handleDeleteDestination,
+  } = useContext(DestinationContext);
+  const navigate = useNavigate();
+  const { placement } = useParams();
 
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("navigate")}>
-        <div className={cx("info")}>
-          {param.placement === "add_content" ? "Adding" : param.placement}
+      <div className={cx("header")}>
+        <div
+          className={cx("back")}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/manage/destinations")}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
         </div>
-        <NavigateManage to={`trips`}>Trips</NavigateManage>
-        <NavigateManage to={`hotels`}>Hotels</NavigateManage>
-        <NavigateManage to={`transports`}>Transports</NavigateManage>
+        <SearchBar
+          onSearch={handleSearchDestinations}
+          results={searchResult}
+          renderResult={(service) => (
+            <ServicesPopper
+              manage
+              data={service}
+              onClick={() => handleSelectedDestination(service)}
+            />
+          )}
+        />
+
+        <div
+          className={cx("add")}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("add_content")}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+        </div>
       </div>
-      <div className={cx("content")}>
-        <Outlet />
-      </div>
+
+      {allDestinations
+        .filter((item) => item.cityId?.name === placement)
+        .map((destination) => (
+          <PlacementItem
+            manage
+            key={destination._id}
+            data={destination}
+            onClick={() => handleSelectedDestination(destination)}
+            onDelete={() => handleDeleteDestination(destination._id)}
+          />
+        ))}
     </div>
   );
 }

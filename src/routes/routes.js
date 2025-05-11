@@ -14,11 +14,9 @@ import Clients from "../pages/Manage/Business/Clients";
 import DestinationsManage from "../pages/Manage/DestinationsManage";
 import ProfileLayout from "../layouts/ProfileLayout";
 import ClientInfo from "../pages/Manage/Business/Clients/ClientInfo/ClientInfo";
-import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo/DestinationInfo";
-import ServicesManage from "../pages/Manage/DestinationsManage/ServicesManage";
-import ServiceIntroduce from "../pages/Manage/DestinationsManage/ServicesManage/ServiceIntroduce/ServiceIntroduce";
+import DestinationInfo from "../pages/Manage/DestinationsManage/DestinationInfo";
+import ServiceIntroduce from "../pages/Manage/DestinationsManage/ServiceIntroduce/ServiceIntroduce";
 import PlacementInfo from "../pages/Destinations/PlacementInfo";
-import Services from "../pages/Destinations/Placement/Services";
 import Bill from "../pages/Bill";
 import BlogManage from "../pages/Manage/BlogManage";
 import BillsManage from "../pages/Manage/BillsManage";
@@ -55,7 +53,7 @@ const publicRoutes = [
   {
     path: "/destinations",
     component: DESTINATIONS,
-    context: CityProvider,
+    context: [CityProvider, DestinationProvider],
     topic: "DESTINATIONS",
   },
   {
@@ -86,10 +84,11 @@ const publicRoutes = [
     path: "/destinations/:placement",
     component: Placement,
     context: DestinationProvider,
-    children: [
-      { path: ":type", component: Services, default: true, layout: null },
-      { path: ":type/:id", component: PlacementInfo, layout: null },
-    ],
+  },
+  {
+    path: "/destinations/:placement/:id",
+    component: PlacementInfo,
+    context: DestinationProvider,
   },
   {
     path: ":email",
@@ -168,20 +167,12 @@ const privateRoutes = [
         component: DestinationInfo,
         context: DestinationProvider,
         layout: null,
-        children: [
-          {
-            path: ":type",
-            component: ServicesManage,
-            context: DestinationProvider,
-            layout: null,
-          },
-          {
-            path: ":type/:id",
-            component: ServiceIntroduce,
-            context: DestinationProvider,
-            layout: null,
-          },
-        ],
+      },
+      {
+        path: "destinations/:placement/:id",
+        component: ServiceIntroduce,
+        context: DestinationProvider,
+        layout: null,
       },
 
       {

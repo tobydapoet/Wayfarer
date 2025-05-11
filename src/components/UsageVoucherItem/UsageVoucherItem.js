@@ -12,13 +12,17 @@ function UsageVoucherItem({ data, onCheck, checked }) {
       <td className={cx("info")}>
         <div className={cx("img")}>
           <img
-            src={data.clientId.avatar || images.noImg}
-            alt={data.clientId?.name}
+            src={data.clientId.avatar || data.client.avatar || images.noImg}
+            alt={data.clientId?.name || data.client.name}
           />
         </div>
-        <div className={cx("name")}>{data.clientId.name}</div>
+        <div className={cx("name")}>
+          {data.clientId.name || data.client.name}
+        </div>
       </td>
-      <td className={cx("voucher")}>{data.voucherId?.name}</td>
+      <td className={cx("voucher")}>
+        {data.voucherId?.name || data.voucher.name}
+      </td>
       <td className={cx("received")}>
         {new Date(data.receivedAt).toLocaleString(undefined, {
           dateStyle: "short",

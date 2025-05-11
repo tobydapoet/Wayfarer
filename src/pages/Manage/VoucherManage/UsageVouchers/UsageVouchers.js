@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./UsageVouchers.module.scss";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UsageVoucherContext } from "../../../../contexts/UsageVoucherContext";
 import UsageVoucherItem from "../../../../components/UsageVoucherItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,15 +29,23 @@ function UsageVouchers() {
     toggleDelete,
     handleDelete,
     listDelete,
+    searchUsageVoucher,
+    handleSearchVouchers,
   } = useContext(UsageVoucherContext);
   const { allVouchers } = useContext(VoucherContext);
-  console.log(listDelete);
+  console.log(searchUsageVoucher);
   return (
     <>
       <div className={cx("wrapper")}>
         <div className={cx("header")}>
           <div className={cx("search-container")}>
-            <SearchBar />
+            <SearchBar
+              onSearch={handleSearchVouchers}
+              // results={searchUsageVoucher}
+              // renderResult={(usage) => (
+              //   <UsageVoucherItem key={usage._id} data={usage} />
+              // )}
+            />
           </div>
           <div className={cx("ffc-area")}>
             <div

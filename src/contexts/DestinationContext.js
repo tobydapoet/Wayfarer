@@ -1,5 +1,12 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CityContext } from "./CityContext";
@@ -11,11 +18,9 @@ export const DestinationContext = createContext({
   editMode: {},
   currentActivity: {},
   searchResult: {},
-  counts: {},
   editActivityIndex: {},
-  handleSearchTrips: () => {},
-  handleSearchHotels: () => {},
-  handleSearchTransports: () => {},
+  setContent: () => {},
+  handleSearchDestinations: () => {},
   handleEditActivityMode: () => {},
   handleSelectedDestination: () => {},
   handleEditActivity: () => {},
@@ -39,8 +44,9 @@ export const DestinationProvider = ({ children }) => {
   const [originalContent, setOriginalContent] = useState({});
   const [editActivityIndex, setEditActivityIndex] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
+  const descriptionRef = useRef();
 
-  const { placement, type, id } = useParams();
+  const { placement, id } = useParams();
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation().pathname;
@@ -62,7 +68,6 @@ export const DestinationProvider = ({ children }) => {
     image: "",
     description: "",
     activities: [],
-    type: type,
   });
 
   useEffect(() => {
@@ -88,34 +93,6 @@ export const DestinationProvider = ({ children }) => {
         });
     }
   }, [id]);
-
-  useEffect(() => {
-    setSearchResult([]);
-  }, [type]);
-  console.log(allDestinations);
-
-  console.log("data2: ", allCities);
-  console.log("data: ", allDestinations);
-
-  const counts = useMemo(() => {
-    const newCounts = {};
-    allCities.forEach((city) => {
-      if (!city._id) return;
-
-      const cityDestinations = allDestinations.filter(
-        (d) => d.cityId && String(d.cityId._id) === String(city._id)
-      );
-
-      newCounts[city._id] = {
-        trips: cityDestinations.filter((d) => d.type === "trips").length,
-        hotels: cityDestinations.filter((d) => d.type === "hotels").length,
-        transports: cityDestinations.filter((d) => d.type === "transports")
-          .length,
-      };
-    });
-
-    return newCounts;
-  }, [allDestinations, allCities]);
 
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -153,6 +130,7 @@ export const DestinationProvider = ({ children }) => {
     }
     return newErrors;
   };
+
   const handleChangeImg = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -171,11 +149,9 @@ export const DestinationProvider = ({ children }) => {
 
   const handleSelectedDestination = (data) => {
     if (location.includes("manage")) {
-      navigate(
-        `/manage/destinations/${data.cityId.name}/${data.type}/${data._id}`
-      );
+      navigate(`/manage/destinations/${data.cityId.name}/${data._id}`);
     } else {
-      navigate(`/destinations/${data.cityId.name}/${data.type}/${data._id}`);
+      navigate(`/destinations/${data.cityId.name}/${data._id}`);
     }
 
     setContent(data);
@@ -291,23 +267,6 @@ export const DestinationProvider = ({ children }) => {
     setCurrentActivity("");
   };
 
-  // const handleSaveDestination = () => {
-  //   let newErrors = {};
-  //   Object.entries(tempContent).forEach(([name, value]) => {
-  //     const fieldErrors = validateInput(name, value);
-  //     newErrors = { ...newErrors, ...fieldErrors };
-  //   });
-  //   setErrors(newErrors);
-  //   if (Object.keys(newErrors).length > 0) {
-  //     return;
-  //   }
-  //   setEditMode(null);
-  //   setContent((prev) => ({
-  //     ...prev,
-  //     ...tempContent,
-  //   }));
-  // };
-
   const handleEditMode = (field) => {
     setOriginalContent(content);
     setEditMode(field);
@@ -323,40 +282,10 @@ export const DestinationProvider = ({ children }) => {
     });
   };
 
-  const handleSearchTrips = async (keyword) => {
+  const handleSearchDestinations = async (keyword) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/destinations/search_trips?keyword=${keyword}&cityName=${placement}`
-      );
-      if (res.data.success) {
-        setSearchResult(Array.isArray(res.data.data) ? res.data.data : []);
-      } else {
-        setSearchResult([]);
-      }
-    } catch (err) {
-      toast.error(err);
-    }
-  };
-
-  const handleSearchHotels = async (keyword) => {
-    try {
-      const res = await axios.get(
-        `http://localhost:3000/destinations/search_hotels?keyword=${keyword}&cityName=${placement}`
-      );
-      if (res.data.success) {
-        setSearchResult(Array.isArray(res.data.data) ? res.data.data : []);
-      } else {
-        setSearchResult([]);
-      }
-    } catch (err) {
-      toast.error(err);
-    }
-  };
-
-  const handleSearchTransports = async (keyword) => {
-    try {
-      const res = await axios.get(
-        `http://localhost:3000/destinations/search_transports?keyword=${keyword}&cityName=${placement}`
+        `http://localhost:3000/destinations/search?keyword=${keyword}&cityName=${placement}`
       );
       if (res.data.success) {
         setSearchResult(Array.isArray(res.data.data) ? res.data.data : []);
@@ -378,6 +307,7 @@ export const DestinationProvider = ({ children }) => {
     if (Object.keys(newErrors).length > 0) {
       return;
     }
+
     try {
       const res = await axios.post(
         `http://localhost:3000/destinations/create_destination`,
@@ -386,14 +316,14 @@ export const DestinationProvider = ({ children }) => {
       if (res.data.success) {
         setAllDestinations((prev) => [...prev, res.data.data]);
         toast.success(res.data.message);
-        navigate(`/manage/destinations/${placement}/${type}`);
+        navigate(`/manage/destinations/${placement}`);
       }
     } catch (err) {
       toast.error(err);
     }
   };
 
-  const handleUpdateService = async (id) => {
+  const handleUpdateService = async () => {
     let newErrors = {};
     Object.entries(content).forEach(([name, value]) => {
       const fieldErrors = validateInput(name, value);
@@ -403,12 +333,13 @@ export const DestinationProvider = ({ children }) => {
     if (Object.keys(newErrors).length > 0) {
       return;
     }
+
     try {
       const res = await axios.put(
         `http://localhost:3000/destinations/${content._id}`,
         {
-          ...content,
           cityId: content.cityId._id,
+          ...content,
         }
       );
       if (res.data.success) {
@@ -419,6 +350,7 @@ export const DestinationProvider = ({ children }) => {
               : destination
           )
         );
+        setContent(res.data.data);
         setEditMode(null);
         toast.success(res.data.message);
       }
@@ -453,10 +385,8 @@ export const DestinationProvider = ({ children }) => {
         editActivityIndex,
         currentActivity,
         searchResult,
-        counts,
-        handleSearchTrips,
-        handleSearchHotels,
-        handleSearchTransports,
+        setContent,
+        handleSearchDestinations,
         handleEditActivityMode,
         handleSelectedDestination,
         HandleCancelEdit,

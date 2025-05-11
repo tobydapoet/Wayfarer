@@ -15,6 +15,7 @@ function SearchBar({ onSearch, results = [], renderResult }) {
   const deleteSearch = () => {
     setSearchValue("");
     setIsResultVisible(false); // Ensure results are hidden when clearing the search bar
+    onSearch("");
   };
 
   const handleSearch = (e) => {
