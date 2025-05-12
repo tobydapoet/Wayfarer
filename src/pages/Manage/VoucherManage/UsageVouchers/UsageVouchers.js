@@ -87,7 +87,12 @@ function UsageVouchers() {
           </tbody>
         </table>
       </div>
-      <Modal form open={openForm} onClose={() => setOpenForm(false)}>
+      <Modal
+        form
+        open={openForm}
+        onClose={() => setOpenForm(false)}
+        style={{ width: "500px" }}
+      >
         <SearchBar
           onSearch={handleSearchClient}
           results={searchResult.filter(

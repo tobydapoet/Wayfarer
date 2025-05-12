@@ -72,17 +72,18 @@
 }
 
 .voucher-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 10px;
     overflow: scroll;
     scrollbar-width: none;
+    height: auto;
+    max-height: 400px;
 }
 
 .voucher-name {
     font-family: var(--font-default);
-    margin-bottom: 5px;
+    margin: 10px 0;
 }
 
 @media (max-width: 800px) {
@@ -96,5 +97,15 @@
     }
     th {
         font-size: 14px;
+    }
+
+    .voucher-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 10px;
+        overflow: scroll;
+        scrollbar-width: none;
+        height: auto;
+        max-height: 400px;
     }
 }

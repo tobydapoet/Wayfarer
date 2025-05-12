@@ -4,7 +4,7 @@ import styles from "./Modal.module.scss";
 
 const cx = classNames.bind(styles);
 
-function Modal({ children, open, onClose, test ,bigedit ,form}) {
+function Modal({ children, open, onClose, test, form, style }) {
   const [isVisibale, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,8 @@ function Modal({ children, open, onClose, test ,bigedit ,form}) {
   return (
     <div className={cx("modal-overlay")} onClick={onClose}>
       <div
-        className={cx("modal-content", { "modal-show": open, test,bigedit,form })}
+        className={cx("modal-content", { "modal-show": open, test, form })}
+        style={style}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

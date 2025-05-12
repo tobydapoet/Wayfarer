@@ -73,6 +73,7 @@ function Vouchers() {
                 name="discountValue"
                 value={selectedVoucher?.discountValue}
                 frame={"Discount($)"}
+                type="number"
                 onChange={handleInputChange}
                 error={errors.discountValue}
               />
@@ -82,6 +83,7 @@ function Vouchers() {
                 dark
                 name="minCost"
                 value={selectedVoucher?.minCost}
+                type="number"
                 frame={"Min($)"}
                 onChange={handleInputChange}
                 error={errors.minCost}

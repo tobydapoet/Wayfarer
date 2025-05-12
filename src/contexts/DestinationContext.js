@@ -316,7 +316,7 @@ export const DestinationProvider = ({ children }) => {
       if (res.data.success) {
         setAllDestinations((prev) => [...prev, res.data.data]);
         toast.success(res.data.message);
-        navigate(`/manage/destinations/${placement}`);
+        navigate(`/manage/destinations/${placement}/${res.data.data._id}`);
       }
     } catch (err) {
       toast.error(err);

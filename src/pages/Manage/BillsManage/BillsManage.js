@@ -192,12 +192,6 @@ function BillsManage() {
           </tbody>
         </table>
       </div>
-      {/* <Modal open={editBill} onClose={() => setEditBill(false)} bigedit form>
-        <BillForm data={billSelected} />
-      </Modal>
-      <Modal open={addBill} onClose={() => setAddBill(false)} bigedit form>
-        <BillForm />
-      </Modal> */}
     </>
   );
 }

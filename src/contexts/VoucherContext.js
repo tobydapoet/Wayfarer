@@ -41,9 +41,10 @@ export const VoucherProvider = ({ children }) => {
     setSelectedVoucher(data);
   };
 
-  const handleReset = (data) => {
+  const handleReset = () => {
     setSelectedVoucher(initialVoucher);
   };
+  console.log(selectedVoucher);
 
   const handleValidate = (name, value) => {
     const newErrors = {};
@@ -66,6 +67,8 @@ export const VoucherProvider = ({ children }) => {
       case "minCost":
         if (!value) {
           newErrors.minCost = "Min cannot be empty!";
+        } else if (Number(value) > Number(selectedVoucher.discountValue)) {
+          newErrors.minCost = "Min cannot bigger than value";
         }
         break;
     }

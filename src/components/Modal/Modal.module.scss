@@ -39,14 +39,6 @@
     scrollbar-width: none;
   }
 
-  &.bigedit {
-    width: 60vw;
-    max-height: calc(100vh - 70px);
-    max-width: 100vw;
-    overflow: scroll;
-    scrollbar-width: none;
-  }
-
   &.form {
     background-color: var(--primary);
     max-height: 80vh;
