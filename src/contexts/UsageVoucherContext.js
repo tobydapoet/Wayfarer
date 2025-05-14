@@ -10,6 +10,8 @@ export const UsageVoucherContext = createContext({
   voucherReceived: {},
   searchUsageVoucher: [],
   toggleDelete: () => {},
+  selectedUsageVoucher: {},
+  setSelectedUsageVoucher: () => {},
   listDelete: {},
   handleAssignVoucher: () => {},
   openForm: {},
@@ -21,10 +23,10 @@ export const UsageVoucherContext = createContext({
 export const UsageVoucherProvider = ({ children }) => {
   const [allUsageVouchers, setAllUsageVouchers] = useState([]);
   const [listVouchersReceived, setListVouchersReceived] = useState([]);
+  const [selectedUsageVoucher, setSelectedUsageVoucher] = useState({});
   const [voucherReceived, setVoucherReceived] = useState({});
   const [listDelete, setlistDelete] = useState([]);
   const [openForm, setOpenForm] = useState(false);
-  const [searchUsageVoucher, setSearchUsageVoucher] = useState([]);
 
   useEffect(() => {
     axios
@@ -125,7 +127,8 @@ export const UsageVoucherProvider = ({ children }) => {
         openForm,
         toggleDelete,
         listDelete,
-        searchUsageVoucher,
+        selectedUsageVoucher,
+        setSelectedUsageVoucher,
         setOpenForm,
         setListVouchersReceived,
         handleSearchVouchers,

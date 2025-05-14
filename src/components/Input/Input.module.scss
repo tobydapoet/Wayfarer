@@ -6,11 +6,11 @@
     margin-bottom: 4px;
 
     &.dark {
-        border-bottom: 2px solid rgb(166, 166, 166);
+        border-bottom: 1px solid #202020;
     }
 
     &.light {
-        border-bottom: 2px solid var(--primary);
+        border-bottom: 1px solid var(--primary);
     }
 
     input,
@@ -75,7 +75,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     white-space: nowrap;
 
     &.dark {
-        color: rgb(99, 98, 98);
+        color: #202020;
         font-weight: bold;
     }
 

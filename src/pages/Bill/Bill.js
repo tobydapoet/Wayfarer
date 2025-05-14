@@ -1,60 +1,228 @@
 import classNames from "classnames/bind";
 import styles from "./Bill.module.scss";
-import { useParams, useSearchParams } from "react-router-dom";
-import BillForm from "../../components/BillForm/BillForm";
-import { BillContext, BillProvider } from "../../contexts/BillContext";
-
-const SERVICE = {
-  name: "Temple of Literature1",
-  city: "Ha Noi",
-  star: 3.5,
-  price: 20,
-  img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-  description:
-    "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-  activities:
-    "visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir,visit,souvenir",
-  type: 0,
-};
+import { useContext, useMemo, useRef, useState } from "react";
+import { DestinationContext } from "../../contexts/DestinationContext";
+import { PayTypeContext } from "../../contexts/PayTypeContext";
+import Notice from "../../components/Notice";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import { BillContext } from "../../contexts/BillContext";
+import HeadlessTippy from "@tippyjs/react/headless";
+import Popper from "../../components/Popper";
+import { ScheduleContext } from "../../contexts/ScheduleContext";
+import standardTime from "../../utils/standardTime";
+import images from "../../assets/images";
+import { UsageVoucherContext } from "../../contexts/UsageVoucherContext";
+import VoucherItem from "../../components/VoucherItem";
 
 const cx = classNames.bind(styles);
 
-const VOUCHERS = [
-  {
-    name: "SAVE5DAYS",
-    value: 50000,
-  },
-  {
-    name: "SAVE10DAYS",
-    value: 100000,
-  },
-  {
-    name: "SAVE20DAYS",
-    value: 220000,
-  },
-  {
-    name: "SAVE30DAYS",
-    value: 350000,
-  },
-];
+function BillForm() {
+  const {
+    allBills,
+    errors,
+    noticeBox,
+    billInfo,
+    totalCalculate,
+    handleSchedule,
+    setNoticeBox,
+    handleInputChange,
+    handleOnSave,
+    handlePayType,
+    handleUsageVoucher,
+    handleCreateBill,
+  } = useContext(BillContext);
 
-function Bill() {
-  const [searchParams] = useSearchParams();
-  const serviceName = searchParams.get("bill");
+  const { allPayTypes } = useContext(PayTypeContext);
+  const { content } = useContext(DestinationContext);
+  const { allSchedules } = useContext(ScheduleContext);
+  const { allUsageVouchers } = useContext(UsageVoucherContext);
+  const { payTypeSelected } = useContext(PayTypeContext);
+  const { edittingSchedule } = useContext(ScheduleContext);
+  const { selectedUsageVoucher } = useContext(UsageVoucherContext);
+  const [isVisible, setIsvisible] = useState(false);
+  const inputRef = useRef(null);
   const user =
     JSON.parse(localStorage.getItem("user")) ||
     JSON.parse(sessionStorage.getItem("user"));
-  console.log(user);
-  const userBill = {
-    client: user.name,
-    service: serviceName,
-    type: SERVICE.type,
-  };
+  console.log(totalCalculate);
   return (
-    <BillProvider data={userBill} userVoucher={VOUCHERS}>
-      <BillForm />
-    </BillProvider>
+    <div className={cx("wrapper")}>
+      <div className={cx("img-container")}>
+        {content?.image && <img src={content?.image} />}
+        <div className={cx("bill-info")}>
+          <div className={cx("name-destination")}>{content.name}</div>
+        </div>
+      </div>
+      <div className={cx("bill-container")}>
+        <div className={cx("row")}>
+          <div className={cx("time")}>
+            <HeadlessTippy
+              interactive
+              visible={isVisible}
+              placement="bottom"
+              render={(attrs) => (
+                <div
+                  className={cx("result-container")}
+                  tabIndex="-1"
+                  {...attrs}
+                  style={{
+                    width: inputRef.current?.offsetWidth || "auto",
+                  }}
+                >
+                  <Popper className={cx("result")}>
+                    {allSchedules
+                      .filter(
+                        (schedules) =>
+                          schedules.destinationId._id === content._id &&
+                          schedules.status !== false
+                      )
+                      .map((schedule) => (
+                        <div
+                          key={schedule._id}
+                          className={cx("result-item")}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            handleSchedule(schedule);
+                            setIsvisible(false);
+                          }}
+                        >
+                          <div className={cx("time")}>
+                            <div className={cx("start-time")}>
+                              {standardTime(schedule.startDate)}
+                            </div>
+                            <span> - </span>
+                            <div className={cx("end-time")}>
+                              {standardTime(schedule.endDate)}
+                            </div>
+                          </div>
+                          <div className={cx("member")}>
+                            {allBills
+                              .filter(
+                                (bill) => bill.scheduleId._id === schedule._id
+                              )
+                              .reduce((sum, bill) => sum + bill.num, 0)}
+                            /{schedule.amount}
+                          </div>
+                        </div>
+                      ))}
+                  </Popper>
+                </div>
+              )}
+            >
+              <div className={cx("schedule-container")} ref={inputRef}>
+                <div className={cx("frame")}>Schedule</div>
+                <input
+                  className={cx("schedule")}
+                  readOnly
+                  value={
+                    edittingSchedule?._id
+                      ? `${standardTime(
+                          edittingSchedule.startDate
+                        )} - ${standardTime(edittingSchedule.endDate)}`
+                      : ""
+                  }
+                  onClick={() => setIsvisible(true)}
+                  onBlur={() => setIsvisible(false)}
+                />
+              </div>
+            </HeadlessTippy>
+          </div>
+          <div className={cx("number")}>
+            <Input
+              dark
+              type="number"
+              name="num"
+              frame={
+                content.unit.charAt(0).toUpperCase() + content.unit.slice(1)
+              }
+              value={billInfo.number}
+              onChange={handleInputChange}
+              error={errors.number}
+            />
+          </div>
+        </div>
+
+        <div className={cx("voucher-container")}>
+          <div className={cx("frame")}>Vouchers available: </div>
+          <div className={cx("voucher-list")}>
+            {allUsageVouchers
+              .filter(
+                (usagevouchers) => usagevouchers.clientId._id === user._id
+              )
+              .map((usage) => (
+                <VoucherItem
+                  key={usage._id}
+                  data={usage}
+                  minimal
+                  onClick={() => handleUsageVoucher(usage)}
+                  active={selectedUsageVoucher._id === usage._id}
+                />
+              ))}
+          </div>
+        </div>
+
+        <div className={cx("total")}>
+          <div className={cx("original-price")}>
+            <span>Total price:</span>
+            {(content?.price * Number(billInfo.num)).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </div>
+          <div className={cx("sale-value")}>
+            <span>Sale value:</span>
+            {Number(
+              selectedUsageVoucher?.voucherId?.discountValue || 0
+            ).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            }) || "$0.00"}
+          </div>
+          <hr></hr>
+          <div className={cx("total-value")}>
+            <span>Total payment:</span>
+            {totalCalculate?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            }) || "$0.00"}
+          </div>
+        </div>
+        <div className={cx("pay-type")}>
+          <div className={cx("pay-title")}>Payment method</div>
+          <div className={cx("type-choice")}>
+            {allPayTypes.map((type) => (
+              <button
+                key={type._id}
+                onClick={() => {
+                  handlePayType(type);
+                }}
+              >
+                {type.name}
+              </button>
+            ))}
+          </div>
+          {payTypeSelected._id && (
+            <img src={payTypeSelected.image} alt="Payment type" />
+          )}
+        </div>
+
+        <div className={cx("btn-container")}>
+          <Button large onClick={() => handleCreateBill()}>
+            Confirm
+          </Button>
+        </div>
+      </div>
+      <Notice
+        warn
+        open={noticeBox}
+        onClose={() => setNoticeBox(false)}
+        content={
+          errors.payment ? errors.payment : "Something wrong with your bill !"
+        }
+      />
+    </div>
   );
 }
 
-export default Bill;
+export default BillForm;

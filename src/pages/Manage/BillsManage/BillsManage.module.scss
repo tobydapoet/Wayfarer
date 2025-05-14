@@ -50,11 +50,10 @@
     .wrapper {
         width: calc(100vw - 120px);
         table {
-            
             table-layout: auto;
             border-collapse: collapse;
         }
-    
+
         thead {
             width: calc(100vw - 120px);
         }
@@ -65,7 +64,7 @@
             width: 100px;
         }
 
-        .start {
+        .number {
             display: none;
         }
 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../../components/SearchBar";
 import Locations from "../../../components/Locations";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import EditDestinationManage from "../../../components/EditDestinationManage/EditDestinationManage";
 import { CityContext, CityProvider } from "../../../contexts/CityContext";
 import { DestinationContext } from "../../../contexts/DestinationContext";

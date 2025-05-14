@@ -24,6 +24,7 @@ import Order from "../../../../components/Order";
 import StaffStatus from "../../../../components/StaffStatus/StaffStatus";
 import { useContext } from "react";
 import { StaffContext } from "../../../../contexts/StaffContext";
+import { BillContext } from "../../../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
@@ -56,114 +57,6 @@ function Dashboard() {
     services: 6000,
     sponsorship: 5000,
   };
-
-  const ORDERS = [
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 1,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 3,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 6,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 0,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 2,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 3,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 3,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 7,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 4,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-    {
-      id: 1,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAz7TV79RYxtJu5RScxRax-OljYqpIKqPxw&s",
-      client: "Davis Astee3",
-      total: "2020",
-      service: "Temple of Literature1",
-      status: 7,
-      dateStart: "03/05/2025",
-      dateEnd: "03/06/2025",
-    },
-  ];
 
   const totalSales = Object.values(salesMonth).reduce(
     (sum, value) => sum + value,
@@ -296,6 +189,7 @@ function Dashboard() {
     },
   };
   const { allStaffsData } = useContext(StaffContext);
+  const { allBills } = useContext(BillContext);
 
   return (
     <div className={cx("wrapper")}>
@@ -363,8 +257,8 @@ function Dashboard() {
           </div>
           <table>
             <tbody className={cx("list-orders")}>
-              {ORDERS.map((order, key) => (
-                <Order key={key} data={order} />
+              {allBills.map((order) => (
+                <Order key={order._id} data={order} />
               ))}
             </tbody>
           </table>

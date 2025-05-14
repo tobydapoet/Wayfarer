@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "../../../../components/SearchBar";
 import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import PlacementItem from "../../../../components/PlacementItem/PlacementItem";
 import { DestinationContext } from "../../../../contexts/DestinationContext";
 import ServicesPopper from "../../../../components/ServicesPopper";

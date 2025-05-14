@@ -13,8 +13,8 @@ function PlacementInfo() {
   const navigate = useNavigate();
   const { content } = useContext(DestinationContext);
   const handleBook = () => {
-    const encodedName = encodeURIComponent(content.name);
-    navigate(`/bill?bill=${encodedName}`);
+    const encodedName = encodeURIComponent(content._id);
+    navigate(`/bill?destinationId=${encodedName}`);
   };
   return (
     <div className={cx("wrapper")}>

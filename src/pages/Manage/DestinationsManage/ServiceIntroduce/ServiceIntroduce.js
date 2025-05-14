@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import ItineraryAdd from "../../../../components/ItineraryAdd/ItineraryAdd";
 import { DestinationProvider } from "../../../../contexts/DestinationContext";
 import { CityProvider } from "../../../../contexts/CityContext";
+import { BillProvider } from "../../../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +16,9 @@ function ServiceIntroduce() {
     <div className={cx("wrapper")}>
       {param.id !== "add_content" ? (
         <DestinationProvider>
-          <Itinenary manage />
+          <BillProvider>
+            <Itinenary manage />
+          </BillProvider>
         </DestinationProvider>
       ) : (
         <CityProvider>

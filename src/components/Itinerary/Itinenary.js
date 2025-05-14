@@ -10,6 +10,7 @@ import images from "../../assets/images";
 import Button from "../Button";
 import ScheduleModal from "../ScheduleModal/ScheduleModal";
 import { ScheduleProvider } from "../../contexts/ScheduleContext";
+import { useLocation } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +33,7 @@ function Itinerary({ manage }) {
   } = useContext(DestinationContext);
 
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
+  const location = useLocation().pathname;
 
   return (
     <>
@@ -313,11 +315,13 @@ function Itinerary({ manage }) {
                 ))}
             </div>
           </div>
-          <div className={cx("btn-container")}>
-            <Button rounded onClick={() => setOpenScheduleForm(true)}>
-              Set schedule!
-            </Button>
-          </div>
+          {location.includes("/manage/") && (
+            <div className={cx("btn-container")}>
+              <Button rounded onClick={() => setOpenScheduleForm(true)}>
+                Set schedule!
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <ScheduleProvider>

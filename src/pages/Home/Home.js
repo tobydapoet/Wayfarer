@@ -55,11 +55,6 @@ function Home() {
               </span>
             </Link>
           </div>
-          <div className={cx("affiliate")}>
-            {/* {PARTNERS.map((partner, index) => (
-              <img key={index} src={partner.logo} alt={partner.name} />
-            ))} */}
-          </div>
         </div>
       </div>
 

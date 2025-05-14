@@ -10,6 +10,8 @@ export const ScheduleContext = createContext({
   handleRowClick: () => {},
   handleResetErrors: () => {},
   edittingSchedule: {},
+  setSelectedSchedule: () => {},
+  setEdittingSchedule: () => {},
   handleEditInputChange: () => {},
   handleInputChange: () => {},
   handleCreateSchedule: () => {},
@@ -26,6 +28,7 @@ export const ScheduleProvider = ({ children }) => {
     startDate: "",
     endDate: "",
     status: true,
+    amount: 0,
   };
   const [selectedSchedule, setSelectedSchedule] = useState(initialSchedule);
   const [edittingSchedule, setEdittingSchedule] = useState(initialSchedule);
@@ -41,31 +44,6 @@ export const ScheduleProvider = ({ children }) => {
   const handleRowClick = (schedule) => {
     setEdittingSchedule(schedule);
   };
-
-  // const handleValidate = (name, value, schedule = {}) => {
-  //   const newErrors = {};
-  //   const currentDate = new Date();
-
-  //   switch (name) {
-  //     case "startDate":
-  //       if (!value) newErrors.startDate = "Start date cannot be empty!";
-  //       else if (new Date(value) < currentDate)
-  //         newErrors.startDate = "Invalid start date!";
-  //       break;
-  //     case "endDate":
-  //       const startDate = new Date(schedule.startDate || "");
-  //       const selectedEndDate = new Date(value);
-  //       if (!value) newErrors.endDate = "End date cannot be empty!";
-  //       else if (selectedEndDate <= startDate)
-  //         newErrors.endDate = "End date must be greater than the start date!";
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
-  //   return newErrors;
-  // };
 
   const handleResetErrors = () => {
     setErrors({ create: {}, edit: {} });
@@ -100,7 +78,10 @@ export const ScheduleProvider = ({ children }) => {
           newErrors.endDate = "End date must be after the start date!";
         }
         break;
-
+      case "amount":
+        if (!value) {
+          newErrors.amount = "Amount cannot be empty!";
+        }
       default:
         break;
     }
@@ -221,6 +202,8 @@ export const ScheduleProvider = ({ children }) => {
         selectedSchedule,
         edittingSchedule,
         errors,
+        setSelectedSchedule,
+        setEdittingSchedule,
         handleResetErrors,
         handleRowClick,
         handleEditInputChange,

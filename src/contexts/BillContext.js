@@ -1,73 +1,68 @@
-import { createContext, useState, useMemo } from "react";
+import axios from "axios";
+import { createContext, useState, useMemo, useEffect, useContext } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { DestinationContext } from "./DestinationContext";
+import { UsageVoucherContext } from "./UsageVoucherContext";
+import { PayTypeContext } from "./PayTypeContext";
+import { ScheduleContext } from "./ScheduleContext";
+import { toast } from "react-toastify";
 
 export const BillContext = createContext({
-  payType: {},
+  allBills: [],
   errors: {},
   noticeBox: false,
   billInfo: {},
-  tempBillInfo: {},
   totalCalculate: {},
-  voucherSelected: {},
-  userVoucher: [],
   setNoticeBox: () => {},
+  handleSchedule: () => {},
   handleInputChange: () => {},
+  handleUsageVoucher: () => {},
   handleOnSave: () => {},
   handlePayType: () => {},
-  handleVoucherClick: () => {},
+  handleCreateBill: () => {},
+  handleDeleteBill: () => {},
 });
 
-export const BillProvider = ({ children, data, userVoucher }) => {
-  const [payType, setPayType] = useState(data?.payType || "");
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
+
+export const BillProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const initialValue = {
+    clientId: user._id,
+    usageVoucherId: null,
+    paytypeId: "",
+    scheduleId: "",
+    num: 0,
+    pay: 0,
+    status: "Pending Confirmation",
+    cancelledAt: null,
+    cancelReason: null,
+    refundAmount: null,
+  };
+
+  const [allBills, setAllBills] = useState([]);
   const [errors, setErrors] = useState({});
   const [noticeBox, setNoticeBox] = useState(false);
-  const [billInfo, setBillInfo] = useState({});
-  const [voucherSelected, setVoucherSelected] = useState(null);
-  const [tempBillInfo, setTempBillInfo] = useState(() => {
-    return data
-      ? {
-          client: data.client || "",
-          service: data.service || "",
-          dateStart: data.dateStart || "",
-          dateEnd: data.dateEnd || "",
-          number: data.number || "",
-          type: data.type || "",
-          total: data.total || "",
-        }
-      : {
-          client: "",
-          service: "",
-          dateStart: "",
-          dateEnd: "",
-          number: "",
-          type: "",
-          total: "",
-        };
-  });
+  const [billInfo, setBillInfo] = useState(initialValue);
+  const { content } = useContext(DestinationContext);
+  const { selectedUsageVoucher, setSelectedUsageVoucher } =
+    useContext(UsageVoucherContext);
+  const { setPayTypeSelected } = useContext(PayTypeContext);
+  const { setEdittingSchedule } = useContext(ScheduleContext);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/bills`)
+      .then((res) => setAllBills(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const validateInput = (name, value) => {
     const newErrors = {};
-    const currentDate = new Date();
 
     switch (name) {
-      case "client":
-        if (!value.trim()) newErrors.client = "Customer name cannot be empty!";
-        break;
-      case "service":
-        if (!value.trim()) newErrors.service = "Service name cannot be empty!";
-        break;
-      case "dateStart":
-        const selectedStartDate = new Date(value);
-        if (!value) newErrors.dateStart = "Start date cannot be empty!";
-        else if (selectedStartDate < currentDate)
-          newErrors.dateStart = "Invalid start date!";
-        break;
-      case "dateEnd":
-        const selectedEndDate = new Date(value);
-        const startDate = new Date(tempBillInfo.dateStart);
-        if (!value) newErrors.dateEnd = "End date cannot be empty!";
-        else if (selectedEndDate <= startDate)
-          newErrors.dateEnd = "End date must be greater than the start date!";
-        break;
       case "number":
         if (!value || value <= 0)
           newErrors.number = "Number of rooms must be greater than 0!";
@@ -89,47 +84,45 @@ export const BillProvider = ({ children, data, userVoucher }) => {
       return updated;
     });
 
-    setTempBillInfo((prev) => ({ ...prev, [name]: value }));
+    setBillInfo((prev) => ({ ...prev, [name]: value }));
   };
   const handlePayType = (type) => {
-    setPayType(type);
-    setTempBillInfo((prev) => ({ ...prev, type }));
+    setPayTypeSelected(type);
+    setBillInfo((prev) => ({ ...prev, paytypeId: type._id }));
   };
 
-  const handleVoucherClick = (voucherValue) => {
-    setVoucherSelected((prev) => (prev === voucherValue ? null : voucherValue));
+  const handleUsageVoucher = (voucher) => {
+    setSelectedUsageVoucher(voucher);
+    setBillInfo((prev) => ({ ...prev, usageVoucherId: voucher._id }));
   };
 
-  const totalCalculate = useMemo(() => {
-    if (!tempBillInfo.dateStart || !tempBillInfo.dateEnd) return 0;
-
-    const dateStart = new Date(tempBillInfo.dateStart);
-    const dateEnd = new Date(tempBillInfo.dateEnd);
-    const days = Math.ceil(dateEnd - dateStart) / (1000 * 60 * 60 * 24);
-    const number = tempBillInfo.number;
-    const discount = voucherSelected || 0;
-
-    const pricePerRoom = 500000;
-    let total = days * number * pricePerRoom - discount;
-    return total < 0 ? 0 : total;
-  }, [
-    tempBillInfo.dateStart,
-    tempBillInfo.dateEnd,
-    tempBillInfo.number,
-    voucherSelected,
-  ]);
+  const handleSchedule = (schedule) => {
+    console.log("here: ", schedule);
+    setEdittingSchedule(schedule);
+    setBillInfo((prev) => ({ ...prev, scheduleId: schedule._id }));
+  };
+  console.log(selectedUsageVoucher || "");
 
   console.log(billInfo);
 
+  const totalCalculate = useMemo(() => {
+    let estimateCost =
+      content?.price * Number(billInfo.num) -
+      (selectedUsageVoucher?.voucherId?.discountValue || 0);
+    return Math.max(estimateCost, 0);
+  }, [content?.price, billInfo.num, selectedUsageVoucher]);
+
+  useEffect(() => {
+    setBillInfo((prev) => ({
+      ...prev,
+      pay: totalCalculate,
+    }));
+  }, [totalCalculate]);
+
   const handleOnSave = () => {
     const newErrors = {
-      ...validateInput("client", tempBillInfo.client),
-      ...validateInput("dateStart", tempBillInfo.dateStart),
-      ...validateInput("dateEnd", tempBillInfo.dateEnd),
-      ...validateInput("number", tempBillInfo.number),
+      ...validateInput("number", billInfo.number),
     };
-
-    if (!payType) newErrors.payment = "Please select a payment method!";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -137,28 +130,58 @@ export const BillProvider = ({ children, data, userVoucher }) => {
       return;
     }
 
-    const billData = { ...tempBillInfo, total: totalCalculate };
+    const billData = { ...billInfo, total: totalCalculate };
     setBillInfo(billData);
     console.log("BillInfo saved:", billData);
+  };
+
+  const handleCreateBill = async () => {
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/bills/create_bill`,
+        billInfo
+      );
+      if (res.data.success) {
+        setAllBills((prev) => [...prev, res.data.data]);
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+
+  const handleDeleteBill = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3000/bills/${id}`);
+      console.log(res.data.message);
+      if (res.data.success) {
+        setAllBills((bills) => bills.filter((bill) => bill._id != id));
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <BillContext.Provider
       value={{
-        payType,
         errors,
         noticeBox,
         setNoticeBox,
+        handleCreateBill,
+        allBills,
         billInfo,
-        tempBillInfo,
+        billInfo,
         totalCalculate,
-        voucherSelected,
-        userVoucher,
+        handleSchedule,
+        handleUsageVoucher,
         setNoticeBox,
         handleInputChange,
         handleOnSave,
         handlePayType,
-        handleVoucherClick,
+        handleDeleteBill,
       }}
     >
       {children}

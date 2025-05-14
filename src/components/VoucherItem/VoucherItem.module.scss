@@ -14,7 +14,7 @@
         padding: 10px;
     }
 
-    &:hover {
+    &.isActive {
         background-color: #f1eee3; // Màu nền nổi bật
         border: 2px solid #3d3d3d; // Viền cam để phân biệt
     }

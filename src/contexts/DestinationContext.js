@@ -7,7 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import { CityContext } from "./CityContext";
 
@@ -44,9 +49,7 @@ export const DestinationProvider = ({ children }) => {
   const [originalContent, setOriginalContent] = useState({});
   const [editActivityIndex, setEditActivityIndex] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
-  const descriptionRef = useRef();
 
-  const { placement, id } = useParams();
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation().pathname;
@@ -69,6 +72,10 @@ export const DestinationProvider = ({ children }) => {
     description: "",
     activities: [],
   });
+  const { placement, id } = useParams();
+
+  const [searchParams] = useSearchParams();
+  const destinationId = searchParams.get("destinationId");
 
   useEffect(() => {
     const fetchCity = async () => {
@@ -82,9 +89,9 @@ export const DestinationProvider = ({ children }) => {
   }, [placement]);
 
   useEffect(() => {
-    if (id && id !== "add_content") {
+    if ((id && id !== "add_content") || destinationId) {
       axios
-        .get(`http://localhost:3000/destinations/${id}`)
+        .get(`http://localhost:3000/destinations/${id || destinationId}`)
         .then((res) => {
           setContent(res.data);
         })
@@ -92,7 +99,7 @@ export const DestinationProvider = ({ children }) => {
           console.error("Lỗi khi gọi API:", err);
         });
     }
-  }, [id]);
+  }, [id, destinationId]);
 
   const validateInput = (name, value) => {
     const newErrors = {};

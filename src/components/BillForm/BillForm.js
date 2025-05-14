@@ -5,6 +5,8 @@ import Button from "../Button";
 import Notice from "../Notice/Notice";
 import { useContext, useMemo, useState } from "react";
 import { BillContext } from "../../contexts/BillContext";
+import { PayTypeContext } from "../../contexts/PayTypeContext";
+import { DestinationContext } from "../../contexts/DestinationContext";
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +16,6 @@ function BillForm() {
     errors,
     noticeBox,
     billInfo,
-    tempBillInfo,
     totalCalculate,
     voucherSelected,
     userVoucher,
@@ -25,84 +26,27 @@ function BillForm() {
     handleVoucherClick,
   } = useContext(BillContext);
 
-  const QRCODE = [
-    {
-      name: "Paypal",
-      code: "https://cdn.pixabay.com/photo/2018/05/08/21/29/paypal-3384015_1280.png",
-    },
-    {
-      name: "Visa",
-      code: "https://mondialbrand.com/wp-content/uploads/2024/02/visa-logo-preview.png",
-    },
-    {
-      name: "Mastercard",
-      code: "https://athgroup.vn/upload/blocks/thumb_1920x0/ATH-kh%C3%A1m-ph%C3%A1-b%E1%BB%99-nh%E1%BA%ADn-di%E1%BB%87n-mastercard-1.png",
-    },
-    {
-      name: "MBBank",
-      code: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDbEnmjjKXOTObZ4YOqqpbcVtJjNwREceuzA&s",
-    },
-  ];
+  const { allPayTypes } = useContext(PayTypeContext);
+  const { handleSelectedDestination } = useContext(DestinationContext);
 
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("client")}>
+      <div className={cx("service", { "pointer-none": billInfo.service })}>
+        <div>{}</div>
+      </div>
+
+      <div className={cx("number")}>
         <Input
           dark
-          name="client"
-          frame="Client"
-          value={tempBillInfo.client}
+          type="number"
+          name="number"
+          frame={"Number"}
+          value={billInfo.number}
           onChange={handleInputChange}
-          error={errors.client}
+          error={errors.number}
         />
       </div>
-      <div className={cx("service", { "pointer-none": tempBillInfo.service })}>
-        <Input
-          dark
-          name="service"
-          frame="Name"
-          value={tempBillInfo.service}
-          onChange={handleInputChange}
-          error={errors.service}
-        />
-      </div>
-      <div className={cx("row")}>
-        <div className={cx("check-in")}>
-          <Input
-            dark
-            type="date"
-            name="dateStart"
-            frame="Check in"
-            value={tempBillInfo.dateStart}
-            onChange={handleInputChange}
-            error={errors.dateStart}
-          />
-        </div>
 
-        <div className={cx("check-out")}>
-          <Input
-            dark
-            type="date"
-            name="dateEnd"
-            frame="Check out"
-            value={tempBillInfo.dateEnd}
-            onChange={handleInputChange}
-            error={errors.dateEnd}
-          />
-        </div>
-
-        <div className={cx("number")}>
-          <Input
-            dark
-            type="number"
-            name="number"
-            frame={"Number"}
-            value={tempBillInfo.number}
-            onChange={handleInputChange}
-            error={errors.number}
-          />
-        </div>
-      </div>
       {userVoucher && (
         <div className={cx("voucher-wrapper")}>
           {userVoucher.map((voucher, index) => (
@@ -132,9 +76,9 @@ function BillForm() {
       <div className={cx("pay-type")}>
         <div className={cx("pay-title")}>Payment method</div>
         <div className={cx("type-choice")}>
-          {QRCODE.map((type, index) => (
+          {allPayTypes.map((type) => (
             <button
-              key={index}
+              key={type._id}
               onClick={() => {
                 handlePayType(type.name);
               }}
@@ -145,7 +89,7 @@ function BillForm() {
         </div>
         {payType && (
           <img
-            src={QRCODE.find((item) => item.name === payType)?.code}
+            src={allPayTypes.find((type) => type.name === payType)?.image}
             alt="Payment type"
           />
         )}

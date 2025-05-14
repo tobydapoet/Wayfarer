@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./About.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import RowFormat from "../../components/BlogFormat/BlogFormat";
 import Member from "../../components/Member/Member";
 import { AboutUsContext } from "../../contexts/AboutUsContext";

@@ -46,10 +46,6 @@ export const StaffProvider = ({ children, data }) => {
   }, [staffData]);
 
   useEffect(() => {
-    console.log("Staff: ", allStaffsData);
-  });
-
-  useEffect(() => {
     if (data) return;
     axios
       .get("http://localhost:3000/staffs")

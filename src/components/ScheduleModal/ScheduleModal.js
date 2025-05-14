@@ -5,8 +5,14 @@ import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ScheduleContext } from "../../contexts/ScheduleContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faPlus,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import standardTime from "../../utils/standardTime";
+import { BillContext } from "../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +38,7 @@ function ScheduleModal({ open, onClose }) {
 
   const [editScheduleId, setEditScheduleId] = useState(null);
   const [editField, setEditField] = useState("");
+  const { allBills } = useContext(BillContext);
 
   return (
     <Modal
@@ -45,14 +52,17 @@ function ScheduleModal({ open, onClose }) {
     >
       <div className={cx("wrapper")}>
         <div className={cx("new-schedule")}>
-          <div className={cx("start-time")}>
-            <input
-              type="datetime-local"
-              value={selectedSchedule.startDate || ""}
-              onChange={handleInputChange}
-              className={cx("input")}
-              name="startDate"
-            />
+          <div className={cx("new-text")}>
+            <div className={cx("start-time")}>
+              <div className={cx("frame")}>Start:</div>
+              <input
+                type="datetime-local"
+                value={selectedSchedule.startDate || ""}
+                onChange={handleInputChange}
+                className={cx("input")}
+                name="startDate"
+              />
+            </div>
             {errors?.create?.startDate && (
               <div className={cx("error-text")}>
                 {errors?.create?.startDate && (
@@ -60,28 +70,47 @@ function ScheduleModal({ open, onClose }) {
                 )}
               </div>
             )}
-          </div>
 
-          <div className={cx("end-time")}>
-            <input
-              type="datetime-local"
-              value={selectedSchedule.endDate || ""}
-              onChange={handleInputChange}
-              className={cx("input")}
-              name="endDate"
-            />
+            <div className={cx("end-time")}>
+              <div className={cx("frame")}>End:</div>
+
+              <input
+                type="datetime-local"
+                value={selectedSchedule.endDate || ""}
+                onChange={handleInputChange}
+                className={cx("input")}
+                name="endDate"
+              />
+            </div>
             {errors?.create?.endDate && (
               <div className={cx("error-text")}>
                 {errors?.create?.endDate && <div>{errors.create.endDate}</div>}
               </div>
             )}
+
+            <div className={cx("amount")}>
+              <div className={cx("frame")}>Amount:</div>
+              <input
+                type="number"
+                value={selectedSchedule.amount || ""}
+                onChange={handleInputChange}
+                className={cx("amount-input")}
+                placeholder="Amount..."
+                name="amount"
+              />
+            </div>
+            {errors?.create?.amount && (
+              <div className={cx("error-text")}>
+                {errors?.create?.amount && <div>{errors.create.amount}</div>}
+              </div>
+            )}
           </div>
-          <button
+          <div
             className={cx("create-btn")}
             onClick={() => handleCreateSchedule()}
           >
-            Create
-          </button>
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
         </div>
 
         <div className={cx("schedule-list")}>
@@ -100,6 +129,7 @@ function ScheduleModal({ open, onClose }) {
                 <div className={cx("date-group")}>
                   <>
                     {editScheduleId === schedule._id &&
+                    edittingSchedule.status === true &&
                     editField === "startDate" ? (
                       <input
                         name="startDate"
@@ -134,7 +164,7 @@ function ScheduleModal({ open, onClose }) {
                           setEditField("startDate");
                         }}
                       >
-                        Bắt đầu: {standardTime(schedule.startDate)}
+                        Start: {standardTime(schedule.startDate)}
                       </div>
                     )}
                     {errors?.edit?.[schedule._id]?.startDate && (
@@ -146,6 +176,7 @@ function ScheduleModal({ open, onClose }) {
 
                   <>
                     {editScheduleId === schedule._id &&
+                    edittingSchedule.status === true &&
                     editField === "endDate" ? (
                       <input
                         name="endDate"
@@ -180,12 +211,61 @@ function ScheduleModal({ open, onClose }) {
                           setEditField("endDate");
                         }}
                       >
-                        Kết thúc: {standardTime(schedule.endDate)}
+                        Finish: {standardTime(schedule.endDate)}
                       </div>
                     )}
                     {errors?.edit?.[schedule._id]?.endDate && (
                       <div className={cx("error-text")}>
                         {errors.edit[schedule._id].endDate}
+                      </div>
+                    )}
+                  </>
+
+                  <>
+                    {editScheduleId === schedule._id &&
+                    edittingSchedule.status === true &&
+                    editField === "amount" ? (
+                      <input
+                        name="amount"
+                        type="number"
+                        value={edittingSchedule.amount}
+                        onChange={handleEditInputChange}
+                        onBlur={() => {
+                          setEditScheduleId(null);
+                          setEditField("");
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleUpdateSchedule();
+                            setEditScheduleId(null);
+                            setEditField("");
+                          }
+                          if (e.key === "Escape") {
+                            setEditScheduleId(null);
+                            setEditField("");
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className={cx("end-div")}
+                        onClick={() => {
+                          setEditScheduleId(schedule._id);
+                          setEditField("amount");
+                        }}
+                      >
+                        Amount:{" "}
+                        {allBills
+                          .filter(
+                            (bill) => bill.scheduleId._id === schedule._id
+                          )
+                          .reduce((sum, bill) => sum + bill.num, 0)}
+                        /{schedule.amount}
+                      </div>
+                    )}
+                    {errors?.edit?.[schedule._id]?.amount && (
+                      <div className={cx("error-text")}>
+                        {errors.edit[schedule._id].amount}
                       </div>
                     )}
                   </>

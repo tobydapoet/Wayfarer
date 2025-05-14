@@ -1,0 +1,309 @@
+.wrapper {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 130px);
+    margin: 0 auto;
+    position: static;
+
+    .img-container {
+        position: relative;
+        height: fit-content;
+        margin-bottom: 20px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 1px;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+            z-index: 2;
+        }
+        img {
+            width: 100%;
+        }
+        .bill-info {
+            padding: 20px;
+            position: absolute;
+            bottom: 0;
+            color: var(--primary);
+            z-index: 10;
+            font-family: themify;
+            .name-destination {
+                font-size: 30px;
+            }
+        }
+    }
+
+    .bill-container {
+        padding: 10px;
+        width: 100%;
+        position: relative;
+
+        .row {
+            display: flex;
+            width: calc(100% - 20px);
+            gap: 30px;
+
+            .number {
+                flex: 3;
+            }
+
+            .time {
+                flex: 7;
+
+                .result-container {
+                    width: 100%;
+                    .result {
+                        width: 100%;
+                        box-sizing: border-box;
+                        .result-item {
+                            display: flex;
+                            justify-content: space-between;
+                            font-size: 17px;
+                            font-family: var(--font-default);
+                            line-height: 35px;
+                            width: 100%;
+                            padding-right: 10px;
+
+                            &:hover {
+                                background-color: #3535350e;
+                            }
+
+                            .time {
+                                display: flex;
+                                gap: 10px;
+                                .start-time {
+                                    width: 140px;
+                                    text-align: center;
+                                }
+                                .end-time {
+                                    text-align: center;
+                                    width: 140px;
+                                }
+                            }
+
+                            .member {
+                                width: 50px;
+                            }
+                        }
+                    }
+                }
+
+                .schedule-container {
+                    margin-bottom: 4px;
+                    border-bottom: 1px solid #202020;
+                    margin-bottom: 20px;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+
+                    .frame {
+                        white-space: nowrap;
+                        color: #202020;
+                        font-weight: bold;
+                    }
+
+                    .schedule {
+                        border: none;
+                        margin: 20px 0 7px 0;
+                        height: auto;
+                        outline: none;
+                        font-family: var(--font-default);
+                        font-size: 19px;
+                        background-color: transparent !important;
+                        box-shadow: none !important;
+                        transition: none !important;
+                    }
+                }
+            }
+        }
+        .btn-container {
+            width: 300px;
+            display: flex;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    }
+
+    .pay-type {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .pay-title {
+            color: rgb(99, 98, 98);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .type-choice {
+            display: flex;
+            gap: 10px;
+
+            button {
+                border-radius: 8px;
+                outline: none;
+                padding: 8px 15px;
+                font-size: 17px;
+                font-family: var(--font-default);
+                border: 2px solid rgba(97, 96, 96, 0.75);
+                cursor: pointer;
+                background-color: transparent;
+            }
+        }
+        img {
+            width: fit-content;
+            height: 200px;
+            margin-top: 20px;
+            object-fit: contain;
+        }
+    }
+
+    .btn-wrapper {
+        margin-top: 30px;
+    }
+
+    .voucher-wrapper {
+        padding: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        flex: 1;
+        justify-content: center;
+        margin-bottom: 10px;
+
+        .voucher-container {
+            cursor: pointer;
+            width: 17%;
+            height: fit-content;
+            background: #fff;
+            border: 2px dashed #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+
+            &.selected {
+                background-color: #f1eee3; // Màu nền nổi bật
+                border: 2px solid #3d3d3d; // Viền cam để phân biệt
+            }
+            .voucher-code {
+                font-size: 1.1rem;
+                display: flex;
+                justify-content: center;
+                font-weight: bold;
+                color: #000;
+                background: #f4f4f4;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            .voucher-details {
+                font-size: 0.7rem;
+                color: #555;
+                margin-bottom: 10px;
+            }
+            .voucher-footer {
+                font-size: 12px;
+                color: #777;
+                border-top: 1px dashed #999;
+                padding-top: 5px;
+            }
+        }
+    }
+
+    .voucher-container {
+        .frame {
+            white-space: nowrap;
+            color: #202020;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .voucher-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+    }
+
+    .total {
+        font-size: 19px;
+        font-family: var(--font-default);
+        margin: 30px 0;
+
+        .original-price,
+        .sale-value,
+        .total-value {
+            display: flex;
+            span {
+                width: 150px;
+            }
+        }
+
+        hr {
+            width: 230px;
+            display: flex;
+            margin-left: 0;
+            margin-top: 10px;
+        }
+    }
+
+    .error {
+        color: rgb(253, 77, 77);
+        margin-top: -10px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        padding: 10px;
+        width: calc(100vw - 100px);
+
+        .row {
+            gap: 20px;
+            flex-direction: column;
+        }
+
+        .voucher-wrapper {
+            padding: 10px;
+            width: 90px;
+            margin: 0 auto;
+            flex: 1;
+            margin-bottom: 5px;
+
+            .voucher-container {
+                cursor: pointer;
+                height: 80px;
+                width: 100%;
+                padding: 10px 8px;
+                text-align: center;
+                position: relative;
+                .voucher-code {
+                    font-size: 0.7rem;
+                }
+                .voucher-details {
+                    font-size: 0.6rem;
+                }
+                .voucher-list {
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                }
+            }
+        }
+
+        .pay-type {
+            .type-choice {
+                button {
+                    font-size: 14px;
+                    padding: 10px 12px;
+                }
+            }
+        }
+    }
+}

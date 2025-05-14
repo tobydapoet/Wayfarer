@@ -2,6 +2,7 @@
     color: #202020;
     width: 100%;
     cursor: pointer;
+    font-family: var(--font-default);
 
     &:hover {
         background-color: #3535350e;
@@ -20,6 +21,22 @@
         width: calc(100% - 20px);
         table-layout: auto;
         border-collapse: collapse;
+    }
+
+    .number {
+        width: 100px;
+    }
+
+    .title {
+        width: 200px;
+    }
+
+    .status {
+        width: 200px;
+    }
+
+    .delete {
+        width: 100px;
     }
 
     .user {
@@ -45,54 +62,43 @@
 
     .title {
         font-size: 13px;
-      
     }
 
-    .status {
+    .status-inner {
         font-size: 13px;
+        padding: 10px;
 
         &.pending {
-            color: #ffcc00; /* Vàng */
-        }
-
-        &.confirmed {
-            color: #4caf50; /* Xanh lá */
-        }
-
-        &.payment-pending {
-            color: #ff9800; /* Cam */
+            background-color: #ffcc00; /* Vàng */
+            border-radius: 16px;
         }
 
         &.paid {
-            color: #2196f3; /* Xanh dương */
-        }
-
-        &.checked-in {
-            color: #673ab7; /* Tím */
+            background-color: #2196f3; /* Xanh dương */
             border-radius: 16px;
         }
 
         &.completed {
-            color: #009688; /* Xanh lục */
+            background-color: #009688; /* Xanh lục */
             border-radius: 16px;
         }
 
-        &.cancelled {
-            color: #f44336; /* Đỏ */
-            border-radius: 16px;
-        }
-
-        &.no-show {
-            color: #9e9e9e; /* Xám */
+        &.in-process {
+            background-color: aquamarine;
             border-radius: 16px;
         }
 
         &.refunded {
-            color: #8bc34a; /* Xanh nhạt */
+            background-color: #f44336; /* Đỏ */
+            border-radius: 16px;
+        }
+
+        &.canceled {
+            background-color: #9e9e9e; /* Xám */
             border-radius: 16px;
         }
     }
-    .time-start {
+    .number {
         font-size: 13px;
     }
 }
@@ -122,7 +128,7 @@
             font-family: var(--font-default);
         }
 
-        .time-start {
+        .number {
             display: none;
         }
     }
@@ -146,7 +152,6 @@
             align-items: center;
             width: 100px;
             .name {
-    
             }
 
             .img {
@@ -156,10 +161,9 @@
                     display: none;
                 }
             }
-          
         }
 
-        .time-start {
+        .number {
             display: none;
         }
 

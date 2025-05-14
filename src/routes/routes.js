@@ -44,6 +44,8 @@ import { ClientProvider } from "../contexts/ClientContext";
 import BonusPoint from "../pages/SelectedPage/BonusPoint/BonusPoint";
 import PayTypeManage from "../pages/Manage/PayTypeManage/PayTypeManage";
 import { PayTypeProvider } from "../contexts/PayTypeContext";
+import { BillProvider } from "../contexts/BillContext";
+import { ScheduleProvider } from "../contexts/ScheduleContext";
 
 const publicRoutes = [
   {
@@ -65,7 +67,18 @@ const publicRoutes = [
     topic: "ABOUT US",
   },
   { path: "/blogs", component: Blogs, context: BlogProvider, topic: "BLOG" },
-  { path: "/bill", component: Bill },
+  {
+    path: "/bill",
+    component: Bill,
+    context: [
+      DestinationProvider,
+      ScheduleProvider,
+      ClientProvider,
+      UsageVoucherProvider,
+      PayTypeProvider,
+      BillProvider,
+    ],
+  },
   {
     path: "/contact",
     component: Contact,
@@ -132,6 +145,7 @@ const privateRoutes = [
           {
             path: "dashboard",
             component: Dashboard,
+            context: BillProvider,
             default: true,
             layout: null,
           },
@@ -219,6 +233,7 @@ const privateRoutes = [
       {
         path: "billsmanage",
         component: BillsManage,
+        context: BillProvider,
         layout: null,
       },
       {
