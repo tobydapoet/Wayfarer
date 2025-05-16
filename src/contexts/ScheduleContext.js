@@ -57,11 +57,19 @@ export const ScheduleProvider = ({ children }) => {
       case "startDate":
         const endDate = schedule.endDate ? new Date(schedule.endDate) : null;
         const selectedStartDate = new Date(value);
+        const diffInDays =
+          (new Date(value).getTime() - currentDate.getTime()) /
+          (1000 * 60 * 60 * 24);
+
         if (!value) {
           newErrors.startDate = "Start date cannot be empty!";
         } else if (new Date(value) < currentDate) {
           newErrors.startDate = "Start date must be in the future!";
-        } else if (endDate && selectedStartDate >= endDate) {
+        }
+        // else if (diffInDays < 30) {
+        //   newErrors.startDate = "Minimum 30 days";
+        // }
+        else if (endDate && selectedStartDate >= endDate) {
           newErrors.startDate = "Start date must be before the end date!";
         }
         break;

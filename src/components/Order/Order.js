@@ -14,13 +14,13 @@ function Order({ data, extent, onDelete }) {
   const statusColors = {
     "Pending Confirmation": "pending",
     Paid: "paid",
-    "In process": "in-process",
+    "In Process": "in-process",
     Completed: "completed",
-    Canceled: "canceled",
+    Cancelled: "cancelled",
     Refunded: "refunded",
+    "Pending Refund": "wait-refund",
   };
 
-  console.log(data);
   const navigate = useNavigate();
   const handleRowClick = () => {
     navigate(`/manage/billsmanage/${data._id}`);

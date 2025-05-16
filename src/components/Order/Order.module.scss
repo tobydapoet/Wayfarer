@@ -88,12 +88,17 @@
             border-radius: 16px;
         }
 
+        &.wait-refund {
+            background-color: #f4a236;
+            border-radius: 16px;
+        }
+
         &.refunded {
             background-color: #f44336; /* Đỏ */
             border-radius: 16px;
         }
 
-        &.canceled {
+        &.cancelled {
             background-color: #9e9e9e; /* Xám */
             border-radius: 16px;
         }

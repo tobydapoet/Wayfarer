@@ -4,9 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../../components/SearchBar";
 import Order from "../../../components/Order";
-import { use, useContext, useState } from "react";
-import BillForm from "../../../components/BillForm";
-import Modal from "../../../components/Modal";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BillContext } from "../../../contexts/BillContext";
 

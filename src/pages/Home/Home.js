@@ -61,7 +61,6 @@ function Home() {
       <div className={cx("main-info")}>
         <div className={cx("destinations")}>
           {allDestinations.slice(0, 5).map((destination) => {
-            console.log(destination);
             return (
               <Tablet
                 key={destination._id}
@@ -101,6 +100,7 @@ function Home() {
           <div className={cx("blog-row")}>
             {allBlogData.slice(-3).map((blog) => (
               <BlogHomeItem
+                key={blog._id}
                 data={blog}
                 onClick={() => navigate(`/blogs/${blog._id}`)}
               />

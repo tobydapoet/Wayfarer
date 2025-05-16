@@ -8,121 +8,15 @@ import {
   ClientContext,
   ClientProvider,
 } from "../../../../../contexts/ClientContext";
+import { BillContext } from "../../../../../contexts/BillContext";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(style);
 
-const TourItems = [
-  {
-    name: "Temple of Literature1",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 11,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "2",
-    type: "0",
-  },
-  {
-    name: "Temple of Literature2",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 10,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "4",
-    type: "1",
-  },
-  {
-    name: "Temple of Literature3",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 12,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "3",
-    type: "2",
-  },
-  {
-    name: "Temple of Literature2",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 10,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "4",
-    type: "1",
-  },
-  {
-    name: "Temple of Literature3",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 12,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "3",
-    type: "2",
-  },
-  {
-    name: "Temple of Literature2",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 10,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "4",
-    type: "1",
-  },
-  {
-    name: "Temple of Literature3",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 12,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "3",
-    type: "2",
-  },
-  {
-    name: "Temple of Literature3",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 12,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "3",
-    type: "2",
-  },
-  {
-    name: "Temple of Literature3",
-    city: "Ha Noi",
-    address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-    img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-    cost: 500,
-    guest: 12,
-    start: "15:40 2025-2-27",
-    finish: "17:40 2025-2-27",
-    status: "3",
-    type: "2",
-  },
-];
 function ClientInfo() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
+  const { allBills } = useContext(BillContext);
+  const { email } = useParams();
 
   useEffect(() => {
     const handleResize = () => {
@@ -137,13 +31,15 @@ function ClientInfo() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("summary", { collapsed: selectedItem !== null })}>
-        {TourItems.map((TourItem, key) => (
-          <ProcessingItem
-            key={key}
-            data={TourItem}
-            onClick={() => setSelectedItem(TourItem)}
-          />
-        ))}
+        {allBills
+          .filter((bills) => bills?.clientId?.email === email)
+          .map((TourItem, key) => (
+            <ProcessingItem
+              key={key}
+              data={TourItem}
+              onClick={() => setSelectedItem(TourItem)}
+            />
+          ))}
       </div>
       {selectedItem ? (
         <div className={cx("details", { expanded: selectedItem !== null })}>

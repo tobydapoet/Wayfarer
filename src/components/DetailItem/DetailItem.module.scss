@@ -3,6 +3,7 @@
     height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
+    position: relative;
 
     .back {
         background-color: transparent;
@@ -13,80 +14,119 @@
         display: flex;
     }
 
-    .content {
-        line-height: 30px;
-    }
-
     .status {
-        padding: 3px 10px;
-        border-radius: 15px;
+        font-size: 15px;
+        padding: 10px;
 
         &.pending {
-            background-color: #ffcc00; /* Vàng */
-        }
-
-        &.confirmed {
-            background-color: #4caf50; /* Xanh lá */
-        }
-
-        &.payment-pending {
-            background-color: #ff9800; /* Cam */
+            background-color: #ffcc00;
+            border-radius: 16px;
         }
 
         &.paid {
-            background-color: #2196f3; /* Xanh dương */
-        }
-
-        &.checked-in {
-            background-color: #673ab7; /* Tím */
+            background-color: #2196f3;
             border-radius: 16px;
         }
 
         &.completed {
-            background-color: #009688; /* Xanh lục */
+            background-color: #009688;
             border-radius: 16px;
         }
 
-        &.cancelled {
-            background-color: #f44336; /* Đỏ */
-            border-radius: 16px;
-        }
-
-        &.no-show {
-            background-color: #9e9e9e; /* Xám */
+        &.in-process {
+            background-color: aquamarine;
             border-radius: 16px;
         }
 
         &.refunded {
-            background-color: #8bc34a; /* Xanh nhạt */
+            background-color: #f44336;
+            border-radius: 16px;
+        }
+
+        &.wait-refund {
+            background-color: #f4a236;
+            border-radius: 16px;
+        }
+
+        &.cancelled {
+            background-color: #9e9e9e;
             border-radius: 16px;
         }
     }
 
-    .choice {
+    .header {
         display: flex;
-        gap: 20px;
-        justify-content: center;
-        margin-top: auto;
+        justify-content: space-between;
 
-        button {
-            width: 30%;
-            min-width: 100px;
-        }
-    }
-    .pay-container,
-    .cancel-container {
-        display: flex;
-        flex-direction: column;
-        height: 200px;
-        position: relative;
-        font-size: 20px;
-
-        .btn-container {
+        .btn-icon-container {
+            cursor: pointer;
+            background-color: #202020;
+            color: var(--primary);
             display: flex;
-            gap: 20px;
-            margin-top: auto;
             justify-content: center;
+            align-items: center;
+            padding: 10px;
+            border-radius: 7px;
         }
     }
+
+    .schedule-info {
+        margin: 15px 0px;
+        .destination-container {
+            display: flex;
+            justify-content: space-between;
+
+            .destination-name {
+                font-size: 25px;
+                font-family: themify;
+                font-weight: bold;
+            }
+        }
+
+        .start-date,
+        .end-date {
+            font-size: 17px;
+            font-family: var(--font-default);
+            display: flex;
+            margin-top: 10px;
+            span {
+                width: 60px;
+            }
+        }
+    }
+
+    .body {
+        .price-container,
+        .unit-container,
+        .number-container,
+        .overall-container,
+        .usage-voucher-container,
+        .total-container {
+            display: flex;
+            justify-content: space-between;
+            font-size: 17px;
+            font-family: var(--font-default);
+            margin-top: 10px;
+        }
+    }
+
+    .btn-container {
+        display: flex;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 20px;
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.confirm-container {
+    display: flex;
+    width: 300px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
 }

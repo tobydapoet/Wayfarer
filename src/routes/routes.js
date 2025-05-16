@@ -5,7 +5,6 @@ import Profile from "../pages/Profile";
 import Contact from "../pages/Contact";
 import Blogs from "../pages/Blogs";
 import Placement from "../pages/Destinations/Placement";
-import SelectedPage from "../pages/SelectedPage/SelectedPage";
 import Manage from "../pages/Manage/Manage";
 import Business from "../pages/Manage/Business";
 import Staffs from "../pages/Manage/Business/Staffs";
@@ -46,6 +45,9 @@ import PayTypeManage from "../pages/Manage/PayTypeManage/PayTypeManage";
 import { PayTypeProvider } from "../contexts/PayTypeContext";
 import { BillProvider } from "../contexts/BillContext";
 import { ScheduleProvider } from "../contexts/ScheduleContext";
+import Processing from "../pages/SelectedPage/Processing";
+import Favourite from "../pages/SelectedPage/Favourite";
+import MyBlogs from "../pages/SelectedPage/MyBlogs/MyBlogs";
 
 const publicRoutes = [
   {
@@ -108,11 +110,25 @@ const publicRoutes = [
   {
     path: ":email",
     component: Profile,
+    context: UsageVoucherProvider,
+
     layout: ProfileLayout,
   },
   {
-    path: ":email/:selected",
-    component: SelectedPage,
+    path: ":email/processing",
+    component: Processing,
+    context: BillProvider,
+    layout: ProfileLayout,
+  },
+  {
+    path: ":email/favourite",
+    component: Favourite,
+    layout: ProfileLayout,
+  },
+  {
+    path: ":email/my_blogs/",
+    component: MyBlogs,
+    context: BlogProvider,
     layout: ProfileLayout,
   },
   {
@@ -124,7 +140,7 @@ const publicRoutes = [
   {
     path: ":email/bonus",
     component: BonusPoint,
-    context: [UsageVoucherProvider],
+    context: UsageVoucherProvider,
     layout: ProfileLayout,
   },
 ];
@@ -163,6 +179,7 @@ const privateRoutes = [
           {
             path: "/manage/business/clients/:email",
             component: ClientInfo,
+            context: BillProvider,
             layout: null,
           },
           {
@@ -263,7 +280,12 @@ const privateRoutes = [
         context: BlogProvider,
         layout: null,
       },
-      { path: "/manage/billsmanage/:bill", component: BillEdit, layout: null },
+      {
+        path: "/manage/billsmanage/:id",
+        component: BillEdit,
+        context: [ScheduleProvider, BillProvider],
+        layout: null,
+      },
     ],
   },
 ];

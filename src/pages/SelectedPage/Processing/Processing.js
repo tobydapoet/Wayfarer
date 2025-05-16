@@ -1,74 +1,73 @@
 import classNames from "classnames/bind";
 import styles from "./Processing.module.scss";
 import ProcessingItem from "../../../components/ProcessingItem/ProcessingItem";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DetailItem from "../../../components/DetailItem/DetailItem";
+import { BillContext } from "../../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
+const user =
+  JSON.parse(localStorage.getItem("user")) ||
+  JSON.parse(sessionStorage.getItem("user"));
+
 function Processing() {
-  const [selectedItem, setSelectedItem] = useState(null);
-  const TourItems = [
-    {
-      name: "Temple of Literature1",
-      city: "Ha Noi",
-      address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-      img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-      cost: 500,
-      guest: 11,
-      start: "15:40 2025-2-27",
-      finish: "17:40 2025-2-27",
-      status: "2",
-      type: "0",
-    },
-    {
-      name: "Temple of Literature2",
-      city: "Ha Noi",
-      address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-      img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-      cost: 500,
-      guest: 10,
-      start: "15:40 2025-2-27",
-      finish: "17:40 2025-2-27",
-      status: "4",
-      type: "1",
-    },
-    {
-      name: "Temple of Literature3",
-      city: "Ha Noi",
-      address: "58 P. Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội",
-      img: "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-      cost: 500,
-      guest: 12,
-      start: "15:40 2025-2-27",
-      finish: "17:40 2025-2-27",
-      status: "3",
-      type: "2",
-    },
-  ];
+  const { allBills, handleUpdateStatusBill, setBillInfo, billInfo } =
+    useContext(BillContext);
+  console.log(billInfo);
+
   return (
-    <div className={cx("wrapper")}>
-      <div className={cx("summary", { collapsed: selectedItem !== null })}>
-        {TourItems.map((TourItem, index) => (
-          <ProcessingItem
-            key={index}
-            data={TourItem}
-            onClick={() => setSelectedItem(TourItem)}
-          />
-        ))}
+    <>
+      <div className={cx("wrapper")}>
+        <div className={cx("summary", { collapsed: billInfo?._id })}>
+          {allBills
+            .filter((bills) => bills.clientId._id === user._id)
+            .map((TourItem, index) => (
+              <ProcessingItem
+                key={index}
+                data={TourItem}
+                onClick={() => setBillInfo(TourItem)}
+              />
+            ))}
+        </div>
+        <div className={cx("details", { expanded: billInfo?._id })}>
+          {billInfo?._id && (
+            <DetailItem
+              data={billInfo}
+              onClick={(e) => {
+                e.stopPropagation();
+                setBillInfo(null);
+              }}
+              onChangeReason={(e) =>
+                setBillInfo((prev) => ({
+                  ...prev,
+                  cancelReason: e.target.value,
+                }))
+              }
+              onStatusChange={
+                ["Pending Confirmation", "Paid"].includes(billInfo.status)
+                  ? () => {
+                      if (billInfo.status === "Pending Confirmation") {
+                        handleUpdateStatusBill(
+                          billInfo._id,
+                          "Cancelled",
+                          billInfo.cancelReason
+                        );
+                      } else if (billInfo.status === "Paid") {
+                        handleUpdateStatusBill(
+                          billInfo._id,
+                          "Pending Refund",
+                          billInfo.cancelReason
+                        );
+                      }
+                    }
+                  : undefined
+              }
+            />
+          )}
+        </div>
       </div>
-      <div className={cx("details", { expanded: selectedItem !== null })}>
-        {selectedItem && (
-          <DetailItem
-            data={selectedItem}
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedItem(null);
-            }}
-          />
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 

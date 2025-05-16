@@ -63,7 +63,6 @@ export const BlogProvider = ({ children, data }) => {
   const [blogsSearchApprovedData, setBlogsSearchApprovedData] = useState([]);
 
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     if (id) {
       axios

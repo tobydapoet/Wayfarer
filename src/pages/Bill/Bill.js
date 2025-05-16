@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./Bill.module.scss";
-import { useContext, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DestinationContext } from "../../contexts/DestinationContext";
 import { PayTypeContext } from "../../contexts/PayTypeContext";
 import Notice from "../../components/Notice";
@@ -11,7 +11,6 @@ import HeadlessTippy from "@tippyjs/react/headless";
 import Popper from "../../components/Popper";
 import { ScheduleContext } from "../../contexts/ScheduleContext";
 import standardTime from "../../utils/standardTime";
-import images from "../../assets/images";
 import { UsageVoucherContext } from "../../contexts/UsageVoucherContext";
 import VoucherItem from "../../components/VoucherItem";
 
@@ -24,10 +23,10 @@ function BillForm() {
     noticeBox,
     billInfo,
     totalCalculate,
+    setBillInfo,
     handleSchedule,
     setNoticeBox,
     handleInputChange,
-    handleOnSave,
     handlePayType,
     handleUsageVoucher,
     handleCreateBill,
@@ -45,7 +44,6 @@ function BillForm() {
   const user =
     JSON.parse(localStorage.getItem("user")) ||
     JSON.parse(sessionStorage.getItem("user"));
-  console.log(totalCalculate);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("img-container")}>
@@ -83,7 +81,7 @@ function BillForm() {
                           className={cx("result-item")}
                           onMouseDown={(e) => {
                             e.preventDefault();
-                            handleSchedule(schedule);
+                            handleSchedule(schedule, setBillInfo);
                             setIsvisible(false);
                           }}
                         >
@@ -113,6 +111,7 @@ function BillForm() {
               <div className={cx("schedule-container")} ref={inputRef}>
                 <div className={cx("frame")}>Schedule</div>
                 <input
+                  name="schedule"
                   className={cx("schedule")}
                   readOnly
                   value={
@@ -127,6 +126,9 @@ function BillForm() {
                 />
               </div>
             </HeadlessTippy>
+            {errors.scheduleId && (
+              <div className={cx("error-text")}>{errors.scheduleId}</div>
+            )}
           </div>
           <div className={cx("number")}>
             <Input
@@ -136,9 +138,9 @@ function BillForm() {
               frame={
                 content.unit.charAt(0).toUpperCase() + content.unit.slice(1)
               }
-              value={billInfo.number}
-              onChange={handleInputChange}
-              error={errors.number}
+              value={billInfo.num}
+              onChange={(e) => handleInputChange(e, setBillInfo)}
+              error={errors.num}
             />
           </div>
         </div>
@@ -146,19 +148,24 @@ function BillForm() {
         <div className={cx("voucher-container")}>
           <div className={cx("frame")}>Vouchers available: </div>
           <div className={cx("voucher-list")}>
-            {allUsageVouchers
-              .filter(
-                (usagevouchers) => usagevouchers.clientId._id === user._id
-              )
-              .map((usage) => (
-                <VoucherItem
-                  key={usage._id}
-                  data={usage}
-                  minimal
-                  onClick={() => handleUsageVoucher(usage)}
-                  active={selectedUsageVoucher._id === usage._id}
-                />
-              ))}
+            {billInfo.num &&
+              allUsageVouchers
+                .filter(
+                  (usagevouchers) =>
+                    usagevouchers.clientId._id === user._id &&
+                    !usagevouchers.usedAt &&
+                    usagevouchers?.voucherId?.minCost <
+                      content?.price * Number(billInfo.num)
+                )
+                .map((usage) => (
+                  <VoucherItem
+                    key={usage._id}
+                    data={usage}
+                    minimal
+                    onClick={() => handleUsageVoucher(usage)}
+                    active={selectedUsageVoucher._id === usage._id}
+                  />
+                ))}
           </div>
         </div>
 
@@ -204,6 +211,9 @@ function BillForm() {
           </div>
           {payTypeSelected._id && (
             <img src={payTypeSelected.image} alt="Payment type" />
+          )}
+          {errors.paytypeId && (
+            <div className={cx("error-text")}>{errors.paytypeId}</div>
           )}
         </div>
 

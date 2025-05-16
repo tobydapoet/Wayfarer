@@ -1,0 +1,222 @@
+.wrapper {
+    padding: 20px;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        .client-info {
+            font-size: 12px;
+            display: flex;
+            gap: 7px;
+            img {
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .name-client {
+                font-size: 14px;
+            }
+        }
+        .btn-icon-container {
+            cursor: pointer;
+            background-color: #202020;
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            border-radius: 7px;
+        }
+    }
+
+    .schedule-info {
+        margin: 15px 0px;
+        .destination-container {
+            display: flex;
+            justify-content: space-between;
+
+            .destination-name {
+                font-size: 25px;
+                font-family: themify;
+                font-weight: bold;
+            }
+        }
+
+        .status {
+            font-size: 15px;
+            padding: 10px;
+
+            &.pending {
+                background-color: #ffcc00;
+                border-radius: 16px;
+            }
+
+            &.paid {
+                background-color: #2196f3;
+                border-radius: 16px;
+            }
+
+            &.completed {
+                background-color: #009688;
+                border-radius: 16px;
+            }
+
+            &.in-process {
+                background-color: aquamarine;
+                border-radius: 16px;
+            }
+
+            &.wait-refund {
+                background-color: #f4a236;
+                border-radius: 16px;
+            }
+
+            &.refunded {
+                background-color: #f44336;
+                border-radius: 16px;
+            }
+
+            &.cancelled {
+                background-color: #9e9e9e;
+                border-radius: 16px;
+            }
+        }
+
+        .start-date,
+        .end-date {
+            font-size: 19px;
+            font-family: var(--font-default);
+            display: flex;
+            margin-top: 10px;
+            span {
+                width: 60px;
+            }
+        }
+    }
+
+    .body {
+        .price-container,
+        .unit-container,
+        .number-container,
+        .overall-container,
+        .usage-voucher-container,
+        .total-container {
+            display: flex;
+            justify-content: space-between;
+            font-size: 19px;
+            font-family: var(--font-default);
+            margin-top: 10px;
+        }
+    }
+
+    .btn-container {
+        display: flex;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+}
+
+.row {
+    .schedule-container {
+        border-bottom: 1px solid #202020;
+        margin-bottom: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .frame {
+            white-space: nowrap;
+            color: #202020;
+            font-weight: bold;
+        }
+
+        .schedule {
+            border: none;
+            margin: 20px 0 5px 0;
+            height: auto;
+            outline: none;
+            font-family: var(--font-default);
+            font-size: 19px;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            transition: none !important;
+        }
+    }
+    .error-text {
+        color: rgb(253, 77, 77);
+        margin-top: -12px;
+        font-size: 13px;
+    }
+    .result-container {
+        width: 100%;
+        .result {
+            width: 100%;
+            box-sizing: border-box;
+            .result-item {
+                display: flex;
+                justify-content: space-between;
+                font-size: 17px;
+                font-family: var(--font-default);
+                line-height: 35px;
+                width: 100%;
+                padding-right: 10px;
+
+                &:hover {
+                    background-color: #3535350e;
+                }
+
+                .time {
+                    display: flex;
+                    gap: 10px;
+                    .start-time {
+                        width: 140px;
+                        text-align: center;
+                    }
+                    .end-time {
+                        text-align: center;
+                        width: 140px;
+                    }
+                }
+
+                .member {
+                    width: 50px;
+                }
+            }
+        }
+    }
+
+    .total {
+        font-size: 19px;
+        font-family: var(--font-default);
+        margin: 30px 0;
+
+        .original-price,
+        .sale-value,
+        .total-value {
+            display: flex;
+            span {
+                width: 150px;
+            }
+        }
+
+        hr {
+            width: 230px;
+            display: flex;
+            margin-left: 0;
+            margin-top: 10px;
+        }
+    }
+
+    .btn-container {
+        display: flex;
+        width: 300px;
+        margin: 0 auto;
+    }
+}
