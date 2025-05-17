@@ -1,7 +1,6 @@
 .wrapper {
     display: flex;
     justify-content: space-between;
-    width: calc(70vw - 40px);
     padding: 10px 20px;
     cursor: pointer;
     &:hover {
@@ -41,7 +40,7 @@
         }
     }
     .right-side {
-        width: 200px;
+        width: 150px;
         display: flex;
         align-items: center;
         font-family: var(--font-default);

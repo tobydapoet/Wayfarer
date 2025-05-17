@@ -6,6 +6,7 @@ import { UsageVoucherContext } from "./UsageVoucherContext";
 import { PayTypeContext } from "./PayTypeContext";
 import { ScheduleContext } from "./ScheduleContext";
 import { toast } from "react-toastify";
+import { ClientContext } from "./ClientContext";
 
 export const BillContext = createContext({
   allBills: [],
@@ -15,7 +16,9 @@ export const BillContext = createContext({
   totalCalculate: {},
   totalTempCalculate: {},
   tempBillInfo: {},
+  searchBillsResult: {},
   setNoticeBox: () => {},
+  handleClient: () => {},
   handleUpdateBill: () => {},
   setTempBillInfo: () => {},
   setBillInfo: () => {},
@@ -28,6 +31,7 @@ export const BillContext = createContext({
   handleCreateBill: () => {},
   handleDeleteBill: () => {},
   handleUpdateStatusBill: () => {},
+  handleSearchBill: () => {},
 });
 
 const user =
@@ -43,7 +47,7 @@ export const BillProvider = ({ children }) => {
   const param = useParams();
 
   const initialValue = {
-    clientId: user._id,
+    clientId: !user.position ? user._id : "",
     usageVoucherId: null,
     paytypeId: "",
     scheduleId: "",
@@ -62,6 +66,12 @@ export const BillProvider = ({ children }) => {
   const { setPayTypeSelected } = useContext(PayTypeContext);
   const { edittingSchedule, setEdittingSchedule, allSchedules } =
     useContext(ScheduleContext);
+  const [searchBillsResult, setSearchBillsResult] = useState([]);
+  const { setClientData } = useContext(ClientContext);
+
+  // useEffect(() => {
+  //   console.log(billInfo);
+  // }, [billInfo]);
 
   useEffect(() => {
     axios
@@ -101,6 +111,9 @@ export const BillProvider = ({ children }) => {
       case "paytypeId":
         if (!value) newErrors.paytypeId = "Please select paytype!";
         break;
+      case "clientId":
+        if (!value) newErrors.clientId = "Please select client!";
+        break;
       default:
         break;
     }
@@ -128,11 +141,23 @@ export const BillProvider = ({ children }) => {
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePayType = (type) => {
-    const newErrors = validateInput("schedule", type._id);
+  const handleClient = (client) => {
+    const newErrors = validateInput("client", client._id);
     setErrors((prevErrors) => {
       const updatedErrors = { ...newErrors, ...prevErrors };
-      if (!newErrors.paytypeId) {
+      if (!newErrors.clientId) {
+        delete updatedErrors.clientId;
+      }
+      return updatedErrors;
+    });
+    setClientData(client);
+    setBillInfo((prev) => ({ ...prev, clientId: client._id }));
+  };
+
+  const handlePayType = (type) => {
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      if (prevErrors.paytypeId) {
         delete updatedErrors.paytypeId;
       }
       return updatedErrors;
@@ -284,7 +309,6 @@ export const BillProvider = ({ children }) => {
   };
 
   const handleUpdateStatusBill = async (id, status, cancelReason) => {
-    console.log(cancelReason);
     try {
       const res = await axios.put(`http://localhost:3000/bills/${id}/status`, {
         status,
@@ -316,6 +340,21 @@ export const BillProvider = ({ children }) => {
     }
   };
 
+  const handleSearchBill = async (keyword) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/bills/search?keyword=${keyword}`
+      );
+      if (res.data.success) {
+        setSearchBillsResult(res.data.data);
+      } else {
+        setSearchBillsResult([]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <BillContext.Provider
       value={{
@@ -329,7 +368,9 @@ export const BillProvider = ({ children }) => {
         billInfo,
         totalCalculate,
         totalTempCalculate,
+        searchBillsResult,
         tempBillInfo,
+        handleClient,
         setTempBillInfo,
         handleSchedule,
         handleUsageVoucher,
@@ -341,6 +382,7 @@ export const BillProvider = ({ children }) => {
         handleOnSave,
         handlePayType,
         handleDeleteBill,
+        handleSearchBill,
       }}
     >
       {children}

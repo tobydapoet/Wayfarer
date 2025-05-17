@@ -27,7 +27,6 @@ function UserProfile() {
   const statusList = ["working", "in meeting", "on leave", "off duty"];
   const {
     clientData,
-    clientTempData,
     clientErrors,
     handleAddClient,
     handleDeleteClient,
@@ -54,7 +53,7 @@ function UserProfile() {
 
   const isStaff = !!staffData?.position;
 
-  const tempData = isStaff ? staffTempData : clientTempData;
+  const tempData = isStaff ? staffTempData : clientData;
   const formData = isStaff ? staffData : clientData;
   const errors = isStaff ? staffErrors : clientErrors;
   const handleChangeInput = isStaff

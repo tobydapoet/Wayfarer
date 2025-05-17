@@ -22,10 +22,10 @@ function VoucherItem({ data, onClick, minimal, active }) {
         {data.name || data.voucherId.name}
       </div>
       <div className={cx("voucher-value")}>
-        sale: {data.discountValue || data.voucherId.discountValue}$
+        sale: {data.discountValue || data?.voucherId?.discountValue}$
       </div>
       <div className={cx("voucher-min")}>
-        at least : {data.minCost || data.voucherId.minCost}$
+        at least : {Number(data.minCost) || Number(data?.voucherId?.minCost)}$
       </div>
       {!minimal && (
         <div className={cx("voucher-details")}>

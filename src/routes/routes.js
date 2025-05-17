@@ -32,7 +32,7 @@ import { DestinationProvider } from "../contexts/DestinationContext";
 import { ContactProvicer } from "../contexts/ContactContext";
 import ContactInfo from "../pages/Manage/ContactManage/ContactInfo/ContactInfo";
 import AboutUsManage from "../pages/Manage/AboutUsManage";
-import { AboutUsContext, AboutUsProvider } from "../contexts/AboutUsContext";
+import { AboutUsProvider } from "../contexts/AboutUsContext";
 import { StaffProvider } from "../contexts/StaffContext";
 import VoucherManage from "../pages/Manage/VoucherManage";
 import { VoucherProvider } from "../contexts/VoucherContext";
@@ -48,6 +48,7 @@ import { ScheduleProvider } from "../contexts/ScheduleContext";
 import Processing from "../pages/SelectedPage/Processing";
 import Favourite from "../pages/SelectedPage/Favourite";
 import MyBlogs from "../pages/SelectedPage/MyBlogs/MyBlogs";
+import { FeedBackProvider } from "../contexts/FeedbackContext";
 
 const publicRoutes = [
   {
@@ -117,7 +118,7 @@ const publicRoutes = [
   {
     path: ":email/processing",
     component: Processing,
-    context: BillProvider,
+    context: [BillProvider, FeedBackProvider],
     layout: ProfileLayout,
   },
   {
@@ -280,6 +281,7 @@ const privateRoutes = [
         context: BlogProvider,
         layout: null,
       },
+
       {
         path: "/manage/billsmanage/:id",
         component: BillEdit,

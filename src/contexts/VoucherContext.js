@@ -30,6 +30,12 @@ export const VoucherProvider = ({ children }) => {
   const [openForm, setOpenForm] = useState(false);
 
   useEffect(() => {
+    if (openForm === false) {
+      setErrors({});
+    }
+  }, [openForm]);
+
+  useEffect(() => {
     axios
       .get(`http://localhost:3000/vouchers`)
       .then((res) => setAllVouchers(res.data))
@@ -67,7 +73,7 @@ export const VoucherProvider = ({ children }) => {
       case "minCost":
         if (!value) {
           newErrors.minCost = "Min cannot be empty!";
-        } else if (Number(value) > Number(selectedVoucher.discountValue)) {
+        } else if (Number(value) < Number(selectedVoucher.discountValue)) {
           newErrors.minCost = "Min cannot bigger than value";
         }
         break;
@@ -135,6 +141,7 @@ export const VoucherProvider = ({ children }) => {
             voucher._id === selectedVoucher._id ? res.data.data : voucher
           )
         );
+        setOpenForm(false);
         toast.success(res.data.message);
       }
     } catch (err) {

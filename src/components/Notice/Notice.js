@@ -30,7 +30,7 @@ function Notice({ open, onClose, content, onConfirm, warn }) {
         <div className={cx("notice-container")}>
           <div className={cx("notice-content")}>{content}</div>
           <div className={cx("btn-container")}>
-            {!warn && (
+            {onConfirm && (
               <Button
                 large
                 onClick={() => {

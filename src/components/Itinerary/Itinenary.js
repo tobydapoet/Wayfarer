@@ -161,7 +161,7 @@ function Itinerary({ manage }) {
           )}
         </div>
 
-        <hr />
+        <hr className={cx("gap-line")} />
 
         <div className={cx("content")}>
           <div className={cx("description-container")}>

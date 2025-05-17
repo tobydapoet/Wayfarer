@@ -9,6 +9,9 @@
         min-width: calc(40% - 20px);
         color: black;
         padding: 15px;
+        height: calc(100% - 30px);
+        overflow: scroll;
+        scrollbar-width: none;
         &.collapsed {
             width: 40%;
         }

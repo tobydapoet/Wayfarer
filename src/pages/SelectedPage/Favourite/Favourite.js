@@ -176,124 +176,7 @@ function Favourite() {
       to: "/",
     },
   ];
-  const HOTELS = [
-    {
-      name: "Temple of Literature",
-      city: "Ha Noi",
-      star: 3.5,
-      price: 20,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOKcxmJ7TnWnvRlMjYMrKXwTIu81NFrZj6lw&s",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-      activities: "visit,souvenir",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Nam",
-      star: 4,
-      price: 20,
-      image:
-        "https://izitour.com/media/ckeditor/photos-a-hanoi-2_2023-08-17_120.webp",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Noi",
-      star: 4,
-      price: 20,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZP-nfAVqnxlHEfMIAYPQmADKJPP6ZDsGsOQ&s",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-      activities: "fishing,campfire",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Nam",
-      star: 4,
-      price: 20,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNTiMJkiWvZg_vUVqb4Q73jQVNs9IDKC-bQ&s",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Giang",
-      star: 4,
-      price: 20,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2i9jRQ8JekfdwSQz_8E1qEEZYkpkYjPpDA&s",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-    },
-  ];
-  const TRANSPORTS = [
-    {
-      name: "Temple of Literature",
-      city: "Ha Noi",
-      star: 3.5,
-      price: 20,
-      image:
-        "https://www.wanderlustmagazine.com/wp-content/uploads/2025/02/shutterstock_2397559069-390x700.jpg",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-      activities: "visit,souvenir",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Nam",
-      star: 4,
-      price: 20,
-      image:
-        "https://maisonoffice.vn/en/wp-content/uploads/2024/01/tallest-buildings-in-ha-noi.jpg",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Noi",
-      star: 4,
-      price: 20,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_58KtxYPQfH32iXOi8vI9ldwJRdchHAQy_w&s",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-      activities: "fishing,campfire",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Nam",
-      star: 4,
-      price: 20,
-      image:
-        "https://res.cloudinary.com/jerrick/image/upload/v1588649812/5eb0df54debee0001d318876.jpg",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-    },
-    {
-      name: "Temple of Literature",
-      city: "Ha Giang",
-      star: 4,
-      price: 20,
-      image:
-        "https://www.indochinavoyages.com/wp-content/uploads/2019/09/temple_of_literature.jpg",
-      description:
-        "Văn Miếu (Vietnamese: Văn Miếu, chữ Hán: 文廟[1][2]), literally translated as Temple of Literature (although a more accurate name should be Temple of Confucius, as Văn refers to Confucius), is a temple dedicated to Confucius in Hanoi, northern Vietnam. The temple was founded and first built in 1070 at the time of Emperor Lý Thánh Tông, and it hosted the Imperial Academy (Quốc Tử Giám, 國子監), Vietnam's first national university, from 1076 to 1779. In 1803, The academy was moved to the new capital of Nguyen dynasty in Hue.",
-      to: "/",
-    },
-  ];
+
   const [tab, setTab] = useState("Blogs");
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -358,59 +241,13 @@ function Favourite() {
             </Slider>
           </div>
         );
-
-      case "Hotels":
-        return (
-          <div className={cx("container")}>
-            <Slider {...settings}>
-              {HOTELS.map((hotel, index) => (
-                <Link
-                  to={hotel.to}
-                  key={index}
-                  tabIndex={0}
-                  className={cx("info", {
-                    "active-slide": index === currentSlide,
-                  })}
-                >
-                  <img className={cx("img")} src={hotel.image} />
-                  <div className={cx("content")}>
-                    <div className={cx("name")}>{hotel.name}</div>
-                  </div>
-                </Link>
-              ))}
-            </Slider>
-          </div>
-        );
-
-      case "Transports":
-        return (
-          <div className={cx("container")}>
-            <Slider {...settings}>
-              {TRANSPORTS.map((transport, index) => (
-                <Link
-                  to={transport.to}
-                  key={index}
-                  tabIndex={0}
-                  className={cx("info", {
-                    "active-slide": index === currentSlide,
-                  })}
-                >
-                  <img className={cx("img")} src={transport.image} />
-                  <div className={cx("content")}>
-                    <div className={cx("name")}> {transport.name}</div>
-                  </div>
-                </Link>
-              ))}
-            </Slider>
-          </div>
-        );
     }
   };
   return (
     <div className={cx("wrapper")}>
       <div className={cx("tabs")}>
         {" "}
-        {["Blogs", "Trips", "Hotels", "Transports"].map((item) => (
+        {["Blogs", "Trips"].map((item) => (
           <div
             key={item}
             onClick={() => setTab(item)}

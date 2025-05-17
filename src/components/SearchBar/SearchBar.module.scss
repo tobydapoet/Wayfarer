@@ -19,6 +19,14 @@
     &:focus {
         border-color: rgba(22, 24, 35, 0.6);
     }
+
+    &.isClient {
+        padding: 10px 0px 0px 0px;
+        font-size: 19px;
+        border: none;
+        border-radius: 0px;
+        border-bottom: 1px solid #202020;
+    }
 }
 
 .search-icon {
@@ -37,4 +45,8 @@
     display: flex;
     align-items: center;
     color: #706d6d;
+}
+
+.result-item {
+    width: 100%;
 }

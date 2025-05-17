@@ -122,6 +122,32 @@
     }
 }
 
+.feedback-modal {
+    .stars-container {
+        .stars {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 10px;
+            .star {
+                cursor: pointer;
+                font-size: 30px;
+                color: #ffd700;
+            }
+        }
+    }
+}
+
+.error-text {
+    color: rgb(253, 77, 77);
+    font-size: 13px;
+    display: flex;
+    margin-top: 5px;
+    font-weight: 500;
+    font-family: var(--font-default);
+    justify-content: center;
+}
+
 .confirm-container {
     display: flex;
     width: 300px;

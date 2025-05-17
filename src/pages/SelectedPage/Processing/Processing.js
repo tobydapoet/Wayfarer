@@ -1,9 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./Processing.module.scss";
 import ProcessingItem from "../../../components/ProcessingItem/ProcessingItem";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DetailItem from "../../../components/DetailItem/DetailItem";
 import { BillContext } from "../../../contexts/BillContext";
+import { FeedBackContext } from "../../../contexts/FeedbackContext";
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +15,8 @@ const user =
 function Processing() {
   const { allBills, handleUpdateStatusBill, setBillInfo, billInfo } =
     useContext(BillContext);
-  console.log(billInfo);
+
+  useEffect(() => {}, []);
 
   return (
     <>

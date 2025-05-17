@@ -6,9 +6,10 @@ import { toast } from "react-toastify";
 export const ClientContext = createContext({
   allClientsData: [],
   clientData: {},
-  clientTempData: {},
+  clientData: {},
   clientErrors: {},
   searchResult: {},
+  setClientData: () => {},
   handleSearchClient: () => {},
   handleAddClient: () => {},
   handleDeleteClient: () => {},
@@ -19,30 +20,22 @@ export const ClientContext = createContext({
   handleOnSaveClient: () => {},
 });
 
-export const ClientProvider = ({ children, data }) => {
+export const ClientProvider = ({ children }) => {
   const [allClientsData, setAllClientsData] = useState([]);
-  const [clientData, setClientData] = useState(
-    data || {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      site: "",
-      avatar: "",
-    }
-  );
-  const [clientTempData, setClientTempData] = useState({});
+  const [clientData, setClientData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    site: "",
+    avatar: "",
+  });
   const [searchResult, setSearchResult] = useState([]);
   const [clientErrors, setClientErrors] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setClientTempData({ ...clientData });
-  }, [clientData]);
-
-  useEffect(() => {
-    if (data) return;
     axios
       .get("http://localhost:3000/clients")
       .then((res) => setAllClientsData(res.data))
@@ -104,7 +97,7 @@ export const ClientProvider = ({ children, data }) => {
       return updated;
     });
 
-    setClientTempData((prev) => ({ ...prev, [name]: value }));
+    setClientData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleChangeClientPhone = (value) => {
@@ -116,7 +109,7 @@ export const ClientProvider = ({ children, data }) => {
       return updatedErrors;
     });
 
-    setClientTempData((prev) => ({ ...prev, phone: value }));
+    setClientData((prev) => ({ ...prev, phone: value }));
   };
 
   const handleChangeClientImg = (e) => {
@@ -126,7 +119,7 @@ export const ClientProvider = ({ children, data }) => {
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result;
-      setClientTempData((prev) => ({ ...prev, avatar: base64 }));
+      setClientData((prev) => ({ ...prev, avatar: base64 }));
 
       setClientErrors((prevErrors) => {
         const updatedErrors = { prevErrors };
@@ -138,7 +131,7 @@ export const ClientProvider = ({ children, data }) => {
   };
   const handleAddClient = async () => {
     let newErrors = {};
-    Object.entries(clientTempData).forEach(([name, value]) => {
+    Object.entries(clientData).forEach(([name, value]) => {
       const errs = validateInput(name, value);
       newErrors = { ...newErrors, ...errs };
     });
@@ -149,7 +142,7 @@ export const ClientProvider = ({ children, data }) => {
     try {
       const res = await axios.post(
         "http://localhost:3000/clients/create_client",
-        clientTempData
+        clientData
       );
       if (res.data.success) {
         toast.success(res.data.succes || "Add client success!");
@@ -167,7 +160,7 @@ export const ClientProvider = ({ children, data }) => {
 
   const handleOnSaveClient = async (id, updatedData) => {
     let newErrors = {};
-    Object.entries(clientTempData).forEach(([name, value]) => {
+    Object.entries(clientData).forEach(([name, value]) => {
       const errs = validateInput(name, value);
       newErrors = { ...newErrors, ...errs };
     });
@@ -233,10 +226,10 @@ export const ClientProvider = ({ children, data }) => {
     <ClientContext.Provider
       value={{
         clientData,
-        clientTempData,
         clientErrors,
         allClientsData,
         searchResult,
+        setClientData,
         setClientErrors,
         handleAddClient,
         handleSearchClient,

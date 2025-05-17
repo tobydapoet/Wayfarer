@@ -1,14 +1,15 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import Notice from "../Notice";
+import { faAngleLeft, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import styles from "./DetailItem.module.scss";
 
 import standardTime from "../../utils/standardTime";
 import Button from "../Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../Modal";
 import Input from "../Input";
+import { FeedBackContext } from "../../contexts/FeedbackContext";
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +25,17 @@ function DetailItem({ data, onClick, onStatusChange, onChangeReason }) {
   };
 
   const [openNotice, setOpenNotice] = useState(false);
+  const [rating, setRating] = useState(0);
+  const {
+    allFeedbacks,
+    handleInputChange,
+    errors,
+    openFeedBack,
+    handleExist,
+    setOpenFeedback,
+    handleCloseFeedback,
+    handleCreateFeedback,
+  } = useContext(FeedBackContext);
 
   return (
     <>
@@ -125,6 +137,13 @@ function DetailItem({ data, onClick, onStatusChange, onChangeReason }) {
             </Button>
           </div>
         )}
+        {data.status === "Completed" && !handleExist && (
+          <div className={cx("btn-container")}>
+            <Button rounded onClick={() => setOpenFeedback(true)}>
+              Feedback
+            </Button>
+          </div>
+        )}
       </div>
 
       <Modal
@@ -144,6 +163,63 @@ function DetailItem({ data, onClick, onStatusChange, onChangeReason }) {
           <Button rounded onClick={onStatusChange}>
             Confirm
           </Button>
+        </div>
+      </Modal>
+      <Modal
+        open={openFeedBack}
+        onClose={() => handleCloseFeedback()}
+        form
+        style={{ width: "500px" }}
+      >
+        <div className={cx("feedback-modal")}>
+          <div className={cx("stars-container")}>
+            <div className={cx("stars")}>
+              {[1, 2, 3, 4, 5].map((value) => (
+                <span
+                  key={value}
+                  onClick={() => {
+                    setRating(value);
+                    handleInputChange({
+                      target: {
+                        name: "rating",
+                        value: value,
+                      },
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={value <= rating ? faStar : emptyStar}
+                    className={cx("star")}
+                  />
+                </span>
+              ))}
+            </div>
+            {errors?.rating && (
+              <p className={cx("error-text")}>{errors?.rating}</p>
+            )}
+          </div>
+
+          <Input
+            dark
+            frame="Comment"
+            placeholder="Your comment..."
+            name="comment"
+            textarea
+            onChange={handleInputChange}
+            error={errors?.comment}
+          />
+
+          <div className={cx("confirm-container")}>
+            <Button
+              rounded
+              onClick={() => {
+                handleCreateFeedback();
+                setRating(0);
+              }}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </Modal>
     </>

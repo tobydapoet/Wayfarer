@@ -3,9 +3,9 @@ import styles from "./ClientPopper.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
-function ClientPopper({ data, onClick }) {
+function ClientPopper({ data, onClick, isDisplay }) {
   return (
-    <div className={cx("wrapper")} onClick={onClick}>
+    <div className={cx("wrapper", { isDisplay })} onClick={onClick}>
       <img src={data.avatar} />
       <div className={cx("user-txt")}>
         <div className={cx("name")}>{data.name}</div>

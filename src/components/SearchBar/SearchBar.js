@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import HeadlessTippy from "@tippyjs/react/headless";
 import styles from "./SearchBar.module.scss";
@@ -8,9 +8,10 @@ import Popper from "../Popper";
 
 const cx = classNames.bind(styles);
 
-function SearchBar({ onSearch, results = [], renderResult }) {
+function SearchBar({ onSearch, results = [], renderResult, isClient }) {
   const [searchValue, setSearchValue] = useState("");
   const [isResultVisible, setIsResultVisible] = useState(false);
+  const inputRef = useRef(null);
 
   const deleteSearch = () => {
     setSearchValue("");
@@ -23,31 +24,34 @@ function SearchBar({ onSearch, results = [], renderResult }) {
     if (!inputValue.startsWith(" ")) {
       setSearchValue(inputValue);
       onSearch(inputValue);
-      setIsResultVisible(inputValue.length > 0); // Show results if search value is not empty
+      setIsResultVisible(inputValue.length > 0);
     }
   };
 
   const handleSelectResult = (item) => {
-    // Clear the search value and hide the results after selecting a result
-    setSearchValue(""); // Clear the search bar
-    setIsResultVisible(false); // Hide the results dropdown
-    // You can do other actions here if needed, like passing selected item to a parent component
+    setSearchValue("");
+    setIsResultVisible(false);
   };
 
   return (
     <div className={cx("search-wrapper")}>
-      <FontAwesomeIcon icon={faSearch} className={cx("search-icon")} />
+      {!isClient && (
+        <FontAwesomeIcon icon={faSearch} className={cx("search-icon")} />
+      )}
       <HeadlessTippy
         interactive
         visible={isResultVisible && results.length > 0}
         appendTo={() => document.body}
         placement="bottom"
-        onClickOutside={() => setIsResultVisible(false)} // Close results when clicking outside
+        onClickOutside={() => setIsResultVisible(false)}
         render={(attrs) => (
           <div
             className={cx("search-result-container")}
             tabIndex="-1"
             {...attrs}
+            style={{
+              width: inputRef.current?.offsetWidth || "auto",
+            }}
           >
             <Popper className={cx("search-result")}>
               {results.map((item, index) => (
@@ -64,13 +68,14 @@ function SearchBar({ onSearch, results = [], renderResult }) {
         )}
       >
         <input
-          className={cx("search")}
-          placeholder="Search"
+          ref={inputRef}
+          className={cx("search", { isClient })}
+          placeholder={!isClient ? "search" : ""}
           value={searchValue}
           onChange={handleSearch}
         />
       </HeadlessTippy>
-      {!!searchValue && (
+      {!!searchValue && !isClient && (
         <button className={cx("clear-icon")} onClick={deleteSearch}>
           <FontAwesomeIcon icon={faCircleXmark} />
         </button>

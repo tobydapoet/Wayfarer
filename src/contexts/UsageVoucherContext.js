@@ -15,6 +15,7 @@ export const UsageVoucherContext = createContext({
   listDelete: {},
   handleAssignVoucher: () => {},
   openForm: {},
+  setAllUsageVouchers: [],
   handleSearchVouchers: () => {},
   setOpenForm: () => {},
   handleDelete: () => {},
@@ -33,7 +34,8 @@ export const UsageVoucherProvider = ({ children }) => {
       .get(`http://localhost:3000/usage_vouchers`)
       .then((res) => setAllUsageVouchers(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [allUsageVouchers]);
+
   const handleSearchVouchers = async (keyword) => {
     try {
       if (!keyword.trim()) {
@@ -135,6 +137,7 @@ export const UsageVoucherProvider = ({ children }) => {
         setVoucherReceived,
         handleAssignVoucher,
         handleDelete,
+        setAllUsageVouchers,
       }}
     >
       {children}

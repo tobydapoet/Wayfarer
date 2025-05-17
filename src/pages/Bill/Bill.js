@@ -13,6 +13,9 @@ import { ScheduleContext } from "../../contexts/ScheduleContext";
 import standardTime from "../../utils/standardTime";
 import { UsageVoucherContext } from "../../contexts/UsageVoucherContext";
 import VoucherItem from "../../components/VoucherItem";
+import { ClientContext } from "../../contexts/ClientContext";
+import SearchBar from "../../components/SearchBar";
+import ClientPopper from "../../components/ClientPopper/ClientPopper";
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +33,7 @@ function BillForm() {
     handlePayType,
     handleUsageVoucher,
     handleCreateBill,
+    handleClient,
   } = useContext(BillContext);
 
   const { allPayTypes } = useContext(PayTypeContext);
@@ -39,6 +43,8 @@ function BillForm() {
   const { payTypeSelected } = useContext(PayTypeContext);
   const { edittingSchedule } = useContext(ScheduleContext);
   const { selectedUsageVoucher } = useContext(UsageVoucherContext);
+  const { searchResult, handleSearchClient, clientData } =
+    useContext(ClientContext);
   const [isVisible, setIsvisible] = useState(false);
   const inputRef = useRef(null);
   const user =
@@ -53,6 +59,29 @@ function BillForm() {
         </div>
       </div>
       <div className={cx("bill-container")}>
+        {user.position && (
+          <div className={cx("search-container")}>
+            <div className={cx("frame")}>Client</div>
+            {Object.keys(billInfo.clientId).length === 0 ? (
+              <SearchBar
+                isClient
+                onSearch={handleSearchClient}
+                results={searchResult}
+                renderResult={(client) => (
+                  <ClientPopper
+                    data={client}
+                    onClick={() => handleClient(client)}
+                  />
+                )}
+              />
+            ) : (
+              <ClientPopper isDisplay data={clientData} />
+            )}
+            {errors.clientId && (
+              <div className={cx("error-text")}>{errors.clientId}</div>
+            )}
+          </div>
+        )}
         <div className={cx("row")}>
           <div className={cx("time")}>
             <HeadlessTippy
@@ -148,7 +177,7 @@ function BillForm() {
         <div className={cx("voucher-container")}>
           <div className={cx("frame")}>Vouchers available: </div>
           <div className={cx("voucher-list")}>
-            {billInfo.num &&
+            {billInfo.num > 0 &&
               allUsageVouchers
                 .filter(
                   (usagevouchers) =>

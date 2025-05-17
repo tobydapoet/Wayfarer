@@ -7,22 +7,28 @@ import Order from "../../../components/Order";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BillContext } from "../../../contexts/BillContext";
+import BillSearchItem from "../../../components/BillsSearchItem/BillSearchItem";
 
 const cx = classNames.bind(styles);
 
 function BillsManage() {
   const navigate = useNavigate();
-  const { allBills, handleDeleteBill } = useContext(BillContext);
+  const { allBills, handleDeleteBill, handleSearchBill, searchBillsResult } =
+    useContext(BillContext);
 
   return (
     <>
       <div className={cx("wrapper")}>
         <div className={cx("header")}>
-          <SearchBar />
+          <SearchBar
+            onSearch={handleSearchBill}
+            results={searchBillsResult}
+            renderResult={(bill) => <BillSearchItem data={bill} />}
+          />
           <div
             className={cx("add")}
             style={{ cursor: "pointer" }}
-            onClick={() => navigate(`/manage/billsmanage/add_content`)}
+            onClick={() => navigate(`/destinations`)}
           >
             <FontAwesomeIcon icon={faPlus} />
           </div>
