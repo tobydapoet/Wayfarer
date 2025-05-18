@@ -1,7 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPersonWalkingArrowRight,
+  faPlus,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./Itinerary.module.scss";
 import StarRating from "../../utils/StartRating";
 import { DestinationContext } from "../../contexts/DestinationContext";
@@ -10,7 +14,9 @@ import images from "../../assets/images";
 import Button from "../Button";
 import ScheduleModal from "../ScheduleModal/ScheduleModal";
 import { ScheduleProvider } from "../../contexts/ScheduleContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { FeedBackContext } from "../../contexts/FeedbackContext";
+import { BillContext } from "../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +40,8 @@ function Itinerary({ manage }) {
 
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
   const location = useLocation().pathname;
+  const { handleCalculateRating } = useContext(FeedBackContext);
+  const { handleCalculateClient } = useContext(BillContext);
 
   return (
     <>
@@ -70,9 +78,21 @@ function Itinerary({ manage }) {
               )}
             </div>
 
-            <h4>
-              <StarRating rating={content.star} />
-            </h4>
+            <div className={cx("calculate")}>
+              <div className={cx("star")}>
+                <div>{`${handleCalculateRating(content._id)}`}</div>
+                <FontAwesomeIcon
+                  icon={faStar}
+                  color="#FFD700"
+                  className={cx("star-icon")}
+                />
+              </div>
+
+              <div className={cx("num")}>
+                <div>{`${handleCalculateClient(content._id)}`}</div>
+                <FontAwesomeIcon icon={faPersonWalkingArrowRight} />
+              </div>
+            </div>
 
             <span className={cx("price-container")}>
               {editMode === "price" && manage ? (
@@ -258,7 +278,6 @@ function Itinerary({ manage }) {
             )}
           </div>
 
-          {/* Activities */}
           <div className={cx("activities-wrapper")}>
             <div className={cx("activities-header")}>
               <div className={cx("activities-title")}> Activities:</div>

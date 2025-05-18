@@ -32,10 +32,6 @@ function ScheduleModal({ open, onClose }) {
     handleDeleteSchedule,
   } = useContext(ScheduleContext);
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   const [editScheduleId, setEditScheduleId] = useState(null);
   const [editField, setEditField] = useState("");
   const { allBills } = useContext(BillContext);

@@ -1,0 +1,64 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(153, 153, 153, 0.75);
+
+    .xmark {
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        cursor: pointer;
+    }
+
+    .header {
+        margin-top: 5px;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-default);
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            img {
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .name-client {
+                font-size: 14px;
+            }
+        }
+    }
+    .rating {
+        margin-top: 10px;
+    }
+    .body {
+        border: 1px solid rgba(153, 153, 153, 0.75);
+        font-size: 14px;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 16px;
+        text-align: justify;
+    }
+}
+
+@media (max-width: 1200px) {
+    .wrapper {
+        .header {
+            flex-direction: column;
+            gap: 4px;
+            .time-create {
+                margin-left: 37px;
+            }
+        }
+        .body {
+            font-size: 12px;
+            text-align: start;
+        }
+    }
+}

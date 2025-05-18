@@ -32,6 +32,7 @@ export const BillContext = createContext({
   handleDeleteBill: () => {},
   handleUpdateStatusBill: () => {},
   handleSearchBill: () => {},
+  handleCalculateClient: () => {},
 });
 
 const user =
@@ -139,6 +140,15 @@ export const BillProvider = ({ children }) => {
     });
 
     setState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCalculateClient = (id) => {
+    const relevantClient = allBills.filter(
+      (bill) => bill.scheduleId.destinationId._id === id
+    );
+    if (relevantClient.length === 0) return 0;
+    const total = relevantClient.reduce((sum, client) => sum + client.num, 0);
+    return total;
   };
 
   const handleClient = (client) => {
@@ -383,6 +393,7 @@ export const BillProvider = ({ children }) => {
         handlePayType,
         handleDeleteBill,
         handleSearchBill,
+        handleCalculateClient,
       }}
     >
       {children}

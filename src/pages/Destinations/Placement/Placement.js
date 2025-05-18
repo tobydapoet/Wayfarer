@@ -10,8 +10,7 @@ import ServicesPopper from "../../../components/ServicesPopper";
 const cx = classNames.bind(styles);
 
 function Placement() {
-  const { placement, type } = useParams();
-  const navigate = useNavigate();
+  const { placement } = useParams();
   const {
     allDestinations,
     handleSelectedDestination,

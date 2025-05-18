@@ -6,6 +6,7 @@ import ItineraryAdd from "../../../../components/ItineraryAdd/ItineraryAdd";
 import { DestinationProvider } from "../../../../contexts/DestinationContext";
 import { CityProvider } from "../../../../contexts/CityContext";
 import { BillProvider } from "../../../../contexts/BillContext";
+import { FeedBackProvider } from "../../../../contexts/FeedbackContext";
 
 const cx = classNames.bind(styles);
 
@@ -15,11 +16,13 @@ function ServiceIntroduce() {
   return (
     <div className={cx("wrapper")}>
       {param.id !== "add_content" ? (
-        <DestinationProvider>
-          <BillProvider>
-            <Itinenary manage />
-          </BillProvider>
-        </DestinationProvider>
+        <FeedBackProvider>
+          <DestinationProvider>
+            <BillProvider>
+              <Itinenary manage />
+            </BillProvider>
+          </DestinationProvider>
+        </FeedBackProvider>
       ) : (
         <CityProvider>
           <DestinationProvider>

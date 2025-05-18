@@ -6,6 +6,42 @@
     .header {
         display: flex;
         justify-content: space-between;
+
+        .calculate {
+            display: flex;
+            gap: 30px;
+            .star {
+                font-size: 19px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                font-family: themify;
+                margin: 10px 0px;
+                div {
+                    display: flex;
+                    align-content: center;
+                    margin-right: 5px;
+                }
+                .star-icon {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            .num {
+                font-size: 19px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                font-family: themify;
+                margin: 10px 0px;
+                div {
+                    display: flex;
+                    align-content: center;
+                    margin-right: 5px;
+                }
+            }
+        }
     }
     .left-side {
         .name-container {
@@ -264,7 +300,6 @@
     height: 15px;
 }
 
-/* Ẩn dấu mũi tên trên Chrome, Safari, Edge */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;

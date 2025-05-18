@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { BillContext } from "./BillContext";
 
@@ -15,6 +15,7 @@ export const FeedBackContext = createContext({
   handleInputChange: () => {},
   handleCreateFeedback: () => {},
   handleDeleteFeedback: () => {},
+  handleCalculateRating: () => {},
 });
 
 const user =
@@ -32,8 +33,6 @@ export const FeedBackProvider = ({ children }) => {
   const [openFeedBack, setOpenFeedback] = useState(false);
   const [feedbackContent, setFeedBackContent] = useState(initialValue);
   const [errors, setErrors] = useState({});
-
-  console.log(errors);
 
   const handleExist = allFeedbacks.some(
     (feedback) =>
@@ -92,6 +91,18 @@ export const FeedBackProvider = ({ children }) => {
     setFeedBackContent((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleCalculateRating = (id) => {
+    const relevantFeedbacks = allFeedbacks.filter(
+      (feedback) => feedback.destinationId._id === id
+    );
+    if (relevantFeedbacks.length === 0) return 0;
+    const total = relevantFeedbacks.reduce(
+      (sum, feedback) => sum + feedback.rating,
+      0
+    );
+    return Math.round((total / relevantFeedbacks.length) * 10) / 10;
+  };
+
   const handleCreateFeedback = async () => {
     let newErrors = {};
     Object.entries(feedbackContent).forEach(([name, value]) => {
@@ -114,12 +125,14 @@ export const FeedBackProvider = ({ children }) => {
       console.log(err);
     }
   };
-  console.log(allFeedbacks);
 
   const handleDeleteFeedback = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:3000/feedbacks/${id}`);
       if (res.data.success) {
+        setAllFeedbacks((prev) =>
+          prev.filter((feedback) => feedback._id !== id)
+        );
         toast.success(res.data.message);
       }
     } catch (err) {
@@ -141,6 +154,7 @@ export const FeedBackProvider = ({ children }) => {
         handleInputChange,
         handleCreateFeedback,
         handleDeleteFeedback,
+        handleCalculateRating,
       }}
     >
       {children}

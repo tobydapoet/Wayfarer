@@ -101,12 +101,12 @@ const publicRoutes = [
   {
     path: "/destinations/:placement",
     component: Placement,
-    context: DestinationProvider,
+    context: [FeedBackProvider, DestinationProvider, BillProvider],
   },
   {
     path: "/destinations/:placement/:id",
     component: PlacementInfo,
-    context: DestinationProvider,
+    context: [FeedBackProvider, DestinationProvider, BillProvider],
   },
   {
     path: ":email",
@@ -199,7 +199,7 @@ const privateRoutes = [
       {
         path: "destinations/:placement",
         component: DestinationInfo,
-        context: DestinationProvider,
+        context: [FeedBackProvider, DestinationProvider, BillProvider],
         layout: null,
       },
       {

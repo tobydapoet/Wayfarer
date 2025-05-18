@@ -3,11 +3,17 @@ import styles from "./PlacementItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPersonWalkingArrowRight,
+  faStar,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import StarRating from "../../utils/StartRating";
 import Notice from "../Notice";
 import { DestinationContext } from "../../contexts/DestinationContext";
+import { FeedBackContext } from "../../contexts/FeedbackContext";
+import { BillContext } from "../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +25,9 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
     return `hsl(${hue}, 90%, 50%)`;
   };
   const randomColor = getRandomPastelColor();
+
+  const { handleCalculateRating } = useContext(FeedBackContext);
+  const { handleCalculateClient } = useContext(BillContext);
 
   const stringHtml = (html) => {
     const tempP = document.createElement("div");
@@ -38,8 +47,15 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
                 className={cx("price", { manage })}
               >{`$${data.price}/${data.unit}`}</div>
             </div>
-            <div className={cx("star")}>
-              <StarRating rating={data.star} />
+            <div className={cx("calculate")}>
+              <div className={cx("star")}>
+                <div>{`${handleCalculateRating(data._id)}`}</div>
+                <FontAwesomeIcon icon={faStar} color="#FFD700" />
+              </div>
+              <div className={cx("num")}>
+                <div>{`${handleCalculateClient(data._id)}`}</div>
+                <FontAwesomeIcon icon={faPersonWalkingArrowRight} />
+              </div>
             </div>
             <div className={cx("description", { manage })}>
               <div>{stringHtml(data.description)}</div>

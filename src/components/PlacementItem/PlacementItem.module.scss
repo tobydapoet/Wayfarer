@@ -47,6 +47,35 @@
             }
         }
 
+        .calculate {
+            display: flex;
+            gap: 20px;
+
+            .star {
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                div {
+                    display: flex;
+                    align-content: center;
+                    margin-right: 2px;
+                    margin-top: 1px;
+                }
+            }
+
+            .num {
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                div {
+                    display: flex;
+                    align-content: center;
+                    margin-right: 5px;
+                    margin-top: 1px;
+                }
+            }
+        }
+
         .description {
             font-size: 14px;
             color: #929191;
@@ -122,6 +151,8 @@
 
             .star {
                 font-size: 12px;
+                display: flex;
+                align-items: center;
             }
 
             .content {
