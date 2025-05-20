@@ -2,11 +2,12 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const BlogContext = createContext({
   allBlogData: [],
   blogData: {},
-  tempBlogData: {},
+  blogData: {},
   errors: {},
   user: {},
   blogsSearchData: [],
@@ -34,10 +35,7 @@ export const BlogProvider = ({ children, data }) => {
     return `${dd}/${mm}/${yyyy} ${hh}:${min}`;
   };
 
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user")) ||
-    {};
+  const user = getCurrentUser();
 
   const [allBlogData, setAllBlogData] = useState([]);
   const navigate = useNavigate();
@@ -72,11 +70,10 @@ export const BlogProvider = ({ children, data }) => {
     }
   }, [id]);
 
-  const [tempBlogData, setTempBlogData] = useState({});
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    setTempBlogData({ ...blogData });
+    setBlogData({ ...blogData });
   }, [blogData]);
 
   const handleSelectedBlog = (selectedBlog) => {
@@ -109,7 +106,7 @@ export const BlogProvider = ({ children, data }) => {
       return updatedErrors;
     });
 
-    setTempBlogData((prev) => ({ ...prev, [name]: value }));
+    setBlogData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImgChange = (e) => {
@@ -118,7 +115,7 @@ export const BlogProvider = ({ children, data }) => {
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result;
-      setTempBlogData((prev) => ({ ...prev, image: base64 }));
+      setBlogData((prev) => ({ ...prev, image: base64 }));
       setErrors((prevErrors) => {
         const newErrors = { ...prevErrors };
         delete newErrors.image;
@@ -187,7 +184,7 @@ export const BlogProvider = ({ children, data }) => {
 
   const handleCreateBlog = async () => {
     let newErrors = {};
-    Object.entries(tempBlogData).forEach(([name, value]) => {
+    Object.entries(blogData).forEach(([name, value]) => {
       const updatedErrors = validateError(name, value);
       newErrors = { ...newErrors, ...updatedErrors };
     });
@@ -195,7 +192,7 @@ export const BlogProvider = ({ children, data }) => {
     if (Object.keys(newErrors).length > 0) return;
     try {
       const res = await axios.post(`http://localhost:3000/blogs/create_blog`, {
-        ...tempBlogData,
+        ...blogData,
         clientId: user._id,
       });
       if (res.data.success) {
@@ -212,16 +209,16 @@ export const BlogProvider = ({ children, data }) => {
 
   const handleSaveChange = (approve) => {
     let newErrors = {};
-    Object.entries(tempBlogData).forEach(([name, value]) => {
+    Object.entries(blogData).forEach(([name, value]) => {
       const updatedErrors = validateError(name, value);
       newErrors = { ...newErrors, ...updatedErrors };
     });
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    const newData = { ...tempBlogData, status: approve ? true : false };
+    const newData = { ...blogData, status: approve ? true : false };
     setBlogData(newData);
-    setTempBlogData({
+    setBlogData({
       image: "",
       title: "",
       content: "",
@@ -250,7 +247,7 @@ export const BlogProvider = ({ children, data }) => {
       value={{
         allBlogData,
         blogData,
-        tempBlogData,
+        blogData,
         errors,
         user,
         blogsSearchData,

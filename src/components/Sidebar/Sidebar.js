@@ -19,12 +19,11 @@ import {
   faTicket,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccountContext } from "../../contexts/AccountContext";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
 
 function Sidebar({ profile, management, dark }) {
   const [isMobile, setIsMobile] = useState(
@@ -151,20 +150,22 @@ function Sidebar({ profile, management, dark }) {
                 )}
               </NavLink>
             </div>
-            <div className={cx("destinations-container")}>
-              <NavLink
-                to={`destinations`}
-                className={(nav) =>
-                  cx("destinations", { active: nav.isActive })
-                }
-              >
-                {isMobile ? (
-                  <FontAwesomeIcon icon={faLocation} />
-                ) : (
-                  "Destinations"
-                )}
-              </NavLink>
-            </div>
+            {user.position !== "staff" && (
+              <div className={cx("destinations-container")}>
+                <NavLink
+                  to={`destinations`}
+                  className={(nav) =>
+                    cx("destinations", { active: nav.isActive })
+                  }
+                >
+                  {isMobile ? (
+                    <FontAwesomeIcon icon={faLocation} />
+                  ) : (
+                    "Destinations"
+                  )}
+                </NavLink>
+              </div>
+            )}
             <div className={cx("blog-container")}>
               <NavLink
                 to={`blog_content`}
@@ -173,18 +174,21 @@ function Sidebar({ profile, management, dark }) {
                 {isMobile ? <FontAwesomeIcon icon={faNewspaper} /> : "Blogs"}
               </NavLink>
             </div>
-            <div className={cx("aboutus-container")}>
-              <NavLink
-                to={`about_us_content`}
-                className={(nav) => cx("about", { active: nav.isActive })}
-              >
-                {isMobile ? (
-                  <FontAwesomeIcon icon={faCircleInfo} />
-                ) : (
-                  "About us"
-                )}
-              </NavLink>
-            </div>
+
+            {user.position !== "staff" && (
+              <div className={cx("aboutus-container")}>
+                <NavLink
+                  to={`about_us_content`}
+                  className={(nav) => cx("about", { active: nav.isActive })}
+                >
+                  {isMobile ? (
+                    <FontAwesomeIcon icon={faCircleInfo} />
+                  ) : (
+                    "About us"
+                  )}
+                </NavLink>
+              </div>
+            )}
 
             <div className={cx("contact-container")}>
               <NavLink
@@ -204,30 +208,34 @@ function Sidebar({ profile, management, dark }) {
                 {isMobile ? <FontAwesomeIcon icon={faMoneyBills} /> : "Bills"}
               </NavLink>
             </div>
-            <div className={cx("vouchermanage-container")}>
-              <NavLink
-                to={`vouchers_manage`}
-                className={(nav) =>
-                  cx("vouchers_manage", { active: nav.isActive })
-                }
-              >
-                {isMobile ? <FontAwesomeIcon icon={faTicket} /> : "Vouchers"}
-              </NavLink>
-            </div>
-            <div className={cx("paytypemanage-container")}>
-              <NavLink
-                to={`paytypes_manage`}
-                className={(nav) =>
-                  cx("paytypes_manage", { active: nav.isActive })
-                }
-              >
-                {isMobile ? (
-                  <FontAwesomeIcon icon={faCreditCard} />
-                ) : (
-                  "Payment method"
-                )}
-              </NavLink>
-            </div>
+            {user.position !== "staff" && (
+              <div className={cx("vouchermanage-container")}>
+                <NavLink
+                  to={`vouchers_manage`}
+                  className={(nav) =>
+                    cx("vouchers_manage", { active: nav.isActive })
+                  }
+                >
+                  {isMobile ? <FontAwesomeIcon icon={faTicket} /> : "Vouchers"}
+                </NavLink>
+              </div>
+            )}
+            {user.position === "super admin" && (
+              <div className={cx("paytypemanage-container")}>
+                <NavLink
+                  to={`paytypes_manage`}
+                  className={(nav) =>
+                    cx("paytypes_manage", { active: nav.isActive })
+                  }
+                >
+                  {isMobile ? (
+                    <FontAwesomeIcon icon={faCreditCard} />
+                  ) : (
+                    "Payment method"
+                  )}
+                </NavLink>
+              </div>
+            )}
           </div>
         </div>
       )}

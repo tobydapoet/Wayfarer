@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const AccountContext = createContext({
   user: {},
@@ -199,12 +200,9 @@ export const AccountProvider = ({ children }) => {
 
   const handleLogout = async () => {
     try {
-      const user =
-        JSON.parse(localStorage.getItem("user")) ||
-        JSON.parse(sessionStorage.getItem("user"));
+      const user = getCurrentUser();
 
       if (user?.position) {
-        // Nếu là nhân viên (có position), gọi API cập nhật trạng thái
         const res = await axios.put(
           `http://localhost:3000/staffs/${user._id}`,
           {
@@ -221,7 +219,6 @@ export const AccountProvider = ({ children }) => {
         console.log("Logout khách hàng (không cần cập nhật trạng thái)");
       }
 
-      // Xoá user khỏi storage và chuyển trang
       localStorage.removeItem("user");
       sessionStorage.removeItem("user");
       navigate("/");

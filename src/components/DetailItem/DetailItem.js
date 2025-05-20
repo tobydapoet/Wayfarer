@@ -215,6 +215,7 @@ function DetailItem({ data, onClick, onStatusChange, onChangeReason }) {
               onClick={() => {
                 handleCreateFeedback();
                 setRating(0);
+                setOpenFeedback(false);
               }}
             >
               Submit

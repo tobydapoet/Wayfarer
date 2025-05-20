@@ -11,6 +11,7 @@ import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "./utils/SrollToTop";
+import { getCurrentUser } from "./utils/currentUser";
 
 const getRandomColor = () => {
   const hue = Math.floor(Math.random() * 360);
@@ -20,9 +21,17 @@ const getRandomColor = () => {
 
 getRandomColor();
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
+
+const RequireRole = ({ roles = [], children }) => {
+  if (!user) return <Navigate to="/login" replace />;
+
+  if (user.position === "super admin" || roles.includes(user.position)) {
+    return children;
+  }
+
+  return <Navigate to="/unauthorized" replace />;
+};
 
 const renderRoutes = (routes) =>
   routes.map((route, index) => {
@@ -41,9 +50,15 @@ const renderRoutes = (routes) =>
       ? [route.context]
       : [];
 
-    const Element = contexts.reduceRight((children, Context) => {
+    const PageWithContexts = contexts.reduceRight((children, Context) => {
       return <Context>{children}</Context>;
     }, <Page />);
+
+    const Element = route.roles ? (
+      <RequireRole roles={route.roles}>{PageWithContexts}</RequireRole>
+    ) : (
+      PageWithContexts
+    );
 
     return (
       <Route

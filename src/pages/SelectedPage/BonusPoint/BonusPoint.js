@@ -14,11 +14,10 @@ import VoucherItem from "../../../components/VoucherItem";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Notice from "../../../components/Notice";
+import { getCurrentUser } from "../../../utils/currentUser";
 
 const cx = classNames.bind(styles);
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
 
 const getDaysInMonth = (year, month) => {
   const days = new Date(year, month + 1, 0).getDate();

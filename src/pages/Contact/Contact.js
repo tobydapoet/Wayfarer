@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import { useContext, useState } from "react";
 import { ContactContext } from "../../contexts/ContactContext";
 import Notice from "../../components/Notice";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
@@ -13,16 +14,12 @@ function Contact() {
     contactValue,
     errors,
     notice,
-    handleCreateContact,
     handleInputChange,
-    setContactValue,
     handlePreventMessage,
     setNotice,
   } = useContext(ContactContext);
 
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
 
   return (
     <div className={cx("wrapper")}>
@@ -34,7 +31,7 @@ function Contact() {
               dark
               placeholder="Name"
               className={cx("name")}
-              value={user.name}
+              value={user?.name}
               name="name"
             />
 
@@ -42,7 +39,7 @@ function Contact() {
               dark
               placeholder="Email"
               className={cx("email")}
-              value={user.email}
+              value={user?.email}
               name="email"
             />
           </div>

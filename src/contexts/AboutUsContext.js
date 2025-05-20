@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const AboutUsContext = createContext({
   allContent: [],
@@ -17,9 +18,8 @@ export const AboutUsContext = createContext({
 });
 
 export const AboutUsProvider = ({ children }) => {
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
+
   const [allContent, setAllContent] = useState([]);
   const initialContent = {
     title: "",

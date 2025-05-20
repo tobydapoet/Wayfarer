@@ -5,12 +5,11 @@ import { useContext, useEffect, useState } from "react";
 import DetailItem from "../../../components/DetailItem/DetailItem";
 import { BillContext } from "../../../contexts/BillContext";
 import { FeedBackContext } from "../../../contexts/FeedbackContext";
+import { getCurrentUser } from "../../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
 
 function Processing() {
   const { allBills, handleUpdateStatusBill, setBillInfo, billInfo } =

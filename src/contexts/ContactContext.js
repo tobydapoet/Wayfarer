@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const ContactContext = createContext({
   contactValue: {},
@@ -21,13 +22,12 @@ export const ContactContext = createContext({
 });
 export const ContactProvicer = ({ children }) => {
   const today = new Date();
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
+
   const [allContacts, setAllContacts] = useState([]);
   const [searchContacts, setSearchContacts] = useState([]);
   const initialContactValue = {
-    clientId: user._id,
+    clientId: user?._id,
     title: "",
     message: "",
     createdAt: today.toISOString(),
@@ -63,7 +63,7 @@ export const ContactProvicer = ({ children }) => {
   console.log(contactValue);
 
   const handlePreventMessage = () => {
-    if (user.position) {
+    if (!user || user?.position) {
       setNotice(true);
       setContactValue(initialContactValue);
     } else {

@@ -13,7 +13,6 @@ const cx = classNames.bind(styles);
 function BlogAdd() {
   const {
     blogData,
-    tempBlogData,
     errors,
     user,
     handleInputChange,
@@ -32,7 +31,7 @@ function BlogAdd() {
             name="title"
             placeholder="Title..."
             className={cx("title")}
-            value={tempBlogData?.title || ""}
+            value={blogData?.title || ""}
             error={errors.title}
             onChange={handleInputChange}
           />
@@ -44,7 +43,7 @@ function BlogAdd() {
         <div className={cx("right-side")}>
           <div className={cx("theme-txt")}>Theme</div>
           <div className={cx("img-container")}>
-            <img src={tempBlogData.image || images.noImg} />
+            <img src={blogData.image || images.noImg} />
             <div className={cx("input-container")}>
               <input type="file" onChange={handleImgChange} />
             </div>
@@ -96,7 +95,7 @@ function BlogAdd() {
             statusbar: false,
             menubar: false,
           }}
-          value={tempBlogData.content}
+          value={blogData.content}
           onEditorChange={(content) => {
             handleInputChange({
               target: {

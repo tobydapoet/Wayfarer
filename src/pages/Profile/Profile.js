@@ -3,12 +3,12 @@ import styles from "./Profile.module.scss";
 import UserProfile from "../../components/UserProfile";
 import { StaffProvider } from "../../contexts/StaffContext";
 import { ClientProvider } from "../../contexts/ClientContext";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
+
 const isStaff = !!user?.position;
 
 const Wrapper = isStaff ? StaffProvider : ClientProvider;

@@ -7,6 +7,7 @@ import { PayTypeContext } from "./PayTypeContext";
 import { ScheduleContext } from "./ScheduleContext";
 import { toast } from "react-toastify";
 import { ClientContext } from "./ClientContext";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const BillContext = createContext({
   allBills: [],
@@ -15,17 +16,15 @@ export const BillContext = createContext({
   billInfo: {},
   totalCalculate: {},
   totalTempCalculate: {},
-  tempBillInfo: {},
+  billInfo: {},
   searchBillsResult: {},
   setNoticeBox: () => {},
   handleClient: () => {},
   handleUpdateBill: () => {},
-  setTempBillInfo: () => {},
-  setBillInfo: () => {},
   handleSchedule: () => {},
   handleInputChange: () => {},
   handleUsageVoucher: () => {},
-  setTempBillInfo: () => {},
+  setBillInfo: () => {},
   handleOnSave: () => {},
   handlePayType: () => {},
   handleCreateBill: () => {},
@@ -35,9 +34,7 @@ export const BillContext = createContext({
   handleCalculateClient: () => {},
 });
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
 
 export const BillProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -48,7 +45,7 @@ export const BillProvider = ({ children }) => {
   const param = useParams();
 
   const initialValue = {
-    clientId: !user.position ? user._id : "",
+    clientId: !user?.position ? user?._id : "",
     usageVoucherId: null,
     paytypeId: "",
     scheduleId: "",
@@ -60,7 +57,6 @@ export const BillProvider = ({ children }) => {
     refundAmount: null,
   };
   const [billInfo, setBillInfo] = useState(initialValue);
-  const [tempBillInfo, setTempBillInfo] = useState(initialValue);
   const { content } = useContext(DestinationContext);
   const { selectedUsageVoucher, setSelectedUsageVoucher } =
     useContext(UsageVoucherContext);
@@ -69,10 +65,6 @@ export const BillProvider = ({ children }) => {
     useContext(ScheduleContext);
   const [searchBillsResult, setSearchBillsResult] = useState([]);
   const { setClientData } = useContext(ClientContext);
-
-  // useEffect(() => {
-  //   console.log(billInfo);
-  // }, [billInfo]);
 
   useEffect(() => {
     axios
@@ -93,10 +85,6 @@ export const BillProvider = ({ children }) => {
         .then((res) => setBillInfo(res.data))
         .catch((err) => console.log(err));
   }, [param.id]);
-
-  useEffect(() => {
-    setTempBillInfo({ ...billInfo, status: "Pending Confirmation" });
-  }, [billInfo]);
 
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -217,27 +205,27 @@ export const BillProvider = ({ children }) => {
 
   const totalTempCalculate = useMemo(() => {
     const scheduleId =
-      typeof tempBillInfo.scheduleId === "string"
-        ? tempBillInfo?.scheduleId
-        : tempBillInfo?.scheduleId?._id;
+      typeof billInfo.scheduleId === "string"
+        ? billInfo?.scheduleId
+        : billInfo?.scheduleId?._id;
 
     const selectedSchedule = allSchedules.find((s) => s?._id === scheduleId);
 
     const price = selectedSchedule?.destinationId?.price || 0;
-    const num = Number(tempBillInfo.num) || 0;
-    const discount = tempBillInfo.usageVoucherId?.voucherId?.discountValue || 0;
+    const num = Number(billInfo.num) || 0;
+    const discount = billInfo.usageVoucherId?.voucherId?.discountValue || 0;
 
     const estimateCost = price * num - discount;
     return Math.max(estimateCost, 0);
   }, [
-    tempBillInfo?.scheduleId,
-    tempBillInfo?.num,
-    tempBillInfo?.usageVoucherId,
+    billInfo?.scheduleId,
+    billInfo?.num,
+    billInfo?.usageVoucherId,
     allSchedules,
   ]);
 
   useEffect(() => {
-    setTempBillInfo((prev) => ({
+    setBillInfo((prev) => ({
       ...prev,
       pay: totalTempCalculate,
     }));
@@ -286,7 +274,7 @@ export const BillProvider = ({ children }) => {
 
   const handleUpdateBill = async () => {
     let newErrors = {};
-    Object.entries(tempBillInfo).forEach(([name, value]) => {
+    Object.entries(billInfo).forEach(([name, value]) => {
       const updatedErrors = validateInput(name, value);
       newErrors = { ...newErrors, ...updatedErrors };
     });
@@ -297,25 +285,23 @@ export const BillProvider = ({ children }) => {
 
     try {
       const res = await axios.put(
-        `http://localhost:3000/bills/${tempBillInfo._id}`,
+        `http://localhost:3000/bills/${billInfo._id}`,
         {
-          ...tempBillInfo,
-          scheduleId: tempBillInfo.scheduleId?._id || null,
-          usageVoucherId: tempBillInfo.usageVoucherId?._id || null,
+          ...billInfo,
+          scheduleId: billInfo.scheduleId?._id || null,
+          usageVoucherId: billInfo.usageVoucherId?._id || null,
           paytypeId:
-            typeof tempBillInfo.paytypeId === "object"
-              ? tempBillInfo.paytypeId?._id || null
-              : tempBillInfo.paytypeId,
+            typeof billInfo.paytypeId === "object"
+              ? billInfo.paytypeId?._id || null
+              : billInfo.paytypeId,
           status: "Pending Confirmation",
         }
       );
       if (res.data.success) {
         setAllBills((prev) =>
-          prev.map((bill) =>
-            bill._id === tempBillInfo._id ? res.data.data : bill
-          )
+          prev.map((bill) => (bill._id === billInfo._id ? res.data.data : bill))
         );
-        setBillInfo(tempBillInfo);
+        setBillInfo(billInfo);
         toast.success(res.data.message);
       }
     } catch (err) {
@@ -384,14 +370,12 @@ export const BillProvider = ({ children }) => {
         totalCalculate,
         totalTempCalculate,
         searchBillsResult,
-        tempBillInfo,
+        billInfo,
         handleClient,
-        setTempBillInfo,
+        setBillInfo,
         handleSchedule,
         handleUsageVoucher,
         setNoticeBox,
-        setBillInfo,
-        setTempBillInfo,
         handleInputChange,
         handleUpdateStatusBill,
         handleOnSave,

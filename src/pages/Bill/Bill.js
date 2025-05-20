@@ -16,6 +16,7 @@ import VoucherItem from "../../components/VoucherItem";
 import { ClientContext } from "../../contexts/ClientContext";
 import SearchBar from "../../components/SearchBar";
 import ClientPopper from "../../components/ClientPopper/ClientPopper";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
@@ -47,9 +48,10 @@ function BillForm() {
     useContext(ClientContext);
   const [isVisible, setIsvisible] = useState(false);
   const inputRef = useRef(null);
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
+
+  const today = new Date();
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("img-container")}>
@@ -102,7 +104,8 @@ function BillForm() {
                       .filter(
                         (schedules) =>
                           schedules.destinationId._id === content._id &&
-                          schedules.status !== false
+                          schedules.status !== false &&
+                          new Date(schedules.startDate) > today
                       )
                       .map((schedule) => (
                         <div
@@ -126,7 +129,10 @@ function BillForm() {
                           <div className={cx("member")}>
                             {allBills
                               .filter(
-                                (bill) => bill.scheduleId._id === schedule._id
+                                (bill) =>
+                                  bill.scheduleId._id === schedule._id &&
+                                  bill.status !== "Cancelled" &&
+                                  bill.status !== "Refunded"
                               )
                               .reduce((sum, bill) => sum + bill.num, 0)}
                             /{schedule.amount}

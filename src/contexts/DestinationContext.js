@@ -60,7 +60,7 @@ export const DestinationProvider = ({ children }) => {
       .get(`http://localhost:3000/destinations`)
       .then((res) => setAllDestinations(res.data))
       .catch((err) => toast.error(err));
-  }, [location]);
+  }, []);
 
   const [content, setContent] = useState({
     name: "",

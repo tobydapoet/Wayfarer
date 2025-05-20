@@ -14,12 +14,11 @@ import useForm from "../../hooks/useForm";
 import AccountItem from "../AccountItem/AccountItem";
 import { AccountContext } from "../../contexts/AccountContext";
 import { toast, ToastContainer } from "react-toastify";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
 
 function Navbar() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);

@@ -7,6 +7,7 @@ import { BlogContext } from "../../../contexts/BlogContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
 import { BlogFavouriteContext } from "../../../contexts/BlogFavouriteContext";
+import { getCurrentUser } from "../../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
@@ -16,9 +17,7 @@ function BlogInfo() {
   const isBlogInfo = location.pathname.includes("/blogs/");
   const isOwnerInfo = location.pathname.includes("/my_blogs/");
   const blogTime = new Date(blogData.createdAt);
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
 
   const { allBlogFavourite, handleToggleFavourite } =
     useContext(BlogFavouriteContext);
@@ -28,7 +27,7 @@ function BlogInfo() {
       typeof fav.blogId === "string" ? fav.blogId : fav.blogId?._id;
     const favClientId =
       typeof fav.clientId === "string" ? fav.clientId : fav.clientId?._id;
-    return favBlogId === blogData._id && favClientId === user._id;
+    return favBlogId === blogData?._id && favClientId === user?._id;
   });
 
   return (
@@ -43,7 +42,7 @@ function BlogInfo() {
         </div>
         <div className={cx("right-side")}>
           {!isBlogInfo && <img src={blogData.image} />}
-          {isBlogInfo && !user.position && (
+          {isBlogInfo && user && !user?.position && (
             <div className={cx("client-ffc")}>
               <FontAwesomeIcon
                 icon={faHeart}

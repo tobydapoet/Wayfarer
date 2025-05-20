@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const StaffContext = createContext({
   allStaffsData: [],
@@ -265,9 +266,7 @@ export const StaffProvider = ({ children, data }) => {
   };
 
   const handleChangeStatus = async (status) => {
-    const user =
-      JSON.parse(localStorage.getItem("user")) ||
-      JSON.parse(sessionStorage.getItem("user"));
+    const user = getCurrentUser();
 
     try {
       const res = await axios.put(

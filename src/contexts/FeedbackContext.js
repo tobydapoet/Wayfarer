@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { BillContext } from "./BillContext";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const FeedBackContext = createContext({
   allFeedbacks: [],
@@ -18,15 +19,14 @@ export const FeedBackContext = createContext({
   handleCalculateRating: () => {},
 });
 
-const user =
-  JSON.parse(localStorage.getItem("user")) ||
-  JSON.parse(sessionStorage.getItem("user"));
+const user = getCurrentUser();
+
 export const FeedBackProvider = ({ children }) => {
   const { billInfo } = useContext(BillContext);
   const [allFeedbacks, setAllFeedbacks] = useState([]);
   const initialValue = {
     destinationId: "",
-    clientId: user._id,
+    clientId: user?._id,
     rating: 0,
     comment: "",
   };

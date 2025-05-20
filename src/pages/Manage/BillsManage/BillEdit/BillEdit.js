@@ -23,11 +23,10 @@ function BillEdit() {
     allBills,
     errors,
     billInfo,
-    tempBillInfo,
     totalTempCalculate,
     handleSchedule,
     handleInputChange,
-    setTempBillInfo,
+    setBillInfo,
     handleUpdateBill,
     handleUpdateStatusBill,
   } = useContext(BillContext);
@@ -50,14 +49,14 @@ function BillEdit() {
     billInfo?.usageVoucherId?.voucherId?.discountValue
   );
 
-  useEffect(() => console.log(tempBillInfo), [tempBillInfo]);
+  useEffect(() => console.log(billInfo), [billInfo]);
 
   const selectedSchedule = allSchedules.find(
     (schedule) =>
       schedule._id ===
-      (typeof tempBillInfo.scheduleId === "string"
-        ? tempBillInfo.scheduleId
-        : tempBillInfo.scheduleId?._id)
+      (typeof billInfo.scheduleId === "string"
+        ? billInfo.scheduleId
+        : billInfo.scheduleId?._id)
   );
 
   const tempPrice = selectedSchedule?.destinationId?.price || 0;
@@ -72,6 +71,8 @@ function BillEdit() {
     Refunded: "refunded",
     "Pending Refund": "wait-refund",
   };
+
+  const today = new Date();
 
   return (
     <>
@@ -201,7 +202,12 @@ function BillEdit() {
         )}
       </div>
 
-      <Modal form open={openEditForm} onClose={() => setOpenEditForm(false)}>
+      <Modal
+        form
+        open={openEditForm}
+        onClose={() => setOpenEditForm(false)}
+        style={{ width: "500px" }}
+      >
         <div className={cx("row")}>
           <div className={cx("time")}>
             <HeadlessTippy
@@ -219,8 +225,9 @@ function BillEdit() {
                     {allSchedules
                       .filter(
                         (schedule) =>
-                          destinationId === destinationId &&
-                          schedule?.status !== false
+                          schedule.destinationId._id === destinationId &&
+                          schedule?.status !== false &&
+                          new Date(schedule.startDate) > today
                       )
                       .map((schedule) => (
                         <div
@@ -228,7 +235,7 @@ function BillEdit() {
                           className={cx("result-item")}
                           onMouseDown={(e) => {
                             e.preventDefault();
-                            handleSchedule(schedule, setTempBillInfo);
+                            handleSchedule(schedule, setBillInfo);
                             setIsvisible(false);
                           }}
                         >
@@ -244,7 +251,10 @@ function BillEdit() {
                           <div className={cx("member")}>
                             {allBills
                               .filter(
-                                (bill) => bill.scheduleId._id === schedule._id
+                                (bill) =>
+                                  bill.scheduleId._id === schedule._id &&
+                                  bill.status !== "Cancelled" &&
+                                  bill.status !== "Refunded"
                               )
                               .reduce((sum, bill) => sum + bill.num, 0)}
                             /{schedule.amount}
@@ -284,22 +294,22 @@ function BillEdit() {
               type="number"
               name="num"
               frame={
-                tempBillInfo?.scheduleId?.destinationId?.unit
-                  ? tempBillInfo.scheduleId.destinationId.unit
+                billInfo?.scheduleId?.destinationId?.unit
+                  ? billInfo.scheduleId.destinationId.unit
                       .charAt(0)
                       .toUpperCase() +
-                    tempBillInfo.scheduleId.destinationId.unit.slice(1)
+                    billInfo.scheduleId.destinationId.unit.slice(1)
                   : ""
               }
-              value={tempBillInfo.num}
-              onChange={(e) => handleInputChange(e, setTempBillInfo)}
+              value={billInfo.num}
+              onChange={(e) => handleInputChange(e, setBillInfo)}
               error={errors.num}
             />
           </div>
           <div className={cx("total")}>
             <div className={cx("original-price")}>
               <span>Total price:</span>
-              {(tempPrice * Number(tempBillInfo.num)).toLocaleString("en-US", {
+              {(tempPrice * Number(billInfo.num)).toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
               })}
@@ -307,7 +317,7 @@ function BillEdit() {
             <div className={cx("sale-value")}>
               <span>Sale value:</span>
               {Number(
-                tempBillInfo?.usageVoucherId?.voucherId?.discountValue || 0
+                billInfo?.usageVoucherId?.voucherId?.discountValue || 0
               ).toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",

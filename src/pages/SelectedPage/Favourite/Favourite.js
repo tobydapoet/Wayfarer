@@ -11,6 +11,7 @@ import { BlogFavouriteContext } from "../../../contexts/BlogFavouriteContext";
 import { DestinationContext } from "../../../contexts/DestinationContext";
 import { DestinationFavouriteContext } from "../../../contexts/DestinationFavouriteContext";
 import PlacementItem from "../../../components/PlacementItem";
+import { getCurrentUser } from "../../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
@@ -22,9 +23,7 @@ function Favourite() {
     useContext(DestinationContext);
   const { allDestinationFavourite } = useContext(DestinationFavouriteContext);
 
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
 
   const favouriteBlogIdsOfClient = allBlogFavourite
     .filter((fav) => fav.clientId?._id === user._id)

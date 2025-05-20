@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getCurrentUser } from "../utils/currentUser";
 
 export const DestinationFavouriteContext = createContext({
   allDestinationFavourite: [],
@@ -10,9 +11,7 @@ export const DestinationFavouriteContext = createContext({
 
 export const DestinationFavouriteProvider = ({ children }) => {
   const [allDestinationFavourite, setAllDestinationFavourite] = useState([]);
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
 
   const { id } = useParams();
 
@@ -24,7 +23,7 @@ export const DestinationFavouriteProvider = ({ children }) => {
           : fav.destinationId?._id;
       const favClientId =
         typeof fav.clientId === "string" ? fav.clientId : fav.clientId?._id;
-      return favDestinationId === destinationId && favClientId === user._id;
+      return favDestinationId === destinationId && favClientId === user?._id;
     });
   };
 

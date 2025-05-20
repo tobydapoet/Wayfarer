@@ -183,7 +183,12 @@ const privateRoutes = [
         layout: null,
         default: true,
         children: [
-          { path: "staffs", component: Staffs, layout: null },
+          {
+            path: "staffs",
+            component: Staffs,
+            roles: ["super admin"],
+            layout: null,
+          },
           {
             path: "dashboard",
             component: Dashboard,
@@ -191,7 +196,11 @@ const privateRoutes = [
             default: true,
             layout: null,
           },
-          { path: "clients", component: Clients, layout: null },
+          {
+            path: "clients",
+            component: Clients,
+            layout: null,
+          },
           {
             path: "/manage/business/clients/add_content",
             component: ClientAdd,
@@ -211,6 +220,7 @@ const privateRoutes = [
           {
             path: "/manage/business/staffs/:email",
             component: StaffLayout,
+            roles: ["admin"],
             layout: null,
           },
         ],
@@ -218,12 +228,14 @@ const privateRoutes = [
       {
         path: "destinations",
         component: DestinationsManage,
+        roles: ["admin"],
         context: [CityProvider, DestinationProvider],
         layout: null,
       },
       {
         path: "destinations/:placement",
         component: DestinationInfo,
+        roles: ["admin"],
         context: [
           FeedBackProvider,
           DestinationProvider,
@@ -235,6 +247,7 @@ const privateRoutes = [
       {
         path: "destinations/:placement/:id",
         component: ServiceIntroduce,
+        roles: ["admin"],
         context: [DestinationProvider, DestinationFavouriteProvider],
         layout: null,
       },
@@ -243,6 +256,7 @@ const privateRoutes = [
         path: "/manage/about_us_content",
         component: AboutUsManage,
         context: AboutUsProvider,
+        roles: ["admin"],
         layout: null,
       },
       {
@@ -287,6 +301,7 @@ const privateRoutes = [
       {
         path: "vouchers_manage",
         component: VoucherManage,
+        roles: ["admin"],
         context: [VoucherProvider, UsageVoucherProvider, ClientProvider],
         layout: null,
         children: [
@@ -297,6 +312,7 @@ const privateRoutes = [
       {
         path: "paytypes_manage",
         component: PayTypeManage,
+        roles: ["super admin"],
         context: PayTypeProvider,
         layout: null,
       },

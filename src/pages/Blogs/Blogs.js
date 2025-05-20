@@ -9,13 +9,13 @@ import { useContext } from "react";
 import { BlogContext } from "../../contexts/BlogContext";
 import BlogPopper from "../../components/BlogPopper/BlogPopper";
 import { BlogFavouriteContext } from "../../contexts/BlogFavouriteContext";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
 function Blogs() {
-  const user =
-    JSON.parse(localStorage.getItem("user")) ||
-    JSON.parse(sessionStorage.getItem("user"));
+  const user = getCurrentUser();
+
   const {
     allBlogData,
     handleSelectedBlog,
@@ -38,11 +38,11 @@ function Blogs() {
             <BlogPopper
               onClick={() => handleSelectedBlog(blog)}
               data={blog}
-              noAdd={user.position}
+              noAdd={!user || user?.position}
             />
           )}
         />
-        {!user.position && (
+        {user && !user.position && (
           <div
             className={cx("add")}
             onClick={handleAddClick}
