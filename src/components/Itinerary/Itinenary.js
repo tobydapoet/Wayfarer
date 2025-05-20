@@ -2,8 +2,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faHeart,
   faPersonWalkingArrowRight,
   faPlus,
+  faShare,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Itinerary.module.scss";
@@ -17,6 +19,7 @@ import { ScheduleProvider } from "../../contexts/ScheduleContext";
 import { useLocation, useParams } from "react-router-dom";
 import { FeedBackContext } from "../../contexts/FeedbackContext";
 import { BillContext } from "../../contexts/BillContext";
+import { DestinationFavouriteContext } from "../../contexts/DestinationFavouriteContext";
 
 const cx = classNames.bind(styles);
 
@@ -42,6 +45,11 @@ function Itinerary({ manage }) {
   const location = useLocation().pathname;
   const { handleCalculateRating } = useContext(FeedBackContext);
   const { handleCalculateClient } = useContext(BillContext);
+  const {
+    handleToggleDestinationFavourite,
+    allDestinationFavourite,
+    isFavourite,
+  } = useContext(DestinationFavouriteContext);
 
   return (
     <>
@@ -91,6 +99,22 @@ function Itinerary({ manage }) {
               <div className={cx("num")}>
                 <div>{`${handleCalculateClient(content._id)}`}</div>
                 <FontAwesomeIcon icon={faPersonWalkingArrowRight} />
+              </div>
+
+              <div className={cx("favourite")}>
+                <div>
+                  {
+                    allDestinationFavourite.filter((fav) => {
+                      const favDestinationId =
+                        typeof fav.destinationId === "string"
+                          ? fav.destinationId
+                          : fav.destinationId?._id;
+                      return favDestinationId === content._id;
+                    }).length
+                  }
+                </div>
+
+                <FontAwesomeIcon icon={faHeart} color="red" />
               </div>
             </div>
 
@@ -163,8 +187,9 @@ function Itinerary({ manage }) {
               </div>
             )}
           </div>
-          {manage && (
-            <div className={cx("right-side")}>
+
+          <div className={cx("right-side")}>
+            {manage && (
               <div className={cx("img-container")}>
                 <img src={content.image || images.noImg} alt={content.name} />
 
@@ -177,8 +202,31 @@ function Itinerary({ manage }) {
                   )}
                 </>
               </div>
-            </div>
-          )}
+            )}
+            {!manage && (
+              <div className={cx("client-ffc")}>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  className={cx("favourite-icon", {
+                    isActive: isFavourite(content._id),
+                  })}
+                  onClick={(e) => {
+                    const icon = e.currentTarget;
+                    icon.classList.add(styles.shrink);
+                    setTimeout(() => icon.classList.remove(styles.shrink), 100);
+                    handleToggleDestinationFavourite(content._id);
+                  }}
+                />
+                <FontAwesomeIcon
+                  icon={faShare}
+                  className={cx("share-icon")}
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         <hr className={cx("gap-line")} />

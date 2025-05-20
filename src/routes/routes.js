@@ -49,6 +49,8 @@ import Processing from "../pages/SelectedPage/Processing";
 import Favourite from "../pages/SelectedPage/Favourite";
 import MyBlogs from "../pages/SelectedPage/MyBlogs/MyBlogs";
 import { FeedBackProvider } from "../contexts/FeedbackContext";
+import { BlogFavouriteProvider } from "../contexts/BlogFavouriteContext";
+import { DestinationFavouriteProvider } from "../contexts/DestinationFavouriteContext";
 
 const publicRoutes = [
   {
@@ -69,7 +71,12 @@ const publicRoutes = [
     context: [AboutUsProvider, StaffProvider],
     topic: "ABOUT US",
   },
-  { path: "/blogs", component: Blogs, context: BlogProvider, topic: "BLOG" },
+  {
+    path: "/blogs",
+    component: Blogs,
+    context: [BlogProvider, BlogFavouriteProvider],
+    topic: "BLOG",
+  },
   {
     path: "/bill",
     component: Bill,
@@ -91,7 +98,7 @@ const publicRoutes = [
   {
     path: "/blogs/:id",
     component: BlogInfo,
-    context: BlogProvider,
+    context: [BlogProvider, BlogFavouriteProvider],
   },
   {
     path: "/blogs/add_content",
@@ -101,12 +108,22 @@ const publicRoutes = [
   {
     path: "/destinations/:placement",
     component: Placement,
-    context: [FeedBackProvider, DestinationProvider, BillProvider],
+    context: [
+      FeedBackProvider,
+      DestinationProvider,
+      DestinationFavouriteProvider,
+      BillProvider,
+    ],
   },
   {
     path: "/destinations/:placement/:id",
     component: PlacementInfo,
-    context: [FeedBackProvider, DestinationProvider, BillProvider],
+    context: [
+      FeedBackProvider,
+      DestinationProvider,
+      DestinationFavouriteProvider,
+      BillProvider,
+    ],
   },
   {
     path: ":email",
@@ -124,6 +141,14 @@ const publicRoutes = [
   {
     path: ":email/favourite",
     component: Favourite,
+    context: [
+      BlogProvider,
+      BlogFavouriteProvider,
+      DestinationProvider,
+      DestinationFavouriteProvider,
+      FeedBackProvider,
+      BillProvider,
+    ],
     layout: ProfileLayout,
   },
   {
@@ -199,13 +224,18 @@ const privateRoutes = [
       {
         path: "destinations/:placement",
         component: DestinationInfo,
-        context: [FeedBackProvider, DestinationProvider, BillProvider],
+        context: [
+          FeedBackProvider,
+          DestinationProvider,
+          DestinationFavouriteProvider,
+          BillProvider,
+        ],
         layout: null,
       },
       {
         path: "destinations/:placement/:id",
         component: ServiceIntroduce,
-        context: DestinationProvider,
+        context: [DestinationProvider, DestinationFavouriteProvider],
         layout: null,
       },
 

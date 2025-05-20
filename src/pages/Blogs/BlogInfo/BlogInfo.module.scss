@@ -28,11 +28,32 @@
         }
 
         .right-side {
+            position: relative;
             img {
                 width: 150px;
                 height: 100px;
                 object-fit: cover;
                 display: flex;
+            }
+
+            .client-ffc {
+                display: flex;
+                gap: 20px;
+                position: absolute;
+                bottom: 0;
+                right: 20px;
+                .favourite-icon {
+                    font-size: 25px;
+                    cursor: pointer;
+
+                    &.isActive {
+                        color: red;
+                    }
+                }
+                .share-icon {
+                    cursor: pointer;
+                    font-size: 25px;
+                }
             }
         }
     }

@@ -77,7 +77,12 @@ export const BillProvider = ({ children }) => {
   useEffect(() => {
     axios
       .get(`http://localhost:3000/bills`)
-      .then((res) => setAllBills(res.data))
+      .then((res) => {
+        const sortedBills = res.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setAllBills(sortedBills);
+      })
       .catch((err) => console.log(err));
   }, []);
 

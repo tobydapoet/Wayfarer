@@ -1,12 +1,16 @@
 import classNames from "classnames/bind";
 import styles from "./Tablet.module.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { BlogFavouriteContext } from "../../contexts/BlogFavouriteContext";
 
 const cx = classNames.bind(styles);
 
 function Pin({ imgSrc, data, type, to, onClick }) {
   const [size, setSize] = useState("");
+  const { allBlogFavourite } = useContext(BlogFavouriteContext);
 
   const checkImageSize = (img) => {
     if (img.naturalHeight < img.naturalWidth) {
@@ -34,10 +38,29 @@ function Pin({ imgSrc, data, type, to, onClick }) {
       {data && (
         <div className={cx("content-overlay")}>
           <div className={cx("content-container")}>
-            <div className={cx("title-container")}>{data.title}</div>
-            {data.clientId && (
-              <div className={cx("name-container")}>{data.clientId.name}</div>
-            )}
+            <div className={cx("left-side")}>
+              <div className={cx("title-container")}>{data.title}</div>
+              {data.clientId && (
+                <div className={cx("name-container")}>{data.clientId.name}</div>
+              )}
+            </div>
+            <div className={cx("right-side")}>
+              <div>
+                {
+                  allBlogFavourite.filter((blogsFav) => {
+                    const blogId =
+                      typeof blogsFav.blogId === "string"
+                        ? blogsFav.blogId
+                        : blogsFav.blogId._id;
+                    return blogId === data._id;
+                  }).length
+                }
+              </div>
+              <FontAwesomeIcon
+                icon={faHeart}
+                className={cx("favourite-icon")}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -49,6 +72,5 @@ function Pin({ imgSrc, data, type, to, onClick }) {
     </Comp>
   );
 }
-// onLoad được chạy trước khi ảnh được render vào nên phải dùng useEffect
 
 export default Pin;

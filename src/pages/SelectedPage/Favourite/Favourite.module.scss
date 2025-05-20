@@ -52,12 +52,13 @@
         scrollbar-width: none;
     }
 
-    .container {
+    .tour-container {
         max-width: 100%;
         margin: 0 auto;
-      
-        margin: 30px;
         overflow: visible;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
 
         .info {
             display: flex;
@@ -67,13 +68,10 @@
             transition: transform 0.3s ease-in-out;
             transform-origin: center; // 🔥 Scale từ giữa
 
-
             &:hover {
-                z-index: 10; 
+                z-index: 10;
                 transform: scale(1.2);
             }
-
-
 
             img {
                 width: 320px;
@@ -82,9 +80,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-              
             }
-          
 
             .content {
                 margin-bottom: 40px;
@@ -97,7 +93,6 @@
                 .title {
                     text-decoration: none;
                 }
-
             }
         }
     }
@@ -107,11 +102,11 @@ a {
     text-decoration: none;
 }
 
-@media (max-width:800px) {
+@media (max-width: 800px) {
     .wrapper {
         .tabs {
             display: flex;
-    
+
             div {
                 padding: 10px 15px;
             }

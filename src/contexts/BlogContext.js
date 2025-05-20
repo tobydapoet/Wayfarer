@@ -81,7 +81,7 @@ export const BlogProvider = ({ children, data }) => {
 
   const handleSelectedBlog = (selectedBlog) => {
     setBlogData(selectedBlog);
-    navigate(`${selectedBlog._id}`);
+    navigate(`/blogs/${selectedBlog._id}`);
   };
 
   const validateError = (name, value) => {

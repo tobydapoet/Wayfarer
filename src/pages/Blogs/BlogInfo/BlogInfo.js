@@ -4,16 +4,32 @@ import Button from "../../../components/Button";
 import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { BlogContext } from "../../../contexts/BlogContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
+import { BlogFavouriteContext } from "../../../contexts/BlogFavouriteContext";
 
 const cx = classNames.bind(styles);
 
 function BlogInfo() {
   const { blogData, handleApproveBlog } = useContext(BlogContext);
-  console.log(blogData);
   const location = useLocation();
   const isBlogInfo = location.pathname.includes("/blogs/");
   const isOwnerInfo = location.pathname.includes("/my_blogs/");
   const blogTime = new Date(blogData.createdAt);
+  const user =
+    JSON.parse(localStorage.getItem("user")) ||
+    JSON.parse(sessionStorage.getItem("user"));
+
+  const { allBlogFavourite, handleToggleFavourite } =
+    useContext(BlogFavouriteContext);
+
+  const isFavourite = allBlogFavourite.some((fav) => {
+    const favBlogId =
+      typeof fav.blogId === "string" ? fav.blogId : fav.blogId?._id;
+    const favClientId =
+      typeof fav.clientId === "string" ? fav.clientId : fav.clientId?._id;
+    return favBlogId === blogData._id && favClientId === user._id;
+  });
 
   return (
     <div className={cx("wrapper", { clientInterface: isBlogInfo })}>
@@ -25,11 +41,30 @@ function BlogInfo() {
             At: {blogTime.toLocaleDateString()}
           </div>
         </div>
-        {!isBlogInfo && (
-          <div className={cx("right-side")}>
-            <img src={blogData.image} />
-          </div>
-        )}
+        <div className={cx("right-side")}>
+          {!isBlogInfo && <img src={blogData.image} />}
+          {isBlogInfo && !user.position && (
+            <div className={cx("client-ffc")}>
+              <FontAwesomeIcon
+                icon={faHeart}
+                className={cx("favourite-icon", { isActive: isFavourite })}
+                onClick={(e) => {
+                  const icon = e.currentTarget;
+                  icon.classList.add(styles.shrink);
+                  setTimeout(() => icon.classList.remove(styles.shrink), 100);
+                  handleToggleFavourite(blogData._id);
+                }}
+              />
+              <FontAwesomeIcon
+                icon={faShare}
+                className={cx("share-icon")}
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
       <hr></hr>
       <div className={cx("body")}>

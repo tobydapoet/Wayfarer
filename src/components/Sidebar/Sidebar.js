@@ -66,18 +66,23 @@ function Sidebar({ profile, management, dark }) {
           <div className={cx("menu")}>
             {!isMobile && <hr className={cx("gap-line1")}></hr>}
 
-            <div className={cx("navigate-profile")}>
-              <div className={cx("processing-container")}>
-                <NavLink
-                  to={`/${email}/processing`}
-                  className={(nav) =>
-                    cx("processing", { active: nav.isActive })
-                  }
-                >
-                  {isMobile ? <FontAwesomeIcon icon={faClock} /> : "Processing"}
-                </NavLink>
-              </div>
-              {!user.position && (
+            {!user.position && (
+              <div className={cx("navigate-profile")}>
+                <div className={cx("processing-container")}>
+                  <NavLink
+                    to={`/${email}/processing`}
+                    className={(nav) =>
+                      cx("processing", { active: nav.isActive })
+                    }
+                  >
+                    {isMobile ? (
+                      <FontAwesomeIcon icon={faClock} />
+                    ) : (
+                      "Processing"
+                    )}
+                  </NavLink>
+                </div>
+
                 <div className={cx("my_blogs-container")}>
                   <NavLink
                     to={`/${email}/my_blogs`}
@@ -88,24 +93,35 @@ function Sidebar({ profile, management, dark }) {
                     {isMobile ? <FontAwesomeIcon icon={faPen} /> : "My Blogs"}
                   </NavLink>
                 </div>
-              )}
-              <div className={cx("favourite-container")}>
-                <NavLink
-                  to={`/${email}/favourite`}
-                  className={(nav) => cx("favourite", { active: nav.isActive })}
-                >
-                  {isMobile ? <FontAwesomeIcon icon={faHeart} /> : "Favourite"}
-                </NavLink>
+
+                <div className={cx("favourite-container")}>
+                  <NavLink
+                    to={`/${email}/favourite`}
+                    className={(nav) =>
+                      cx("favourite", { active: nav.isActive })
+                    }
+                  >
+                    {isMobile ? (
+                      <FontAwesomeIcon icon={faHeart} />
+                    ) : (
+                      "Favourite"
+                    )}
+                  </NavLink>
+                </div>
+                <div className={cx("bonus-container")}>
+                  <NavLink
+                    to={`/${email}/bonus`}
+                    className={(nav) => cx("bonus", { active: nav.isActive })}
+                  >
+                    {isMobile ? (
+                      <FontAwesomeIcon icon={faGift} />
+                    ) : (
+                      "Bonus point"
+                    )}
+                  </NavLink>
+                </div>
               </div>
-              <div className={cx("bonus-container")}>
-                <NavLink
-                  to={`/${email}/bonus`}
-                  className={(nav) => cx("bonus", { active: nav.isActive })}
-                >
-                  {isMobile ? <FontAwesomeIcon icon={faGift} /> : "Bonus point"}
-                </NavLink>
-              </div>
-            </div>
+            )}
             {!isMobile && <hr className={cx("gap-line2")}></hr>}
 
             <div className={cx("logout")} onClick={handleLogout}>

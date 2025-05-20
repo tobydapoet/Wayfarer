@@ -4,16 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import {
+  faHeart,
   faPersonWalkingArrowRight,
   faStar,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
-import StarRating from "../../utils/StartRating";
 import Notice from "../Notice";
-import { DestinationContext } from "../../contexts/DestinationContext";
 import { FeedBackContext } from "../../contexts/FeedbackContext";
 import { BillContext } from "../../contexts/BillContext";
+import { DestinationFavouriteContext } from "../../contexts/DestinationFavouriteContext";
 
 const cx = classNames.bind(styles);
 
@@ -28,6 +28,7 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
 
   const { handleCalculateRating } = useContext(FeedBackContext);
   const { handleCalculateClient } = useContext(BillContext);
+  const { allDestinationFavourite } = useContext(DestinationFavouriteContext);
 
   const stringHtml = (html) => {
     const tempP = document.createElement("div");
@@ -55,6 +56,22 @@ function PlacementItem({ data, manage, client, onClick, onDelete }) {
               <div className={cx("num")}>
                 <div>{`${handleCalculateClient(data._id)}`}</div>
                 <FontAwesomeIcon icon={faPersonWalkingArrowRight} />
+              </div>
+
+              <div className={cx("favourite")}>
+                <div>
+                  {
+                    allDestinationFavourite.filter((fav) => {
+                      const favDestinationId =
+                        typeof fav.destinationId === "string"
+                          ? fav.destinationId
+                          : fav.destinationId?._id;
+                      return favDestinationId === data._id;
+                    }).length
+                  }
+                </div>
+
+                <FontAwesomeIcon icon={faHeart} color="red" />
               </div>
             </div>
             <div className={cx("description", { manage })}>

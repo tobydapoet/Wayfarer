@@ -110,10 +110,19 @@
         bottom: 0;
         margin: 20px 20px;
         opacity: 0;
+        display: flex;
+        justify-content: space-between;
+        width: calc(100% - 40px);
+        align-items: center;
         transition: opacity 0.3s ease;
 
         .name-container {
             margin-top: 10px;
+        }
+
+        .right-side {
+            display: flex;
+            gap: 7px;
         }
     }
 
