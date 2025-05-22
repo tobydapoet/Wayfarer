@@ -87,12 +87,15 @@ function BillEdit() {
               </div>
             </div>
           </div>
-          <div
-            className={cx("btn-icon-container")}
-            onClick={() => setOpenEditForm(true)}
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </div>
+          {(billInfo.status === "Pending Confirmation" ||
+            billInfo.status === "Paid") && (
+            <div
+              className={cx("btn-icon-container")}
+              onClick={() => setOpenEditForm(true)}
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </div>
+          )}
         </div>
 
         <div className={cx("schedule-info")}>

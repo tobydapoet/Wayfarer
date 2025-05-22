@@ -1,5 +1,12 @@
 import axios from "axios";
-import { createContext, useState, useMemo, useEffect, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useMemo,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DestinationContext } from "./DestinationContext";
 import { UsageVoucherContext } from "./UsageVoucherContext";
@@ -65,6 +72,7 @@ export const BillProvider = ({ children }) => {
     useContext(ScheduleContext);
   const [searchBillsResult, setSearchBillsResult] = useState([]);
   const { setClientData } = useContext(ClientContext);
+  const hasExists = useRef(false);
 
   useEffect(() => {
     axios
@@ -116,6 +124,8 @@ export const BillProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (hasExists.current) return;
+    hasExists.current = true;
     const updateStatus = async () => {
       await axios.post("http://localhost:3000/bills/status-by-time");
     };

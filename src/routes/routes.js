@@ -29,7 +29,7 @@ import BlogAddWraper from "../pages/Blogs/BlogAddWrapper/BlogAddWrapper";
 import { CityProvider } from "../contexts/CityContext";
 import { BlogProvider } from "../contexts/BlogContext";
 import { DestinationProvider } from "../contexts/DestinationContext";
-import { ContactProvicer } from "../contexts/ContactContext";
+import { ContactProvider } from "../contexts/ContactContext";
 import ContactInfo from "../pages/Manage/ContactManage/ContactInfo/ContactInfo";
 import AboutUsManage from "../pages/Manage/AboutUsManage";
 import { AboutUsProvider } from "../contexts/AboutUsContext";
@@ -51,6 +51,7 @@ import MyBlogs from "../pages/SelectedPage/MyBlogs/MyBlogs";
 import { FeedBackProvider } from "../contexts/FeedbackContext";
 import { BlogFavouriteProvider } from "../contexts/BlogFavouriteContext";
 import { DestinationFavouriteProvider } from "../contexts/DestinationFavouriteContext";
+import ContactResponse from "../pages/ContactResponse";
 
 const publicRoutes = [
   {
@@ -90,9 +91,14 @@ const publicRoutes = [
     ],
   },
   {
+    path: "/contact/:id",
+    component: ContactResponse,
+    context: ContactProvider,
+  },
+  {
     path: "/contact",
     component: Contact,
-    context: ContactProvicer,
+    context: ContactProvider,
     topic: "CONTACT US",
   },
   {
@@ -281,14 +287,14 @@ const privateRoutes = [
       {
         path: "contact_manage",
         component: ContactManage,
-        context: ContactProvicer,
+        context: ContactProvider,
         layout: null,
       },
 
       {
         path: "/manage/contact_manage/:id",
         component: ContactInfo,
-        context: ContactProvicer,
+        context: ContactProvider,
         layout: null,
       },
 

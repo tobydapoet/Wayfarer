@@ -20,7 +20,7 @@ export const ContactContext = createContext({
   handleDeleteContact: () => {},
   handleSearchContact: () => {},
 });
-export const ContactProvicer = ({ children }) => {
+export const ContactProvider = ({ children }) => {
   const today = new Date();
   const user = getCurrentUser();
 
@@ -30,7 +30,6 @@ export const ContactProvicer = ({ children }) => {
     clientId: user?._id,
     title: "",
     message: "",
-    createdAt: today.toISOString(),
   };
   const [contactValue, setContactValue] = useState({
     ...initialContactValue,
@@ -44,7 +43,7 @@ export const ContactProvicer = ({ children }) => {
   useEffect(() => {
     axios
       .get(`http://localhost:3000/contacts`)
-      .then((res) => setAllContacts(res.data))
+      .then((res) => setAllContacts(res.data.reverse()))
       .catch((err) => console.log(err));
   }, []);
 

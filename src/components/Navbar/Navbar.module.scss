@@ -14,12 +14,16 @@
 .inner {
     display: flex;
 }
-.menu-btn {
+
+.btn-ffc {
     display: none;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
+
+    .menu-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
 }
 
 .to-user-shrink {
@@ -30,9 +34,28 @@
     display: none;
 }
 
+.to-user {
+    display: flex;
+    gap: 10px;
+    width: 220px;
+    justify-content: center;
+    align-items: center;
+
+    .notify {
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+    }
+}
+
 .logo-link {
     height: 100%;
     outline: none;
+    display: flex;
+    width: 220px;
+    justify-content: center;
 
     img {
         width: 60px;
@@ -145,10 +168,23 @@
 
         .logo-link {
             padding-left: 20px;
+            width: fit-content;
         }
 
-        .menu-btn {
-            padding-right: 20px;
+        .btn-ffc {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            .notify {
+                font-size: 20px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            }
+
+            .menu-btn {
+                padding-right: 20px;
+            }
         }
     }
 
@@ -177,10 +213,6 @@
             visibility: visible;
             pointer-events: auto;
         }
-    }
-
-    .menu-btn {
-        display: block;
     }
 
     .middle-btn {

@@ -69,7 +69,7 @@ function BlogInfo() {
       <div className={cx("body")}>
         <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
       </div>
-      {!isBlogInfo && !isOwnerInfo && blogData.status === false && (
+      {user.position && blogData.status === false && (
         <div className={cx("btn-container")}>
           <Button rounded onClick={() => handleApproveBlog(blogData._id)}>
             Approve

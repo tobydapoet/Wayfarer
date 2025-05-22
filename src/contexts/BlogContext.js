@@ -72,10 +72,6 @@ export const BlogProvider = ({ children, data }) => {
 
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    setBlogData({ ...blogData });
-  }, [blogData]);
-
   const handleSelectedBlog = (selectedBlog) => {
     setBlogData(selectedBlog);
     navigate(`/blogs/${selectedBlog._id}`);

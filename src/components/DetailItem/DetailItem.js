@@ -160,7 +160,13 @@ function DetailItem({ data, onClick, onStatusChange, onChangeReason }) {
           onChange={onChangeReason}
         />
         <div className={cx("confirm-container")}>
-          <Button rounded onClick={onStatusChange}>
+          <Button
+            rounded
+            onClick={() => {
+              onStatusChange();
+              setOpenNotice(false);
+            }}
+          >
             Confirm
           </Button>
         </div>

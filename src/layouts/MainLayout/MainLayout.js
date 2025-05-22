@@ -5,6 +5,7 @@ import styles from "./MainLayout.module.scss";
 import classNames from "classnames/bind";
 import { AccountProvider } from "../../contexts/AccountContext";
 import ScrollHeader from "../../components/ScrollHeader";
+import { NotifyProvider } from "../../contexts/NotifyContext";
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +15,9 @@ function MainLayout({ children }) {
   return (
     <div className={cx("container")}>
       <AccountProvider>
-        <Navbar />
+        <NotifyProvider>
+          <Navbar />
+        </NotifyProvider>
       </AccountProvider>
       <div className={cx("content")}>{children}</div>
       {!isManagementPage && <Footer />}

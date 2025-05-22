@@ -1,20 +1,25 @@
 import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleUp,
+  faBars,
+  faBell,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../../routes/routes";
 import Button from "../Button";
 import images from "../../assets/images";
 import Modal from "../Modal";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Input from "../Input";
-import useForm from "../../hooks/useForm";
 import AccountItem from "../AccountItem/AccountItem";
 import { AccountContext } from "../../contexts/AccountContext";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { getCurrentUser } from "../../utils/currentUser";
+import NotifyBell from "../NotifyBell";
 
 const cx = classNames.bind(styles);
 
@@ -56,16 +61,19 @@ function Navbar() {
         <img src={images.logoDark} alt="Logo" />
       </Link>
 
-      <button
-        className={cx("menu-btn")}
-        onClick={() => setShrinkMeu(!shrinkMenu)}
-      >
-        {shrinkMenu ? (
-          <FontAwesomeIcon icon={faAngleUp} />
-        ) : (
-          <FontAwesomeIcon icon={faBars} />
-        )}
-      </button>
+      <div className={cx("btn-ffc")}>
+        {user && !user.position && <NotifyBell />}
+        <button
+          className={cx("menu-btn")}
+          onClick={() => setShrinkMeu(!shrinkMenu)}
+        >
+          {shrinkMenu ? (
+            <FontAwesomeIcon icon={faAngleUp} />
+          ) : (
+            <FontAwesomeIcon icon={faBars} />
+          )}
+        </button>
+      </div>
       <div className={cx("inner", { open: shrinkMenu })}>
         {(user && user.position ? privateRoutes : publicRoutes).map(
           (route, index) => {
@@ -107,7 +115,10 @@ function Navbar() {
 
       {user ? (
         <div className={cx("to-user", { open: shrinkMenu })}>
-          <AccountItem data={user} />
+          {user && !user.position && <NotifyBell />}
+          <div className={cx("user")}>
+            <AccountItem data={user} />
+          </div>
         </div>
       ) : (
         <div className={cx("to-user", { open: shrinkMenu })}>

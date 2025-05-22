@@ -8,12 +8,12 @@ import {
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import Notice from "../Notice/Notice";
+import standardTime from "../../utils/standardTime";
 
 const cx = classNames.bind(styles);
 
 function ContactItem({ data, onClick, onDelete }) {
   const [openNotice, setOpenNotice] = useState(false);
-  const timeContact = new Date(data.createdAt);
   return (
     <>
       <div className={cx("wrapper")}>
@@ -30,7 +30,7 @@ function ContactItem({ data, onClick, onDelete }) {
               </div>
             </div>
             <div className={cx("time-create")}>
-              {timeContact.toLocaleDateString()}
+              {standardTime(data.createdAt)}
             </div>
           </div>
           <div className={cx("body")}>
