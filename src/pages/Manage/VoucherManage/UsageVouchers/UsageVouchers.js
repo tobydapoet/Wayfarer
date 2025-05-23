@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { UsageVoucherContext } from "../../../../contexts/UsageVoucherContext";
 import UsageVoucherItem from "../../../../components/UsageVoucherItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faShare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../../../components/Modal";
 import SearchBar from "../../../../components/SearchBar";
 import ClientPopper from "../../../../components/ClientPopper/ClientPopper";
@@ -16,7 +16,8 @@ import Button from "../../../../components/Button";
 const cx = classNames.bind(styles);
 
 function UsageVouchers() {
-  const { searchResult, handleSearchClient } = useContext(ClientContext);
+  const { searchResult, handleSearchClient, allClientsData } =
+    useContext(ClientContext);
   const {
     allUsageVouchers,
     setListVouchersReceived,
@@ -55,13 +56,13 @@ function UsageVouchers() {
             >
               <FontAwesomeIcon icon={faPlus} />
             </div>
-            <div
+            {/* <div
               className={cx("delete", { isNoData: listDelete.length === 0 })}
               style={{ cursor: "pointer" }}
               onClick={() => handleDelete()}
             >
               <FontAwesomeIcon icon={faTrash} />
-            </div>
+            </div> */}
           </div>
         </div>
         <table>
@@ -72,7 +73,7 @@ function UsageVouchers() {
               <th className={cx("received")}>Received</th>
               <th className={cx("expired")}>Expired</th>
               <th className={cx("used")}>Used</th>
-              <th></th>
+              {/* <th></th> */}
             </tr>
           </thead>
           <tbody>
@@ -90,28 +91,44 @@ function UsageVouchers() {
       <Modal
         form
         open={openForm}
-        onClose={() => setOpenForm(false)}
+        onClose={() => {
+          setOpenForm(false);
+          setListVouchersReceived([]);
+        }}
         style={{ width: "500px" }}
       >
-        <SearchBar
-          onSearch={handleSearchClient}
-          results={searchResult.filter(
-            (client) =>
-              !listVouchersReceived.some((item) => item._id === client._id)
-          )}
-          renderResult={(client) => (
-            <ClientPopper
-              data={client}
-              onClick={() =>
-                setListVouchersReceived((prev) => [...prev, client])
-              }
-            />
-          )}
-        />
-        <div className={cx("list-client")}>
-          {listVouchersReceived?.map((client) => (
-            <div className={cx("client-item")}>{client.name}</div>
-          ))}
+        <div className={cx("client-container")}>
+          <SearchBar
+            onSearch={handleSearchClient}
+            results={searchResult.filter(
+              (client) =>
+                !listVouchersReceived.some((item) => item._id === client._id)
+            )}
+            renderResult={(client) => (
+              <ClientPopper
+                data={client}
+                onClick={() =>
+                  setListVouchersReceived((prev) => [...prev, client])
+                }
+              />
+            )}
+          />
+
+          <div
+            className={cx("assign-all")}
+            onClick={() => setListVouchersReceived(allClientsData)}
+          >
+            <FontAwesomeIcon icon={faShare} />
+          </div>
+        </div>
+        <div className={cx("list-container")}>
+          <div className={cx("list-client")}>
+            {listVouchersReceived?.map((client) => (
+              <div key={client._id} className={cx("client-item")}>
+                {client.name}
+              </div>
+            ))}
+          </div>
         </div>
         <div className={cx("voucher-list")}>
           {allVouchers.map((voucher) => (
@@ -126,9 +143,11 @@ function UsageVouchers() {
         <div className={cx("voucher-name")}>
           Voucher choosen: {voucherReceived?.name}
         </div>
-        <Button rounded onClick={() => handleAssignVoucher()}>
-          Apply
-        </Button>
+        <div className={cx("btn-container")}>
+          <Button rounded onClick={() => handleAssignVoucher()}>
+            Apply
+          </Button>
+        </div>
       </Modal>
     </>
   );

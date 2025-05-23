@@ -34,7 +34,7 @@ export const UsageVoucherProvider = ({ children }) => {
       .get(`http://localhost:3000/usage_vouchers`)
       .then((res) => setAllUsageVouchers(res.data))
       .catch((err) => console.log(err));
-  }, [allUsageVouchers]);
+  }, []);
 
   const handleSearchVouchers = async (keyword) => {
     try {

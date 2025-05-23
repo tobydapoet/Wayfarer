@@ -42,7 +42,6 @@ function PayTypeManage() {
               key={paytype._id}
               data={paytype}
               onClick={() => handleSelectedPaytype(paytype)}
-              onDelete={() => handleDeletePayType(paytype._id)}
             />
           ))}
         </div>

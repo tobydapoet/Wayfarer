@@ -5,6 +5,7 @@ import {
   faCheckCircle,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +14,7 @@ function ContactPopper({ data, onClick }) {
     <div className={cx("wrapper")} onClick={onClick}>
       <div className={cx("left-side")}>
         <div className={cx("client-info")}>
-          <img src={data.client.avatar} />
+          <img src={data.client.avatar || images.noImg} />
           <div className={cx("txt-info")}>
             <div className={cx("name")}>{data.client.name}</div>
             <div className={cx("email")}>{data.client.email}</div>

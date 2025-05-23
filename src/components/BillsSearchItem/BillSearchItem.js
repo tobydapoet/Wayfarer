@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./BillSearchItem.module.scss";
 import { useNavigate } from "react-router-dom";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +24,10 @@ function BillSearchItem({ data }) {
     <div className={cx("wrapper")} onClick={handleRowClick}>
       <div className={cx("user")}>
         <div className={cx("img")}>
-          <img src={data?.client?.avatar} alt={data?.client?.name} />
+          <img
+            src={data?.client?.avatar || images.noImg}
+            alt={data?.client?.name}
+          />
         </div>
         <div className={cx("name")}>{data?.client?.name}</div>
       </div>

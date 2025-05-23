@@ -20,6 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { AccountContext } from "../../contexts/AccountContext";
 import { getCurrentUser } from "../../utils/currentUser";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -46,7 +47,7 @@ function Sidebar({ profile, management, dark }) {
     <div className={cx("wrapper")}>
       <Link to={`/${user.email}`} className={cx("current-user")}>
         <div className={cx("img-container")}>
-          <img src={user.avatar} className={cx("img-avatar")} />
+          <img src={user.avatar || images.noImg} className={cx("img-avatar")} />
         </div>
 
         {!isMobile && (

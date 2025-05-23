@@ -12,7 +12,7 @@ function UsageVoucherItem({ data, onCheck, checked }) {
       <td className={cx("info")}>
         <div className={cx("img")}>
           <img
-            src={data.clientId.avatar || data.client.avatar || images.noImg}
+            src={data.clientId?.avatar || data.client?.avatar || images.noImg}
             alt={data.clientId?.name || data.client.name}
           />
         </div>
@@ -44,9 +44,9 @@ function UsageVoucherItem({ data, onCheck, checked }) {
           : "null"}
       </td>
 
-      <td className={cx("delete")}>
+      {/* <td className={cx("delete")}>
         <input type="checkbox" checked={checked} onChange={onCheck} />
-      </td>
+      </td> */}
     </tr>
   );
 }

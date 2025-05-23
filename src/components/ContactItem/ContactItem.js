@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Notice from "../Notice/Notice";
 import standardTime from "../../utils/standardTime";
+import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +24,7 @@ function ContactItem({ data, onClick, onDelete }) {
         <div className={cx("container")} onClick={onClick}>
           <div className={cx("header")}>
             <div className={cx("client-info")}>
-              <img src={data.clientId.avatar} />
+              <img src={data.clientId.avatar || images.noImg} />
               <div className={cx("txt-info")}>
                 <div className={cx("name-client")}>{data.clientId.name}</div>
                 <div className={cx("email-client")}>{data.clientId.email}</div>

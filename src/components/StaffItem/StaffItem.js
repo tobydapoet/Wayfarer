@@ -48,7 +48,7 @@ function StaffItem({ data, onClick, onDelete }) {
             {data.status}
           </div>
         </td>
-        {data.position === "staff" && (
+        {/* {data.position === "staff" && (
           <td className={cx("delete")}>
             <FontAwesomeIcon
               icon={faXmark}
@@ -59,7 +59,7 @@ function StaffItem({ data, onClick, onDelete }) {
               }}
             />
           </td>
-        )}
+        )} */}
       </tr>
       <Notice
         open={deleteNotice}

@@ -122,14 +122,14 @@ function Vouchers() {
                 >
                   Save
                 </Button>
-                <Button
+                {/* <Button
                   rounded
                   onClick={() => {
                     handleDeleteVoucher();
                   }}
                 >
                   Delete
-                </Button>
+                </Button> */}
               </>
             )}
           </div>

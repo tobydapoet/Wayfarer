@@ -51,7 +51,7 @@ function Clients() {
             <th className={cx("location")}>Site</th>
             <th className={cx("email")}>Email</th>
             <th className={cx("phone")}>Phone</th>
-            <th></th>
+            {/* <th></th> */}
           </tr>
         </thead>
         <tbody>

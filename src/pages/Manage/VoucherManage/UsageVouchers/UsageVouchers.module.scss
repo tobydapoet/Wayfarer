@@ -53,6 +53,11 @@
     }
 }
 
+.list-container {
+    max-height: 100px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
 .list-client {
     display: flex;
     gap: 5px;
@@ -84,6 +89,37 @@
 .voucher-name {
     font-family: var(--font-default);
     margin: 10px 0;
+}
+
+.client-container {
+    display: flex;
+    gap: 5px;
+
+    .assign-all {
+        height: 25px;
+        width: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        outline: none;
+        font-size: 16px;
+        font-family: var(--font-default);
+        transition: border-color 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            border-color: rgba(22, 24, 35, 0.6);
+        }
+    }
+}
+
+.btn-container {
+    display: flex;
+    width: 300px;
+    margin: 0 auto;
 }
 
 @media (max-width: 800px) {

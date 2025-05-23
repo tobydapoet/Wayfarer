@@ -80,6 +80,16 @@ function NotifyBell() {
             <div className={cx("message")}>{data.message}</div>
           </div>
         );
+      case "UsageVoucher":
+        return (
+          <div
+            className={cx("usagevoucher-container")}
+            onClick={() => navigate(`/${data.clientId.email}/bonus`)}
+          >
+            <div className={cx("title")}>{data.relatedType}</div>
+            <div className={cx("message")}>{data.message}</div>
+          </div>
+        );
     }
   };
 

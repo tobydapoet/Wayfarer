@@ -11,6 +11,8 @@ import { CityContext } from "../../contexts/CityContext";
 import CityItem from "../../components/CityItem/CityItem";
 import Slider from "react-slick";
 import BlogHomeItem from "../../components/BlogHomeItem/BlogHomeItem";
+import { BlogFavouriteContext } from "../../contexts/BlogFavouriteContext";
+import { BillContext } from "../../contexts/BillContext";
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +21,27 @@ function Home() {
     useContext(DestinationContext);
   const { allBlogData } = useContext(BlogContext);
   const { allCities } = useContext(CityContext);
+  const { allBlogFavourite } = useContext(BlogFavouriteContext);
+  const { handleCalculateClient } = useContext(BillContext);
   const navigate = useNavigate();
+
+  const blogMap = allBlogFavourite.reduce((acc, fav) => {
+    const blogId = typeof fav.blogId === "string" ? fav.blogId : fav.blogId._id;
+    acc[blogId] = (acc[blogId] || 0) + 1;
+    return acc;
+  }, {});
+
+  const sortedBlogs = [...allBlogData].sort((a, b) => {
+    const countA = blogMap[a._id] || 0;
+    const countB = blogMap[b._id] || 0;
+    return countB - countA;
+  });
+
+  const sortedLocations = [...allDestinations].sort((a, b) => {
+    const countA = handleCalculateClient(a._id);
+    const countB = handleCalculateClient(b._id);
+    return countB - countA; // Giảm dần theo số người đã đi
+  });
 
   const settings = {
     slidesToShow: 3,
@@ -60,7 +82,7 @@ function Home() {
 
       <div className={cx("main-info")}>
         <div className={cx("destinations")}>
-          {allDestinations.slice(0, 5).map((destination) => {
+          {sortedLocations.slice(0, 5).map((destination) => {
             return (
               <Tablet
                 key={destination._id}
@@ -84,14 +106,14 @@ function Home() {
           </Slider>
         </div>
         <div className={cx("blog")}>
-          {allBlogData.slice(0, 3).map((blog) => (
+          {sortedBlogs.slice(0, 3).map((blog) => (
             <Tablet
               key={blog._id}
               image={blog.image}
               title={blog.title}
               content={blog.content}
               showMore={() => navigate(`/blogs/${blog._id}`)}
-              author={blog.clientId.name}
+              author={blog?.clientId?.name}
             />
           ))}
         </div>

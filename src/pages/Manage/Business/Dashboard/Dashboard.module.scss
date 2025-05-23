@@ -11,35 +11,22 @@
         flex-direction: column;
         align-items: center;
         padding-top: 30px;
-        background-color: #f8f7f1;
 
         .basic-infor {
             display: flex;
-            gap: 15px;
-            width: 100%;
+            gap: 30px;
             justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            width: calc(100% - 60px);
 
-            .balance {
+            .profit {
                 background-color: #c0cfb2;
 
                 .icon {
                     background-color: #8ba888;
                     color: #44624a;
-                }
-
-                .growth {
-                    display: flex;
-                    border-radius: 5px;
-                    gap: 5px;
-                    align-items: center;
-                    font-size: 13px;
-
-                    .growth-percent {
-                        color: #44624a;
-                        border-radius: 10px;
-                        padding: 5px;
-                        background-color: #8ba888;
-                    }
                 }
             }
 
@@ -50,51 +37,22 @@
                     background-color: #f0d331;
                     color: #776815;
                 }
-
-                .growth {
-                    display: flex;
-                    border-radius: 5px;
-                    gap: 5px;
-                    align-items: center;
-                    font-size: 13px;
-
-                    .growth-percent {
-                        color: #776815;
-                        border-radius: 10px;
-                        padding: 5px;
-                        background-color: #f0d331;
-                    }
-                }
             }
 
-            .users {
+            .bills {
                 background-color: #7880f3;
 
                 .icon {
                     background-color: #515dfd;
                     color: #010866;
                 }
-
-                .growth {
-                    display: flex;
-                    border-radius: 5px;
-                    gap: 5px;
-                    align-items: center;
-                    font-size: 13px;
-
-                    .growth-percent {
-                        border-radius: 10px;
-                        padding: 5px;
-                        background-color: #515dfd;
-                        color: #010866;
-                    }
-                }
             }
 
             > div {
-                width: 180px;
+                width: 20vw;
                 height: 135px;
                 display: flex;
+                position: relative;
                 flex-direction: column;
                 justify-content: center;
                 border-radius: 16px;
@@ -104,37 +62,23 @@
                 .parameter {
                     .topic {
                         font-size: 15px;
-                        display: flex;
-                        gap: 5px;
-                        align-items: center;
+                        position: absolute;
+                        top: 10px;
                     }
                 }
 
                 .number {
-                    font-size: 23px;
+                    font-size: 29px;
                     font-weight: bold;
                     display: flex;
                     justify-content: center;
+                    margin-bottom: 25px;
                 }
 
                 .icon {
                     padding: 5px;
                     font-size: 8px;
                     border-radius: 5px;
-                }
-
-                .growth {
-                    display: flex;
-                    border-radius: 5px;
-                    gap: 5px;
-                    align-items: center;
-                    font-size: 12px;
-
-                    .growth-percent {
-                        border-radius: 10px;
-                        padding: 5px;
-                        font-weight: bold;
-                    }
                 }
             }
         }
@@ -147,6 +91,9 @@
             margin-left: 20px;
             height: 100%;
             margin: 40px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 10px;
 
             .growth-percent {
                 font-weight: bold;
@@ -155,10 +102,15 @@
             }
         }
         .last-order {
-            width: 93%;
-            .search-bar {
-                margin-top: 10px;
-                display: flex;
+            width: calc(100% - 30px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+
+            strong {
+                padding: 15px 15px 0px 15px;
             }
 
             .list-orders {
@@ -173,138 +125,194 @@
         display: flex;
         flex-direction: column;
         position: sticky;
-        top: 50px;
+        top: 20px;
         z-index: 1;
         height: 90vh;
         width: 100%;
         overflow-y: scroll;
         scrollbar-width: none;
 
+        .kpi-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px;
+
+            .profitTarget-container,
+            .billTarget-container {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                border-radius: 16px;
+            }
+            .profit-target,
+            .bill-target {
+                display: flex;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.5rem;
+                margin-top: 10px;
+            }
+
+            .gap-line {
+                border:
+                    0,
+                    5px solid black;
+                margin: 5px 0;
+                padding: 0 5px;
+            }
+        }
         .pie-chart {
             display: flex;
             flex-direction: column;
-            margin-bottom: 10px;
-            width: auto;
-            height: 50vh;
+            padding: 30px;
+            height: fit-content;
             align-items: center;
+            justify-content: center;
+            position: relative;
+
+            .percent-kpi {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-weight: bold;
+                font-size: 2.1rem;
+            }
         }
 
-        .list-staffs {
-            width: 100%;
-            background-color: #f1eee3;
-            display: flex;
-            flex-direction: column;
+        // .list-staffs {
+        //     width: calc(100% - 20px);
+        //     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        //     border-radius: 16px;
+        //     display: flex;
+        //     flex-direction: column;
+        //     margin: 0 10px;
 
-            .title {
+        //     .title {
+        //         font-size: 20px;
+        //         font-weight: bold;
+        //         padding: 10px;
+        //         margin-left: 15px;
+        //     }
+        //     .staffs-container {
+        //         overflow-y: scroll;
+        //         scrollbar-width: none;
+        //         height: 50vh;
+        //     }
+        // }
+
+        .kpi-list {
+            .kpi-create-btn {
                 font-size: 20px;
-                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 padding: 10px;
-                margin-left: 15px;
+                cursor: pointer;
+                width: calc(100% - 40px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                border-radius: 16px;
+                display: flex;
+                flex-direction: column;
+                margin: 0 10px;
             }
-            .staffs-container {
-                overflow-y: scroll;
+
+            .list {
+                height: 40vh;
+                overflow: scroll;
                 scrollbar-width: none;
-                height: 50vh;
+                padding-bottom: 10px;
+
+                .list-container {
+                    display: flex;
+                    flex-direction: column;
+                    .kpi-item {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 10px;
+                        cursor: pointer;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                        border-radius: 16px;
+                        margin: 0 10px;
+                        align-items: center;
+                        font-size: 14px;
+                        margin-top: 10px;
+
+                        .rate {
+                            .bill,
+                            .revenue {
+                                display: flex;
+                                span {
+                                    width: 80px;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
+.kpi-target-value {
+    display: flex;
+    gap: 20px;
+}
+.btn-container {
+    display: flex;
+    gap: 10px;
+}
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .wrapper {
         width: calc(100vw - 80px);
         display: flex;
         flex-direction: column;
         flex-direction: column-reverse;
-        background-color: #f8f7f1;
 
         .main-dashboard {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 30px;
+            padding-top: 10px;
 
             .basic-infor {
                 display: flex;
                 gap: 5px;
-                width: 100%;
+                width: calc(100% - 40px);
                 justify-content: center;
-
-                .balance {
-                    .growth {
-                        display: flex;
-                        border-radius: 5px;
-                        gap: 5px;
-                        align-items: center;
-                        font-size: 13px;
-                    }
-                }
-
-                .growth {
-                    display: flex;
-                    border-radius: 5px;
-                    gap: 5px;
-                    align-items: center;
-                    font-size: 13px;
-                }
-
-                .users {
-                    .growth {
-                        display: flex;
-                        border-radius: 5px;
-                        gap: 5px;
-                        align-items: center;
-                        font-size: 13px;
-                    }
-                }
+                position: relative;
+                padding: 10px;
 
                 > div {
-                    width: 180px;
+                    width: 20vw;
                     height: fit-content;
                     display: flex;
                     flex-direction: column;
                     padding: 10px;
                     gap: 17px;
+                    position: relative;
 
                     .parameter {
+                        position: relative;
                         .topic {
+                            position: absolute;
+                            height: 10px;
+                            top: 0;
                             font-size: 12px;
-                            display: flex;
                             gap: 5px;
-                            align-items: center;
                         }
                     }
 
                     .number {
                         font-size: 15px;
                         font-weight: bold;
-                        display: flex;
-                        justify-content: center;
+                        margin-top: 15px;
                     }
 
                     .icon {
                         padding: 5px;
                         font-size: 8px;
                         border-radius: 5px;
-                    }
-
-                    .growth {
-                        display: flex;
-                        border-radius: 5px;
-                        gap: 5px;
-                        flex-direction: column;
-
-                        span {
-                            display: none;
-                        }
-
-                        .growth-percent {
-                            border-radius: 10px;
-
-                            font-weight: bold;
-                            font-size: 9px;
-                        }
                     }
                 }
             }
@@ -313,7 +321,7 @@
                 display: flex;
                 justify-content: center;
                 flex-direction: column;
-                margin-left: 0px;
+                padding: 10px 0;
 
                 .growth-percent {
                     font-weight: bold;
@@ -327,18 +335,46 @@
             z-index: 1;
             height: fit-content;
             display: flex;
+            display: flex;
             margin: 0 auto;
-            width: 80%;
             margin-bottom: 20px;
+            width: calc(100vw - 90px);
+
+            .kpi-container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+
+                .profitTarget-container,
+                .billTarget-container {
+                    width: 100%;
+                    height: fit-content;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .profit-target,
+                .bill-target {
+                    display: flex;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                    margin-top: 10px;
+                    margin-bottom: -20px;
+                }
+
+                .percent-kpi {
+                    font-size: 1.5rem;
+                }
+            }
 
             .pie-chart {
                 display: flex;
-                flex-direction: column;
-                margin-bottom: 0px;
-                width: auto;
-                height: 50vh;
+                width: 20vw;
+                height: auto;
                 align-items: center;
-                position: relative;
+                justify-content: center;
             }
 
             .list-staffs {

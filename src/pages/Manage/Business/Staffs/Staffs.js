@@ -41,7 +41,7 @@ function Staffs() {
             <th className={cx("salary")}>Salary</th>
             <th className={cx("start")}>Start</th>
             <th className={cx("status")}>Status</th>
-            <th></th>
+            {/* <th></th> */}
           </tr>
         </thead>
         <tbody>

@@ -52,12 +52,19 @@ import { FeedBackProvider } from "../contexts/FeedbackContext";
 import { BlogFavouriteProvider } from "../contexts/BlogFavouriteContext";
 import { DestinationFavouriteProvider } from "../contexts/DestinationFavouriteContext";
 import ContactResponse from "../pages/ContactResponse";
+import { KpiTargetProvider } from "../contexts/KpiTargertContext";
 
 const publicRoutes = [
   {
     path: "/",
     component: Home,
-    context: [BlogProvider, CityProvider, DestinationProvider],
+    context: [
+      BlogProvider,
+      CityProvider,
+      DestinationProvider,
+      BlogFavouriteProvider,
+      BillProvider,
+    ],
     topic: "HOME",
   },
   {
@@ -198,7 +205,7 @@ const privateRoutes = [
           {
             path: "dashboard",
             component: Dashboard,
-            context: BillProvider,
+            context: [BillProvider, KpiTargetProvider],
             default: true,
             layout: null,
           },

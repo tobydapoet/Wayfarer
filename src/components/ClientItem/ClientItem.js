@@ -32,7 +32,7 @@ function ClientItem({ data, onClick, onDelete }) {
         </td>
         <td className={cx("email")}>{data.email}</td>
         <td className={cx("phone")}>{data.phone}</td>
-        <td className={cx("delete")}>
+        {/* <td className={cx("delete")}>
           <FontAwesomeIcon
             icon={faXmark}
             className={cx("delete-icon")}
@@ -41,7 +41,7 @@ function ClientItem({ data, onClick, onDelete }) {
               setDeleteNotice(true);
             }}
           />
-        </td>
+        </td> */}
       </tr>
       <Notice
         open={deleteNotice}

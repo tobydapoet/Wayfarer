@@ -78,9 +78,7 @@ export const BillProvider = ({ children }) => {
     axios
       .get(`http://localhost:3000/bills`)
       .then((res) => {
-        const sortedBills = res.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
+        const sortedBills = res.data.reverse();
         setAllBills(sortedBills);
       })
       .catch((err) => console.log(err));
@@ -311,7 +309,7 @@ export const BillProvider = ({ children }) => {
         setAllBills((prev) =>
           prev.map((bill) => (bill._id === billInfo._id ? res.data.data : bill))
         );
-        setBillInfo(billInfo);
+        setBillInfo(res.data.data);
         toast.success(res.data.message);
       }
     } catch (err) {
