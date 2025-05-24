@@ -26,6 +26,7 @@ export const ClientProvider = ({ children }) => {
     name: "",
     email: "",
     password: "",
+    repassword: "",
     phone: "",
     site: "",
     avatar: "",
@@ -34,6 +35,7 @@ export const ClientProvider = ({ children }) => {
   const [clientErrors, setClientErrors] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(clientErrors);
 
   useEffect(() => {
     axios
@@ -71,6 +73,13 @@ export const ClientProvider = ({ children }) => {
           newErrors.password = "Password cannot be empty!";
         } else if (value.length < 8) {
           newErrors.password = "Password must be more than 8 characters";
+        }
+        break;
+      case "repassword":
+        if (!value.trim()) {
+          newErrors.repassword = "Please enter the password!";
+        } else if (value !== clientData.password) {
+          newErrors.repassword = "Passwords do not match!";
         }
         break;
       case "phone":
@@ -132,6 +141,7 @@ export const ClientProvider = ({ children }) => {
   const handleAddClient = async () => {
     let newErrors = {};
     Object.entries(clientData).forEach(([name, value]) => {
+      if (name === "repassword") return;
       const errs = validateInput(name, value);
       newErrors = { ...newErrors, ...errs };
     });
@@ -140,9 +150,10 @@ export const ClientProvider = ({ children }) => {
     if (Object.keys(newErrors).length > 0) return;
 
     try {
+      const { repassword, ...data } = clientData;
       const res = await axios.post(
         "http://localhost:3000/clients/create_client",
-        clientData
+        data
       );
       if (res.data.success) {
         toast.success(res.data.succes || "Add client success!");
@@ -169,10 +180,36 @@ export const ClientProvider = ({ children }) => {
     if (Object.keys(newErrors).length > 0) return;
 
     try {
-      const res = await axios.put(
-        `http://localhost:3000/clients/${id}`,
-        updatedData
-      );
+      const { repassword, ...data } = updatedData;
+      const res = await axios.put(`http://localhost:3000/clients/${id}`, data);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setAllClientsData((prev) =>
+          prev.map((client) =>
+            client._id === id ? { ...client, ...updatedData } : client
+          )
+        );
+      } else {
+        toast.error(res.data.mesage);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const handleChangePasswordClient = async (id, updatedData) => {
+    let newErrors = {};
+    Object.entries(clientData).forEach(([name, value]) => {
+      const errs = validateInput(name, value);
+      newErrors = { ...newErrors, ...errs };
+    });
+
+    setClientErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+
+    try {
+      const { repassword, ...data } = updatedData;
+      const res = await axios.put(`http://localhost:3000/clients/${id}`, data);
       if (res.data.success) {
         toast.success(res.data.message);
         setAllClientsData((prev) =>

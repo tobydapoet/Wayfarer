@@ -19,6 +19,7 @@ function StaffItem({ data, onClick, onDelete }) {
     "in meeting": "inMeeting",
     "on leave": "onLeave",
     "off duty": "offDuty",
+    quit: "quit",
   };
 
   return (

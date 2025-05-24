@@ -6,7 +6,7 @@ import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
-function UsageVoucherItem({ data, onCheck, checked }) {
+function UsageVoucherItem({ data }) {
   return (
     <tr className={cx("wrapper")} style={{ cursor: "pointer" }}>
       <td className={cx("info")}>

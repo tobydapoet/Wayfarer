@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Modal.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -22,11 +24,22 @@ function Modal({ children, open, onClose, test, form, style }) {
   return (
     <div className={cx("modal-overlay")} onClick={onClose}>
       <div
-        className={cx("modal-content", { "modal-show": open, test, form })}
-        style={style}
-        onClick={(e) => e.stopPropagation()}
+        className={cx("modal-container", { "modal-show": open, test, form })}
       >
-        {children}
+        {form && (
+          <FontAwesomeIcon
+            className={cx("xmark")}
+            icon={faXmark}
+            onClick={onClose}
+          />
+        )}
+        <div
+          className={cx("modal-content")}
+          style={style}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

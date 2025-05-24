@@ -53,6 +53,11 @@ import { BlogFavouriteProvider } from "../contexts/BlogFavouriteContext";
 import { DestinationFavouriteProvider } from "../contexts/DestinationFavouriteContext";
 import ContactResponse from "../pages/ContactResponse";
 import { KpiTargetProvider } from "../contexts/KpiTargertContext";
+import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
+import OTPIdentify from "../pages/OTPIdentify/OTPIdentify";
+import { UserOTPProvider } from "../contexts/UserOTPContext";
+import ResetPassword from "../pages/ResetPassword";
+import { AccountProvider } from "../contexts/AccountContext";
 
 const publicRoutes = [
   {
@@ -181,6 +186,17 @@ const publicRoutes = [
     component: BonusPoint,
     context: UsageVoucherProvider,
     layout: ProfileLayout,
+  },
+  { path: "/indentify", context: UserOTPProvider, component: ForgetPassword },
+  {
+    path: "/indentify/:email",
+    context: UserOTPProvider,
+    component: OTPIdentify,
+  },
+  {
+    path: "/indentify/:email/reset",
+    context: [ClientProvider, StaffProvider],
+    component: ResetPassword,
   },
 ];
 const privateRoutes = [

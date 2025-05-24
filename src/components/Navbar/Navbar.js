@@ -8,7 +8,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../../routes/routes";
 import Button from "../Button";
 import images from "../../assets/images";
@@ -54,6 +54,7 @@ function Navbar() {
     setIsOpenRegister(false);
     resetRegisterData();
   };
+  const navigate = useNavigate();
 
   return (
     <header className={cx("wrapper")}>
@@ -75,23 +76,24 @@ function Navbar() {
         </button>
       </div>
       <div className={cx("inner", { open: shrinkMenu })}>
-        {(user && user.position ? privateRoutes : publicRoutes).map(
-          (route, index) => {
-            if (route.layout === undefined || route.layout === false) {
-              return route.topic ? (
-                <Link
-                  key={index}
-                  className={cx("middle-btn")}
-                  to={route.path}
-                  onClick={() => setShrinkMeu(false)}
-                >
-                  {route.topic}
-                </Link>
-              ) : null;
-            }
-            return null;
+        {(user && user.position && user.status != "quit"
+          ? privateRoutes
+          : publicRoutes
+        ).map((route, index) => {
+          if (route.layout === undefined || route.layout === false) {
+            return route.topic ? (
+              <Link
+                key={index}
+                className={cx("middle-btn")}
+                to={route.path}
+                onClick={() => setShrinkMeu(false)}
+              >
+                {route.topic}
+              </Link>
+            ) : null;
           }
-        )}
+          return null;
+        })}
         <hr className={cx("divider")} />
         {user ? (
           <div className={cx("to-user-shrink", { open: shrinkMenu })}>
@@ -164,9 +166,15 @@ function Navbar() {
             />
             <div>Save your password</div>
           </div>
-          <a className={cx("forgot-pass")} href="">
+          <div
+            className={cx("forgot-pass")}
+            onClick={() => {
+              navigate(`/indentify`);
+              setIsOpenLogin(false);
+            }}
+          >
             Forgot password?
-          </a>
+          </div>
         </div>
         <div className={cx("btn-wrapper")}>
           <Button large className={cx("login-btn")} onClick={checkLogin}>
@@ -219,11 +227,6 @@ function Navbar() {
           error={errors.repassword}
           type="password"
         />
-
-        <div className={cx("policy-wrapper")}>
-          <input type="checkbox" className={cx("policy")} />
-          <a href="">Accept our privacy policy</a>
-        </div>
 
         <div className={cx("btn-wrapper")}>
           <Button large className={cx("register-btn")} onClick={checkRegister}>

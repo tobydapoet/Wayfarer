@@ -16,7 +16,8 @@
   pointer-events: auto;
 }
 
-.modal-content {
+.modal-container {
+  position: relative;
   background: transparent;
   border-radius: 8px;
   border: 1px solid;
@@ -44,6 +45,18 @@
     max-height: 80vh;
     max-width: 70vw;
   }
+
+  .xmark {
+    position: absolute;
+    color: #202020;
+    right: 15px;
+    top: 10px;
+    font-size: 25px;
+    cursor: pointer;
+  }
+}
+
+.modal-content {
 }
 
 .modal-show {

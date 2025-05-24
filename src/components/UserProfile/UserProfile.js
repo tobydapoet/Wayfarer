@@ -29,7 +29,6 @@ function UserProfile() {
     clientData,
     clientErrors,
     handleAddClient,
-    handleDeleteClient,
     handleChangeClientInput,
     handleChangeClientPhone,
     handleChangeClientImg,
@@ -49,8 +48,6 @@ function UserProfile() {
     handleSelectedStaff,
   } = useContext(StaffContext);
 
-  console.log(staffData);
-
   const isStaff = !!staffData?.position;
 
   const tempData = isStaff ? staffTempData : clientData;
@@ -68,7 +65,6 @@ function UserProfile() {
   const handleOnSave = isStaff ? handleOnSaveStaff : handleOnSaveClient;
   const handleSelected = isStaff ? handleSelectedStaff : handleSelectedClient;
 
-  console.log(formData);
   const location = useLocation();
   const param = useParams();
   const [isPopperVisible, setIsPopperVisible] = useState(false);
@@ -107,18 +103,22 @@ function UserProfile() {
             error={errors?.email}
           />
         </div>
-        <div className={cx("password")}>
-          <Input
-            dark
-            type="password"
-            frame="Password"
-            placeholder="Password..."
-            value={tempData?.password || ""}
-            name="password"
-            onChange={handleChangeInput}
-            error={errors?.password}
-          />
-        </div>
+
+        {location.pathname.includes("/manage/business/clients/") && (
+          <div className={cx("password")}>
+            <Input
+              dark
+              type="password"
+              frame="Password"
+              placeholder="Password..."
+              value={tempData?.password || ""}
+              name="password"
+              onChange={handleChangeInput}
+              error={errors?.password}
+            />
+          </div>
+        )}
+
         <div className={cx("phone-container")}>
           <Input
             dark
@@ -230,7 +230,7 @@ function UserProfile() {
             >
               Save
             </Button>
-            {location.pathname.includes("/manage/business/clients/") &&
+            {/* {location.pathname.includes("/manage/business/clients/") &&
               !staffData.position && (
                 <Button
                   rounded
@@ -239,10 +239,17 @@ function UserProfile() {
                 >
                   Delete
                 </Button>
-              )}
+              )} */}
           </>
         ) : (
-          <Button rounded className={cx("save-btn")} onClick={handleAddClient}>
+          <Button
+            rounded
+            className={cx("save-btn")}
+            onClick={() => {
+              handleAddClient();
+              console.log(tempData);
+            }}
+          >
             Add
           </Button>
         )}

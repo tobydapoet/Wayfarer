@@ -2,6 +2,57 @@
     padding: 20px;
     height: fit-content;
     scroll-behavior: unset;
+    position: relative;
+
+    .status-container {
+        border: 1px solid rgba(153, 153, 153, 0.75);
+        position: absolute;
+        right: 10px;
+    }
+
+    .status-container,
+    .status-option {
+        display: flex;
+        background-color: var(--primary);
+        border-radius: 16px;
+        padding: 12px 5px;
+        gap: 7px;
+        align-items: center;
+        width: 200px;
+        font-family: var(--font-default);
+        cursor: pointer;
+
+        .status-txt {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-radius: 16px;
+            color: var(--primary);
+
+            &.working {
+                color: rgb(61, 212, 61);
+            }
+            &.inMeeting {
+                color: blue;
+            }
+            &.onLeave {
+                color: red;
+            }
+            &.offDuty {
+                color: rgb(190, 190, 190);
+            }
+            &.quit {
+                color: rgb(51, 51, 51);
+            }
+        }
+    }
 
     .header-info {
         display: flex;
@@ -197,6 +248,13 @@
         .main-detail {
             display: flex;
             flex-direction: column;
+        }
+
+        .status-container {
+            border: 1px solid black;
+            position: relative;
+            right: 10px;
+            margin: 10px 0;
         }
     }
 }

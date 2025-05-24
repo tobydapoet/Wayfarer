@@ -86,7 +86,8 @@ const renderRoutes = (routes) =>
   });
 
 function App() {
-  const routesToRender = user?.position ? privateRoutes : publicRoutes;
+  const routesToRender =
+    user?.position && user.status !== "quit" ? privateRoutes : publicRoutes;
   return (
     <>
       <ToastContainer position="top-center" autoClose={3000} />

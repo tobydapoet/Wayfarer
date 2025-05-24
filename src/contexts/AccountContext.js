@@ -121,7 +121,7 @@ export const AccountProvider = ({ children }) => {
         email: dataLogin.email,
         password: dataLogin.password,
       });
-      if (resStaff.data.success) {
+      if (resStaff.data.success && resStaff.data.data.status !== "quit") {
         const resUpdate = await axios.put(
           `http://localhost:3000/staffs/${resStaff.data.data._id}`,
           {
@@ -202,7 +202,7 @@ export const AccountProvider = ({ children }) => {
     try {
       const user = getCurrentUser();
 
-      if (user?.position) {
+      if (user?.position && user.position !== "quit") {
         const res = await axios.put(
           `http://localhost:3000/staffs/${user._id}`,
           {

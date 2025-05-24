@@ -29,6 +29,7 @@ export const StaffProvider = ({ children, data }) => {
       name: "",
       email: "",
       password: "",
+      repassword: "",
       birth: "",
       phone: "",
       salary: "",
@@ -83,6 +84,13 @@ export const StaffProvider = ({ children, data }) => {
           newErrors.password = "Password cannot be empty!";
         } else if (value.length < 8) {
           newErrors.password = "Password must be more than 8 characters";
+        }
+        break;
+      case "repassword":
+        if (!value.trim()) {
+          newErrors.repassword = "Please enter the password!";
+        } else if (value !== staffData.password) {
+          newErrors.repassword = "Passwords do not match!";
         }
         break;
       case "phone":
@@ -196,6 +204,7 @@ export const StaffProvider = ({ children, data }) => {
     let newErrors = {};
 
     Object.entries(staffTempData).forEach(([name, value]) => {
+      if (name === "repassword") return;
       const updatedErrors = validateInput(name, value);
       newErrors = { ...newErrors, ...updatedErrors };
     });
@@ -270,7 +279,7 @@ export const StaffProvider = ({ children, data }) => {
 
     try {
       const res = await axios.put(
-        `http://localhost:3000/staffs/${user._id}/status`,
+        `http://localhost:3000/staffs/${staffData._id}/status`,
         {
           status: status,
         }
