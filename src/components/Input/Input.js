@@ -37,7 +37,7 @@ function Input({
   else if (children) Comp = "div";
 
   const getLocationName = async (latitude, longitude) => {
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`;
 
     try {
       const response = await fetch(url);

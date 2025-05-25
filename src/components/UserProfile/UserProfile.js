@@ -51,7 +51,11 @@ function UserProfile() {
     handleSelectedStaff,
   } = useContext(StaffContext);
 
-  const isStaff = !!user?.position;
+  const location = useLocation();
+  const param = useParams();
+  const [isPopperVisible, setIsPopperVisible] = useState(false);
+  const isManagingClient = location.pathname.includes("/clients/");
+  const isStaff = !isManagingClient && !!user?.position;
 
   const tempData = isStaff ? staffTempData : clientData;
   const formData = isStaff ? staffData : clientData;
@@ -67,10 +71,6 @@ function UserProfile() {
     : handleChangeClientImg;
   const handleOnSave = isStaff ? handleOnSaveStaff : handleOnSaveClient;
   const handleSelected = isStaff ? handleSelectedStaff : handleSelectedClient;
-
-  const location = useLocation();
-  const param = useParams();
-  const [isPopperVisible, setIsPopperVisible] = useState(false);
 
   useEffect(() => {
     if (param.email) {
