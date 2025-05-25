@@ -29,7 +29,7 @@ function ScheduleModal({ open, onClose }) {
     handleEditInputChange,
     handleCreateSchedule,
     handleUpdateSchedule,
-    handleDeleteSchedule,
+    handleUpdateStatus,
   } = useContext(ScheduleContext);
 
   const [editScheduleId, setEditScheduleId] = useState(null);
@@ -118,10 +118,6 @@ function ScheduleModal({ open, onClose }) {
                 className={cx("schedule-item")}
                 onClick={() => handleRowClick(schedule)}
               >
-                <FontAwesomeIcon
-                  icon={schedule.status ? faCheck : faXmark}
-                  className={cx("status-icon", { inactive: !schedule.status })}
-                />
                 <div className={cx("date-group")}>
                   <>
                     {editScheduleId === schedule._id &&
@@ -253,7 +249,10 @@ function ScheduleModal({ open, onClose }) {
                         Amount:{" "}
                         {allBills
                           .filter(
-                            (bill) => bill.scheduleId._id === schedule._id
+                            (bill) =>
+                              bill.scheduleId._id === schedule._id &&
+                              bill.status !== "Cancelled" &&
+                              bill.status !== "Refunded"
                           )
                           .reduce((sum, bill) => sum + bill.num, 0)}
                         /{schedule.amount}
@@ -266,10 +265,15 @@ function ScheduleModal({ open, onClose }) {
                     )}
                   </>
                 </div>
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   icon={faTrash}
                   className={cx("trash-icon")}
                   onClick={() => handleDeleteSchedule(schedule._id)}
+                /> */}
+                <FontAwesomeIcon
+                  icon={schedule.status ? faCheck : faXmark}
+                  className={cx("status-icon", { inactive: !schedule.status })}
+                  onClick={() => handleUpdateStatus(schedule)}
                 />
               </div>
             ))}

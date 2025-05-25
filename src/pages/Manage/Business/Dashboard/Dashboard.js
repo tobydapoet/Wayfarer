@@ -29,6 +29,7 @@ import { KpiTargetContext } from "../../../../contexts/KpiTargertContext";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import { getCurrentUser } from "../../../../utils/currentUser";
 
 const cx = classNames.bind(styles);
 
@@ -44,7 +45,7 @@ ChartJS.register(
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Dashboard() {
-  const { allStaffsData } = useContext(StaffContext);
+  const user = getCurrentUser();
   const { allBills } = useContext(BillContext);
   const {
     allKpi,
@@ -436,18 +437,21 @@ function Dashboard() {
             </div>
           </div>
           <div className={cx("kpi-list")}>
-            <div
-              className={cx("kpi-create-btn")}
-              onClick={() => handleOpenKpiForm()}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </div>
+            {user.position === "super admin" && (
+              <div
+                className={cx("kpi-create-btn")}
+                onClick={() => handleOpenKpiForm()}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </div>
+            )}
             <div className={cx("list")}>
               <div className={cx("list-container")}>
                 {allKpi
                   .sort((a, b) => b.month - a.month)
                   .map((kpi) => (
                     <div
+                      key={kpi._id}
                       className={cx("kpi-item")}
                       onClick={() => handleOpenKpiForm(kpi)}
                     >

@@ -22,21 +22,20 @@ export const StaffContext = createContext({
   handleOnSaveStaff: () => {},
 });
 
-export const StaffProvider = ({ children, data }) => {
+export const StaffProvider = ({ children }) => {
   const [allStaffsData, setAllStaffsData] = useState([]);
-  const [staffData, setStaffData] = useState(
-    data || {
-      name: "",
-      email: "",
-      password: "",
-      repassword: "",
-      birth: "",
-      phone: "",
-      salary: "",
-      site: "",
-      avatar: "",
-    }
-  );
+  const [staffData, setStaffData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    repassword: "",
+    birth: "",
+    phone: "",
+    salary: "",
+    site: "",
+    avatar: "",
+    status: "off duty",
+  });
   const [staffTempData, setStaffTempData] = useState({});
   const [staffErrors, setStaffErrors] = useState({});
   const [searchResult, setSearchResult] = useState([]);
@@ -48,7 +47,6 @@ export const StaffProvider = ({ children, data }) => {
   }, [staffData]);
 
   useEffect(() => {
-    if (data) return;
     axios
       .get("http://localhost:3000/staffs")
       .then((res) => setAllStaffsData(res.data))
@@ -59,7 +57,7 @@ export const StaffProvider = ({ children, data }) => {
     axios
       .get(`http://localhost:3000/staffs/${StaffEmail}`)
       .then((res) => setStaffData(res.data))
-      .catch((err) => console.log(err));
+      .catch(() => navigate(`/unauthorized`));
   };
 
   const validateInput = (name, value) => {

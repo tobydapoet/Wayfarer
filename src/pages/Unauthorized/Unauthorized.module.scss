@@ -1,0 +1,17 @@
+.wrapper {
+    width: 100vw;
+    height: calc(100vh - 140px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: end;
+
+    .icon {
+        font-size: 10vw;
+    }
+    .content {
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+    }
+}

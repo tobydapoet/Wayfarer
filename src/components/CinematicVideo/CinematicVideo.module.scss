@@ -1,13 +1,13 @@
 .introduce {
     position: relative;
-    padding-top: 50PX;
+    padding-top: 40px;
     overflow: hidden;
 }
-.video-container{
+.video-container {
     position: absolute;
-    top: 0;
+    top: 20px;
     width: 100%;
     z-index: 0;
-    height: 100vh; 
+    height: 100vh;
     overflow: hidden;
 }

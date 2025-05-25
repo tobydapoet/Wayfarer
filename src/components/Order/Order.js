@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function Order({ data, extent, onDelete }) {
-  const [deleteNotice, setDeleteNotice] = useState(false);
-
   const statusColors = {
     "Pending Confirmation": "pending",
     Paid: "paid",
@@ -45,25 +43,7 @@ function Order({ data, extent, onDelete }) {
             {data.status}
           </div>
         </td>
-        {extent && (
-          <td className={cx("delete")}>
-            <FontAwesomeIcon
-              icon={faXmark}
-              className={cx("delete-icon")}
-              onClick={(e) => {
-                e.stopPropagation();
-                setDeleteNotice(true);
-              }}
-            />
-          </td>
-        )}
       </tr>
-      <Notice
-        open={deleteNotice}
-        onClose={() => setDeleteNotice(false)}
-        content="Do you want to delete this  ?"
-        onConfirm={onDelete}
-      />
     </>
   );
 }

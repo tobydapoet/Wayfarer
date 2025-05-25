@@ -19,28 +19,28 @@ export const CityContext = createContext({
   handleDeleteCity: () => {},
   handleSearchCity: () => {},
   getCityFromParam: () => {},
+  handleUpdateStatus: () => {},
 });
 
-export const CityProvider = ({ data, children }) => {
+export const CityProvider = ({ children }) => {
   const [allCities, setAllCities] = useState([]);
-  const [city, setCity] = useState(
-    data || {
-      name: "",
-      image: "",
-    }
-  );
+  const [city, setCity] = useState({
+    name: "",
+    image: "",
+    status: false,
+  });
   const [tempCity, setTempCity] = useState({});
   const [citiesSearchResult, setCitiesSearchResult] = useState([]);
   const [errors, setErrors] = useState({});
   const [openEditForm, setOpenEditForm] = useState(false);
-  const param = useParams();
 
   useEffect(() => {
-    setTempCity(city);
+    if (city) {
+      setTempCity(city);
+    }
   }, [city]);
 
   useEffect(() => {
-    if (data) return;
     axios
       .get("http://localhost:3000/cities")
       .then((res) => {
@@ -69,7 +69,7 @@ export const CityProvider = ({ data, children }) => {
   };
   const resetForm = () => {
     setErrors({});
-    setCity({ name: "", value: "" });
+    setCity({ name: "", value: "", status: false });
   };
 
   const handleChangeCityInput = (e) => {
@@ -130,6 +130,26 @@ export const CityProvider = ({ data, children }) => {
       toast.error(err);
     }
   };
+
+  const handleUpdateStatus = async (data) => {
+    try {
+      const res = await axios.put(`http://localhost:3000/cities/${data._id}`, {
+        isDeleted: true,
+      });
+
+      if (res.data.success) {
+        toast.success("This city is deleted!");
+        setAllCities((prev) =>
+          prev.map((city) => (city._id === data._id ? res.data.data : city))
+        );
+
+        setOpenEditForm(false);
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   const handleCreateCity = async () => {
     let newErrors = {};
     Object.entries(tempCity).forEach(([name, value]) => {
@@ -214,6 +234,7 @@ export const CityProvider = ({ data, children }) => {
         handleSearchCity,
         handleCreateCity,
         setCitiesSearchResult,
+        handleUpdateStatus,
       }}
     >
       {children}

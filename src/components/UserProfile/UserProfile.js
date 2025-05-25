@@ -13,8 +13,11 @@ import { useLocation, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import Popper from "../Popper";
+import { getCurrentUser } from "../../utils/currentUser";
 
 const cx = classNames.bind(style);
+
+const user = getCurrentUser();
 
 const statusDisplay = {
   working: "working",
@@ -48,7 +51,7 @@ function UserProfile() {
     handleSelectedStaff,
   } = useContext(StaffContext);
 
-  const isStaff = !!staffData?.position;
+  const isStaff = !!user?.position;
 
   const tempData = isStaff ? staffTempData : clientData;
   const formData = isStaff ? staffData : clientData;
@@ -141,7 +144,7 @@ function UserProfile() {
 
       <div className={cx("left-side")}>
         <div className={cx("avatar")}>
-          <img src={tempData?.avatar || images.noImg} alt="avatar" />
+          <img src={tempData?.avatar || images.noAvatar} alt="avatar" />
           <div className={cx("input-container")}>
             <input type="file" name="avatar" onChange={handleChangeImg} />
           </div>
@@ -163,7 +166,6 @@ function UserProfile() {
           <HeadlessTippy
             placement="bottom"
             interactive
-            trigger="click"
             visible={isPopperVisible}
             onClickOutside={() => setIsPopperVisible(false)}
             render={(attrs) => (

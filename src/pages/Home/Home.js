@@ -40,7 +40,7 @@ function Home() {
   const sortedLocations = [...allDestinations].sort((a, b) => {
     const countA = handleCalculateClient(a._id);
     const countB = handleCalculateClient(b._id);
-    return countB - countA; // Giảm dần theo số người đã đi
+    return countB - countA;
   });
 
   const settings = {
@@ -63,7 +63,9 @@ function Home() {
   return (
     <>
       <div className={cx("page-header")}>
-        <CinematicVideo />
+        <div className={cx("video")}>
+          <CinematicVideo />
+        </div>
         <div className={cx("content")}>
           <div className={cx("brand")}>
             <div className={cx("brand-name")}>Farwayer</div>

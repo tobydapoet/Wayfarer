@@ -37,6 +37,7 @@ export const DestinationContext = createContext({
   handleSaveActivity: () => {},
   handleAddServices: () => {},
   handleUpdateService: () => {},
+  handleUpdateStatus: () => {},
   handleDeleteDestination: () => {},
   handleCancelActivity: () => {},
 });
@@ -65,17 +66,14 @@ export const DestinationProvider = ({ children }) => {
   const [content, setContent] = useState({
     name: "",
     cityId: "",
-    star: 0,
     unit: "",
     price: 0,
     image: "",
     description: "",
     activities: [],
+    isDeleted: false,
   });
   const { placement, id } = useParams();
-
-  const [searchParams] = useSearchParams();
-  const destinationId = searchParams.get("destinationId");
 
   useEffect(() => {
     const fetchCity = async () => {
@@ -89,17 +87,17 @@ export const DestinationProvider = ({ children }) => {
   }, [placement]);
 
   useEffect(() => {
-    if ((id && id !== "add_content") || destinationId) {
+    if (id && id !== "add_content") {
       axios
-        .get(`http://localhost:3000/destinations/${id || destinationId}`)
+        .get(`http://localhost:3000/destinations/${id}`)
         .then((res) => {
           setContent(res.data);
         })
-        .catch((err) => {
-          console.error("Lỗi khi gọi API:", err);
+        .catch(() => {
+          navigate(`/unauthorized`);
         });
     }
-  }, [id, destinationId]);
+  }, [id]);
 
   const validateInput = (name, value) => {
     const newErrors = {};
@@ -366,6 +364,31 @@ export const DestinationProvider = ({ children }) => {
     }
   };
 
+  const handleUpdateStatus = async (data) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/destinations/${data._id}`,
+        {
+          isDeleted: true,
+        }
+      );
+      if (res.data.success) {
+        setAllDestinations((prev) =>
+          prev.map((destination) =>
+            destination._id === res.data.data._id
+              ? { ...destination, ...res.data.data }
+              : destination
+          )
+        );
+        setContent(res.data.data);
+        setEditMode(null);
+        toast.success("This destination is deleted!");
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   const handleDeleteDestination = async (id) => {
     try {
       const res = await axios.delete(
@@ -406,6 +429,7 @@ export const DestinationProvider = ({ children }) => {
         handleCancelActivity,
         handleAddServices,
         handleUpdateService,
+        handleUpdateStatus,
         handleDeleteDestination,
       }}
     >

@@ -18,6 +18,7 @@ function DestinationInfo() {
     handleSelectedDestination,
     handleSearchDestinations,
     handleDeleteDestination,
+    handleUpdateStatus,
   } = useContext(DestinationContext);
   const navigate = useNavigate();
   const { placement } = useParams();
@@ -61,7 +62,7 @@ function DestinationInfo() {
             key={destination._id}
             data={destination}
             onClick={() => handleSelectedDestination(destination)}
-            onDelete={() => handleDeleteDestination(destination._id)}
+            onDelete={() => handleUpdateStatus(destination)}
           />
         ))}
     </div>

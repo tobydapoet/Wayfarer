@@ -36,7 +36,6 @@ function StaffInfo() {
     handleSelectedStaff,
     handleAddStaff,
     handleChangeStaffInput,
-    handleDeleteStaff,
     handleChangeStaffPhone,
     handleChangeStaffAvatar,
     handleOnSaveStaff,
@@ -70,53 +69,54 @@ function StaffInfo() {
 
   return (
     <div className={cx("wrapper")}>
-      <HeadlessTippy
-        placement="bottom"
-        interactive
-        trigger="click"
-        visible={isPopperVisible}
-        onClickOutside={() => setIsPopperVisible(false)}
-        render={(attrs) => (
-          <div className={cx("popper-container")} tabIndex="-1" {...attrs}>
-            <Popper className={cx("popper")}>
-              {filteredStatusList.map((item) => (
-                <div
-                  key={item}
-                  className={cx("status-option", {
-                    selected: item === staffData.status,
-                  })}
-                  onClick={() => {
-                    handleChangeStatus(item);
-                    setIsPopperVisible(false);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faCircle}
-                    className={cx("icon", statusDisplay[item])}
-                  />
-                  <div>{item}</div>
-                </div>
-              ))}
-            </Popper>
-          </div>
-        )}
-      >
-        <div
-          className={cx("status-container")}
-          onClick={() => {
-            setIsPopperVisible(!isPopperVisible);
-          }}
+      {staffData._id && (
+        <HeadlessTippy
+          placement="bottom"
+          interactive
+          visible={isPopperVisible}
+          onClickOutside={() => setIsPopperVisible(false)}
+          render={(attrs) => (
+            <div className={cx("popper-container")} tabIndex="-1" {...attrs}>
+              <Popper className={cx("popper")}>
+                {filteredStatusList.map((item) => (
+                  <div
+                    key={item}
+                    className={cx("status-option", {
+                      selected: item === staffData.status,
+                    })}
+                    onClick={() => {
+                      handleChangeStatus(item);
+                      setIsPopperVisible(false);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faCircle}
+                      className={cx("icon", statusDisplay[item])}
+                    />
+                    <div>{item}</div>
+                  </div>
+                ))}
+              </Popper>
+            </div>
+          )}
         >
-          <FontAwesomeIcon
-            icon={faCircle}
-            className={cx("icon", statusDisplay[staffData.status])}
-          />
-          <div className={cx("status-txt")}>{staffData.status}</div>
-        </div>
-      </HeadlessTippy>
+          <div
+            className={cx("status-container")}
+            onClick={() => {
+              setIsPopperVisible(!isPopperVisible);
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faCircle}
+              className={cx("icon", statusDisplay[staffData.status])}
+            />
+            <div className={cx("status-txt")}>{staffData.status}</div>
+          </div>
+        </HeadlessTippy>
+      )}
       <div className={cx("header-info")}>
         <div className={cx("avatar")}>
-          <img src={staffTempData.avatar || images.noImg} alt="Avatar"></img>
+          <img src={staffTempData.avatar || images.noAvatar} alt="Avatar"></img>
           <div className={cx("input-container")}>
             <input
               type="file"

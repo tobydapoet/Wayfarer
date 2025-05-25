@@ -14,9 +14,14 @@ function ContentManageItem({ data, onClick, onDelete }) {
   return (
     <>
       <div className={cx("wrapper")}>
-        <div className={cx("xmark")}>
-          <FontAwesomeIcon icon={faXmark} onClick={() => setOpenNotice(true)} />
-        </div>
+        {data.status === false && (
+          <div className={cx("xmark")}>
+            <FontAwesomeIcon
+              icon={faXmark}
+              onClick={() => setOpenNotice(true)}
+            />
+          </div>
+        )}
         <div className={cx("container")} onClick={onClick}>
           <div className={cx("img-container")}>
             <img src={data.image} />

@@ -1,24 +1,50 @@
-@import 'normalize.css';
+@import "normalize.css";
 
 :root {
-    --primary : #fff;
-    --font-default : 'Walsheim-light';
+    --primary: #fff;
+    --font-default: "Walsheim-light";
 }
 
 @font-face {
     font-family: Nocturne-light;
-    src: url('../assets/fonts/nocturne_serif_light.ttf');
+    src: url("../assets/fonts/nocturne_serif_light.ttf");
 }
 @font-face {
     font-family: Walsheim-light;
-    src: url('../assets/fonts/gt-walsheim-light.ttf');
+    src: url("../assets/fonts/gt-walsheim-light.ttf");
 }
 @font-face {
     font-family: themify;
-    src: url('../assets/fonts/themify.woff');
+    src: url("../assets/fonts/themify.woff");
 }
 @font-face {
     font-family: Walsheim-bold;
-    src: url('../assets/fonts/gt-walsheim-bold.ttf');
+    src: url("../assets/fonts/gt-walsheim-bold.ttf");
 }
 
+::-webkit-scrollbar {
+    height: 2px;
+    border-radius: 16px;
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 16px;
+    margin: 0 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 16px;
+    min-height: 20px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 16px;
+}

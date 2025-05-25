@@ -25,9 +25,7 @@ function PayTypeManage() {
     handleImgChange,
     handleCreatePaytype,
     handleUpdatePayType,
-    handleDeletePayType,
   } = useContext(PayTypeContext);
-  console.log(payTypeSelected);
   return (
     <>
       <div className={cx("wrapper")}>

@@ -25,6 +25,8 @@ function Modal({ children, open, onClose, test, form, style }) {
     <div className={cx("modal-overlay")} onClick={onClose}>
       <div
         className={cx("modal-container", { "modal-show": open, test, form })}
+        style={style}
+        onClick={(e) => e.stopPropagation()}
       >
         {form && (
           <FontAwesomeIcon
@@ -35,7 +37,6 @@ function Modal({ children, open, onClose, test, form, style }) {
         )}
         <div
           className={cx("modal-content")}
-          style={style}
           onClick={(e) => e.stopPropagation()}
         >
           {children}

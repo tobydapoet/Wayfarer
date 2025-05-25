@@ -50,7 +50,6 @@ export const VoucherProvider = ({ children }) => {
   const handleReset = () => {
     setSelectedVoucher(initialVoucher);
   };
-  console.log(selectedVoucher);
 
   const handleValidate = (name, value) => {
     const newErrors = {};

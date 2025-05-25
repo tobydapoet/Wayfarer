@@ -66,7 +66,7 @@ export const BlogProvider = ({ children, data }) => {
       axios
         .get(`http://localhost:3000/blogs/${id}`)
         .then((res) => setBlogData(res.data))
-        .catch((err) => console.error(err));
+        .catch(() => navigate("/unauthorized"));
     }
   }, [id]);
 

@@ -34,7 +34,6 @@ function UsageVouchers() {
     handleSearchVouchers,
   } = useContext(UsageVoucherContext);
   const { allVouchers } = useContext(VoucherContext);
-  console.log(searchUsageVoucher);
   return (
     <>
       <div className={cx("wrapper")}>

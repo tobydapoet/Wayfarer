@@ -17,6 +17,7 @@ export const ScheduleContext = createContext({
   handleCreateSchedule: () => {},
   handleUpdateSchedule: () => {},
   handleDeleteSchedule: () => {},
+  handleUpdateStatus: () => {},
 });
 
 export const ScheduleProvider = ({ children }) => {
@@ -37,7 +38,13 @@ export const ScheduleProvider = ({ children }) => {
   useEffect(() => {
     axios
       .get(`http://localhost:3000/schedules`)
-      .then((res) => setAllSchedules(res.data))
+      .then((res) => {
+        const sortedData = res.data.sort(
+          (a, b) =>
+            new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+        );
+        setAllSchedules(sortedData);
+      })
       .catch((err) => console.log(err));
   }, [allSchedules]);
 
@@ -187,6 +194,28 @@ export const ScheduleProvider = ({ children }) => {
     }
   };
 
+  const handleUpdateStatus = async (scheduleUpdate) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/schedules/${scheduleUpdate._id}`,
+        {
+          status: !scheduleUpdate.status,
+        }
+      );
+
+      if (res.data.success) {
+        setAllSchedules((prev) =>
+          prev.map((schedule) =>
+            schedule._id === res.data.data._id ? res.data.data : schedule
+          )
+        );
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleDeleteSchedule = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:3000/schedules/${id}`);
@@ -217,6 +246,7 @@ export const ScheduleProvider = ({ children }) => {
         handleCreateSchedule,
         handleUpdateSchedule,
         handleDeleteSchedule,
+        handleUpdateStatus,
       }}
     >
       {children}

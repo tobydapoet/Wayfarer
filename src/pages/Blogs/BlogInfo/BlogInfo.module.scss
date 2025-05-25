@@ -19,6 +19,20 @@
                 color: #202020;
                 margin-bottom: 20px;
             }
+
+            .favourite {
+                font-size: 19px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                font-family: themify;
+                div {
+                    display: flex;
+                    align-content: center;
+                    margin-right: 5px;
+                }
+            }
+
             .owner,
             .created-time {
                 color: rgb(153, 153, 153);

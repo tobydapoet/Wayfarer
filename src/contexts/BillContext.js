@@ -58,7 +58,7 @@ export const BillProvider = ({ children }) => {
     scheduleId: "",
     num: 0,
     pay: 0,
-    status: "Pending Confirmation",
+    status: "",
     cancelledAt: null,
     cancelReason: null,
     refundAmount: null,
@@ -89,7 +89,7 @@ export const BillProvider = ({ children }) => {
       axios
         .get(`http://localhost:3000/bills/${param.id}`)
         .then((res) => setBillInfo(res.data))
-        .catch((err) => console.log(err));
+        .catch(() => navigate("/unauthorized"));
   }, [param.id]);
 
   const validateInput = (name, value) => {

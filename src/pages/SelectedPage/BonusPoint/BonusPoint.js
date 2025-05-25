@@ -35,7 +35,6 @@ function BonusPoint() {
 
   const [attendance, setAttendance] = useState({});
   const [openReward, setOpenReward] = useState(false);
-  const [loggedMilestones, setLoggedMilestones] = useState([]);
   const [receivedVoucherName, setReceivedVoucherName] = useState("");
   const [viewVoucherForm, setViewVoucherForm] = useState(false);
   const [viewVoucher, setViewVoucher] = useState({});

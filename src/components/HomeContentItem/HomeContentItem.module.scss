@@ -46,33 +46,6 @@
   }
 }
 
-::-webkit-scrollbar {
-  height: 2px;
-  border-radius: 16px;
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 16px;
-  margin: 0 100px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 16px;
-  min-height: 20px; /* Đảm bảo phần kéo không quá nhỏ */
-  border-top: 6px solid transparent; /* Tăng vùng bấm nhưng không làm dày scrollbar */
-  border-bottom: 6px solid transparent;
-  background-clip: padding-box;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Hiệu ứng nổi */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-  border-radius: 16px;
-}
-
 @media (max-width: 800px) {
   .wrapper {
     .container {

@@ -3,6 +3,7 @@ import styles from "./Manage.module.scss";
 import Sidebar from "../../components/Sidebar";
 import { Outlet } from "react-router-dom";
 import { AccountProvider } from "../../contexts/AccountContext";
+import ScrollHeader from "../../components/ScrollHeader";
 
 const cx = classNames.bind(styles);
 function Manage() {

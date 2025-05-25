@@ -35,7 +35,6 @@ export const ClientProvider = ({ children }) => {
   const [clientErrors, setClientErrors] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(clientErrors);
 
   useEffect(() => {
     axios
@@ -48,7 +47,7 @@ export const ClientProvider = ({ children }) => {
     axios
       .get(`http://localhost:3000/clients/${ClientEmail}`)
       .then((res) => setClientData(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => navigate(`/unauthorized`));
   };
 
   const validateInput = (name, value) => {

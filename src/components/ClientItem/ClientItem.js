@@ -23,7 +23,7 @@ function ClientItem({ data, onClick, onDelete }) {
       >
         <td className={cx("info")}>
           <div className={cx("img")}>
-            <img src={data.avatar || images.noImg} alt={data.name} />
+            <img src={data.avatar || images.noAvatar} alt={data.name} />
           </div>
           <div className={cx("name")}>{data.name}</div>
         </td>

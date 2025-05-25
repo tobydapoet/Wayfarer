@@ -21,6 +21,7 @@ function DestinationsManage() {
     setOpenEditForm,
     handleSearchCity,
     handleDeleteCity,
+    handleUpdateStatus,
   } = useContext(CityContext);
   const { allDestinations } = useContext(DestinationContext);
 
@@ -54,23 +55,25 @@ function DestinationsManage() {
         </div>
       </div>
       <div className={cx("content")}>
-        {allCities.map((selectedCity) => (
-          <Locations
-            manage
-            key={selectedCity._id}
-            data={selectedCity}
-            onEdit={() => {
-              setOpenEditForm(true);
-              setCity(selectedCity);
-            }}
-            count={
-              allDestinations?.filter(
-                (dest) => dest.cityId._id === selectedCity._id
-              ).length || 0
-            }
-            onDelete={() => handleDeleteCity(selectedCity._id)}
-          />
-        ))}
+        {allCities
+          .filter((cities) => cities.isDeleted === false)
+          .map((selectedCity) => (
+            <Locations
+              manage
+              key={selectedCity._id}
+              data={selectedCity}
+              onEdit={() => {
+                setOpenEditForm(true);
+                setCity(selectedCity);
+              }}
+              count={
+                allDestinations?.filter(
+                  (dest) => dest.cityId._id === selectedCity._id
+                ).length || 0
+              }
+              onDelete={() => handleUpdateStatus(selectedCity)}
+            />
+          ))}
       </div>
 
       <EditDestinationManage

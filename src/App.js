@@ -42,7 +42,6 @@ const renderRoutes = (routes) =>
         : route.layout === null
         ? Fragment
         : MainLayout;
-    // const Context = route.context;
 
     const contexts = Array.isArray(route.context)
       ? route.context
@@ -95,7 +94,10 @@ function App() {
       <Router>
         <ScrollToTop />
         <div className="App">
-          <Routes>{renderRoutes(routesToRender)}</Routes>
+          <Routes>
+            {renderRoutes(routesToRender)}{" "}
+            <Route path="*" element={<Navigate to="/unauthorized" replace />} />
+          </Routes>
         </div>
       </Router>
     </>

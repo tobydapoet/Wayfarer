@@ -5,6 +5,7 @@ import BlogManageItem from "../../../components/BlogManageItem";
 import { useContext } from "react";
 import { BlogContext } from "../../../contexts/BlogContext";
 import BlogPopper from "../../../components/BlogPopper/BlogPopper";
+import ScrollHeader from "../../../components/ScrollHeader";
 
 const cx = classNames.bind(styles);
 

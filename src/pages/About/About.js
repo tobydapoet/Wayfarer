@@ -15,7 +15,6 @@ function About() {
   const [size, setSize] = useState({ width: 0, height: 0 });
 
   const handleImgLoad = (e, index) => {
-    console.log(e.target.naturalWidth, e.target.naturalHeight);
     setSize((prev) => ({
       ...prev,
       [index]: { width: e.target.naturalWidth, height: e.target.naturalHeight },

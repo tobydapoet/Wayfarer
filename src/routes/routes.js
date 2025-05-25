@@ -58,6 +58,7 @@ import OTPIdentify from "../pages/OTPIdentify/OTPIdentify";
 import { UserOTPProvider } from "../contexts/UserOTPContext";
 import ResetPassword from "../pages/ResetPassword";
 import { AccountProvider } from "../contexts/AccountContext";
+import Unauthorized from "../pages/Unauthorized";
 
 const publicRoutes = [
   {
@@ -146,8 +147,7 @@ const publicRoutes = [
   {
     path: ":email",
     component: Profile,
-    context: UsageVoucherProvider,
-
+    context: [StaffProvider, ClientProvider, UsageVoucherProvider],
     layout: ProfileLayout,
   },
   {
@@ -197,6 +197,10 @@ const publicRoutes = [
     path: "/indentify/:email/reset",
     context: [ClientProvider, StaffProvider],
     component: ResetPassword,
+  },
+  {
+    path: "/unauthorized",
+    component: Unauthorized,
   },
 ];
 const privateRoutes = [

@@ -49,8 +49,6 @@ function BillEdit() {
     billInfo?.usageVoucherId?.voucherId?.discountValue
   );
 
-  useEffect(() => console.log(billInfo), [billInfo]);
-
   const selectedSchedule = allSchedules.find(
     (schedule) =>
       schedule._id ===

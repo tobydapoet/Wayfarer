@@ -1,6 +1,5 @@
 .container {
     position: relative;
-    
 }
 
 body::-webkit-scrollbar {
@@ -8,6 +7,6 @@ body::-webkit-scrollbar {
 }
 
 .content {
-    padding-top: 60px; /* Chiều cao của Navbar */
-   
+    padding-top: 60px;
+    min-height: 60vh;
 }

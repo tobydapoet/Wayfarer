@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCurrentUser } from "../utils/currentUser";
 
@@ -50,7 +50,6 @@ export const AboutUsProvider = ({ children }) => {
       setContent(initialContent);
     }
   }, [id]);
-  console.log(content);
 
   const validateInput = (name, value) => {
     const newErrors = {};

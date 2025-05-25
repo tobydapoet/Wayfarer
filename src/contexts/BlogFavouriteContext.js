@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Children, createContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { getCurrentUser } from "../utils/currentUser";
 
 export const BlogFavouriteContext = createContext({
@@ -47,7 +46,6 @@ export const BlogFavouriteProvider = ({ children }) => {
       }
     }
   };
-  console.log(allBlogFavourite);
 
   return (
     <BlogFavouriteContext.Provider

@@ -11,7 +11,7 @@ function ScrollHeader() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShow(window.scrollY > 100); // hiện khi cuộn quá 100px
+      setShow(window.scrollY > 100);
     };
 
     window.addEventListener("scroll", handleScroll);

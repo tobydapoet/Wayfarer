@@ -11,17 +11,19 @@ function Destinations() {
   const { allDestinations } = useContext(DestinationContext);
   return (
     <div className={cx("wrapper")}>
-      {allCities.map((city) => (
-        <Locations
-          data={city}
-          key={city._id}
-          client
-          count={
-            allDestinations?.filter((dest) => dest.cityId._id === city._id)
-              .length || 0
-          }
-        />
-      ))}
+      {allCities
+        .filter((cities) => cities.isDeleted === false)
+        .map((city) => (
+          <Locations
+            data={city}
+            key={city._id}
+            client
+            count={
+              allDestinations?.filter((dest) => dest.cityId._id === city._id)
+                .length || 0
+            }
+          />
+        ))}
     </div>
   );
 }

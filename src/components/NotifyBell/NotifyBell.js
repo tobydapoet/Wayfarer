@@ -18,7 +18,6 @@ function NotifyBell() {
     useContext(NotifyContext);
   const [isResultVisible, setIsResultVisible] = useState(false);
   const navigate = useNavigate();
-  console.log(allNotifications);
   const handleOnCloseResult = () => {
     setIsResultVisible(false);
     if (

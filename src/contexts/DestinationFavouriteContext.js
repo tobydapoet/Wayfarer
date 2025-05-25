@@ -33,7 +33,6 @@ export const DestinationFavouriteProvider = ({ children }) => {
       .then((res) => setAllDestinationFavourite(res.data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(allDestinationFavourite);
 
   const handleToggleDestinationFavourite = async (destinationId) => {
     const matchedFavourite = allDestinationFavourite.find((fav) => {

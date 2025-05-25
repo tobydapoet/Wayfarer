@@ -15,7 +15,6 @@ function BlogInfo() {
   const { blogData, handleApproveBlog } = useContext(BlogContext);
   const location = useLocation();
   const isBlogInfo = location.pathname.includes("/blogs/");
-  const isOwnerInfo = location.pathname.includes("/my_blogs/");
   const blogTime = new Date(blogData.createdAt);
   const user = getCurrentUser();
 
@@ -35,6 +34,22 @@ function BlogInfo() {
       <div className={cx("header")}>
         <div className={cx("left-side")}>
           <div className={cx("title")}>{blogData.title}</div>
+          <div className={cx("favourite")}>
+            <div>
+              {
+                allBlogFavourite.filter((fav) => {
+                  const favBlogId =
+                    typeof fav.blogId === "string"
+                      ? fav.blogId
+                      : fav.blogId?._id;
+                  return favBlogId === blogData._id;
+                }).length
+              }
+            </div>
+
+            <FontAwesomeIcon icon={faHeart} color="red" />
+          </div>
+
           <div className={cx("owner")}>By: {blogData.clientId?.name}</div>
           <div className={cx("created-time")}>
             At: {blogTime.toLocaleDateString()}

@@ -8,6 +8,7 @@
     .sidebar-container {
         box-shadow: 0px 1px 1px 1px rgba(209, 204, 204, 0.75);
         width: 15vw;
+        min-height: calc(100vh - 60px);
     }
 
     .content {
@@ -17,7 +18,6 @@
         scrollbar-width: none;
     }
 }
-
 
 @media (max-width: 800px) {
     .wrapper {

@@ -47,7 +47,10 @@ function Sidebar({ profile, management, dark }) {
     <div className={cx("wrapper")}>
       <Link to={`/${user.email}`} className={cx("current-user")}>
         <div className={cx("img-container")}>
-          <img src={user.avatar || images.noImg} className={cx("img-avatar")} />
+          <img
+            src={user.avatar || images.noAvatar}
+            className={cx("img-avatar")}
+          />
         </div>
 
         {!isMobile && (
@@ -68,6 +71,16 @@ function Sidebar({ profile, management, dark }) {
 
             {!user.position && (
               <div className={cx("navigate-profile")}>
+                {isMobile && (
+                  <div className={cx("home-container")}>
+                    <NavLink
+                      to={`/`}
+                      className={(nav) => cx("home", { active: nav.isActive })}
+                    >
+                      <img src={images.logoNoText} />
+                    </NavLink>
+                  </div>
+                )}
                 <div className={cx("processing-container")}>
                   <NavLink
                     to={`/${email}/processing`}
@@ -127,7 +140,10 @@ function Sidebar({ profile, management, dark }) {
             <div className={cx("logout")} onClick={handleLogout}>
               <div>
                 {isMobile ? (
-                  <FontAwesomeIcon icon={faRightFromBracket} />
+                  <FontAwesomeIcon
+                    icon={faRightFromBracket}
+                    className={cx("logout-icon")}
+                  />
                 ) : (
                   "Log out"
                 )}

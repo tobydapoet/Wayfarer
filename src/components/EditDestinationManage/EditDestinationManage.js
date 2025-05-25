@@ -22,13 +22,12 @@ function EditDestinationManage({ onClose, open }) {
   } = useContext(CityContext);
 
   const handleSubmit = () => {
-    if (city) {
+    if (city._id) {
       handleSaveCity(city._id);
     } else {
       handleCreateCity();
     }
   };
-  console.log(city._id);
 
   return (
     <Modal
@@ -46,7 +45,7 @@ function EditDestinationManage({ onClose, open }) {
             placeholder="City..."
             frame="City"
             name="name"
-            value={tempCity?.name || ""}
+            value={tempCity?.name}
             onChange={handleChangeCityInput}
             error={errors?.name}
           />
@@ -61,6 +60,9 @@ function EditDestinationManage({ onClose, open }) {
               />
             </div>
           </div>
+          {errors.content && (
+            <div className={cx("error-text")}>{errors.image}</div>
+          )}
           {errors?.image && <p className={cx("error-text")}>{errors.image}</p>}
         </div>
         <div className={cx("btn-container")}>

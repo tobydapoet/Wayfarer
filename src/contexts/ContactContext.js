@@ -52,14 +52,13 @@ export const ContactProvider = ({ children }) => {
       axios
         .get(`http://localhost:3000/contacts/${id}`)
         .then((res) => setContactValue(res.data))
-        .catch((err) => console.log(err));
+        .catch((err) => navigate(`/unauthorized`));
   }, [id]);
 
   const handleSelectedContact = (data) => {
     setContactValue(data);
     navigate(`${data._id}`);
   };
-  console.log(contactValue);
 
   const handlePreventMessage = () => {
     if (!user || user?.position) {
@@ -215,7 +214,6 @@ export const ContactProvider = ({ children }) => {
       console.log(err);
     }
   };
-  console.log(searchContacts);
 
   return (
     <ContactContext.Provider

@@ -126,6 +126,7 @@
     border: 1px solid #ccc;
 
     .status-icon {
+        cursor: pointer;
         font-size: 18px;
         color: #4caf50;
 
@@ -160,16 +161,16 @@
         }
     }
 
-    .trash-icon {
-        font-size: 16px;
-        color: #e53935;
-        cursor: pointer;
-        transition: color 0.2s ease;
+    // .trash-icon {
+    //     font-size: 16px;
+    //     color: #e53935;
+    //     cursor: pointer;
+    //     transition: color 0.2s ease;
 
-        &:hover {
-            color: #b71c1c;
-        }
-    }
+    //     &:hover {
+    //         color: #b71c1c;
+    //     }
+    // }
 }
 @media (max-width: 800px) {
     .wrapper {
